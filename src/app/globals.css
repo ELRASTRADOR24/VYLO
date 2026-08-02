@@ -34,18 +34,40 @@
   --font-sans: var(--font-outfit);
 }
 
+/* Accélération Matérielle GPU & Fluidité Mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  touch-action: manipulation;
+}
+
 body {
   background-color: var(--background);
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(255, 94, 54, 0.14) 0%, transparent 45%),
-    radial-gradient(circle at 90% 80%, rgba(0, 163, 255, 0.14) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(255, 42, 109, 0.08) 0%, transparent 60%);
-  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  position: relative;
+}
+
+/* Couche de Fond Fixe Optimizée GPU (Évite le lag de scroll mobile) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 94, 54, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(0, 163, 255, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255, 42, 109, 0.06) 0%, transparent 50%);
+  transform: translateZ(0);
+  pointer-events-none: none;
 }
 
 /* Gradients Chaleureux & Effets de Lumière */
@@ -59,16 +81,39 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* Accélération GPU des Ombres */
 .shadow-summer-glow {
-  box-shadow: 0 12px 32px -8px rgba(255, 94, 54, 0.35);
+  box-shadow: 0 8px 24px -6px rgba(255, 94, 54, 0.3);
+  transform: translateZ(0);
 }
 
 .shadow-blue-glow {
-  box-shadow: 0 12px 32px -8px rgba(0, 163, 255, 0.35);
+  box-shadow: 0 8px 24px -6px rgba(0, 163, 255, 0.3);
+  transform: translateZ(0);
+}
+
+.shadow-glow {
+  box-shadow: 0 8px 24px -6px rgba(157, 78, 221, 0.3);
+  transform: translateZ(0);
 }
 
 @utility shadow-soft {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  transform: translateZ(0);
+}
+
+/* Rendu différé automatique pour listes longues */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 60px;
+}
+
+/* Optimisation Réduite pour Mobiles Faibles Performances */
+@media (max-width: 768px) {
+  .backdrop-blur-xl, .backdrop-blur-2xl, .backdrop-blur-md {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
 }
 
 @utility pb-safe {

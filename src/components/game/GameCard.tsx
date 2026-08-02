@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import React from "react";
 import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 
@@ -14,12 +14,12 @@ interface GameCardProps {
   icon: React.ReactNode;
 }
 
-export function GameCard({ title, description, minPlayers, maxPlayers, difficulty, themeColor, icon }: GameCardProps) {
+export const GameCard = React.memo(function GameCard({ title, description, minPlayers, maxPlayers, difficulty, themeColor, icon }: GameCardProps) {
   return (
-    <motion.div whileTap={{ scale: 0.97 }} whileHover={{ y: -3 }} className="w-full">
+    <div className="w-full active:scale-[0.98] transition-transform duration-150 transform-gpu">
       <Card className="flex flex-col relative group cursor-pointer border border-white/10 hover:border-primary/50 transition-all shadow-soft hover:shadow-summer-glow overflow-hidden">
         <div className={cn(
-          "absolute top-0 left-0 right-0 h-36 opacity-30 group-hover:opacity-50 transition-opacity",
+          "absolute top-0 left-0 right-0 h-36 opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none",
           {
             "bg-gradient-to-b from-primary via-accent/30 to-transparent": themeColor === "primary",
             "bg-gradient-to-b from-accent via-pink/30 to-transparent": themeColor === "accent",
@@ -32,7 +32,7 @@ export function GameCard({ title, description, minPlayers, maxPlayers, difficult
         <div className="p-6 relative z-10 flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className={cn(
-              "p-4 rounded-2xl text-white shadow-soft transition-transform group-hover:scale-105",
+              "p-4 rounded-2xl text-white shadow-soft transition-transform group-hover:scale-105 transform-gpu",
               {
                 "bg-gradient-summer shadow-summer-glow": themeColor === "primary",
                 "bg-gradient-to-r from-accent to-pink": themeColor === "accent",
@@ -43,7 +43,7 @@ export function GameCard({ title, description, minPlayers, maxPlayers, difficult
             )}>
               {icon}
             </div>
-            <span className="text-xs font-extrabold text-foreground/50">
+            <span className="text-xs font-extrabold text-foreground/60">
               {minPlayers}-{maxPlayers} joueurs
             </span>
           </div>
@@ -56,6 +56,6 @@ export function GameCard({ title, description, minPlayers, maxPlayers, difficult
           </div>
         </div>
       </Card>
-    </motion.div>
+    </div>
   );
-}
+});

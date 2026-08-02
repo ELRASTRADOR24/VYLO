@@ -6,9 +6,16 @@
 
 let audioCtx: AudioContext | null = null;
 
-function getCtx(): AudioContext {
+function getCtx(): AudioContext | null {
+  if (typeof window === "undefined") return null;
   if (!audioCtx) {
-    audioCtx = new AudioContext();
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === "suspended") {
+    audioCtx.resume().catch(() => {});
   }
   return audioCtx;
 }
@@ -21,6 +28,7 @@ function playTone(
   fadeOut = true
 ) {
   const ctx = getCtx();
+  if (!ctx) return;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
 
@@ -52,6 +60,7 @@ export function sfxTap() {
 /** Son de succès / validation */
 export function sfxSuccess() {
   const ctx = getCtx();
+  if (!ctx) return;
   const now = ctx.currentTime;
 
   [523, 659, 784].forEach((freq, i) => {
@@ -77,6 +86,7 @@ export function sfxError() {
 /** Suspense — montée de tension */
 export function sfxSuspense() {
   const ctx = getCtx();
+  if (!ctx) return;
   const now = ctx.currentTime;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
@@ -96,6 +106,7 @@ export function sfxSuspense() {
 /** Fanfare de victoire */
 export function sfxVictory() {
   const ctx = getCtx();
+  if (!ctx) return;
   const now = ctx.currentTime;
   const notes = [523, 659, 784, 1047]; // Do Mi Sol Do (octave)
 
