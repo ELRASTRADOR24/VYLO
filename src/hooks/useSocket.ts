@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 export interface PlayerOnline {
   id: string;
   name: string;
+  avatar?: string;
   isHost: boolean;
   isReady: boolean;
   isEliminated: boolean;
@@ -45,7 +46,7 @@ interface UseSocketReturn {
   isConnected: boolean;
   roomState: RoomState | null;
   secretData: SecretData | null;
-  joinRoom: (roomCode: string, gameId: string, playerName: string) => void;
+  joinRoom: (roomCode: string, gameId: string, playerName: string, avatar?: string) => void;
   toggleReady: (roomCode: string) => void;
   startUndercover: (roomCode: string, playerSecrets: Record<string, any>, speakingOrder: string[], category: string, civilianWord: string) => void;
   nextSpeaker: (roomCode: string) => void;
@@ -94,8 +95,8 @@ export function useSocket(): UseSocketReturn {
     };
   }, []);
 
-  const joinRoom = useCallback((roomCode: string, gameId: string, playerName: string) => {
-    socketRef.current?.emit("room:join", { roomCode, gameId, playerName });
+  const joinRoom = useCallback((roomCode: string, gameId: string, playerName: string, avatar?: string) => {
+    socketRef.current?.emit("room:join", { roomCode, gameId, playerName, avatar });
   }, []);
 
   const toggleReady = useCallback((roomCode: string) => {

@@ -36,6 +36,7 @@ app.prepare().then(() => {
     const playersArray = Array.from(room.players.values()).map(p => ({
       id: p.id,
       name: p.name,
+      avatar: p.avatar,
       isHost: p.id === room.hostId,
       isReady: p.isReady,
       isEliminated: p.isEliminated || false,
@@ -92,7 +93,7 @@ app.prepare().then(() => {
     console.log(`🟢 Joueur connecté: ${socket.id}`);
 
     // ─── REJOINDRE UN SALON ─────────────────────────────
-    socket.on("room:join", ({ roomCode, gameId, playerName }) => {
+    socket.on("room:join", ({ roomCode, gameId, playerName, avatar }) => {
       socket.join(roomCode);
 
       let room = rooms.get(roomCode);
@@ -116,6 +117,7 @@ app.prepare().then(() => {
       const playerData = {
         id: socket.id,
         name: playerName,
+        avatar: avatar,
         isHost: isHost,
         isReady: false,
         isEliminated: false,

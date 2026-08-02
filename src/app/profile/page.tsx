@@ -1,7 +1,10 @@
 "use client";
 
-import { Trophy, Star, Shield, Edit2, Target, Flame, Search, Ghost, Crown, Lock, User } from "lucide-react";
+import { useState } from "react";
+import { Trophy, Star, Shield, Edit2, Target, Flame, Search, Ghost, Crown, Lock, User, Camera } from "lucide-react";
 import Card from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { ProfileModal } from "@/components/ui/ProfileModal";
 import { useAppStore } from "@/store/useAppStore";
 import { getUnlockedBadges, BADGES } from "@/lib/badges";
 
@@ -15,34 +18,57 @@ const BADGE_ICONS: Record<string, React.ReactNode> = {
 
 export default function Profile() {
   const { guestProfile } = useAppStore();
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const unlockedBadges = getUnlockedBadges(guestProfile.stats);
   const lockedBadges = BADGES.filter(b => !unlockedBadges.includes(b));
 
+  const isCustomImage = guestProfile.avatar.startsWith("http") || guestProfile.avatar.startsWith("data:image");
+
   return (
-    <main className="flex-1 flex flex-col items-center px-4 pt-10 pb-32 max-w-md mx-auto">
-      <div className="w-full flex flex-col items-center mb-10 mt-4 relative">
-        <div className="w-28 h-28 rounded-full bg-gradient-summer border-4 border-surface flex items-center justify-center text-white mb-4 shadow-summer-glow relative group">
-          <User size={52} />
-          <div className="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer shadow-soft">
-            <Edit2 size={14} className="text-white" />
+    <main className="flex-1 flex flex-col items-center px-4 pt-8 md:pt-12 pb-32 max-w-md md:max-w-4xl mx-auto w-full">
+      <ProfileModal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} />
+
+      {/* Profil Header */}
+      <div className="w-full flex flex-col items-center mb-10 mt-4 relative text-center">
+        <div 
+          className="w-28 h-28 rounded-full border-4 border-surface bg-purple-500/20 flex items-center justify-center text-4xl font-black mb-4 shadow-summer-glow relative group cursor-pointer overflow-hidden"
+          onClick={() => setIsEditOpen(true)}
+        >
+          {isCustomImage ? (
+            <img src={guestProfile.avatar} alt="Avatar" className="w-full h-full object-cover" />
+          ) : (
+            <span>{guestProfile.avatar}</span>
+          )}
+
+          <div className="absolute inset-0 bg-slate-950/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <Camera size={26} className="text-white" />
+            <span className="text-[10px] font-black text-white mt-1">Modifier</span>
           </div>
         </div>
-        <h1 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-2">
+
+        <h1 className="text-3xl font-black tracking-tight text-foreground flex items-center justify-center gap-2">
           {guestProfile.pseudo}
+          <button onClick={() => setIsEditOpen(true)} className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-primary transition-all">
+            <Edit2 size={18} />
+          </button>
         </h1>
         <p className="text-foreground/50 font-bold mt-1">
           {unlockedBadges.length > 0 ? unlockedBadges[unlockedBadges.length - 1].name : "Novice"}
         </p>
+
+        <Button variant="surface" size="sm" className="mt-4 font-black text-xs gap-2 rounded-full px-5 border border-white/10" onClick={() => setIsEditOpen(true)}>
+          <Edit2 size={14} className="text-primary" /> Modifier Photo & Pseudo
+        </Button>
       </div>
 
       <div className="w-full grid grid-cols-2 gap-4 mb-8">
-        <Card className="flex flex-col items-center justify-center p-6 gap-2 text-center">
-          <Trophy className="w-8 h-8 text-accent mb-2" />
+        <Card className="flex flex-col items-center justify-center p-6 gap-2 text-center bg-surface/90 border border-white/10 shadow-soft">
+          <Trophy className="w-8 h-8 text-accent mb-1" />
           <span className="text-3xl font-black">{guestProfile.stats.gamesPlayed}</span>
           <span className="text-xs font-black text-foreground/50 uppercase tracking-wider">Parties</span>
         </Card>
-        <Card className="flex flex-col items-center justify-center p-6 gap-2 text-center">
-          <Star className="w-8 h-8 text-yellow-400 mb-2" />
+        <Card className="flex flex-col items-center justify-center p-6 gap-2 text-center bg-surface/90 border border-white/10 shadow-soft">
+          <Star className="w-8 h-8 text-yellow-400 mb-1" />
           <span className="text-3xl font-black">{guestProfile.stats.wins}</span>
           <span className="text-xs font-black text-foreground/50 uppercase tracking-wider">Victoires</span>
         </Card>
@@ -55,7 +81,7 @@ export default function Profile() {
         
         <div className="grid gap-3">
           {unlockedBadges.map(badge => (
-            <div key={badge.id} className="bg-surface p-4 rounded-2xl flex items-center gap-4 border border-white/10 shadow-soft">
+            <div key={badge.id} className="bg-surface/90 p-4 rounded-2xl flex items-center gap-4 border border-white/10 shadow-soft">
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${badge.color}`}>
                 {BADGE_ICONS[badge.id] || <Target size={24} />}
               </div>
@@ -67,7 +93,7 @@ export default function Profile() {
           ))}
 
           {lockedBadges.map(badge => (
-            <div key={badge.id} className="bg-surface/50 p-4 rounded-2xl flex items-center gap-4 border border-white/5 opacity-50 grayscale">
+            <div key={badge.id} className="bg-surface/40 p-4 rounded-2xl flex items-center gap-4 border border-white/5 opacity-50 grayscale">
               <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-foreground/40">
                 <Lock size={20} />
               </div>

@@ -42,9 +42,9 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
 
   useEffect(() => {
     if (isConnected) {
-      joinRoom(roomId, "undercover", guestProfile.pseudo);
+      joinRoom(roomId, "undercover", guestProfile.pseudo, guestProfile.avatar);
     }
-  }, [isConnected, roomId, guestProfile.pseudo, joinRoom]);
+  }, [isConnected, roomId, guestProfile.pseudo, guestProfile.avatar, joinRoom]);
 
   // Sons & notifications
   const playerCount = roomState?.players.length || 0;
@@ -282,8 +282,14 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
             {players.map((p) => (
               <div key={p.id} className="flex items-center justify-between bg-surface/90 p-3.5 rounded-2xl border border-white/10 shadow-soft">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-gradient-summer text-white flex items-center justify-center font-black text-sm">
-                    {p.name.charAt(0).toUpperCase()}
+                  <div className="w-9 h-9 rounded-full overflow-hidden bg-purple-500/20 text-white flex items-center justify-center font-black text-sm border border-white/10">
+                    {p.avatar && (p.avatar.startsWith("http") || p.avatar.startsWith("data:")) ? (
+                      <img src={p.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                    ) : p.name === guestProfile.pseudo && (guestProfile.avatar.startsWith("http") || guestProfile.avatar.startsWith("data:")) ? (
+                      <img src={guestProfile.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                    ) : (
+                      <span>{p.avatar || (p.name === guestProfile.pseudo ? guestProfile.avatar : p.name.charAt(0).toUpperCase())}</span>
+                    )}
                   </div>
                   <span className="font-bold text-sm flex items-center gap-2">
                     {p.name}

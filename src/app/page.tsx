@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { getGameList } from "@/games";
 import { useAppStore } from "@/store/useAppStore";
 
+import { ProfileModal } from "@/components/ui/ProfileModal";
+
 const GAME_ICONS: Record<string, React.ReactNode> = {
   "undercover": <Ghost className="w-8 h-8" strokeWidth={2.5} />,
   "truth-or-dare": <Flame className="w-8 h-8" strokeWidth={2.5} />,
@@ -22,6 +24,7 @@ export default function Home() {
   const { guestProfile } = useAppStore();
   const stats = guestProfile.stats;
   const [quickCode, setQuickCode] = useState("");
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   const handleQuickJoin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +35,7 @@ export default function Home() {
 
   return (
     <main className="flex-1 flex flex-col items-center px-4 md:px-8 pt-6 md:pt-12 pb-32 max-w-md md:max-w-6xl mx-auto relative">
+      <ProfileModal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} />
       {/* Fond Luminescent Flouté pour Ordinateur */}
       <div className="hidden md:block absolute -top-20 -left-20 w-96 h-96 bg-primary/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="hidden md:block absolute top-1/3 -right-20 w-96 h-96 bg-accent/15 rounded-full blur-[120px] pointer-events-none" />
@@ -130,7 +134,17 @@ export default function Home() {
               <span className="text-xs font-black uppercase tracking-wider text-primary flex items-center gap-2">
                 <Trophy size={16} /> Profil & Statistiques
               </span>
-              <span className="text-xs font-bold text-foreground/60">{guestProfile.pseudo}</span>
+              <button onClick={() => setIsEditOpen(true)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <div className="w-6 h-6 rounded-full overflow-hidden bg-purple-500/20 text-xs flex items-center justify-center font-bold">
+                  {guestProfile.avatar.startsWith("http") || guestProfile.avatar.startsWith("data:") ? (
+                    <img src={guestProfile.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <span>{guestProfile.avatar}</span>
+                  )}
+                </div>
+                <span className="text-xs font-black text-foreground">{guestProfile.pseudo}</span>
+                <span className="text-[10px] text-primary underline">Éditer</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-3 gap-3 text-center">
