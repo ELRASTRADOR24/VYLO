@@ -37,8 +37,9 @@ export interface RoomState {
 
 export interface SecretData {
   role: string;
-  word: string;
-  category: string;
+  word?: string;
+  category?: string;
+  saboteurHint?: string;
 }
 
 interface UseSocketReturn {
@@ -49,6 +50,7 @@ interface UseSocketReturn {
   joinRoom: (roomCode: string, gameId: string, playerName: string, avatar?: string) => void;
   toggleReady: (roomCode: string) => void;
   startUndercover: (roomCode: string, playerSecrets: Record<string, any>, speakingOrder: string[], category: string, civilianWord: string) => void;
+  startSaboteur: (roomCode: string, playerSecrets: Record<string, any>, activeChallenge: any) => void;
   nextSpeaker: (roomCode: string) => void;
   startVote: (roomCode: string) => void;
   castVote: (roomCode: string, targetId: string) => void;
@@ -115,6 +117,16 @@ export function useSocket(): UseSocketReturn {
     });
   }, []);
 
+  const startSaboteur = useCallback((
+    roomCode: string, 
+    playerSecrets: Record<string, any>, 
+    activeChallenge: any
+  ) => {
+    socketRef.current?.emit("game:start_saboteur", { 
+      roomCode, playerSecrets, activeChallenge 
+    });
+  }, []);
+
   const nextSpeaker = useCallback((roomCode: string) => {
     socketRef.current?.emit("game:next_speaker", { roomCode });
   }, []);
@@ -147,6 +159,7 @@ export function useSocket(): UseSocketReturn {
     joinRoom,
     toggleReady,
     startUndercover,
+    startSaboteur,
     nextSpeaker,
     startVote,
     castVote,

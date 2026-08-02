@@ -176,6 +176,32 @@ app.prepare().then(() => {
       console.log(`🕵️ Undercover lancé en ligne dans le salon ${roomCode}`);
     });
 
+    // ─── LANCEMENT LE SABOTEUR ONLINE ─────────────────────
+    socket.on("game:start_saboteur", ({ roomCode, playerSecrets, activeChallenge }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+
+      room.state = "PLAYING_SABOTEUR";
+      room.secrets = playerSecrets;
+      room.activeChallenge = activeChallenge;
+      room.votes = {};
+      room.eliminatedPlayer = null;
+      room.winnerTeam = null;
+
+      for (const player of room.players.values()) {
+        player.isEliminated = false;
+      }
+
+      if (playerSecrets) {
+        Object.entries(playerSecrets).forEach(([targetSocketId, secretData]) => {
+          io.to(targetSocketId).emit("game:secret", secretData);
+        });
+      }
+
+      broadcastRoomState(roomCode);
+      console.log(`💣 Le Saboteur lancé en ligne dans le salon ${roomCode}`);
+    });
+
     // ─── PASSER AU SPEAKER SUIVANT ───────────────────────
     socket.on("game:next_speaker", ({ roomCode }) => {
       const room = rooms.get(roomCode);
