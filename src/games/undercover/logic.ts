@@ -18,6 +18,7 @@ export interface UndercoverWordPair {
 export const CATEGORIES = [
   "Toutes les catégories",
   "Incontournables de Soirée",
+  "Anime, Manga & Geek Culture",
   "Légendes, Fantaisie & Super-Héros",
   "Écoles, Culture & Arts",
   "Émotions, Esprit & Adjectifs",
@@ -68,6 +69,29 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "T-shirt", undercover: "Chemise", category: "Incontournables de Soirée" },
   { civilian: "Super Mario", undercover: "Sonic", category: "Incontournables de Soirée" },
   { civilian: "Superman", undercover: "Spider-Man", category: "Incontournables de Soirée" },
+
+  // Anime, Manga & Geek Culture (22)
+  { civilian: "Naruto", undercover: "Sasuke", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Sakura", undercover: "Hinata", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Kakashi", undercover: "Itachi", category: "Anime, Manga & Geek Culture" },
+  { civilian: "One Piece", undercover: "Naruto", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Luffy", undercover: "Gon", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Zoro", undercover: "Sasuke", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Goku", undercover: "Saitama", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Vegeta", undercover: "Goku", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Pikachu", undercover: "Évoli", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Pokémon", undercover: "Yu-Gi-Oh", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Demon Slayer", undercover: "Jujutsu Kaisen", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Tanjiro", undercover: "Zenitsu", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Gojo", undercover: "Sukuna", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Attack on Titan", undercover: "Tokyo Ghoul", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Eren", undercover: "Levi", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Death Note", undercover: "Code Geass", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Dragon Ball Z", undercover: "Dragon Ball Super", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Jedi", undercover: "Sith", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Dark Vador", undercover: "Voldemort", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Harry Potter", undercover: "Hermione", category: "Anime, Manga & Geek Culture" },
+  { civilian: "Gryffondor", undercover: "Serpentard", category: "Anime, Manga & Geek Culture" },
 
   // Légendes, Fantaisie & Super-Héros (26)
   { civilian: "Batman", undercover: "Superman", category: "Légendes, Fantaisie & Super-Héros" },
