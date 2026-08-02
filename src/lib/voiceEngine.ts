@@ -61,6 +61,10 @@ class VoiceEngine {
   public speak(text: string, options: VoiceOptions = {}) {
     this.notifySubtitles(text);
 
+    if (!this.frenchVoice) {
+      this.initVoices();
+    }
+
     // Jouer le son d'ambiance selon le ton
     const tone = options.tone || "ANNOUNCEMENT";
     this.playToneAmbiance(tone);
