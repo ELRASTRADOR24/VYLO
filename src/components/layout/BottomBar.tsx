@@ -11,8 +11,13 @@ import { LayoutGrid } from "lucide-react";
 export function BottomBar() {
   const pathname = usePathname();
 
-  // Hide BottomBar in Setup or Lobby flows where we need the space
-  if (pathname.includes("/setup") || pathname.includes("/lobby")) {
+  // Masquer la BottomBar dans les flux de jeu et salons pour libérer tout l'espace
+  if (
+    pathname.includes("/setup") || 
+    pathname.includes("/lobby") || 
+    pathname.includes("/play") || 
+    pathname.includes("/online")
+  ) {
     return null;
   }
 

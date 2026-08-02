@@ -266,7 +266,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // --- ÉCRAN 1 : CONFIGURATION DU JEU ---
   if (phase === "CONFIG") {
     return (
-      <main className="min-h-screen flex flex-col items-center py-8 px-6 max-w-md mx-auto relative">
+      <main className="min-h-screen flex flex-col items-center pt-8 pb-32 px-6 max-w-md mx-auto relative">
         <div className="w-full flex items-center mb-6">
           <button onClick={() => router.back()} className="h-12 w-12 bg-surface rounded-full flex items-center justify-center">
             <ChevronLeft size={24} />
