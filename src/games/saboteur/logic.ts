@@ -23,66 +23,82 @@ export const SABOTEUR_CHALLENGES_DATABASE: SaboteurChallenge[] = [
   {
     id: "c1",
     title: "Chaîne de Mots : Capitales",
-    instruction: "Citez 4 véritables capitales de pays en moins de 25 secondes à voix haute.",
+    instruction: "Chacun votre tour, citez une vraie capitale de pays. Vous devez en trouver 4 sans répéter. Si quelqu'un se trompe ou répète, la mission échoue !",
     type: "WORD_CHAIN",
-    timeLimitSec: 25,
-    saboteurHint: "Cite une fausse capitale de manière très naturelle ou fais hésiter le groupe en coupant la parole."
+    timeLimitSec: 50,
+    saboteurHint: "Cite une fausse capitale de manière très naturelle, ou répète une déjà dite en espérant que personne ne s'en souvient !"
   },
   {
     id: "c2",
-    title: "Estimation : Vitesse de la Lumière",
-    instruction: "La vitesse de la lumière est d'environ 300 000 km/s. L'équipe doit répondre 'VRAI' en 15s.",
+    title: "Vrai ou Faux : Vitesse de la Lumière",
+    instruction: "La vitesse de la lumière est d'environ 300 000 kilomètres par seconde. Le groupe doit se mettre d'accord et crier VRAI ou FAUX ensemble !",
     type: "TRIVIA_GUESS",
-    timeLimitSec: 15,
-    saboteurHint: "Insinue avec confiance que c'est 30 000 km/s et pousse le groupe à répondre 'FAUX' !"
+    timeLimitSec: 30,
+    saboteurHint: "Insinue avec confiance que c'est plutôt 30 000 km/s pour pousser le groupe à répondre FAUX !"
   },
   {
     id: "c3",
-    title: "Chaîne de Mots : Marque de Voitures",
-    instruction: "Citez 5 marques de voitures différentes sans répéter la même marque.",
+    title: "Chaîne de Mots : Marques de Voitures",
+    instruction: "Chacun votre tour, citez une marque de voiture différente. 5 marques sans répétition pour réussir la mission !",
     type: "WORD_CHAIN",
-    timeLimitSec: 20,
-    saboteurHint: "Répète exprès une marque déjà dite 10 secondes plus tôt pour annuler le point !"
+    timeLimitSec: 55,
+    saboteurHint: "Répète exprès une marque déjà dite, mais attends 30 secondes pour que les gens l'aient oubliée !"
   },
   {
     id: "c4",
-    title: "Action Groupe : La Statue Synchro",
-    instruction: "Tous les joueurs doivent prendre une pose de statue sans bouger pendant 10 secondes.",
+    title: "La Statue Synchro",
+    instruction: "Au signal, tous les joueurs prennent une pose de statue immobile et tiennent 10 secondes complètes sans bouger, sans rire. Un seul mouvement et c'est raté !",
     type: "ACTION_MIME",
     timeLimitSec: 15,
-    saboteurHint: "Fais un léger mouvement discret ou ris tout bas pour faire annuler la statue !"
+    saboteurHint: "Fais un micro-mouvement discret, ou ricane tout doucement pour provoquer le fou rire du groupe !"
   },
   {
     id: "c5",
-    title: "Trivia : Le Cœur Humain",
-    instruction: "Le cœur humain possède 4 cavités (oreillettes et ventricules). Vrai ou Faux ?",
+    title: "Vrai ou Faux : Le Cœur Humain",
+    instruction: "Le cœur humain possède 4 cavités : 2 oreillettes et 2 ventricules. Vrai ou Faux ? Tout le groupe doit se mettre d'accord !",
     type: "TRIVIA_GUESS",
-    timeLimitSec: 15,
-    saboteurHint: "Soutiens fermement qu'il n'y a que 2 cavités pour induire en erreur l'équipe !"
+    timeLimitSec: 30,
+    saboteurHint: "Affirme avec conviction qu'il n'y a que 2 cavités et citer de faux noms médicaux pour les perdre !"
   },
   {
     id: "c6",
-    title: "Chrono Réflexe : Compter à Rebours",
-    instruction: "Comptez à voix haute de 20 jusqu'à 0 sans qu'aucun joueur ne parle en même temps.",
+    title: "Compte à Rebours Collectif",
+    instruction: "Comptez ensemble à voix haute de 20 jusqu'à 0 en vous répartissant les chiffres. Chaque joueur dit le suivant à tour de rôle. Personne ne doit parler en même temps ou sauter un chiffre !",
     type: "SPEED_REFLEX",
-    timeLimitSec: 20,
-    saboteurHint: "Parle en même temps qu'un autre joueur à la dernière seconde pour casser le décompte !"
+    timeLimitSec: 70,
+    saboteurHint: "Parle en même temps qu'un autre au bon moment ou saute un chiffre pour casser la chaîne !"
   },
   {
     id: "c7",
-    title: "Chaîne de Mots : Fruits Rouges",
-    instruction: "Citez 4 fruits de couleur rouge en moins de 15 secondes.",
+    title: "Chaîne de Mots : Fruits",
+    instruction: "Chacun votre tour, citez un fruit différent. 5 fruits sans répétition pour réussir ! Attention, le Saboteur est aux aguets...",
     type: "WORD_CHAIN",
-    timeLimitSec: 15,
-    saboteurHint: "Propose la 'Banane' ou le 'Citron' en faisant semblant de paniquer sous la pression du chrono !"
+    timeLimitSec: 50,
+    saboteurHint: "Cite une tomate et défends-la comme étant un légume, ou répète un fruit déjà cité !"
   },
   {
     id: "c8",
-    title: "Trivia : Les Océans",
-    instruction: "L'Océan Pacifique est le plus grand océan du monde. Vrai ou Faux ?",
+    title: "Vrai ou Faux : Les Océans",
+    instruction: "L'Océan Pacifique est le plus grand océan de la planète. Vrai ou Faux ? Débattez en 30 secondes et donnez une réponse commune !",
     type: "TRIVIA_GUESS",
-    timeLimitSec: 15,
-    saboteurHint: "Dis que c'est l'Océan Atlantique et fais douter tes voisins !"
+    timeLimitSec: 30,
+    saboteurHint: "Argue que c'est l'Atlantique avec un air très sûr de toi, et fais douter les plus hésitants !"
+  },
+  {
+    id: "c9",
+    title: "Chaîne de Mots : Pays d'Europe",
+    instruction: "Chacun votre tour, citez un pays européen différent. Trouvez-en 5 sans répétition pour valider la mission !",
+    type: "WORD_CHAIN",
+    timeLimitSec: 55,
+    saboteurHint: "Cite un pays hors Europe comme le Maroc ou la Turquie d'un air très convaincu !"
+  },
+  {
+    id: "c10",
+    title: "Le Mime Interdit",
+    instruction: "Le groupe doit mimer collectivement un objet choisi parmi : une bouteille, un avion ou un téléphone. Tout le groupe doit mimer le MÊME objet sans se concerter à voix haute !",
+    type: "ACTION_MIME",
+    timeLimitSec: 25,
+    saboteurHint: "Mime un objet complètement différent de ceux proposés avec l'air très concentré !"
   }
 ];
 

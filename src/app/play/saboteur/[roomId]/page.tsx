@@ -45,6 +45,9 @@ export default function SaboteurLocalGame({ params }: { params: Promise<{ roomId
   const [activeChallenge, setActiveChallenge] = useState<SaboteurChallenge | null>(null);
   const [missionTimer, setMissionTimer] = useState<number>(20);
   const [timerActive, setTimerActive] = useState(false);
+  // Phase de préparation (compte à rebours 5s avant le vrai défi)
+  const [prepCountdown, setPrepCountdown] = useState<number>(5);
+  const [isPrepPhase, setIsPrepPhase] = useState(false);
   const [voterIndex, setVoterIndex] = useState(0);
   const [votesMap, setVotesMap] = useState<Record<string, string>>({});
   const [eliminatedPlayer, setEliminatedPlayer] = useState<SaboteurPlayer | null>(null);
@@ -113,20 +116,40 @@ export default function SaboteurLocalGame({ params }: { params: Promise<{ roomId
     }
   };
 
-  // 2. PHASE DE MISSION
+  // 2. PHASE DE MISSION — avec préparation 5 secondes
   const startMissionPhase = () => {
     const challenge = getRandomChallenge();
     setActiveChallenge(challenge);
     setMissionTimer(challenge.timeLimitSec);
-    setTimerActive(true);
+    setTimerActive(false);
+    setIsPrepPhase(true);
+    setPrepCountdown(5);
     setPhase("MISSION");
 
-    voiceEngine.speak(
-      `Attention l'équipe ! Début de la mission : ${challenge.title}. Le Saboteur est parmi vous !`,
-      { tone: "SABOTEUR" }
-    );
+    // Le robot lit le titre puis l'instruction pendant la phase de préparation
+    setTimeout(() => {
+      voiceEngine.speak(
+        `Attention équipe ! Mission : ${challenge.title}. ${challenge.instruction}`,
+        { tone: "SABOTEUR" }
+      );
+    }, 300);
   };
 
+  // Décompte de préparation (5 secondes de lecture avant le vrai chrono)
+  useEffect(() => {
+    if (!isPrepPhase) return;
+    if (prepCountdown <= 0) {
+      setIsPrepPhase(false);
+      setTimerActive(true);
+      sfxSuspense();
+      voiceEngine.speak("C'est parti ! La mission commence maintenant !", { tone: "SUSPENSE" });
+      return;
+    }
+    const t = setTimeout(() => setPrepCountdown(prev => prev - 1), 1000);
+    return () => clearTimeout(t);
+  }, [isPrepPhase, prepCountdown]);
+
+  // Décompte de la mission réelle
   useEffect(() => {
     let interval: any = null;
     if (timerActive && missionTimer > 0) {
@@ -378,14 +401,50 @@ export default function SaboteurLocalGame({ params }: { params: Promise<{ roomId
 
   // --- ÉCRAN 5 : MISSION D'ÉQUIPE EN COURS ---
   if (phase === "MISSION" && activeChallenge) {
+
+    // 5a. PHASE DE PRÉPARATION (robot lis, compte à rebours 5s)
+    if (isPrepPhase) {
+      return (
+        <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md md:max-w-4xl mx-auto gap-6">
+          <div className="flex flex-col items-center gap-2 mb-2">
+            <span className="text-xs font-black uppercase tracking-widest text-foreground/50">Prochaine mission</span>
+            <h2 className="text-3xl font-black text-primary">{activeChallenge.title}</h2>
+          </div>
+
+          <Card className="w-full p-7 flex flex-col items-center border border-white/10 shadow-glow bg-surface/90">
+            <span className="text-base font-bold leading-relaxed text-foreground/90">{activeChallenge.instruction}</span>
+          </Card>
+
+          {/* Grand compte à rebours de préparation */}
+          <div className="flex flex-col items-center gap-3 mt-2">
+            <div
+              className="w-28 h-28 rounded-full flex items-center justify-center border-4 border-primary shadow-summer-glow"
+              style={{ background: "radial-gradient(circle, hsl(var(--primary) / 0.2), transparent)" }}
+            >
+              <span className="text-6xl font-black text-primary">{prepCountdown}</span>
+            </div>
+            <p className="text-xs font-bold text-foreground/50">
+              🤖 Le robot vous lit la mission... La mission démarre dans <span className="text-primary">{prepCountdown}s</span>
+            </p>
+          </div>
+        </main>
+      );
+    }
+
+    // 5b. MISSION EN COURS avec chrono réel
     return (
       <main className="min-h-screen flex flex-col items-center justify-between py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto text-center">
         <div className="w-full flex items-center justify-between">
           <button onClick={handleLeaveGame} className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground">
             <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
-          <div className="flex items-center gap-2 text-red-400 font-black text-xl bg-red-500/10 px-4 py-1.5 rounded-full border border-red-500/30">
-            <Clock size={20} className="animate-spin" /> {missionTimer}s
+          {/* Chrono rouge dynamique */}
+          <div className={`flex items-center gap-2 font-black text-xl px-4 py-1.5 rounded-full border ${
+            missionTimer <= 10
+              ? "text-red-400 bg-red-500/20 border-red-500/40 animate-pulse"
+              : "text-yellow-400 bg-yellow-500/10 border-yellow-500/30"
+          }`}>
+            <Clock size={20} /> {missionTimer}s
           </div>
         </div>
 
@@ -393,9 +452,9 @@ export default function SaboteurLocalGame({ params }: { params: Promise<{ roomId
           <span className="text-xs font-black uppercase tracking-widest bg-white/5 px-3.5 py-1.5 rounded-full text-primary mb-4">
             {activeChallenge.title}
           </span>
-          <h2 className="text-2xl font-black mb-4 leading-snug">{activeChallenge.instruction}</h2>
-          <p className="text-xs text-foreground/50 font-bold">
-            Les Agents doivent réussir la mission. Le Saboteur doit secrètement faire rater !
+          <p className="text-lg font-bold mb-4 leading-snug text-foreground/90">{activeChallenge.instruction}</p>
+          <p className="text-xs text-foreground/50 font-bold border-t border-white/5 pt-3 mt-1">
+            💣 Les Agents doivent réussir. Le Saboteur doit secrètement faire rater !
           </p>
         </Card>
 
