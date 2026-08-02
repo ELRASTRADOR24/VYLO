@@ -45,14 +45,17 @@ export const TOD_CONTENT: TodCard[] = [
   { type: "TRUTH", text: "Quelle est l'habitude la plus énervante qu'un ami puisse avoir selon toi ?", intensity: "Fun" },
 
   { type: "DARE", text: "Laisse le joueur à ta droite te refaire une coiffure originale.", intensity: "Fun" },
-  { type: "DARE", text: "Envoie une photo grimaçante au 3ème contact récent de ton téléphone.", intensity: "Fun" },
-  { type: "DARE", text: "Danse le robot pendant 30 secondes sans musique.", intensity: "Fun" },
   { type: "DARE", text: "Laisse le groupe te choisir un surnom que tu dois utiliser toute la soirée.", intensity: "Fun" },
   { type: "DARE", text: "Imite le cri d'un coq à plein poumon.", intensity: "Fun" },
   { type: "DARE", text: "Fais 5 squats en portant (ou faisant semblant de porter) le joueur à ta gauche.", intensity: "Fun" },
   { type: "DARE", text: "Propose une battle de danse improvisée de 20 secondes contre le joueur de ton choix.", intensity: "Fun" },
   { type: "DARE", text: "Laisse quelqu'un écrire un mot loufoque sur ton bras avec un stylo.", intensity: "Fun" },
   { type: "DARE", text: "Répète 'Je suis un génie méconnu' après chaque phrase jusqu'à ton prochain tour.", intensity: "Fun" },
+  { type: "DARE", text: "Laisse le joueur à ta droite envoyer l'émoji cœur ❤️ au premier contact de tes messages récents.", intensity: "Fun" },
+  { type: "DARE", text: "Imite une demande en mariage hyper romantique à la personne en face de toi.", intensity: "Fun" },
+  { type: "DARE", text: "Raconte une anecdote embarrassante en parlant uniquement avec la voix d'un bébé.", intensity: "Fun" },
+  { type: "DARE", text: "Appelle un ami, dis-lui 'Je dois te dire un truc grave...' puis raccroche immédiatement.", intensity: "Fun" },
+  { type: "DARE", text: "Mets tes vêtements ou ton haut à l'envers jusqu'à ton prochain tour.", intensity: "Fun" },
 
   // 🌶️ PIQUANT — Révélations, répliques & défis gênants
   { type: "TRUTH", text: "Quel est ton plus grand crush secret dans cette pièce ou dans ton cercle proche ?", intensity: "Piquant" },
@@ -65,6 +68,11 @@ export const TOD_CONTENT: TodCard[] = [
   { type: "TRUTH", text: "As-tu déjà stalké l'ex de quelqu'un sur les réseaux sociaux pendant plus de 20 minutes ?", intensity: "Piquant" },
   { type: "TRUTH", text: "Quelle est la pire décision romantique ou amicale que tu aies prise cette année ?", intensity: "Piquant" },
   { type: "TRUTH", text: "Si tu pouvais effacer une rencontre de ton passé, qui effacerais-tu ?", intensity: "Piquant" },
+  { type: "TRUTH", text: "Qui dans cette pièce est la personne avec qui tu aimerais le plus être coincé dans un ascenseur ?", intensity: "Piquant" },
+  { type: "TRUTH", text: "Quel est le pire râteau ou rejet amoureux que tu aies pris de toute ta vie ?", intensity: "Piquant" },
+  { type: "TRUTH", text: "As-tu déjà prétendu être malade pour éviter une soirée avec quelqu'un ici présent ?", intensity: "Piquant" },
+  { type: "TRUTH", text: "Quel est le secret que tu n'as jamais osé avouer à tes parents ?", intensity: "Piquant" },
+  { type: "TRUTH", text: "Si tu devais donner la première lettre du prénom de ton crush actuel, quelle est-elle ?", intensity: "Piquant" },
 
   { type: "DARE", text: "Laisse le joueur à ta gauche lire à voix haute le tout dernier message d'une de tes conversations.", intensity: "Piquant" },
   { type: "DARE", text: "Fais un compliment très sincère et troublant à la personne de ton choix dans la pièce.", intensity: "Piquant" },
@@ -75,6 +83,8 @@ export const TOD_CONTENT: TodCard[] = [
   { type: "DARE", text: "Murmure un secret totalement faux mais crédible à l'oreille du joueur de ton choix.", intensity: "Piquant" },
   { type: "DARE", text: "Fais un massage des épaules de 30 secondes au joueur qui a le score le plus bas.", intensity: "Piquant" },
   { type: "DARE", text: "Accepte de répondre en toute honnêteté à une question choisie sur-le-champ par TOUT le groupe réunis.", intensity: "Piquant" },
+  { type: "DARE", text: "Laisse le groupe regarder les 5 dernières photos de ta galerie photo pendant 15 secondes.", intensity: "Piquant" },
+  { type: "DARE", text: "Donne ton téléphone déverrouillé au joueur de ton choix pendant 1 minute complète.", intensity: "Piquant" },
 ];
 
 export function getRandomCard(type: CardType, intensity: IntensityLevel = "Toutes"): TodCard {

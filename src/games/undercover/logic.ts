@@ -17,6 +17,7 @@ export interface UndercoverWordPair {
 
 export const CATEGORIES = [
   "Toutes les catégories",
+  "Incontournables de Soirée",
   "Animaux",
   "Nourriture & Cuisine",
   "Football & Sport",
@@ -36,6 +37,32 @@ export const CATEGORIES = [
 export type CategoryName = typeof CATEGORIES[number];
 
 export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
+  // Incontournables de Soirée (25 paires ultra-connues)
+  { civilian: "Pain au chocolat", undercover: "Chocolatine", category: "Incontournables de Soirée" },
+  { civilian: "WhatsApp", undercover: "Snapchat", category: "Incontournables de Soirée" },
+  { civilian: "Mojito", undercover: "Piña Colada", category: "Incontournables de Soirée" },
+  { civilian: "Pastis", undercover: "Ricard", category: "Incontournables de Soirée" },
+  { civilian: "Champagne", undercover: "Prosecco", category: "Incontournables de Soirée" },
+  { civilian: "Cigarette", undercover: "Vape", category: "Incontournables de Soirée" },
+  { civilian: "Père Noël", undercover: "Saint Nicolas", category: "Incontournables de Soirée" },
+  { civilian: "Baguette", undercover: "Tradition", category: "Incontournables de Soirée" },
+  { civilian: "Plage", undercover: "Piscine", category: "Incontournables de Soirée" },
+  { civilian: "Soleil", undercover: "Lune", category: "Incontournables de Soirée" },
+  { civilian: "Facebook", undercover: "Instagram", category: "Incontournables de Soirée" },
+  { civilian: "Chocolat", undercover: "Nutella", category: "Incontournables de Soirée" },
+  { civilian: "TGV", undercover: "TER", category: "Incontournables de Soirée" },
+  { civilian: "Gendarme", undercover: "Policier", category: "Incontournables de Soirée" },
+  { civilian: "Château", undercover: "Palais", category: "Incontournables de Soirée" },
+  { civilian: "Dents", undercover: "Langue", category: "Incontournables de Soirée" },
+  { civilian: "Cheveux", undercover: "Barbe", category: "Incontournables de Soirée" },
+  { civilian: "Doigt", undercover: "Orteil", category: "Incontournables de Soirée" },
+  { civilian: "Cœur", undercover: "Poumon", category: "Incontournables de Soirée" },
+  { civilian: "Montagne", undercover: "Mer", category: "Incontournables de Soirée" },
+  { civilian: "Soleil", undercover: "Pluie", category: "Incontournables de Soirée" },
+  { civilian: "Café", undercover: "Espresso", category: "Incontournables de Soirée" },
+  { civilian: "T-shirt", undercover: "Chemise", category: "Incontournables de Soirée" },
+  { civilian: "Super Mario", undercover: "Sonic", category: "Incontournables de Soirée" },
+  { civilian: "Superman", undercover: "Spider-Man", category: "Incontournables de Soirée" },
   // Animaux (20)
   { civilian: "Chat", undercover: "Tigre", category: "Animaux" },
   { civilian: "Chien", undercover: "Loup", category: "Animaux" },
