@@ -2,7 +2,7 @@
 
 import { GameCard } from "@/components/game/GameCard";
 import { Button } from "@/components/ui/Button";
-import { Ghost, Flame, Sword, HelpCircle, Users, QrCode, Sparkles } from "lucide-react";
+import { Ghost, Flame, Sword, HelpCircle, Users, QrCode } from "lucide-react";
 import Link from "next/link";
 import { getGameList } from "@/games";
 

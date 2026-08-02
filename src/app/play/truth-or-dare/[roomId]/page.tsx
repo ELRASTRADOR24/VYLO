@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Users, UserPlus, Play, Check, X, 
-  RotateCcw, Sparkles, Flame, HelpCircle, Trophy, Trash2, Dices
+  RotateCcw, Flame, HelpCircle, Trophy, Trash2, Dices
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getRandomCard, TodCard, TOD_CATEGORIES, IntensityLevel, CardType } from "@/games/truth-or-dare/logic";

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/Card";
-import { Users, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface GameCardProps {
@@ -31,7 +30,7 @@ export function GameCard({ title, description, minPlayers, maxPlayers, difficult
         )} />
         
         <div className="p-6 relative z-10 flex flex-col gap-4">
-          <div className="flex items-start justify-between">
+          <div className="flex items-center justify-between">
             <div className={cn(
               "p-4 rounded-2xl text-white shadow-soft transition-transform group-hover:scale-105",
               {
@@ -44,20 +43,13 @@ export function GameCard({ title, description, minPlayers, maxPlayers, difficult
             )}>
               {icon}
             </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full text-xs font-black text-foreground backdrop-blur-md border border-white/10">
-                <Users className="w-3.5 h-3.5 text-primary" />
-                <span>{minPlayers}-{maxPlayers} pers.</span>
-              </div>
-              <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full text-xs font-black text-foreground backdrop-blur-md border border-white/10">
-                <Zap className="w-3.5 h-3.5 text-pink" />
-                <span>{difficulty}</span>
-              </div>
-            </div>
+            <span className="text-xs font-extrabold text-foreground/50">
+              {minPlayers}-{maxPlayers} joueurs
+            </span>
           </div>
 
           <div className="mt-1">
-            <h2 className="text-2xl font-black mb-1.5 flex items-center gap-2 group-hover:text-primary transition-colors">
+            <h2 className="text-2xl font-black mb-1.5 group-hover:text-primary transition-colors">
               {title}
             </h2>
             <p className="text-foreground/70 text-sm leading-relaxed font-medium">{description}</p>

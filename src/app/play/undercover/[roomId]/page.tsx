@@ -13,7 +13,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Eye, EyeOff, Skull, Trophy, Share, Users, 
-  Sparkles, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2,
+  Smartphone, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2,
   HelpCircle, Vote, RefreshCw
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -401,7 +401,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto relative">
         <div className="w-24 h-24 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 animate-pulse">
-          <Sparkles size={48} />
+          <Smartphone size={48} />
         </div>
         <h2 className="text-3xl font-black mb-3">Passez le téléphone</h2>
         <p className="text-foreground/50 text-base mb-12">
