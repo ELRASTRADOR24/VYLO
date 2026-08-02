@@ -4,8 +4,9 @@ export type UndercoverRole = "Civilian" | "Undercover" | "MrWhite";
 
 export interface UndercoverPlayer extends Player {
   gameRole?: UndercoverRole;
-  word?: string; // Le mot qu'il reçoit
+  word?: string; // Le mot secret reçu
   isEliminated: boolean;
+  scorePoints: number;
 }
 
 export interface UndercoverWordPair {
@@ -14,50 +15,138 @@ export interface UndercoverWordPair {
   category: string;
 }
 
+export const CATEGORIES = [
+  "Toutes les catégories",
+  "Animaux",
+  "Films & Séries",
+  "Football & Sport",
+  "Anime & Mangas",
+  "Nourriture & Cuisine",
+  "Objets du quotidien"
+] as const;
+
+export type CategoryName = typeof CATEGORIES[number];
+
+export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
+  // Objets du quotidien
+  { civilian: "Sac à main", undercover: "Sac à dos", category: "Objets du quotidien" },
+  { civilian: "Stylo à bille", undercover: "Crayon de bois", category: "Objets du quotidien" },
+  { civilian: "Lunettes de soleil", undercover: "Casquette", category: "Objets du quotidien" },
+  { civilian: "Chaise", undercover: "Tabouret", category: "Objets du quotidien" },
+  { civilian: "Montre", undercover: "Horloge", category: "Objets du quotidien" },
+
+  // Animaux
+  { civilian: "Chien", undercover: "Loup", category: "Animaux" },
+  { civilian: "Chat", undercover: "Tigre", category: "Animaux" },
+  { civilian: "Dauphin", undercover: "Baleine", category: "Animaux" },
+  { civilian: "Aigle", undercover: "Faucon", category: "Animaux" },
+  { civilian: "Cheval", undercover: "Poney", category: "Animaux" },
+
+  // Films & Séries
+  { civilian: "Batman", undercover: "Superman", category: "Films & Séries" },
+  { civilian: "Harry Potter", undercover: "Gandalf", category: "Films & Séries" },
+  { civilian: "Star Wars", undercover: "Star Trek", category: "Films & Séries" },
+  { civilian: "Spider-Man", undercover: "Iron Man", category: "Films & Séries" },
+
+  // Football & Sport
+  { civilian: "Messi", undercover: "Ronaldo", category: "Football & Sport" },
+  { civilian: "Real Madrid", undercover: "FC Barcelone", category: "Football & Sport" },
+  { civilian: "Coupe du Monde", undercover: "Ligue des Champions", category: "Football & Sport" },
+  { civilian: "Basket-ball", undercover: "Handball", category: "Football & Sport" },
+
+  // Anime & Mangas
+  { civilian: "Naruto", undercover: "Sasuke", category: "Anime & Mangas" },
+  { civilian: "Goku", undercover: "Vegeta", category: "Anime & Mangas" },
+  { civilian: "One Piece", undercover: "Bleach", category: "Anime & Mangas" },
+  { civilian: "Attack on Titan", undercover: "Demon Slayer", category: "Anime & Mangas" },
+
+  // Nourriture & Cuisine
+  { civilian: "Pomme", undercover: "Poire", category: "Nourriture & Cuisine" },
+  { civilian: "Pizza", undercover: "Burger", category: "Nourriture & Cuisine" },
+  { civilian: "Chocolat noir", undercover: "Chocolat au lait", category: "Nourriture & Cuisine" },
+  { civilian: "Thé", undercover: "Café", category: "Nourriture & Cuisine" },
+  { civilian: "Frites", undercover: "Potatoes", category: "Nourriture & Cuisine" },
+];
+
+/** Validation stricte de la répartition des rôles */
+export function validateRoleConfig(
+  totalPlayers: number,
+  undercoverCount: number,
+  mrWhiteCount: number
+): { isValid: boolean; error?: string } {
+  const civilianCount = totalPlayers - undercoverCount - mrWhiteCount;
+
+  if (civilianCount < 2) {
+    return { isValid: false, error: "Il faut au moins 2 Civils dans la partie." };
+  }
+
+  if (totalPlayers === 3 && undercoverCount > 0 && mrWhiteCount > 0) {
+    return { isValid: false, error: "À 3 joueurs, impossible d'avoir à la fois un Undercover et Mr. White." };
+  }
+
+  if (undercoverCount < 1 && mrWhiteCount < 1) {
+    return { isValid: false, error: "Il faut au moins 1 Undercover ou 1 Mr. White." };
+  }
+
+  return { isValid: true };
+}
+
+/** Obtenir une paire de mots aléatoire selon la catégorie choisie */
+export function getRandomWordPair(category: CategoryName): UndercoverWordPair {
+  let pool = WORD_PAIRS_DATABASE;
+  if (category !== "Toutes les catégories") {
+    pool = WORD_PAIRS_DATABASE.filter(p => p.category === category);
+  }
+  if (pool.length === 0) pool = WORD_PAIRS_DATABASE;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+/** Helper classique de génération automatique des rôles */
 export function generateRoles(playerCount: number): UndercoverRole[] {
   let undercoverCount = 1;
   let mrWhiteCount = 0;
-
   if (playerCount >= 5) mrWhiteCount = 1;
   if (playerCount >= 7) undercoverCount = 2;
   if (playerCount >= 10) undercoverCount = 3;
-  if (playerCount >= 14) mrWhiteCount = 2;
+  return generateRolesFromConfig(playerCount, undercoverCount, mrWhiteCount);
+}
 
-  const civilianCount = playerCount - undercoverCount - mrWhiteCount;
-  
+/** Génération mélangée des rôles */
+export function generateRolesFromConfig(
+  totalPlayers: number,
+  undercoverCount: number,
+  mrWhiteCount: number
+): UndercoverRole[] {
+  const civilianCount = totalPlayers - undercoverCount - mrWhiteCount;
   const roles: UndercoverRole[] = [];
+
   for (let i = 0; i < undercoverCount; i++) roles.push("Undercover");
   for (let i = 0; i < mrWhiteCount; i++) roles.push("MrWhite");
   for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
 
-  // Shuffle roles
-  return roles.sort(() => Math.random() - 0.5);
+  // Fisher-Yates shuffle
+  for (let i = roles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [roles[i], roles[j]] = [roles[j], roles[i]];
+  }
+
+  return roles;
 }
 
-export function assignWords(
-  players: Record<string, UndercoverPlayer>, 
-  roles: UndercoverRole[],
-  wordPair: UndercoverWordPair
-): Record<string, UndercoverPlayer> {
-  const updatedPlayers: Record<string, UndercoverPlayer> = {};
+/** Ordre de parole mélangé avec probabilité réduite que Mr White soit 1er */
+export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPlayer[] {
+  const shuffled = [...players];
   
-  const playerIds = Object.keys(players);
-  
-  playerIds.forEach((id, index) => {
-    const role = roles[index];
-    let word = "";
-    
-    if (role === "Civilian") word = wordPair.civilian;
-    else if (role === "Undercover") word = wordPair.undercover;
-    else if (role === "MrWhite") word = "^^"; // Mr White ne voit rien
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
 
-    updatedPlayers[id] = {
-      ...players[id],
-      gameRole: role,
-      word,
-      isEliminated: false,
-    };
-  });
+  // Si le premier joueur est Mr. White, on applique 90% de chance de le permuter avec un autre joueur
+  if (shuffled.length > 1 && shuffled[0].gameRole === "MrWhite" && Math.random() < 0.9) {
+    const targetIdx = 1 + Math.floor(Math.random() * (shuffled.length - 1));
+    [shuffled[0], shuffled[targetIdx]] = [shuffled[targetIdx], shuffled[0]];
+  }
 
-  return updatedPlayers;
+  return shuffled;
 }
