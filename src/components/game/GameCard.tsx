@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/Card";
-import { Users, Zap, Sparkles } from "lucide-react";
+import { Users, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface GameCardProps {
@@ -17,16 +17,16 @@ interface GameCardProps {
 
 export function GameCard({ title, description, minPlayers, maxPlayers, difficulty, themeColor, icon }: GameCardProps) {
   return (
-    <motion.div whileTap={{ scale: 0.97 }} whileHover={{ y: -3 }} className="w-full">
-      <Card className="flex flex-col relative group cursor-pointer border border-white/10 hover:border-primary/50 transition-all shadow-soft hover:shadow-summer-glow overflow-hidden">
+    <motion.div whileTap={{ scale: 0.97 }} whileHover={{ y: -2 }} className="w-full">
+      <Card className="flex flex-col relative group cursor-pointer border border-white/10 hover:border-white/20 transition-all shadow-soft overflow-hidden">
         <div className={cn(
-          "absolute top-0 left-0 right-0 h-36 opacity-30 group-hover:opacity-50 transition-opacity",
+          "absolute top-0 left-0 right-0 h-32 opacity-25 group-hover:opacity-40 transition-opacity",
           {
-            "bg-gradient-to-b from-primary via-accent/30 to-transparent": themeColor === "primary",
-            "bg-gradient-to-b from-accent via-pink/30 to-transparent": themeColor === "accent",
-            "bg-gradient-to-b from-secondary via-primary/30 to-transparent": themeColor === "secondary",
-            "bg-gradient-to-b from-pink via-accent/30 to-transparent": themeColor === "pink",
-            "bg-gradient-to-b from-purple via-secondary/30 to-transparent": themeColor === "purple",
+            "bg-gradient-to-b from-primary via-accent/20 to-transparent": themeColor === "primary",
+            "bg-gradient-to-b from-accent via-pink/20 to-transparent": themeColor === "accent",
+            "bg-gradient-to-b from-secondary via-primary/20 to-transparent": themeColor === "secondary",
+            "bg-gradient-to-b from-pink via-accent/20 to-transparent": themeColor === "pink",
+            "bg-gradient-to-b from-purple via-secondary/20 to-transparent": themeColor === "purple",
           }
         )} />
         
@@ -45,19 +45,19 @@ export function GameCard({ title, description, minPlayers, maxPlayers, difficult
               {icon}
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full text-xs font-black text-foreground backdrop-blur-md border border-white/10">
-                <Users className="w-3.5 h-3.5 text-primary" />
-                <span>{minPlayers}-{maxPlayers}</span>
+              <div className="flex items-center gap-1.5 bg-surface-elevated/90 px-3 py-1.5 rounded-xl text-xs font-bold text-foreground/80 border border-white/10">
+                <Users className="w-3.5 h-3.5 text-foreground/50" />
+                <span>{minPlayers}-{maxPlayers} pers.</span>
               </div>
-              <div className="flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full text-xs font-black text-foreground backdrop-blur-md border border-white/10">
-                <Zap className="w-3.5 h-3.5 text-pink" />
+              <div className="flex items-center gap-1.5 bg-surface-elevated/90 px-3 py-1.5 rounded-xl text-xs font-bold text-foreground/80 border border-white/10">
+                <Zap className="w-3.5 h-3.5 text-foreground/50" />
                 <span>{difficulty}</span>
               </div>
             </div>
           </div>
 
           <div className="mt-1">
-            <h2 className="text-2xl font-black mb-1.5 flex items-center gap-2 group-hover:text-primary transition-colors">
+            <h2 className="text-2xl font-black mb-1.5 group-hover:text-primary transition-colors">
               {title}
             </h2>
             <p className="text-foreground/70 text-sm leading-relaxed font-medium">{description}</p>

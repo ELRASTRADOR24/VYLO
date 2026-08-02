@@ -70,8 +70,8 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
           </div>
 
           <div>
-            <h2 className="text-xl font-extrabold mb-1 flex items-center gap-2">
-              Mode Local <Sparkles size={16} className="text-yellow-400" />
+            <h2 className="text-xl font-black mb-1">
+              Mode Local
             </h2>
             <p className="text-foreground/60 text-xs leading-relaxed">
               Un seul téléphone passe de main en main autour de la table. Zéro connexion requise, 100% rapide & confidentiel.

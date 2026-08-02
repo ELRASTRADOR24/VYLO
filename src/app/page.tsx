@@ -18,15 +18,12 @@ export default function Home() {
   return (
     <main className="flex-1 flex flex-col items-center px-4 pt-10 pb-32">
       <div className="w-full max-w-md flex flex-col mb-8 mt-2">
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex flex-col mb-2">
           <h1 className="text-5xl font-black tracking-tight text-gradient-summer">
             VYLO
           </h1>
-          <span className="text-[10px] font-black uppercase tracking-widest bg-gradient-summer text-white px-3 py-1 rounded-full shadow-summer-glow flex items-center gap-1">
-            <Sparkles size={12} /> Party App
-          </span>
+          <p className="text-foreground/70 font-semibold text-sm mt-1">L'application de jeu de soirée ultime.</p>
         </div>
-        <p className="text-foreground/70 font-semibold text-sm">Tous vos jeux de soirée réinventés.</p>
       </div>
 
       <div className="w-full max-w-md flex flex-col gap-4 mb-10">
