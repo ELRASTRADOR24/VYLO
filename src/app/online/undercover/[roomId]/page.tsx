@@ -10,7 +10,7 @@ import {
   Play, Flame, ShieldAlert, Mic, Vote, RefreshCw, ArrowRight, Check, Sparkles, ChevronLeft
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { WORD_PAIRS_DATABASE, CATEGORIES, CategoryName, generateRolesFromConfig } from "@/games/undercover/logic";
+import { WORD_PAIRS_DATABASE, CATEGORIES, CategoryName, generateRolesFromConfig, getRandomWordPair } from "@/games/undercover/logic";
 import { sfxTap, sfxReveal, sfxVictory, sfxError, sfxSuspense, sfxSuccess, sfxJoin } from "@/lib/audio";
 import { QRCodeModal } from "@/components/ui/QRCodeModal";
 
@@ -28,12 +28,31 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
   const [showSecret, setShowSecret] = useState(false);
   const [showQR, setShowQR] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryName>("Toutes les catégories");
+  const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(["Toutes les catégories"]);
   const [undercoverCount, setUndercoverCount] = useState<number>(1);
   const [includeMrWhite, setIncludeMrWhite] = useState<boolean>(false);
   const [turnTimerSec, setTurnTimerSec] = useState<number>(30);
   const [hideCategory, setHideCategory] = useState<boolean>(false);
   const [revealRoleOnElimination, setRevealRoleOnElimination] = useState<boolean>(true);
+
+  const handleToggleCategory = (cat: CategoryName) => {
+    sfxTap();
+    if (cat === "Toutes les catégories") {
+      setSelectedCategories(["Toutes les catégories"]);
+      return;
+    }
+
+    setSelectedCategories(prev => {
+      let current = prev.filter(c => c !== "Toutes les catégories");
+      if (current.includes(cat)) {
+        current = current.filter(c => c !== cat);
+      } else {
+        current.push(cat);
+      }
+      if (current.length === 0) return ["Toutes les catégories"];
+      return current;
+    });
+  };
 
   // Voting Selection State
   const [selectedTargetId, setSelectedTargetId] = useState<string | null>(null);
@@ -99,14 +118,8 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
     const mrWhiteCount = includeMrWhite ? 1 : 0;
     const roles = generateRolesFromConfig(totalCount, undercoverCount, mrWhiteCount);
 
-    // Filtrer la base de paires par catégorie sélectionnée
-    let availablePairs = WORD_PAIRS_DATABASE;
-    if (selectedCategory !== "Toutes les catégories") {
-      availablePairs = WORD_PAIRS_DATABASE.filter(p => p.category === selectedCategory);
-      if (availablePairs.length === 0) availablePairs = WORD_PAIRS_DATABASE;
-    }
-
-    const wordPair = availablePairs[Math.floor(Math.random() * availablePairs.length)];
+    // Choix du mot (Multi-catégories)
+    const wordPair = getRandomWordPair(selectedCategories);
 
     // Générer l'ordre de parole mélangé
     const speakingOrder = [...players.map(p => p.id)].sort(() => Math.random() - 0.5);
@@ -195,18 +208,42 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
               <Flame size={16} /> Options de Partie (Hôte)
             </h3>
 
-            {/* Choix catégorie */}
+            {/* Choix catégories (Sélection multiple) */}
             <div>
-              <label className="text-xs font-bold text-foreground/60 mb-1.5 block">Thème des mots</label>
-              <select 
-                value={selectedCategory} 
-                onChange={(e) => setSelectedCategory(e.target.value as CategoryName)}
-                className="w-full bg-background/80 border border-white/10 rounded-xl p-3 text-xs font-bold text-foreground focus:outline-none focus:border-primary"
-              >
-                {CATEGORIES.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-bold text-foreground/60">Thème des mots (Sélection multiple)</label>
+                <span className="text-[10px] font-black uppercase bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded-full">
+                  {selectedCategories.includes("Toutes les catégories") ? "Toutes" : `${selectedCategories.length} sélec.`}
+                </span>
+              </div>
+
+              <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-1 flex-wrap max-h-48 overflow-y-auto">
+                {CATEGORIES.map(cat => {
+                  const isAllSelected = selectedCategories.includes("Toutes les catégories");
+                  const isThisSelected = selectedCategories.includes(cat);
+
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => handleToggleCategory(cat)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all active:scale-95 border ${
+                        cat === "Toutes les catégories"
+                          ? isAllSelected
+                            ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
+                            : "bg-white/5 border-white/10 text-foreground/40 hover:text-foreground/70"
+                          : isThisSelected && !isAllSelected
+                            ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
+                            : isAllSelected
+                              ? "bg-white/5 border-white/5 text-foreground/30 opacity-50 grayscale"
+                              : "bg-white/5 border-white/10 text-foreground/60 hover:text-foreground"
+                      }`}
+                    >
+                      {cat} {isThisSelected && !isAllSelected && "✓"}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Choix nb Undercover */}

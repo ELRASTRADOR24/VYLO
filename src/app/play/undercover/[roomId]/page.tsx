@@ -37,10 +37,29 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   // --- Configuration State ---
   const [phase, setPhase] = useState<PassPhase>("CONFIG");
-  const [selectedCategory, setSelectedCategory] = useState<CategoryName>("Toutes les catégories");
+  const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(["Toutes les catégories"]);
   const [playerCount, setPlayerCount] = useState(4);
   const [undercoverCount, setUndercoverCount] = useState(1);
   const [mrWhiteCount, setMrWhiteCount] = useState(0);
+
+  const handleToggleCategory = (cat: CategoryName) => {
+    sfxTap();
+    if (cat === "Toutes les catégories") {
+      setSelectedCategories(["Toutes les catégories"]);
+      return;
+    }
+
+    setSelectedCategories(prev => {
+      let current = prev.filter(c => c !== "Toutes les catégories");
+      if (current.includes(cat)) {
+        current = current.filter(c => c !== cat);
+      } else {
+        current.push(cat);
+      }
+      if (current.length === 0) return ["Toutes les catégories"];
+      return current;
+    });
+  };
 
   // --- Game Session State ---
   const [playerList, setPlayerList] = useState<UndercoverPlayer[]>([]);
@@ -81,8 +100,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const handleStartDistribution = () => {
     if (!configValidation.isValid) return;
 
-    // 1. Choix des mots
-    const wordPair = getRandomWordPair(selectedCategory);
+    // 1. Choix des mots (Multi-catégories)
+    const wordPair = getRandomWordPair(selectedCategories);
     // 2. Génération des rôles
     const roles = generateRolesFromConfig(playerCount, undercoverCount, mrWhiteCount);
 
@@ -298,25 +317,44 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           
           {/* Colonne Gauche : Catégories & Nombre de Joueurs */}
           <div className="md:col-span-6 flex flex-col gap-6">
-            {/* Choix de la Catégorie */}
+            {/* Choix de la Catégorie (Sélection multiple) */}
             <Card className="w-full p-6 bg-surface/90 border border-white/10 shadow-soft">
-              <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/50 mb-3 block">
-                Catégorie de mots
-              </label>
-              <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 flex-wrap">
-                {CATEGORIES.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => { setSelectedCategory(cat); sfxTap(); }}
-                    className={`px-4 py-2.5 rounded-full text-xs font-extrabold transition-all active:scale-95 border ${
-                      selectedCategory === cat 
-                        ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow" 
-                        : "bg-surface border-white/5 text-foreground/70"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
+              <div className="flex items-center justify-between mb-3">
+                <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/50">
+                  Catégories de mots
+                </label>
+                <span className="text-[10px] font-black uppercase bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded-full">
+                  {selectedCategories.includes("Toutes les catégories") 
+                    ? "Toutes" 
+                    : `${selectedCategories.length} sélectionnée(s)`}
+                </span>
+              </div>
+
+              <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 flex-wrap max-h-60 overflow-y-auto">
+                {CATEGORIES.map(cat => {
+                  const isAllSelected = selectedCategories.includes("Toutes les catégories");
+                  const isThisSelected = selectedCategories.includes(cat);
+
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => handleToggleCategory(cat)}
+                      className={`px-3.5 py-2 rounded-full text-xs font-black transition-all active:scale-95 border ${
+                        cat === "Toutes les catégories"
+                          ? isAllSelected
+                            ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
+                            : "bg-surface border-white/5 text-foreground/40 hover:text-foreground/70"
+                          : isThisSelected && !isAllSelected
+                            ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
+                            : isAllSelected
+                              ? "bg-white/5 border-white/5 text-foreground/30 opacity-50 grayscale"
+                              : "bg-surface border-white/5 text-foreground/60 hover:text-foreground"
+                      }`}
+                    >
+                      {cat} {isThisSelected && !isAllSelected && "✓"}
+                    </button>
+                  );
+                })}
               </div>
             </Card>
 

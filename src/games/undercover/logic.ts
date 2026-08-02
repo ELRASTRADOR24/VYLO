@@ -647,11 +647,17 @@ export function validateRoleConfig(
 }
 
 /** Obtenir une paire de mots aléatoire selon la catégorie choisie */
-export function getRandomWordPair(category: CategoryName): UndercoverWordPair {
+export function getRandomWordPair(categories: CategoryName | CategoryName[]): UndercoverWordPair {
   let pool = WORD_PAIRS_DATABASE;
-  if (category !== "Toutes les catégories") {
-    pool = WORD_PAIRS_DATABASE.filter(p => p.category === category);
+  
+  if (Array.isArray(categories)) {
+    if (!categories.includes("Toutes les catégories") && categories.length > 0) {
+      pool = WORD_PAIRS_DATABASE.filter(p => categories.includes(p.category as CategoryName));
+    }
+  } else if (categories !== "Toutes les catégories") {
+    pool = WORD_PAIRS_DATABASE.filter(p => p.category === categories);
   }
+
   if (pool.length === 0) pool = WORD_PAIRS_DATABASE;
   return pool[Math.floor(Math.random() * pool.length)];
 }
