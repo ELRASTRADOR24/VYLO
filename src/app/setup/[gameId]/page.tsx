@@ -3,7 +3,7 @@
 import { use } from "react";
 import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight, Sparkles } from "lucide-react";
+import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight, Flame } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getGameConfig } from "@/games";
 import { sfxTap, sfxSuccess } from "@/lib/audio";
@@ -64,8 +64,8 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
             <div className="w-14 h-14 rounded-2xl bg-primary/20 text-primary flex items-center justify-center">
               <Smartphone size={30} />
             </div>
-            <span className="text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1 rounded-xl flex items-center gap-1.5 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            <span className="text-xs font-extrabold text-[#FF4757] bg-[#FF4757]/10 border border-[#FF4757]/25 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm">
+              <Flame size={14} className="text-[#FF4757]" />
               Recommandé en soirée
             </span>
           </div>
