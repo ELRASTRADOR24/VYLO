@@ -1,20 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  /* Night Mode Premium Colors */
-  --background: #0B0F19; 
-  --surface: #131824;    
-  --foreground: #F8FAFC; 
-  --border: #1E293B;     
+  /* Playful Summer Sunset Palette */
+  --background: #0C0E1A; 
+  --surface: #151829;    
+  --surface-elevated: #1E2238;
+  --foreground: #FFFFFF; 
+  --border: rgba(255, 255, 255, 0.08);     
   
-  /* Brand/Category Colors */
-  --primary: #8B5CF6;    
+  /* Vibrant Warm Brand Colors */
+  --primary: #FF5E36;          /* Warm Sunburst Orange */
   --primary-foreground: #FFFFFF;
-  --secondary: #3B82F6;  
-  --accent: #F97316;     
-  --pink: #EC4899;
+  --secondary: #00A3FF;        /* Electric Summer Cyan-Blue */
+  --accent: #FF2A6D;           /* Hot Sunset Coral */
+  --pink: #FF9F43;             /* Warm Golden Amber */
+  --purple: #9D4EDD;           /* Vibrant Violet */
   
-  --radius: 1.25rem;     
+  --radius: 1.5rem;     
 }
 
 @theme inline {
@@ -25,6 +27,7 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-pink: var(--pink);
+  --color-purple: var(--purple);
   --color-surface: var(--surface);
   --color-border: var(--border);
   --radius-xl: var(--radius);
@@ -33,6 +36,11 @@
 
 body {
   background-color: var(--background);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 94, 54, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(0, 163, 255, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255, 42, 109, 0.06) 0%, transparent 60%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -40,9 +48,31 @@ body {
   min-height: 100vh;
 }
 
-/* Utilitaires pour le tactile et la profondeur */
+/* Gradients Chaleureux & Effets de Lumière */
+.bg-gradient-summer {
+  background: linear-gradient(135deg, #FF5E36 0%, #FF2A6D 50%, #00A3FF 100%);
+}
+
+.bg-gradient-orange-blue {
+  background: linear-gradient(135deg, #FF5E36 0%, #FF9F43 45%, #00A3FF 100%);
+}
+
+.text-gradient-summer {
+  background: linear-gradient(135deg, #FF5E36 0%, #FF9F43 40%, #00A3FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shadow-summer-glow {
+  box-shadow: 0 12px 32px -8px rgba(255, 94, 54, 0.35);
+}
+
+.shadow-blue-glow {
+  box-shadow: 0 12px 32px -8px rgba(0, 163, 255, 0.35);
+}
+
 @utility shadow-soft {
-  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
 @utility pb-safe {

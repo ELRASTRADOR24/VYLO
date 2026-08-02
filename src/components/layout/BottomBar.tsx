@@ -1,12 +1,9 @@
 "use client";
 
-import { Home, User, QrCode, Grid2X2 } from "lucide-react"; // Wait, Grid2X2 doesn't exist maybe? Let's use Grid
+import { Home, User, QrCode, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-// Using valid lucide-react icons
-import { LayoutGrid } from "lucide-react";
 
 export function BottomBar() {
   const pathname = usePathname();
@@ -30,7 +27,7 @@ export function BottomBar() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 pb-[env(safe-area-inset-bottom)] pointer-events-none">
-      <div className="bg-surface/80 backdrop-blur-xl border border-border/50 mx-4 mb-6 flex items-center justify-around rounded-[1.75rem] p-2 pointer-events-auto shadow-soft">
+      <div className="bg-surface/85 backdrop-blur-2xl border border-white/15 mx-4 mb-6 flex items-center justify-around rounded-[2rem] p-2 pointer-events-auto shadow-summer-glow">
         {links.map(({ href, icon: Icon, label }) => {
           const isActive = pathname === href;
           return (
@@ -38,12 +35,14 @@ export function BottomBar() {
               key={href}
               href={href}
               className={cn(
-                "flex flex-col items-center gap-1.5 px-4 py-3 rounded-2xl transition-all duration-300",
-                isActive ? "text-white bg-white/5" : "text-foreground/40 hover:text-foreground/80 active:scale-95 active:bg-white/5"
+                "flex flex-col items-center gap-1 px-5 py-2.5 rounded-2xl transition-all duration-300",
+                isActive 
+                  ? "text-white bg-gradient-summer shadow-soft scale-105" 
+                  : "text-foreground/50 hover:text-foreground/90 active:scale-95"
               )}
             >
-              <Icon className="h-6 w-6 relative z-10" strokeWidth={isActive ? 2.5 : 2} />
-              <span className="text-[10px] font-bold tracking-wide">{label}</span>
+              <Icon className="h-5 w-5 relative z-10" strokeWidth={isActive ? 2.5 : 2} />
+              <span className="text-[10px] font-black tracking-wider uppercase">{label}</span>
             </Link>
           );
         })}
