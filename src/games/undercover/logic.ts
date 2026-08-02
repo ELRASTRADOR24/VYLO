@@ -18,93 +18,220 @@ export interface UndercoverWordPair {
 export const CATEGORIES = [
   "Toutes les catégories",
   "Animaux",
-  "Films & Séries",
-  "Football & Sport",
-  "Anime & Mangas",
   "Nourriture & Cuisine",
-  "Objets du quotidien"
+  "Football & Sport",
+  "Jeux vidéo",
+  "Films & Séries",
+  "Objets du quotidien",
+  "Transports",
+  "Maison",
+  "Métiers",
+  "Pays & Géographie",
+  "Marques",
+  "Mode Expert"
 ] as const;
 
 export type CategoryName = typeof CATEGORIES[number];
 
 export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
-  // Objets du quotidien
-  { civilian: "Sac à main", undercover: "Sac à dos", category: "Objets du quotidien" },
-  { civilian: "Stylo à bille", undercover: "Crayon à papier", category: "Objets du quotidien" },
-  { civilian: "Lunettes de soleil", undercover: "Casquette", category: "Objets du quotidien" },
-  { civilian: "Chaise", undercover: "Tabouret", category: "Objets du quotidien" },
-  { civilian: "Montre", undercover: "Horloge", category: "Objets du quotidien" },
-  { civilian: "Shampoing", undercover: "Gel douche", category: "Objets du quotidien" },
-  { civilian: "Brosse à dents", undercover: "Cure-dents", category: "Objets du quotidien" },
-  { civilian: "Parapluie", undercover: "Imperméable", category: "Objets du quotidien" },
-  { civilian: "Oreiller", undercover: "Coussin", category: "Objets du quotidien" },
-  { civilian: "Serviette de bain", undercover: "Peignoir", category: "Objets du quotidien" },
-  { civilian: "Télécommande", undercover: "Manette de jeu", category: "Objets du quotidien" },
-  { civilian: "Miroir", undercover: "Vitrine", category: "Objets du quotidien" },
-  { civilian: "Briquet", undercover: "Allumette", category: "Objets du quotidien" },
-  { civilian: "Casque audio", undercover: "Écouteurs", category: "Objets du quotidien" },
-  { civilian: "Valise", undercover: "Sac de voyage", category: "Objets du quotidien" },
-  { civilian: "Lit", undercover: "Canapé", category: "Objets du quotidien" },
-
-  // Animaux
-  { civilian: "Chien", undercover: "Loup", category: "Animaux" },
+  // Animaux (20)
   { civilian: "Chat", undercover: "Tigre", category: "Animaux" },
-  { civilian: "Dauphin", undercover: "Baleine", category: "Animaux" },
+  { civilian: "Chien", undercover: "Loup", category: "Animaux" },
+  { civilian: "Lion", undercover: "Tigre", category: "Animaux" },
+  { civilian: "Zèbre", undercover: "Cheval", category: "Animaux" },
+  { civilian: "Âne", undercover: "Cheval", category: "Animaux" },
+  { civilian: "Lapin", undercover: "Lièvre", category: "Animaux" },
+  { civilian: "Canard", undercover: "Oie", category: "Animaux" },
+  { civilian: "Poule", undercover: "Coq", category: "Animaux" },
+  { civilian: "Pigeon", undercover: "Colombe", category: "Animaux" },
   { civilian: "Aigle", undercover: "Faucon", category: "Animaux" },
-  { civilian: "Cheval", undercover: "Poney", category: "Animaux" },
-  { civilian: "Pingouin", undercover: "Manchot", category: "Animaux" },
-  { civilian: "Crapaud", undercover: "Grenouille", category: "Animaux" },
-  { civilian: "Abeille", undercover: "Guêpe", category: "Animaux" },
+  { civilian: "Dauphin", undercover: "Requin", category: "Animaux" },
+  { civilian: "Baleine", undercover: "Dauphin", category: "Animaux" },
+  { civilian: "Tortue", undercover: "Escargot", category: "Animaux" },
+  { civilian: "Grenouille", undercover: "Crapaud", category: "Animaux" },
   { civilian: "Crocodile", undercover: "Alligator", category: "Animaux" },
-  { civilian: "Caméléon", undercover: "Iguane", category: "Animaux" },
-  { civilian: "Serpent", undercover: "Lézard", category: "Animaux" },
-  { civilian: "Singe", undercover: "Gorille", category: "Animaux" },
-  { civilian: "Hamster", undercover: "Cochon d'Inde", category: "Animaux" },
-  { civilian: "Requin", undercover: "Espadon", category: "Animaux" },
+  { civilian: "Souris", undercover: "Rat", category: "Animaux" },
+  { civilian: "Abeille", undercover: "Guêpe", category: "Animaux" },
+  { civilian: "Fourmi", undercover: "Termite", category: "Animaux" },
+  { civilian: "Papillon", undercover: "Libellule", category: "Animaux" },
+  { civilian: "Moustique", undercover: "Mouche", category: "Animaux" },
 
-  // Films & Séries
-  { civilian: "Batman", undercover: "Superman", category: "Films & Séries" },
-  { civilian: "Harry Potter", undercover: "Gandalf", category: "Films & Séries" },
-  { civilian: "Star Wars", undercover: "Star Trek", category: "Films & Séries" },
-  { civilian: "Spider-Man", undercover: "Iron Man", category: "Films & Séries" },
-  { civilian: "Netflix", undercover: "Prime Video", category: "Films & Séries" },
-  { civilian: "Titanic", undercover: "Avatar", category: "Films & Séries" },
-  { civilian: "Game of Thrones", undercover: "House of the Dragon", category: "Films & Séries" },
-  { civilian: "Barbie", undercover: "Oppenheimer", category: "Films & Séries" },
-  { civilian: "Stranger Things", undercover: "Mercredi", category: "Films & Séries" },
-  { civilian: "James Bond", undercover: "Ethan Hunt", category: "Films & Séries" },
-  { civilian: "Disney", undercover: "Pixar", category: "Films & Séries" },
-
-  // Football & Sport
-  { civilian: "Messi", undercover: "Cristiano Ronaldo", category: "Football & Sport" },
-  { civilian: "Real Madrid", undercover: "FC Barcelone", category: "Football & Sport" },
-  { civilian: "PSG", undercover: "OM", category: "Football & Sport" },
-  { civilian: "Coupe du Monde", undercover: "Ligue des Champions", category: "Football & Sport" },
-  { civilian: "Basket-ball", undercover: "Handball", category: "Football & Sport" },
-  { civilian: "Tennis", undercover: "Ping-pong", category: "Football & Sport" },
-  { civilian: "Mbappé", undercover: "Haaland", category: "Football & Sport" },
-  { civilian: "Roland Garros", undercover: "Wimbledon", category: "Football & Sport" },
-  { civilian: "Rugby", undercover: "Football Américain", category: "Football & Sport" },
-  { civilian: "Nadal", undercover: "Djokovic", category: "Football & Sport" },
-
-  // Anime & Mangas
-  { civilian: "Naruto", undercover: "Sasuke", category: "Anime & Mangas" },
-  { civilian: "Goku", undercover: "Vegeta", category: "Anime & Mangas" },
-  { civilian: "One Piece", undercover: "Bleach", category: "Anime & Mangas" },
-  { civilian: "Luffy", undercover: "Zoro", category: "Anime & Mangas" },
-  { civilian: "Attack on Titan", undercover: "Demon Slayer", category: "Anime & Mangas" },
-  { civilian: "Death Note", undercover: "Code Geass", category: "Anime & Mangas" },
-  { civilian: "Pikachu", undercover: "Raichu", category: "Anime & Mangas" },
-  { civilian: "Jujutsu Kaisen", undercover: "My Hero Academia", category: "Anime & Mangas" },
-  { civilian: "Kirua", undercover: "Gon", category: "Anime & Mangas" },
-
-  // Nourriture & Cuisine
+  // Nourriture & Cuisine (20)
+  { civilian: "Pizza", undercover: "Tarte", category: "Nourriture & Cuisine" },
+  { civilian: "Hamburger", undercover: "Cheeseburger", category: "Nourriture & Cuisine" },
+  { civilian: "Riz", undercover: "Pâtes", category: "Nourriture & Cuisine" },
+  { civilian: "Frites", undercover: "Chips", category: "Nourriture & Cuisine" },
+  { civilian: "Banane", undercover: "Plantain", category: "Nourriture & Cuisine" },
+  { civilian: "Orange", undercover: "Mandarine", category: "Nourriture & Cuisine" },
+  { civilian: "Pomme", undercover: "Poire", category: "Nourriture & Cuisine" },
+  { civilian: "Fraise", undercover: "Framboise", category: "Nourriture & Cuisine" },
+  { civilian: "Citron", undercover: "Lime", category: "Nourriture & Cuisine" },
+  { civilian: "Chocolat", undercover: "Cacao", category: "Nourriture & Cuisine" },
+  { civilian: "Café", undercover: "Thé", category: "Nourriture & Cuisine" },
+  { civilian: "Lait", undercover: "Yaourt", category: "Nourriture & Cuisine" },
+  { civilian: "Beurre", undercover: "Margarine", category: "Nourriture & Cuisine" },
+  { civilian: "Sel", undercover: "Sucre", category: "Nourriture & Cuisine" },
+  { civilian: "Miel", undercover: "Confiture", category: "Nourriture & Cuisine" },
+  { civilian: "Crêpe", undercover: "Pancake", category: "Nourriture & Cuisine" },
+  { civilian: "Gaufre", undercover: "Crêpe", category: "Nourriture & Cuisine" },
+  { civilian: "Glace", undercover: "Sorbet", category: "Nourriture & Cuisine" },
+  { civilian: "Biscuit", undercover: "Cookie", category: "Nourriture & Cuisine" },
   { civilian: "Croissant", undercover: "Pain au chocolat", category: "Nourriture & Cuisine" },
-  { civilian: "Pizza", undercover: "Burger", category: "Nourriture & Cuisine" },
-  { civilian: "Pâte à tartiner", undercover: "Beurre de cacahuète", category: "Nourriture & Cuisine" },
-  { civilian: "McDo", undercover: "Burger King", category: "Nourriture & Cuisine" },
-  { civilian: "Coca-Cola", undercover: "Pepsi", category: "Nourriture & Cuisine" },
-  { civilian: "Frites", undercover: "Potatoes", category: "Nourriture & Cuisine" },
+
+  // Football & Sport (15)
+  { civilian: "Mbappé", undercover: "Vinícius Jr.", category: "Football & Sport" },
+  { civilian: "Messi", undercover: "Maradona", category: "Football & Sport" },
+  { civilian: "Ronaldo", undercover: "Benzema", category: "Football & Sport" },
+  { civilian: "Ballon", undercover: "Ballon de rugby", category: "Football & Sport" },
+  { civilian: "Gardien", undercover: "Défenseur", category: "Football & Sport" },
+  { civilian: "Arbitre", undercover: "Juge de touche", category: "Football & Sport" },
+  { civilian: "Corner", undercover: "Coup franc", category: "Football & Sport" },
+  { civilian: "Penalty", undercover: "Coup franc", category: "Football & Sport" },
+  { civilian: "Ligue 1", undercover: "Premier League", category: "Football & Sport" },
+  { civilian: "Real Madrid", undercover: "FC Barcelone", category: "Football & Sport" },
+  { civilian: "PSG", undercover: "Manchester City", category: "Football & Sport" },
+  { civilian: "Coupe du Monde", undercover: "Euro", category: "Football & Sport" },
+  { civilian: "Maillot", undercover: "Short", category: "Football & Sport" },
+  { civilian: "Chaussures", undercover: "Crampons", category: "Football & Sport" },
+  { civilian: "Stade", undercover: "Arène", category: "Football & Sport" },
+
+  // Jeux vidéo (15)
+  { civilian: "PlayStation", undercover: "Xbox", category: "Jeux vidéo" },
+  { civilian: "Nintendo", undercover: "Sega", category: "Jeux vidéo" },
+  { civilian: "Minecraft", undercover: "Roblox", category: "Jeux vidéo" },
+  { civilian: "Fortnite", undercover: "PUBG", category: "Jeux vidéo" },
+  { civilian: "FIFA", undercover: "eFootball", category: "Jeux vidéo" },
+  { civilian: "Mario", undercover: "Luigi", category: "Jeux vidéo" },
+  { civilian: "Zelda", undercover: "Link", category: "Jeux vidéo" },
+  { civilian: "Pokémon", undercover: "Digimon", category: "Jeux vidéo" },
+  { civilian: "Pac-Man", undercover: "Sonic", category: "Jeux vidéo" },
+  { civilian: "GTA", undercover: "Saints Row", category: "Jeux vidéo" },
+  { civilian: "Call of Duty", undercover: "Battlefield", category: "Jeux vidéo" },
+  { civilian: "Valorant", undercover: "Counter-Strike", category: "Jeux vidéo" },
+  { civilian: "Elden Ring", undercover: "Dark Souls", category: "Jeux vidéo" },
+  { civilian: "Cyberpunk", undercover: "Watch Dogs", category: "Jeux vidéo" },
+  { civilian: "Assassin's Creed", undercover: "Ghost of Tsushima", category: "Jeux vidéo" },
+
+  // Films & Séries (15)
+  { civilian: "Harry Potter", undercover: "Hermione", category: "Films & Séries" },
+  { civilian: "Batman", undercover: "Superman", category: "Films & Séries" },
+  { civilian: "Joker", undercover: "Harley Quinn", category: "Films & Séries" },
+  { civilian: "Iron Man", undercover: "Captain America", category: "Films & Séries" },
+  { civilian: "Thor", undercover: "Loki", category: "Films & Séries" },
+  { civilian: "Shrek", undercover: "Fiona", category: "Films & Séries" },
+  { civilian: "Elsa", undercover: "Anna", category: "Films & Séries" },
+  { civilian: "Simba", undercover: "Mufasa", category: "Films & Séries" },
+  { civilian: "Titanic", undercover: "Avatar", category: "Films & Séries" },
+  { civilian: "Matrix", undercover: "Inception", category: "Films & Séries" },
+  { civilian: "Star Wars", undercover: "Star Trek", category: "Films & Séries" },
+  { civilian: "Breaking Bad", undercover: "Better Call Saul", category: "Films & Séries" },
+  { civilian: "Stranger Things", undercover: "Dark", category: "Films & Séries" },
+  { civilian: "Naruto", undercover: "Boruto", category: "Films & Séries" },
+  { civilian: "One Piece", undercover: "Fairy Tail", category: "Films & Séries" },
+
+  // Objets du quotidien (20)
+  { civilian: "Sac à main", undercover: "Sac à dos", category: "Objets du quotidien" },
+  { civilian: "Stylo", undercover: "Crayon", category: "Objets du quotidien" },
+  { civilian: "Clavier", undercover: "Souris", category: "Objets du quotidien" },
+  { civilian: "Écran", undercover: "Télévision", category: "Objets du quotidien" },
+  { civilian: "Téléphone", undercover: "Tablette", category: "Objets du quotidien" },
+  { civilian: "Chargeur", undercover: "Batterie", category: "Objets du quotidien" },
+  { civilian: "Casque", undercover: "Écouteurs", category: "Objets du quotidien" },
+  { civilian: "Lunettes", undercover: "Jumelles", category: "Objets du quotidien" },
+  { civilian: "Porte", undercover: "Fenêtre", category: "Objets du quotidien" },
+  { civilian: "Chaise", undercover: "Fauteuil", category: "Objets du quotidien" },
+  { civilian: "Lit", undercover: "Canapé", category: "Objets du quotidien" },
+  { civilian: "Lampe", undercover: "Ampoule", category: "Objets du quotidien" },
+  { civilian: "Horloge", undercover: "Montre", category: "Objets du quotidien" },
+  { civilian: "Clé", undercover: "Cadenas", category: "Objets du quotidien" },
+  { civilian: "Valise", undercover: "Sac de voyage", category: "Objets du quotidien" },
+  { civilian: "Bouteille", undercover: "Gourde", category: "Objets du quotidien" },
+  { civilian: "Parapluie", undercover: "Parasol", category: "Objets du quotidien" },
+  { civilian: "Couteau", undercover: "Fourchette", category: "Objets du quotidien" },
+  { civilian: "Cuillère", undercover: "Louche", category: "Objets du quotidien" },
+  { civilian: "Balai", undercover: "Aspirateur", category: "Objets du quotidien" },
+
+  // Transports (10)
+  { civilian: "Voiture", undercover: "Camion", category: "Transports" },
+  { civilian: "Moto", undercover: "Scooter", category: "Transports" },
+  { civilian: "Vélo", undercover: "Trottinette", category: "Transports" },
+  { civilian: "Train", undercover: "Métro", category: "Transports" },
+  { civilian: "Bus", undercover: "Tramway", category: "Transports" },
+  { civilian: "Avion", undercover: "Hélicoptère", category: "Transports" },
+  { civilian: "Fusée", undercover: "Navette spatiale", category: "Transports" },
+  { civilian: "Bateau", undercover: "Voilier", category: "Transports" },
+  { civilian: "Sous-marin", undercover: "Bateau", category: "Transports" },
+  { civilian: "Taxi", undercover: "Uber", category: "Transports" },
+
+  // Maison (10)
+  { civilian: "Cuisine", undercover: "Salle à manger", category: "Maison" },
+  { civilian: "Salon", undercover: "Chambre", category: "Maison" },
+  { civilian: "Salle de bain", undercover: "Toilettes", category: "Maison" },
+  { civilian: "Frigo", undercover: "Congélateur", category: "Maison" },
+  { civilian: "Four", undercover: "Micro-ondes", category: "Maison" },
+  { civilian: "Plaque", undercover: "Barbecue", category: "Maison" },
+  { civilian: "Oreiller", undercover: "Couette", category: "Maison" },
+  { civilian: "Rideau", undercover: "Store", category: "Maison" },
+  { civilian: "Tapis", undercover: "Moquette", category: "Maison" },
+  { civilian: "Terrasse", undercover: "Balcon", category: "Maison" },
+
+  // Métiers (10)
+  { civilian: "Médecin", undercover: "Infirmier", category: "Métiers" },
+  { civilian: "Pompier", undercover: "Policier", category: "Métiers" },
+  { civilian: "Professeur", undercover: "Instituteur", category: "Métiers" },
+  { civilian: "Avocat", undercover: "Juge", category: "Métiers" },
+  { civilian: "Boulanger", undercover: "Pâtissier", category: "Métiers" },
+  { civilian: "Coiffeur", undercover: "Barbier", category: "Métiers" },
+  { civilian: "Architecte", undercover: "Ingénieur", category: "Métiers" },
+  { civilian: "Journaliste", undercover: "Reporter", category: "Métiers" },
+  { civilian: "Pilote", undercover: "Steward", category: "Métiers" },
+  { civilian: "Développeur", undercover: "Designer", category: "Métiers" },
+
+  // Pays & Géographie (10)
+  { civilian: "France", undercover: "Belgique", category: "Pays & Géographie" },
+  { civilian: "Espagne", undercover: "Portugal", category: "Pays & Géographie" },
+  { civilian: "Allemagne", undercover: "Autriche", category: "Pays & Géographie" },
+  { civilian: "Chine", undercover: "Japon", category: "Pays & Géographie" },
+  { civilian: "Corée du Sud", undercover: "Corée du Nord", category: "Pays & Géographie" },
+  { civilian: "Canada", undercover: "États-Unis", category: "Pays & Géographie" },
+  { civilian: "Brésil", undercover: "Argentine", category: "Pays & Géographie" },
+  { civilian: "Égypte", undercover: "Maroc", category: "Pays & Géographie" },
+  { civilian: "Cameroun", undercover: "Congo", category: "Pays & Géographie" },
+  { civilian: "Australie", undercover: "Nouvelle-Zélande", category: "Pays & Géographie" },
+
+  // Marques (10)
+  { civilian: "Nike", undercover: "Adidas", category: "Marques" },
+  { civilian: "Apple", undercover: "Samsung", category: "Marques" },
+  { civilian: "Coca-Cola", undercover: "Pepsi", category: "Marques" },
+  { civilian: "McDonald's", undercover: "Burger King", category: "Marques" },
+  { civilian: "KFC", undercover: "Popeyes", category: "Marques" },
+  { civilian: "Netflix", undercover: "Disney+", category: "Marques" },
+  { civilian: "Amazon", undercover: "eBay", category: "Marques" },
+  { civilian: "Ferrari", undercover: "Lamborghini", category: "Marques" },
+  { civilian: "Audi", undercover: "BMW", category: "Marques" },
+  { civilian: "Mercedes", undercover: "Tesla", category: "Marques" },
+
+  // Mode Expert (20)
+  { civilian: "Nuage", undercover: "Brouillard", category: "Mode Expert" },
+  { civilian: "Rivière", undercover: "Fleuve", category: "Mode Expert" },
+  { civilian: "Océan", undercover: "Mer", category: "Mode Expert" },
+  { civilian: "Colline", undercover: "Montagne", category: "Mode Expert" },
+  { civilian: "Lune", undercover: "Satellite", category: "Mode Expert" },
+  { civilian: "Étoile", undercover: "Soleil", category: "Mode Expert" },
+  { civilian: "Verre", undercover: "Cristal", category: "Mode Expert" },
+  { civilian: "Bois", undercover: "Forêt", category: "Mode Expert" },
+  { civilian: "Neige", undercover: "Grêle", category: "Mode Expert" },
+  { civilian: "Tempête", undercover: "Tornade", category: "Mode Expert" },
+  { civilian: "Mur", undercover: "Cloison", category: "Mode Expert" },
+  { civilian: "Bureau", undercover: "Table", category: "Mode Expert" },
+  { civilian: "Roman", undercover: "Nouvelle", category: "Mode Expert" },
+  { civilian: "Poème", undercover: "Chanson", category: "Mode Expert" },
+  { civilian: "Peinture", undercover: "Dessin", category: "Mode Expert" },
+  { civilian: "Silence", undercover: "Calme", category: "Mode Expert" },
+  { civilian: "Colère", undercover: "Haine", category: "Mode Expert" },
+  { civilian: "Courage", undercover: "Audace", category: "Mode Expert" },
+  { civilian: "Vitesse", undercover: "Rapidité", category: "Mode Expert" },
+  { civilian: "Chance", undercover: "Hasard", category: "Mode Expert" },
 ];
 
 /** Validation stricte de la répartition des rôles */
@@ -159,11 +286,11 @@ export function generateRolesFromConfig(
   const civilianCount = totalPlayers - undercoverCount - mrWhiteCount;
   const roles: UndercoverRole[] = [];
 
+  for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
   for (let i = 0; i < undercoverCount; i++) roles.push("Undercover");
   for (let i = 0; i < mrWhiteCount; i++) roles.push("MrWhite");
-  for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
 
-  // Fisher-Yates shuffle
+  // Mélange de Fisher-Yates
   for (let i = roles.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [roles[i], roles[j]] = [roles[j], roles[i]];
@@ -172,19 +299,19 @@ export function generateRolesFromConfig(
   return roles;
 }
 
-/** Ordre de parole mélangé avec probabilité réduite que Mr White soit 1er */
+/** Ordre de parole mélangé avec probabilité réduite pour Mr. White d'être le premier joueur */
 export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPlayer[] {
-  const shuffled = [...players];
+  let shuffled = [...players];
   
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
 
-  // Si le premier joueur est Mr. White, on applique 90% de chance de le permuter avec un autre joueur
-  if (shuffled.length > 1 && shuffled[0].gameRole === "MrWhite" && Math.random() < 0.9) {
-    const targetIdx = 1 + Math.floor(Math.random() * (shuffled.length - 1));
-    [shuffled[0], shuffled[targetIdx]] = [shuffled[targetIdx], shuffled[0]];
+  // Si le premier joueur tiré est Mr. White, on lui applique 90% de chance d'être déplacé plus loin
+  if (shuffled[0].gameRole === "MrWhite" && Math.random() < 0.9 && shuffled.length > 2) {
+    const newIdx = 1 + Math.floor(Math.random() * (shuffled.length - 1));
+    [shuffled[0], shuffled[newIdx]] = [shuffled[newIdx], shuffled[0]];
   }
 
   return shuffled;
