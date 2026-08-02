@@ -53,17 +53,37 @@ export function useSocket(): UseSocketReturn {
       setIsConnected(false);
     });
 
-    // Secret listener
+    // Listener secret
     socket.on("game:secret", (secret: any) => {
       setSecretData(secret);
     });
 
-    socket.on("game:started_undercover", (data: any) => {
+    socket.on("game:started", (data: any) => {
+      console.log("🎮 Game started event received:", data);
       setRoomState((prev: RoomState | null) => prev ? {
         ...prev,
         state: "PLAYING",
-        players: data.players
-      } : null);
+        players: data.players || prev.players
+      } : {
+        gameId: data.gameId || "undercover",
+        players: data.players || [],
+        state: "PLAYING",
+        isHost: false
+      });
+    });
+
+    socket.on("game:started_undercover", (data: any) => {
+      console.log("🕵️ Undercover started event received:", data);
+      setRoomState((prev: RoomState | null) => prev ? {
+        ...prev,
+        state: "PLAYING",
+        players: data.players || prev.players
+      } : {
+        gameId: "undercover",
+        players: data.players || [],
+        state: "PLAYING",
+        isHost: false
+      });
     });
 
     // Room events
@@ -74,7 +94,7 @@ export function useSocket(): UseSocketReturn {
     socket.on("room:player-joined", (player: PlayerOnline) => {
       setRoomState((prev: RoomState | null) => prev ? {
         ...prev,
-        players: [...prev.players, player],
+        players: [...prev.players.filter(p => p.id !== player.id), player],
       } : null);
     });
 

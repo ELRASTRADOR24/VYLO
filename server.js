@@ -39,7 +39,7 @@ app.prepare().then(() => {
       if (!room) {
         // Créer le salon
         room = {
-          gameId,
+          gameId: gameId || "undercover",
           players: new Map(),
           state: "LOBBY",
           hostId: socket.id,
@@ -47,10 +47,13 @@ app.prepare().then(() => {
         rooms.set(roomCode, room);
       }
 
+      const isHost = socket.id === room.hostId || room.players.size === 0;
+      if (isHost) room.hostId = socket.id;
+
       const playerData = {
         id: socket.id,
         name: playerName,
-        isHost: socket.id === room.hostId,
+        isHost: isHost,
         isReady: false,
       };
       room.players.set(socket.id, playerData);
@@ -60,12 +63,12 @@ app.prepare().then(() => {
         gameId: room.gameId,
         players: Array.from(room.players.values()),
         state: room.state,
-        isHost: socket.id === room.hostId,
+        isHost: isHost,
       });
 
       // Notifier les autres
       socket.to(roomCode).emit("room:player-joined", playerData);
-      console.log(`👤 ${playerName} a rejoint le salon ${roomCode}`);
+      console.log(`👤 ${playerName} a rejoint le salon ${roomCode} (Host: ${isHost})`);
     });
 
     // ─── PRÊT ───────────────────────────────────────────
@@ -82,11 +85,22 @@ app.prepare().then(() => {
     // ─── LANCER LA PARTIE (GÉNÉRIQUE) ───────────────────
     socket.on("game:start", ({ roomCode, gameData }) => {
       const room = rooms.get(roomCode);
-      if (!room || socket.id !== room.hostId) return;
+      if (!room) return;
       room.state = "PLAYING";
-      io.to(roomCode).emit("game:started", {
+
+      const payload = {
+        roomCode,
+        gameId: room.gameId || "undercover",
         players: Array.from(room.players.values()),
+        state: "PLAYING",
         ...gameData,
+      };
+
+      io.to(roomCode).emit("game:started", payload);
+      io.to(roomCode).emit("room:state", {
+        gameId: room.gameId,
+        players: Array.from(room.players.values()),
+        state: "PLAYING",
       });
       console.log(`🎮 Partie lancée dans le salon ${roomCode}`);
     });
@@ -94,14 +108,16 @@ app.prepare().then(() => {
     // ─── LANCER UNDERCOVER (DISTRIBUTION PRIVÉE DES MOTS) ──
     socket.on("game:start_undercover", ({ roomCode, playerSecrets }) => {
       const room = rooms.get(roomCode);
-      if (!room || socket.id !== room.hostId) return;
+      if (!room) return;
       room.state = "PLAYING";
       room.secrets = playerSecrets;
 
       // Envoi privé du mot à chaque joueur
-      Object.entries(playerSecrets).forEach(([targetSocketId, secretData]) => {
-        io.to(targetSocketId).emit("game:secret", secretData);
-      });
+      if (playerSecrets) {
+        Object.entries(playerSecrets).forEach(([targetSocketId, secretData]) => {
+          io.to(targetSocketId).emit("game:secret", secretData);
+        });
+      }
 
       // Annonce générale du début de partie
       io.to(roomCode).emit("game:started_undercover", {
@@ -111,6 +127,11 @@ app.prepare().then(() => {
         })),
         state: "PLAYING"
       });
+      io.to(roomCode).emit("room:state", {
+        gameId: room.gameId,
+        players: Array.from(room.players.values()),
+        state: "PLAYING",
+      });
       console.log(`🕵️ Undercover lancé en ligne dans le salon ${roomCode}`);
     });
 
@@ -118,7 +139,6 @@ app.prepare().then(() => {
     socket.on("game:action", ({ roomCode, action, payload }) => {
       const room = rooms.get(roomCode);
       if (!room) return;
-      // Broadcast l'action à tous les joueurs du salon
       io.to(roomCode).emit("game:action", {
         playerId: socket.id,
         action,
@@ -151,12 +171,14 @@ app.prepare().then(() => {
             rooms.delete(roomCode);
             console.log(`🗑️ Salon ${roomCode} supprimé (vide)`);
           }
-          // Si l'hôte part, transférer
+          // Si l'hôte part, transférer le rôle au premier joueur disponible
           else if (socket.id === room.hostId) {
             const newHost = room.players.values().next().value;
-            room.hostId = newHost.id;
-            newHost.isHost = true;
-            io.to(roomCode).emit("room:host-changed", newHost);
+            if (newHost) {
+              room.hostId = newHost.id;
+              newHost.isHost = true;
+              io.to(roomCode).emit("room:host-changed", newHost);
+            }
           }
         }
       }
