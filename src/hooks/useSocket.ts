@@ -37,7 +37,8 @@ export function useSocket(): UseSocketReturn {
   const [secretData, setSecretData] = useState<any | null>(null);
 
   useEffect(() => {
-    const socket = io({
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || undefined;
+    const socket = io(socketUrl, {
       path: "/api/socketio",
       transports: ["websocket", "polling"],
     });
