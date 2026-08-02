@@ -17,39 +17,40 @@ interface GameCardProps {
 
 export function GameCard({ title, description, minPlayers, maxPlayers, difficulty, themeColor, icon }: GameCardProps) {
   return (
-    <motion.div whileTap={{ scale: 0.97 }} whileHover={{ y: -2 }} className="w-full">
-      <Card className="flex flex-col relative group cursor-pointer border border-white/10 hover:border-white/20 transition-all shadow-soft overflow-hidden">
+    <motion.div whileTap={{ scale: 0.98 }} className="w-full">
+      <Card className="flex flex-col relative group cursor-pointer border border-white/10 hover:border-white/25 transition-all shadow-soft overflow-hidden">
+        {/* Solid header accent bar */}
         <div className={cn(
-          "absolute top-0 left-0 right-0 h-32 opacity-25 group-hover:opacity-40 transition-opacity",
+          "h-2 w-full",
           {
-            "bg-gradient-to-b from-primary via-accent/20 to-transparent": themeColor === "primary",
-            "bg-gradient-to-b from-accent via-pink/20 to-transparent": themeColor === "accent",
-            "bg-gradient-to-b from-secondary via-primary/20 to-transparent": themeColor === "secondary",
-            "bg-gradient-to-b from-pink via-accent/20 to-transparent": themeColor === "pink",
-            "bg-gradient-to-b from-purple via-secondary/20 to-transparent": themeColor === "purple",
+            "bg-[#FF4757]": themeColor === "primary",
+            "bg-[#FFA502]": themeColor === "accent",
+            "bg-[#3742FA]": themeColor === "secondary",
+            "bg-[#FF6B81]": themeColor === "pink",
+            "bg-[#70A1FF]": themeColor === "purple",
           }
         )} />
         
-        <div className="p-6 relative z-10 flex flex-col gap-4">
+        <div className="p-6 flex flex-col gap-4">
           <div className="flex items-start justify-between">
             <div className={cn(
               "p-4 rounded-2xl text-white shadow-soft transition-transform group-hover:scale-105",
               {
-                "bg-gradient-summer shadow-summer-glow": themeColor === "primary",
-                "bg-gradient-to-r from-accent to-pink": themeColor === "accent",
-                "bg-gradient-to-r from-secondary to-primary shadow-blue-glow": themeColor === "secondary",
-                "bg-gradient-to-r from-pink to-accent": themeColor === "pink",
-                "bg-gradient-to-r from-purple to-secondary": themeColor === "purple",
+                "bg-[#FF4757]": themeColor === "primary",
+                "bg-[#FFA502] text-black": themeColor === "accent",
+                "bg-[#3742FA]": themeColor === "secondary",
+                "bg-[#FF6B81]": themeColor === "pink",
+                "bg-[#70A1FF] text-black": themeColor === "purple",
               }
             )}>
               {icon}
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-surface-elevated/90 px-3 py-1.5 rounded-xl text-xs font-bold text-foreground/80 border border-white/10">
+              <div className="flex items-center gap-1.5 bg-[#1C1E2E] px-3 py-1.5 rounded-xl text-xs font-bold text-foreground/80 border border-white/10">
                 <Users className="w-3.5 h-3.5 text-foreground/50" />
                 <span>{minPlayers}-{maxPlayers} pers.</span>
               </div>
-              <div className="flex items-center gap-1.5 bg-surface-elevated/90 px-3 py-1.5 rounded-xl text-xs font-bold text-foreground/80 border border-white/10">
+              <div className="flex items-center gap-1.5 bg-[#1C1E2E] px-3 py-1.5 rounded-xl text-xs font-bold text-foreground/80 border border-white/10">
                 <Zap className="w-3.5 h-3.5 text-foreground/50" />
                 <span>{difficulty}</span>
               </div>

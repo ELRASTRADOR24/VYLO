@@ -57,7 +57,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
       <div className="w-full flex flex-col gap-5 mb-8">
         {/* MODE LOCAL */}
         <Card 
-          className="p-6 flex flex-col gap-4 border-2 border-primary/30 hover:border-primary transition-all cursor-pointer shadow-glow bg-surface-elevated group"
+          className="p-6 flex flex-col gap-4 border border-white/10 hover:border-white/25 transition-all cursor-pointer shadow-soft group"
           onClick={handleChooseLocal}
         >
           <div className="flex items-center justify-between">

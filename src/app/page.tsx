@@ -19,7 +19,7 @@ export default function Home() {
     <main className="flex-1 flex flex-col items-center px-4 pt-10 pb-32">
       <div className="w-full max-w-md flex flex-col mb-8 mt-2">
         <div className="flex flex-col mb-2">
-          <h1 className="text-5xl font-black tracking-tight text-gradient-summer">
+          <h1 className="text-5xl font-black tracking-tight text-[#FF4757]">
             VYLO
           </h1>
           <p className="text-foreground/70 font-semibold text-sm mt-1">L'application de jeu de soirée ultime.</p>
