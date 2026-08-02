@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import { BottomBar } from "@/components/layout/BottomBar";
+import { HeaderNavbar } from "@/components/layout/HeaderNavbar";
 import { BetaBanner } from "@/components/ui/BetaBanner";
 
 const outfit = Outfit({
@@ -36,10 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${outfit.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col pb-24 relative">
+      <body className="min-h-full flex flex-col relative">
         <BetaBanner />
+        <HeaderNavbar />
         {children}
-        <BottomBar />
       </body>
     </html>
   );
