@@ -175,10 +175,23 @@ export function HeaderNavbar() {
 
             {/* Footer du Drawer */}
             <div className="pt-4 border-t border-white/10 text-center space-y-2">
+              <div className="flex items-center justify-center gap-1.5 text-xs font-black text-foreground/80">
+                <span>Développé avec</span>
+                <span>🖐️</span>
+                <span>par</span>
+                <a
+                  href="https://www.xn--dynaceglobalsant-top-q2b.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => sfxTap()}
+                  className="text-primary font-black hover:underline"
+                >
+                  Johanson
+                </a>
+              </div>
               <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full border border-purple-500/30">
                 <FlaskConical size={12} /> Plateforme Bêta V0.9
               </span>
-              <p className="text-[11px] text-foreground/40 font-bold">VYLO © 2026 — Tous droits réservés</p>
             </div>
           </div>
         </div>
