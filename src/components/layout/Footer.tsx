@@ -12,7 +12,7 @@ export function Footer() {
           <span className="inline-flex items-center justify-center text-base animate-bounce">🖐️</span>
           <span>par</span>
           <a
-            href="https://www.xn--dynaceglobalsant-top-q2b.com/"
+            href="https://johansonweb.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => sfxTap()}

@@ -180,7 +180,7 @@ export function HeaderNavbar() {
                 <span>🖐️</span>
                 <span>par</span>
                 <a
-                  href="https://www.xn--dynaceglobalsant-top-q2b.com/"
+                  href="https://johansonweb.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => sfxTap()}
