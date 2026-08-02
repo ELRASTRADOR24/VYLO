@@ -146,7 +146,7 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
   // =========================================================================
   if (!roomState || roomState.state === "LOBBY") {
     return (
-      <main className="min-h-screen flex flex-col items-center py-10 px-6 max-w-md mx-auto pb-36">
+      <main className="min-h-screen flex flex-col items-center py-6 md:py-10 px-4 md:px-8 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto pb-36">
         <QRCodeModal 
           isOpen={showQR} 
           onClose={() => setShowQR(false)} 

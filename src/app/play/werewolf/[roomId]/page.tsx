@@ -477,7 +477,7 @@ export default function WerewolfGame({ params }: { params: Promise<{ roomId: str
   // =========================================================================
   if (phase === "LOBBY") {
     return (
-      <main className="min-h-screen flex flex-col items-center py-10 px-6 max-w-md mx-auto pb-36">
+      <main className="min-h-screen flex flex-col items-center py-6 md:py-10 px-4 md:px-8 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto pb-36">
         <div className="w-full flex items-center justify-between mb-6">
           <button onClick={() => router.back()} className="h-10 w-10 bg-surface rounded-full flex items-center justify-center border border-white/10">
             <ChevronLeft className="w-5 h-5" />
