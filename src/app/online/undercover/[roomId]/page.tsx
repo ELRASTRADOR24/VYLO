@@ -31,6 +31,9 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
   const [selectedCategory, setSelectedCategory] = useState<CategoryName>("Toutes les catégories");
   const [undercoverCount, setUndercoverCount] = useState<number>(1);
   const [includeMrWhite, setIncludeMrWhite] = useState<boolean>(false);
+  const [turnTimerSec, setTurnTimerSec] = useState<number>(30);
+  const [hideCategory, setHideCategory] = useState<boolean>(false);
+  const [revealRoleOnElimination, setRevealRoleOnElimination] = useState<boolean>(true);
 
   // Voting Selection State
   const [selectedTargetId, setSelectedTargetId] = useState<string | null>(null);
@@ -185,7 +188,7 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
 
             {/* Choix catégorie */}
             <div>
-              <label className="text-xs font-bold text-foreground/60 mb-2 block">Thème des mots</label>
+              <label className="text-xs font-bold text-foreground/60 mb-1.5 block">Thème des mots</label>
               <select 
                 value={selectedCategory} 
                 onChange={(e) => setSelectedCategory(e.target.value as CategoryName)}
@@ -200,8 +203,8 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
             {/* Choix nb Undercover */}
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold">Nombre d'Undercover</span>
-              <div className="flex gap-2">
-                {[1, 2].map(num => (
+              <div className="flex gap-1.5">
+                {[1, 2, 3].map(num => (
                   <button
                     key={num}
                     onClick={() => setUndercoverCount(num)}
@@ -218,9 +221,52 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
               <span className="text-xs font-bold">Inclure Mr. White</span>
               <button
                 onClick={() => setIncludeMrWhite(!includeMrWhite)}
-                className={`px-4 py-2 rounded-xl text-xs font-black border transition-all ${includeMrWhite ? 'bg-purple-500/20 text-purple-400 border-purple-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${includeMrWhite ? 'bg-purple-500/20 text-purple-400 border-purple-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
               >
                 {includeMrWhite ? "Activé 🤍" : "Désactivé"}
+              </button>
+            </div>
+
+            {/* Chronomètre par tour */}
+            <div className="flex items-center justify-between border-t border-white/5 pt-3">
+              <span className="text-xs font-bold">Chrono par indice</span>
+              <div className="flex gap-1.5">
+                {[
+                  { sec: 0, label: "∞" },
+                  { sec: 30, label: "30s" },
+                  { sec: 45, label: "45s" },
+                  { sec: 60, label: "60s" }
+                ].map(opt => (
+                  <button
+                    key={opt.sec}
+                    onClick={() => setTurnTimerSec(opt.sec)}
+                    className={`px-2.5 py-1.5 rounded-xl font-black text-xs border transition-all ${turnTimerSec === opt.sec ? 'bg-accent text-slate-950 border-accent shadow-soft' : 'bg-white/5 border-white/10 text-foreground/50'}`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Mode Mystère (Thème masqué) */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold">Thème aux joueurs</span>
+              <button
+                onClick={() => setHideCategory(!hideCategory)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${hideCategory ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
+              >
+                {hideCategory ? "Caché 🤫 (Mystère)" : "Visible 💡"}
+              </button>
+            </div>
+
+            {/* Mode Hardcore (Rôle Éliminé) */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold">Rôle à l'élimination</span>
+              <button
+                onClick={() => setRevealRoleOnElimination(!revealRoleOnElimination)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${revealRoleOnElimination ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40' : 'bg-red-500/20 text-red-400 border-red-500/40'}`}
+              >
+                {revealRoleOnElimination ? "Révélé 👁️" : "Masqué 🙈 (Hardcore)"}
               </button>
             </div>
           </Card>
