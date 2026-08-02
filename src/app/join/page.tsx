@@ -22,7 +22,7 @@ export default function Join() {
 
   const handleJoin = () => {
     if (code.length === 6) {
-      router.push(`/online/${code}`);
+      router.push(`/online/undercover/${code}`);
     }
   };
 
