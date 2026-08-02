@@ -277,7 +277,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // --- ÉCRAN 1 : CONFIGURATION DU JEU ---
   if (phase === "CONFIG") {
     return (
-      <main className="min-h-screen flex flex-col items-center pt-8 pb-32 px-6 max-w-md mx-auto relative">
+      <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 w-full max-w-md md:max-w-5xl lg:max-w-6xl mx-auto relative">
         <div className="w-full flex items-center justify-between mb-6">
           <button 
             onClick={() => {
@@ -289,109 +289,125 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           >
             <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
-          <div className="flex-1 text-center font-black text-lg">Undercover Local</div>
+          <div className="flex-1 text-center font-black text-xl">Undercover Local</div>
           <div className="w-16" />
         </div>
 
-        {/* Choix de la Catégorie */}
-        <div className="w-full mb-8">
-          <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/50 mb-3 block">
-            Catégorie de mots
-          </label>
-          <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                onClick={() => { setSelectedCategory(cat); sfxTap(); }}
-                className={`px-4 py-2.5 rounded-full text-xs font-extrabold whitespace-nowrap transition-all active:scale-95 ${
-                  selectedCategory === cat 
-                    ? "bg-primary text-white shadow-soft" 
-                    : "bg-surface border border-white/5 text-foreground/70"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+        {/* Grille Responsive (1 colonne Mobile / 2 colonnes Desktop) */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+          
+          {/* Colonne Gauche : Catégories & Nombre de Joueurs */}
+          <div className="md:col-span-6 flex flex-col gap-6">
+            {/* Choix de la Catégorie */}
+            <Card className="w-full p-6 bg-surface/90 border border-white/10 shadow-soft">
+              <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/50 mb-3 block">
+                Catégorie de mots
+              </label>
+              <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 flex-wrap">
+                {CATEGORIES.map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => { setSelectedCategory(cat); sfxTap(); }}
+                    className={`px-4 py-2.5 rounded-full text-xs font-extrabold transition-all active:scale-95 border ${
+                      selectedCategory === cat 
+                        ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow" 
+                        : "bg-surface border-white/5 text-foreground/70"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </Card>
+
+            {/* Nombre de Joueurs */}
+            <Card className="w-full p-6 flex items-center justify-between bg-surface/90 border border-white/10 shadow-soft">
+              <div>
+                <span className="font-extrabold text-lg block">Participants</span>
+                <span className="text-xs text-foreground/50 font-bold">Minimum 3 joueurs</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => { setPlayerCount(Math.max(3, playerCount - 1)); sfxTap(); }}
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl font-bold active:scale-90"
+                >-</button>
+                <span className="text-2xl font-black text-primary">{playerCount}</span>
+                <button 
+                  onClick={() => { setPlayerCount(Math.min(20, playerCount + 1)); sfxTap(); }}
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl font-bold active:scale-90"
+                >+</button>
+              </div>
+            </Card>
           </div>
+
+          {/* Colonne Droite : Répartition des Rôles */}
+          <div className="md:col-span-6 flex flex-col gap-4">
+            <Card className="w-full p-6 bg-surface/90 border border-white/10 shadow-soft">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-foreground/50 mb-4 block">
+                Répartition des Rôles ({playerCount} Joueurs)
+              </span>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                  <span className="font-bold flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-blue-400"></span> Civils
+                  </span>
+                  <span className="font-extrabold text-blue-400 text-lg">
+                    {playerCount - undercoverCount - mrWhiteCount}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                  <span className="font-bold flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-red-500"></span> Undercover
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <button 
+                      onClick={() => { setUndercoverCount(Math.max(0, undercoverCount - 1)); sfxTap(); }}
+                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                    >-</button>
+                    <span className="font-extrabold text-red-500">{undercoverCount}</span>
+                    <button 
+                      onClick={() => { setUndercoverCount(Math.min(playerCount - 2 - mrWhiteCount, undercoverCount + 1)); sfxTap(); }}
+                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                    >+</button>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                  <span className="font-bold flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-purple-400"></span> Mr. White
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <button 
+                      onClick={() => { setMrWhiteCount(Math.max(0, mrWhiteCount - 1)); sfxTap(); }}
+                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                    >-</button>
+                    <span className="font-extrabold text-purple-400">{mrWhiteCount}</span>
+                    <button 
+                      onClick={() => { setMrWhiteCount(Math.min(playerCount - 2 - undercoverCount, mrWhiteCount + 1)); sfxTap(); }}
+                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                    >+</button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Indicateur d'erreur de config */}
+            {!configValidation.isValid && (
+              <div className="w-full bg-red-500/10 border border-red-500/30 p-4 rounded-2xl text-red-400 text-xs font-bold flex items-center gap-2">
+                <ShieldAlert size={18} /> {configValidation.error}
+              </div>
+            )}
+          </div>
+
         </div>
 
-        {/* Nombre de Joueurs */}
-        <Card className="w-full p-6 mb-6 flex items-center justify-between">
-          <div>
-            <span className="font-extrabold text-lg block">Joueurs</span>
-            <span className="text-xs text-foreground/50 font-bold">Minimum 3 participants</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => { setPlayerCount(Math.max(3, playerCount - 1)); sfxTap(); }}
-              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xl font-bold active:scale-90"
-            >-</button>
-            <span className="text-2xl font-black text-primary">{playerCount}</span>
-            <button 
-              onClick={() => { setPlayerCount(Math.min(20, playerCount + 1)); sfxTap(); }}
-              className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xl font-bold active:scale-90"
-            >+</button>
-          </div>
-        </Card>
-
-        {/* Répartition des Rôles */}
-        <div className="w-full space-y-3 mb-8">
-          <div className="flex justify-between items-center bg-surface p-4 rounded-2xl border border-white/5">
-            <span className="font-bold flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-blue-400"></span> Civils
-            </span>
-            <span className="font-extrabold text-blue-400 text-lg">
-              {playerCount - undercoverCount - mrWhiteCount}
-            </span>
-          </div>
-
-          <div className="flex justify-between items-center bg-surface p-4 rounded-2xl border border-white/5">
-            <span className="font-bold flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500"></span> Undercover
-            </span>
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => { setUndercoverCount(Math.max(0, undercoverCount - 1)); sfxTap(); }}
-                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-              >-</button>
-              <span className="font-extrabold text-red-500">{undercoverCount}</span>
-              <button 
-                onClick={() => { setUndercoverCount(Math.min(playerCount - 2 - mrWhiteCount, undercoverCount + 1)); sfxTap(); }}
-                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-              >+</button>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center bg-surface p-4 rounded-2xl border border-white/5">
-            <span className="font-bold flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-purple-400"></span> Mr. White
-            </span>
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => { setMrWhiteCount(Math.max(0, mrWhiteCount - 1)); sfxTap(); }}
-                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-              >-</button>
-              <span className="font-extrabold text-purple-400">{mrWhiteCount}</span>
-              <button 
-                onClick={() => { setMrWhiteCount(Math.min(playerCount - 2 - undercoverCount, mrWhiteCount + 1)); sfxTap(); }}
-                className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-              >+</button>
-            </div>
-          </div>
-        </div>
-
-        {/* Indicateur de validation en temps réel */}
-        {!configValidation.isValid && (
-          <div className="w-full bg-red-500/10 border border-red-500/30 p-4 rounded-2xl text-red-400 text-xs font-bold mb-6 flex items-center gap-2">
-            <ShieldAlert size={18} /> {configValidation.error}
-          </div>
-        )}
-
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-xl border-t border-border/50 z-50">
-          <div className="max-w-md mx-auto">
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-2xl border-t border-white/10 z-50">
+          <div className="max-w-md md:max-w-lg mx-auto">
             <Button 
               variant="primary" 
-              className="w-full h-16 text-lg"
+              className="w-full h-16 text-lg shadow-summer-glow"
               disabled={!configValidation.isValid}
               onClick={handleStartDistribution}
             >
