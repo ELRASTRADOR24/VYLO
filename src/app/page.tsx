@@ -47,20 +47,20 @@ export default function Home() {
         <div className="md:col-span-6 flex flex-col gap-6">
           {/* Header Mobile & Desktop */}
           <div className="flex flex-col">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-[11px] font-black uppercase tracking-widest bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">
-                Plateforme de Jeux de Soirée
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className="text-[11px] font-black uppercase tracking-widest bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full border border-purple-500/30 flex items-center gap-1">
+                🧪 Version Bêta (V0.9)
               </span>
-              <span className="hidden md:inline-flex text-[11px] font-black uppercase tracking-widest bg-accent/20 text-accent px-3 py-1 rounded-full border border-accent/30">
-                Version Desktop Pro 🔥
+              <span className="text-[11px] font-black uppercase tracking-widest bg-primary/20 text-primary px-3 py-1 rounded-full border border-primary/30">
+                Jeux de Soirée
               </span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-black tracking-tight text-gradient-summer">
-              VYLO
+            <h1 className="text-5xl md:text-6xl font-black tracking-tight text-gradient-summer flex items-center gap-3">
+              VYLO <span className="text-xs font-black bg-purple-500/20 text-purple-300 border border-purple-500/40 px-2.5 py-1 rounded-xl uppercase tracking-widest align-middle">Bêta</span>
             </h1>
             <p className="text-foreground/70 font-semibold text-sm md:text-base mt-2 leading-relaxed">
-              L'application ultime pour animer vos soirées entre amis, en local ou à distance !
+              L'application ultime pour animer vos soirées entre amis, en local ou à distance ! (Plateforme en cours de test & développement).
             </p>
           </div>
 

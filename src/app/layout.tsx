@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { BottomBar } from "@/components/layout/BottomBar";
+import { BetaBanner } from "@/components/ui/BetaBanner";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -10,8 +11,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "VYLO - Jeux de Soirée",
-  description: "La plateforme premium de jeux de soirée.",
+  title: "VYLO - Jeux de Soirée (Version Bêta)",
+  description: "La plateforme premium de jeux de soirée en version Bêta.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -36,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${outfit.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col pb-24 relative">
+        <BetaBanner />
         {children}
         <BottomBar />
       </body>
