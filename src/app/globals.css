@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  /* Night Mode Premium Colors */
+  --background: #0B0F19; 
+  --surface: #131824;    
+  --foreground: #F8FAFC; 
+  --border: #1E293B;     
+  
+  /* Brand/Category Colors */
+  --primary: #8B5CF6;    
+  --primary-foreground: #FFFFFF;
+  --secondary: #3B82F6;  
+  --accent: #F97316;     
+  --pink: #EC4899;
+  
+  --radius: 1.25rem;     
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-pink: var(--pink);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --radius-xl: var(--radius);
+  --font-sans: var(--font-outfit);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Utilitaires pour le tactile et la profondeur */
+@utility shadow-soft {
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
