@@ -3,38 +3,64 @@
 import { io, Socket } from "socket.io-client";
 import { useEffect, useRef, useState, useCallback } from "react";
 
-interface PlayerOnline {
+export interface PlayerOnline {
   id: string;
   name: string;
   isHost: boolean;
   isReady: boolean;
+  isEliminated: boolean;
+  role?: string;
+  word?: string;
 }
 
-interface RoomState {
+export interface RoomState {
   gameId: string;
   players: PlayerOnline[];
   state: string;
   isHost: boolean;
+  speakingOrder?: string[];
+  currentSpeakerIndex?: number;
+  clueRound?: number;
+  votes?: Record<string, string>;
+  votedSocketIds?: string[];
+  eliminatedPlayer?: {
+    id: string;
+    name: string;
+    role: string;
+    votes: number;
+  } | null;
+  winnerTeam?: "CIVILIANS" | "UNDERCOVER" | "MR_WHITE" | null;
+  category?: string;
+  civilianWord?: string;
+}
+
+export interface SecretData {
+  role: string;
+  word: string;
+  category: string;
 }
 
 interface UseSocketReturn {
   socket: Socket | null;
   isConnected: boolean;
   roomState: RoomState | null;
-  secretData: any | null;
+  secretData: SecretData | null;
   joinRoom: (roomCode: string, gameId: string, playerName: string) => void;
   toggleReady: (roomCode: string) => void;
-  startGame: (roomCode: string, gameData?: any) => void;
-  startUndercover: (roomCode: string, playerSecrets: Record<string, any>) => void;
-  sendAction: (roomCode: string, action: string, payload?: any) => void;
-  sendVote: (roomCode: string, targetId: string) => void;
+  startUndercover: (roomCode: string, playerSecrets: Record<string, any>, speakingOrder: string[], category: string, civilianWord: string) => void;
+  nextSpeaker: (roomCode: string) => void;
+  startVote: (roomCode: string) => void;
+  castVote: (roomCode: string, targetId: string) => void;
+  submitMrWhiteGuess: (roomCode: string, guess: string) => void;
+  continueRound: (roomCode: string) => void;
+  restartLobby: (roomCode: string) => void;
 }
 
 export function useSocket(): UseSocketReturn {
   const socketRef = useRef<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [roomState, setRoomState] = useState<RoomState | null>(null);
-  const [secretData, setSecretData] = useState<any | null>(null);
+  const [secretData, setSecretData] = useState<SecretData | null>(null);
 
   useEffect(() => {
     const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || undefined;
@@ -53,74 +79,12 @@ export function useSocket(): UseSocketReturn {
       setIsConnected(false);
     });
 
-    // Listener secret
-    socket.on("game:secret", (secret: any) => {
+    socket.on("game:secret", (secret: SecretData) => {
       setSecretData(secret);
     });
 
-    socket.on("game:started", (data: any) => {
-      console.log("🎮 Game started event received:", data);
-      setRoomState((prev: RoomState | null) => prev ? {
-        ...prev,
-        state: "PLAYING",
-        players: data.players || prev.players
-      } : {
-        gameId: data.gameId || "undercover",
-        players: data.players || [],
-        state: "PLAYING",
-        isHost: false
-      });
-    });
-
-    socket.on("game:started_undercover", (data: any) => {
-      console.log("🕵️ Undercover started event received:", data);
-      setRoomState((prev: RoomState | null) => prev ? {
-        ...prev,
-        state: "PLAYING",
-        players: data.players || prev.players
-      } : {
-        gameId: "undercover",
-        players: data.players || [],
-        state: "PLAYING",
-        isHost: false
-      });
-    });
-
-    // Room events
     socket.on("room:state", (state: RoomState) => {
       setRoomState(state);
-    });
-
-    socket.on("room:player-joined", (player: PlayerOnline) => {
-      setRoomState((prev: RoomState | null) => prev ? {
-        ...prev,
-        players: [...prev.players.filter(p => p.id !== player.id), player],
-      } : null);
-    });
-
-    socket.on("room:player-left", ({ id }: { id: string }) => {
-      setRoomState((prev: RoomState | null) => prev ? {
-        ...prev,
-        players: prev.players.filter((p: PlayerOnline) => p.id !== id),
-      } : null);
-    });
-
-    socket.on("room:player-updated", (updatedPlayer: PlayerOnline) => {
-      setRoomState((prev: RoomState | null) => prev ? {
-        ...prev,
-        players: prev.players.map((p: PlayerOnline) => p.id === updatedPlayer.id ? updatedPlayer : p),
-      } : null);
-    });
-
-    socket.on("room:host-changed", (newHost: PlayerOnline) => {
-      setRoomState((prev: RoomState | null) => prev ? {
-        ...prev,
-        players: prev.players.map((p: PlayerOnline) => ({
-          ...p,
-          isHost: p.id === newHost.id,
-        })),
-        isHost: socketRef.current?.id === newHost.id,
-      } : null);
     });
 
     socketRef.current = socket;
@@ -138,20 +102,40 @@ export function useSocket(): UseSocketReturn {
     socketRef.current?.emit("room:ready", { roomCode });
   }, []);
 
-  const startGame = useCallback((roomCode: string, gameData?: any) => {
-    socketRef.current?.emit("game:start", { roomCode, gameData });
+  const startUndercover = useCallback((
+    roomCode: string, 
+    playerSecrets: Record<string, any>, 
+    speakingOrder: string[],
+    category: string,
+    civilianWord: string
+  ) => {
+    socketRef.current?.emit("game:start_undercover", { 
+      roomCode, playerSecrets, speakingOrder, category, civilianWord 
+    });
   }, []);
 
-  const startUndercover = useCallback((roomCode: string, playerSecrets: Record<string, any>) => {
-    socketRef.current?.emit("game:start_undercover", { roomCode, playerSecrets });
+  const nextSpeaker = useCallback((roomCode: string) => {
+    socketRef.current?.emit("game:next_speaker", { roomCode });
   }, []);
 
-  const sendAction = useCallback((roomCode: string, action: string, payload?: any) => {
-    socketRef.current?.emit("game:action", { roomCode, action, payload });
+  const startVote = useCallback((roomCode: string) => {
+    socketRef.current?.emit("game:start_vote", { roomCode });
   }, []);
 
-  const sendVote = useCallback((roomCode: string, targetId: string) => {
-    socketRef.current?.emit("game:vote", { roomCode, targetId });
+  const castVote = useCallback((roomCode: string, targetId: string) => {
+    socketRef.current?.emit("game:cast_vote", { roomCode, targetId });
+  }, []);
+
+  const submitMrWhiteGuess = useCallback((roomCode: string, guess: string) => {
+    socketRef.current?.emit("game:mr_white_guess", { roomCode, guess });
+  }, []);
+
+  const continueRound = useCallback((roomCode: string) => {
+    socketRef.current?.emit("game:continue_round", { roomCode });
+  }, []);
+
+  const restartLobby = useCallback((roomCode: string) => {
+    socketRef.current?.emit("game:restart_lobby", { roomCode });
   }, []);
 
   return {
@@ -161,9 +145,12 @@ export function useSocket(): UseSocketReturn {
     secretData,
     joinRoom,
     toggleReady,
-    startGame,
     startUndercover,
-    sendAction,
-    sendVote,
+    nextSpeaker,
+    startVote,
+    castVote,
+    submitMrWhiteGuess,
+    continueRound,
+    restartLobby,
   };
 }

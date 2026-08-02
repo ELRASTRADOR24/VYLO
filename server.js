@@ -1,6 +1,7 @@
 /**
  * VYLO — Custom Server avec Socket.io
  * Lance Next.js + WebSocket sur le même port.
+ * Gestion complète du jeu Undercover Online en temps réel.
  */
 const { createServer } = require("http");
 const { parse } = require("url");
@@ -15,7 +16,7 @@ const handle = app.getRequestHandler();
 
 // ─── ROOM STATE (in-memory) ────────────────────────────────
 const rooms = new Map();
-// rooms.get(roomCode) => { gameId, players: Map<socketId, playerData>, state, hostId }
+// rooms.get(roomCode) => { gameId, players: Map<socketId, playerData>, state, hostId, secrets, speakingOrder, currentSpeakerIndex, clueRound, votes, eliminatedPlayer, winnerTeam }
 
 app.prepare().then(() => {
   const httpServer = createServer((req, res) => {
@@ -28,6 +29,65 @@ app.prepare().then(() => {
     path: "/api/socketio",
   });
 
+  const broadcastRoomState = (roomCode) => {
+    const room = rooms.get(roomCode);
+    if (!room) return;
+
+    const playersArray = Array.from(room.players.values()).map(p => ({
+      id: p.id,
+      name: p.name,
+      isHost: p.id === room.hostId,
+      isReady: p.isReady,
+      isEliminated: p.isEliminated || false,
+      role: (room.state === "END_GAME" && room.secrets?.[p.id]) ? room.secrets[p.id].role : undefined,
+      word: (room.state === "END_GAME" && room.secrets?.[p.id]) ? room.secrets[p.id].word : undefined,
+    }));
+
+    io.to(roomCode).emit("room:state", {
+      gameId: room.gameId,
+      players: playersArray,
+      state: room.state,
+      isHost: false, // calculé côté client via socket.id
+      speakingOrder: room.speakingOrder || [],
+      currentSpeakerIndex: room.currentSpeakerIndex || 0,
+      clueRound: room.clueRound || 1,
+      votes: room.votes || {},
+      votedSocketIds: Object.keys(room.votes || {}),
+      eliminatedPlayer: room.eliminatedPlayer || null,
+      winnerTeam: room.winnerTeam || null,
+      category: room.category || "",
+      civilianWord: room.civilianWord || "",
+    });
+  };
+
+  const checkWinConditions = (roomCode) => {
+    const room = rooms.get(roomCode);
+    if (!room) return false;
+
+    const activePlayers = Array.from(room.players.values()).filter(p => !p.isEliminated);
+    const activeRoles = activePlayers.map(p => room.secrets?.[p.id]?.role || "Civilian");
+
+    const undercoverCount = activeRoles.filter(r => r === "Undercover").length;
+    const civilianCount = activeRoles.filter(r => r === "Civilian").length;
+    const mrWhiteCount = activeRoles.filter(r => r === "MrWhite").length;
+
+    if (undercoverCount === 0 && mrWhiteCount === 0) {
+      room.state = "END_GAME";
+      room.winnerTeam = "CIVILIANS";
+      broadcastRoomState(roomCode);
+      return true;
+    }
+
+    if (undercoverCount >= civilianCount) {
+      room.state = "END_GAME";
+      room.winnerTeam = "UNDERCOVER";
+      broadcastRoomState(roomCode);
+      return true;
+    }
+
+    return false;
+  };
+
   io.on("connection", (socket) => {
     console.log(`🟢 Joueur connecté: ${socket.id}`);
 
@@ -37,12 +97,15 @@ app.prepare().then(() => {
 
       let room = rooms.get(roomCode);
       if (!room) {
-        // Créer le salon
         room = {
           gameId: gameId || "undercover",
           players: new Map(),
           state: "LOBBY",
           hostId: socket.id,
+          votes: {},
+          speakingOrder: [],
+          currentSpeakerIndex: 0,
+          clueRound: 1,
         };
         rooms.set(roomCode, room);
       }
@@ -55,130 +118,223 @@ app.prepare().then(() => {
         name: playerName,
         isHost: isHost,
         isReady: false,
+        isEliminated: false,
       };
       room.players.set(socket.id, playerData);
 
-      // Envoyer l'état complet au joueur qui rejoint
-      socket.emit("room:state", {
-        gameId: room.gameId,
-        players: Array.from(room.players.values()),
-        state: room.state,
-        isHost: isHost,
-      });
+      // Renvoyer les secrets si en cours de partie
+      if (room.secrets?.[socket.id]) {
+        socket.emit("game:secret", room.secrets[socket.id]);
+      }
 
-      // Notifier les autres
-      socket.to(roomCode).emit("room:player-joined", playerData);
+      broadcastRoomState(roomCode);
       console.log(`👤 ${playerName} a rejoint le salon ${roomCode} (Host: ${isHost})`);
     });
 
-    // ─── PRÊT ───────────────────────────────────────────
+    // ─── TOGGLE PRÊT ─────────────────────────────────────
     socket.on("room:ready", ({ roomCode }) => {
       const room = rooms.get(roomCode);
       if (!room) return;
       const player = room.players.get(socket.id);
       if (player) {
         player.isReady = !player.isReady;
-        io.to(roomCode).emit("room:player-updated", player);
+        broadcastRoomState(roomCode);
       }
     });
 
-    // ─── LANCER LA PARTIE (GÉNÉRIQUE) ───────────────────
-    socket.on("game:start", ({ roomCode, gameData }) => {
+    // ─── LANCEMENT UNDERCOVER ────────────────────────────
+    socket.on("game:start_undercover", ({ roomCode, playerSecrets, speakingOrder, category, civilianWord }) => {
       const room = rooms.get(roomCode);
       if (!room) return;
-      room.state = "PLAYING";
 
-      const payload = {
-        roomCode,
-        gameId: room.gameId || "undercover",
-        players: Array.from(room.players.values()),
-        state: "PLAYING",
-        ...gameData,
-      };
-
-      io.to(roomCode).emit("game:started", payload);
-      io.to(roomCode).emit("room:state", {
-        gameId: room.gameId,
-        players: Array.from(room.players.values()),
-        state: "PLAYING",
-      });
-      console.log(`🎮 Partie lancée dans le salon ${roomCode}`);
-    });
-
-    // ─── LANCER UNDERCOVER (DISTRIBUTION PRIVÉE DES MOTS) ──
-    socket.on("game:start_undercover", ({ roomCode, playerSecrets }) => {
-      const room = rooms.get(roomCode);
-      if (!room) return;
-      room.state = "PLAYING";
+      room.state = "PLAYING_DEBATE";
       room.secrets = playerSecrets;
+      room.speakingOrder = speakingOrder || Array.from(room.players.keys());
+      room.currentSpeakerIndex = 0;
+      room.clueRound = 1;
+      room.votes = {};
+      room.eliminatedPlayer = null;
+      room.winnerTeam = null;
+      room.category = category || "";
+      room.civilianWord = civilianWord || "";
 
-      // Envoi privé du mot à chaque joueur
+      // Réinitialiser les statuts d'élimination
+      for (const player of room.players.values()) {
+        player.isEliminated = false;
+      }
+
+      // Envoi individuel du secret
       if (playerSecrets) {
         Object.entries(playerSecrets).forEach(([targetSocketId, secretData]) => {
           io.to(targetSocketId).emit("game:secret", secretData);
         });
       }
 
-      // Annonce générale du début de partie
-      io.to(roomCode).emit("game:started_undercover", {
-        players: Array.from(room.players.values()).map(p => ({
-          ...p,
-          isEliminated: false
-        })),
-        state: "PLAYING"
-      });
-      io.to(roomCode).emit("room:state", {
-        gameId: room.gameId,
-        players: Array.from(room.players.values()),
-        state: "PLAYING",
-      });
+      broadcastRoomState(roomCode);
       console.log(`🕵️ Undercover lancé en ligne dans le salon ${roomCode}`);
     });
 
-    // ─── ACTIONS DE JEU (Générique) ─────────────────────
-    socket.on("game:action", ({ roomCode, action, payload }) => {
+    // ─── PASSER AU SPEAKER SUIVANT ───────────────────────
+    socket.on("game:next_speaker", ({ roomCode }) => {
       const room = rooms.get(roomCode);
-      if (!room) return;
-      io.to(roomCode).emit("game:action", {
-        playerId: socket.id,
-        action,
-        payload,
-      });
+      if (!room || room.state !== "PLAYING_DEBATE") return;
+
+      const activeSpeakingOrder = room.speakingOrder.filter(id => !room.players.get(id)?.isEliminated);
+      if (activeSpeakingOrder.length === 0) return;
+
+      room.currentSpeakerIndex = (room.currentSpeakerIndex + 1) % activeSpeakingOrder.length;
+      if (room.currentSpeakerIndex === 0) {
+        room.clueRound += 1;
+      }
+
+      broadcastRoomState(roomCode);
     });
 
-    // ─── VOTE ───────────────────────────────────────────
-    socket.on("game:vote", ({ roomCode, targetId }) => {
+    // ─── DEBUT PHASE DE VOTE ─────────────────────────────
+    socket.on("game:start_vote", ({ roomCode }) => {
       const room = rooms.get(roomCode);
       if (!room) return;
-      io.to(roomCode).emit("game:vote-cast", {
-        voterId: socket.id,
-        targetId,
-      });
+
+      room.state = "VOTING";
+      room.votes = {};
+      broadcastRoomState(roomCode);
+      console.log(`🗳️ Phase de vote lancée dans le salon ${roomCode}`);
+    });
+
+    // ─── SOUMISSION D'UN VOTE ────────────────────────────
+    socket.on("game:cast_vote", ({ roomCode, targetId }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.state !== "VOTING") return;
+
+      const voter = room.players.get(socket.id);
+      if (!voter || voter.isEliminated) return;
+
+      room.votes[socket.id] = targetId;
+
+      const activePlayers = Array.from(room.players.values()).filter(p => !p.isEliminated);
+      const totalActiveVotes = Object.keys(room.votes).length;
+
+      broadcastRoomState(roomCode);
+
+      // Si tout le monde a voté, dépouiller !
+      if (totalActiveVotes >= activePlayers.length) {
+        // Dépouillement des votes
+        const tally = {};
+        Object.values(room.votes).forEach(target => {
+          tally[target] = (tally[target] || 0) + 1;
+        });
+
+        let maxVotes = 0;
+        let eliminatedId = null;
+        Object.entries(tally).forEach(([target, count]) => {
+          if (count > maxVotes) {
+            maxVotes = count;
+            eliminatedId = target;
+          }
+        });
+
+        if (eliminatedId) {
+          const eliminatedPlayer = room.players.get(eliminatedId);
+          if (eliminatedPlayer) {
+            eliminatedPlayer.isEliminated = true;
+            const role = room.secrets?.[eliminatedId]?.role || "Civilian";
+            room.eliminatedPlayer = {
+              id: eliminatedId,
+              name: eliminatedPlayer.name,
+              role: role,
+              votes: maxVotes
+            };
+
+            // Vérifier si Mr White est éliminé et a une chance de deviner
+            if (role === "MrWhite") {
+              room.state = "MR_WHITE_GUESS";
+              broadcastRoomState(roomCode);
+              return;
+            }
+          }
+        }
+
+        // Vérifier les conditions de victoire
+        const hasWinner = checkWinConditions(roomCode);
+        if (!hasWinner) {
+          room.state = "VOTE_RESULT";
+          broadcastRoomState(roomCode);
+        }
+      }
+    });
+
+    // ─── TENTATIVE MR WHITE ──────────────────────────────
+    socket.on("game:mr_white_guess", ({ roomCode, guess }) => {
+      const room = rooms.get(roomCode);
+      if (!room || room.state !== "MR_WHITE_GUESS") return;
+
+      const cleanGuess = (guess || "").trim().toLowerCase();
+      const cleanSecret = (room.civilianWord || "").trim().toLowerCase();
+
+      if (cleanGuess === cleanSecret) {
+        room.state = "END_GAME";
+        room.winnerTeam = "MR_WHITE";
+      } else {
+        const hasWinner = checkWinConditions(roomCode);
+        if (!hasWinner) {
+          room.state = "VOTE_RESULT";
+        }
+      }
+      broadcastRoomState(roomCode);
+    });
+
+    // ─── CONTINUER LA PARTIE APRES VOTE ──────────────────
+    socket.on("game:continue_round", ({ roomCode }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+
+      room.state = "PLAYING_DEBATE";
+      room.currentSpeakerIndex = 0;
+      room.clueRound += 1;
+      room.votes = {};
+      broadcastRoomState(roomCode);
+    });
+
+    // ─── RELANCER LE LOBBY (REJOUER) ─────────────────────
+    socket.on("game:restart_lobby", ({ roomCode }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+
+      room.state = "LOBBY";
+      room.votes = {};
+      room.speakingOrder = [];
+      room.currentSpeakerIndex = 0;
+      room.clueRound = 1;
+      room.eliminatedPlayer = null;
+      room.winnerTeam = null;
+
+      for (const p of room.players.values()) {
+        p.isReady = false;
+        p.isEliminated = false;
+      }
+
+      broadcastRoomState(roomCode);
     });
 
     // ─── DÉCONNEXION ────────────────────────────────────
     socket.on("disconnect", () => {
       console.log(`🔴 Joueur déconnecté: ${socket.id}`);
-      // Nettoyer les salons
       for (const [roomCode, room] of rooms.entries()) {
         if (room.players.has(socket.id)) {
-          const playerName = room.players.get(socket.id)?.name;
           room.players.delete(socket.id);
-          io.to(roomCode).emit("room:player-left", { id: socket.id, name: playerName });
 
-          // Si le salon est vide, le supprimer
           if (room.players.size === 0) {
             rooms.delete(roomCode);
             console.log(`🗑️ Salon ${roomCode} supprimé (vide)`);
-          }
-          // Si l'hôte part, transférer le rôle au premier joueur disponible
-          else if (socket.id === room.hostId) {
+          } else if (socket.id === room.hostId) {
             const newHost = room.players.values().next().value;
             if (newHost) {
               room.hostId = newHost.id;
               newHost.isHost = true;
-              io.to(roomCode).emit("room:host-changed", newHost);
             }
+            broadcastRoomState(roomCode);
+          } else {
+            broadcastRoomState(roomCode);
           }
         }
       }
