@@ -64,7 +64,8 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
             <div className="w-14 h-14 rounded-2xl bg-primary/20 text-primary flex items-center justify-center">
               <Smartphone size={30} />
             </div>
-            <span className="text-xs font-black uppercase tracking-wider bg-primary/20 text-primary px-3 py-1 rounded-full">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1 rounded-xl flex items-center gap-1.5 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
               Recommandé en soirée
             </span>
           </div>
@@ -91,7 +92,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
             <div className="w-14 h-14 rounded-2xl bg-accent/20 text-accent flex items-center justify-center">
               <Globe size={30} />
             </div>
-            <span className="text-xs font-bold text-foreground/40 bg-white/5 px-3 py-1 rounded-full">
+            <span className="text-[11px] font-bold tracking-wider text-foreground/60 bg-white/5 border border-white/10 px-3 py-1 rounded-xl">
               Multijoueur
             </span>
           </div>
