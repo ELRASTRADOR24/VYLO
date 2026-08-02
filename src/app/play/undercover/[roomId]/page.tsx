@@ -333,7 +333,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </span>
             <div className="flex items-center gap-3">
               <button 
-                onClick={() => { setUndercoverCount(Math.max(1, undercoverCount - 1)); sfxTap(); }}
+                onClick={() => { setUndercoverCount(Math.max(0, undercoverCount - 1)); sfxTap(); }}
                 className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
               >-</button>
               <span className="font-extrabold text-red-500">{undercoverCount}</span>
@@ -355,7 +355,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
               >-</button>
               <span className="font-extrabold text-purple-400">{mrWhiteCount}</span>
               <button 
-                onClick={() => { setMrWhiteCount(Math.min(1, mrWhiteCount + 1)); sfxTap(); }}
+                onClick={() => { setMrWhiteCount(Math.min(playerCount - 2 - undercoverCount, mrWhiteCount + 1)); sfxTap(); }}
                 className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
               >+</button>
             </div>
