@@ -63,10 +63,12 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "T-shirt", undercover: "Chemise", category: "Incontournables de Soirée" },
   { civilian: "Super Mario", undercover: "Sonic", category: "Incontournables de Soirée" },
   { civilian: "Superman", undercover: "Spider-Man", category: "Incontournables de Soirée" },
-  // Animaux (20)
+  // Animaux (26)
   { civilian: "Chat", undercover: "Tigre", category: "Animaux" },
   { civilian: "Chien", undercover: "Loup", category: "Animaux" },
   { civilian: "Lion", undercover: "Tigre", category: "Animaux" },
+  { civilian: "Panthère", undercover: "Jaguar", category: "Animaux" },
+  { civilian: "Léopard", undercover: "Guépard", category: "Animaux" },
   { civilian: "Zèbre", undercover: "Cheval", category: "Animaux" },
   { civilian: "Âne", undercover: "Cheval", category: "Animaux" },
   { civilian: "Lapin", undercover: "Lièvre", category: "Animaux" },
@@ -74,9 +76,13 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Poule", undercover: "Coq", category: "Animaux" },
   { civilian: "Pigeon", undercover: "Colombe", category: "Animaux" },
   { civilian: "Aigle", undercover: "Faucon", category: "Animaux" },
+  { civilian: "Corbeau", undercover: "Corneille", category: "Animaux" },
   { civilian: "Dauphin", undercover: "Requin", category: "Animaux" },
   { civilian: "Baleine", undercover: "Dauphin", category: "Animaux" },
+  { civilian: "Requin", undercover: "Orque", category: "Animaux" },
   { civilian: "Tortue", undercover: "Escargot", category: "Animaux" },
+  { civilian: "Escargot", undercover: "Limace", category: "Animaux" },
+  { civilian: "Tortue", undercover: "Carapace", category: "Animaux" },
   { civilian: "Grenouille", undercover: "Crapaud", category: "Animaux" },
   { civilian: "Crocodile", undercover: "Alligator", category: "Animaux" },
   { civilian: "Souris", undercover: "Rat", category: "Animaux" },
@@ -117,8 +123,17 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Kinder Bueno", undercover: "KitKat", category: "Nourriture & Cuisine" },
   { civilian: "Haribo", undercover: "Dragibus", category: "Nourriture & Cuisine" },
   { civilian: "Camembert", undercover: "Brie", category: "Nourriture & Cuisine" },
+  { civilian: "Fromage", undercover: "Camembert", category: "Nourriture & Cuisine" },
   { civilian: "Raclette", undercover: "Fondue", category: "Nourriture & Cuisine" },
   { civilian: "Tartiflette", undercover: "Gratin dauphinois", category: "Nourriture & Cuisine" },
+  { civilian: "Cerise", undercover: "Griotte", category: "Nourriture & Cuisine" },
+  { civilian: "Raisin", undercover: "Myrtille", category: "Nourriture & Cuisine" },
+  { civilian: "Ananas", undercover: "Mangue", category: "Nourriture & Cuisine" },
+  { civilian: "Kiwi", undercover: "Avocat", category: "Nourriture & Cuisine" },
+  { civilian: "Pastèque", undercover: "Melon", category: "Nourriture & Cuisine" },
+  { civilian: "Sandwich", undercover: "Panini", category: "Nourriture & Cuisine" },
+  { civilian: "Pain", undercover: "Baguette", category: "Nourriture & Cuisine" },
+  { civilian: "Poivre", undercover: "Paprika", category: "Nourriture & Cuisine" },
 
   // Football & Sport (15)
   { civilian: "Mbappé", undercover: "Vinícius Jr.", category: "Football & Sport" },
@@ -205,14 +220,21 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Tom Cruise", undercover: "Keanu Reeves", category: "Célébrités & Star System" },
   { civilian: "Dwayne Johnson", undercover: "Vin Diesel", category: "Célébrités & Star System" },
 
-  // Objets du quotidien (20)
+  // Objets du quotidien (28)
   { civilian: "Sac à main", undercover: "Sac à dos", category: "Objets du quotidien" },
   { civilian: "Stylo", undercover: "Crayon", category: "Objets du quotidien" },
+  { civilian: "Feutre", undercover: "Surligneur", category: "Objets du quotidien" },
+  { civilian: "Cahier", undercover: "Carnet", category: "Objets du quotidien" },
+  { civilian: "Livre", undercover: "Roman", category: "Objets du quotidien" },
+  { civilian: "Journal", undercover: "Magazine", category: "Objets du quotidien" },
+  { civilian: "Ordinateur", undercover: "PC", category: "Objets du quotidien" },
   { civilian: "Clavier", undercover: "Souris", category: "Objets du quotidien" },
   { civilian: "Écran", undercover: "Télévision", category: "Objets du quotidien" },
   { civilian: "Téléphone", undercover: "Tablette", category: "Objets du quotidien" },
   { civilian: "Chargeur", undercover: "Batterie", category: "Objets du quotidien" },
   { civilian: "Casque", undercover: "Écouteurs", category: "Objets du quotidien" },
+  { civilian: "Télécommande", undercover: "Manette", category: "Objets du quotidien" },
+  { civilian: "Manette", undercover: "Volant", category: "Objets du quotidien" },
   { civilian: "Lunettes", undercover: "Jumelles", category: "Objets du quotidien" },
   { civilian: "Porte", undercover: "Fenêtre", category: "Objets du quotidien" },
   { civilian: "Chaise", undercover: "Fauteuil", category: "Objets du quotidien" },
@@ -225,6 +247,8 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Parapluie", undercover: "Parasol", category: "Objets du quotidien" },
   { civilian: "Couteau", undercover: "Fourchette", category: "Objets du quotidien" },
   { civilian: "Cuillère", undercover: "Louche", category: "Objets du quotidien" },
+  { civilian: "Assiette", undercover: "Plateau", category: "Objets du quotidien" },
+  { civilian: "Verre", undercover: "Tasse", category: "Objets du quotidien" },
   { civilian: "Balai", undercover: "Aspirateur", category: "Objets du quotidien" },
 
   // Vêtements & Mode (10)
@@ -263,9 +287,12 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Tapis", undercover: "Moquette", category: "Maison" },
   { civilian: "Terrasse", undercover: "Balcon", category: "Maison" },
 
-  // Métiers (10)
+  // Métiers (17)
   { civilian: "Médecin", undercover: "Infirmier", category: "Métiers" },
+  { civilian: "Pharmacien", undercover: "Docteur", category: "Métiers" },
   { civilian: "Pompier", undercover: "Policier", category: "Métiers" },
+  { civilian: "Police", undercover: "Gendarmerie", category: "Métiers" },
+  { civilian: "Pompier", undercover: "Ambulancier", category: "Métiers" },
   { civilian: "Professeur", undercover: "Instituteur", category: "Métiers" },
   { civilian: "Avocat", undercover: "Juge", category: "Métiers" },
   { civilian: "Boulanger", undercover: "Pâtissier", category: "Métiers" },
@@ -273,7 +300,11 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Architecte", undercover: "Ingénieur", category: "Métiers" },
   { civilian: "Journaliste", undercover: "Reporter", category: "Métiers" },
   { civilian: "Pilote", undercover: "Steward", category: "Métiers" },
+  { civilian: "Pilote", undercover: "Commandant de bord", category: "Métiers" },
   { civilian: "Développeur", undercover: "Designer", category: "Métiers" },
+  { civilian: "Développeur", undercover: "Programmeur", category: "Métiers" },
+  { civilian: "Acteur", undercover: "Chanteur", category: "Métiers" },
+  { civilian: "Danseur", undercover: "Chorégraphe", category: "Métiers" },
 
   // Pays & Géographie (20)
   { civilian: "France", undercover: "Belgique", category: "Pays & Géographie" },
