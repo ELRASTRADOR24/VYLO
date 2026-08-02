@@ -22,7 +22,9 @@ export const CATEGORIES = [
   "Football & Sport",
   "Jeux vidéo",
   "Films & Séries",
+  "Célébrités & Star System",
   "Objets du quotidien",
+  "Vêtements & Mode",
   "Transports",
   "Maison",
   "Métiers",
@@ -56,7 +58,7 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Papillon", undercover: "Libellule", category: "Animaux" },
   { civilian: "Moustique", undercover: "Mouche", category: "Animaux" },
 
-  // Nourriture & Cuisine (20)
+  // Nourriture & Cuisine (33)
   { civilian: "Pizza", undercover: "Tarte", category: "Nourriture & Cuisine" },
   { civilian: "Hamburger", undercover: "Cheeseburger", category: "Nourriture & Cuisine" },
   { civilian: "Riz", undercover: "Pâtes", category: "Nourriture & Cuisine" },
@@ -77,6 +79,19 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Glace", undercover: "Sorbet", category: "Nourriture & Cuisine" },
   { civilian: "Biscuit", undercover: "Cookie", category: "Nourriture & Cuisine" },
   { civilian: "Croissant", undercover: "Pain au chocolat", category: "Nourriture & Cuisine" },
+  { civilian: "Tiramisu", undercover: "Mousse au chocolat", category: "Nourriture & Cuisine" },
+  { civilian: "Cookie", undercover: "Brownie", category: "Nourriture & Cuisine" },
+  { civilian: "Donut", undercover: "Beignet", category: "Nourriture & Cuisine" },
+  { civilian: "Tacos", undercover: "Burrito", category: "Nourriture & Cuisine" },
+  { civilian: "Nachos", undercover: "Doritos", category: "Nourriture & Cuisine" },
+  { civilian: "Nutella", undercover: "Nocciolata", category: "Nourriture & Cuisine" },
+  { civilian: "Red Bull", undercover: "Monster", category: "Nourriture & Cuisine" },
+  { civilian: "Fanta", undercover: "Orangina", category: "Nourriture & Cuisine" },
+  { civilian: "Kinder Bueno", undercover: "KitKat", category: "Nourriture & Cuisine" },
+  { civilian: "Haribo", undercover: "Dragibus", category: "Nourriture & Cuisine" },
+  { civilian: "Camembert", undercover: "Brie", category: "Nourriture & Cuisine" },
+  { civilian: "Raclette", undercover: "Fondue", category: "Nourriture & Cuisine" },
+  { civilian: "Tartiflette", undercover: "Gratin dauphinois", category: "Nourriture & Cuisine" },
 
   // Football & Sport (15)
   { civilian: "Mbappé", undercover: "Vinícius Jr.", category: "Football & Sport" },
@@ -95,7 +110,7 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Chaussures", undercover: "Crampons", category: "Football & Sport" },
   { civilian: "Stade", undercover: "Arène", category: "Football & Sport" },
 
-  // Jeux vidéo (15)
+  // Jeux vidéo (25)
   { civilian: "PlayStation", undercover: "Xbox", category: "Jeux vidéo" },
   { civilian: "Nintendo", undercover: "Sega", category: "Jeux vidéo" },
   { civilian: "Minecraft", undercover: "Roblox", category: "Jeux vidéo" },
@@ -111,8 +126,18 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Elden Ring", undercover: "Dark Souls", category: "Jeux vidéo" },
   { civilian: "Cyberpunk", undercover: "Watch Dogs", category: "Jeux vidéo" },
   { civilian: "Assassin's Creed", undercover: "Ghost of Tsushima", category: "Jeux vidéo" },
+  { civilian: "Mario Kart", undercover: "Crash Team Racing", category: "Jeux vidéo" },
+  { civilian: "Clash Royale", undercover: "Clash of Clans", category: "Jeux vidéo" },
+  { civilian: "Among Us", undercover: "Loup-Garou", category: "Jeux vidéo" },
+  { civilian: "League of Legends", undercover: "Dota 2", category: "Jeux vidéo" },
+  { civilian: "Rocket League", undercover: "FIFA", category: "Jeux vidéo" },
+  { civilian: "Super Smash Bros", undercover: "Street Fighter", category: "Jeux vidéo" },
+  { civilian: "Tetris", undercover: "Pac-Man", category: "Jeux vidéo" },
+  { civilian: "Animal Crossing", undercover: "Les Sims", category: "Jeux vidéo" },
+  { civilian: "Subnautica", undercover: "Sea of Thieves", category: "Jeux vidéo" },
+  { civilian: "Dead by Daylight", undercover: "Phasmophobia", category: "Jeux vidéo" },
 
-  // Films & Séries (15)
+  // Films & Séries (25)
   { civilian: "Harry Potter", undercover: "Hermione", category: "Films & Séries" },
   { civilian: "Batman", undercover: "Superman", category: "Films & Séries" },
   { civilian: "Joker", undercover: "Harley Quinn", category: "Films & Séries" },
@@ -128,6 +153,30 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Stranger Things", undercover: "Dark", category: "Films & Séries" },
   { civilian: "Naruto", undercover: "Boruto", category: "Films & Séries" },
   { civilian: "One Piece", undercover: "Fairy Tail", category: "Films & Séries" },
+  { civilian: "Squid Game", undercover: "Alice in Borderland", category: "Films & Séries" },
+  { civilian: "Euphoria", undercover: "Skins", category: "Films & Séries" },
+  { civilian: "Peaky Blinders", undercover: "Sons of Anarchy", category: "Films & Séries" },
+  { civilian: "The Walking Dead", undercover: "The Last of Us", category: "Films & Séries" },
+  { civilian: "Fast & Furious", undercover: "Need for Speed", category: "Films & Séries" },
+  { civilian: "Pirates des Caraïbes", undercover: "Peter Pan", category: "Films & Séries" },
+  { civilian: "Jurassic Park", undercover: "Godzilla", category: "Films & Séries" },
+  { civilian: "Inception", undercover: "Interstellar", category: "Films & Séries" },
+  { civilian: "The Dark Knight", undercover: "Man of Steel", category: "Films & Séries" },
+  { civilian: "Spider-Man: No Way Home", undercover: "Doctor Strange", category: "Films & Séries" },
+
+  // Célébrités & Star System (12)
+  { civilian: "Rihanna", undercover: "Beyoncé", category: "Célébrités & Star System" },
+  { civilian: "Drake", undercover: "Kanye West", category: "Célébrités & Star System" },
+  { civilian: "Snoop Dogg", undercover: "Wiz Khalifa", category: "Célébrités & Star System" },
+  { civilian: "Michael Jackson", undercover: "Prince", category: "Célébrités & Star System" },
+  { civilian: "Taylor Swift", undercover: "Katy Perry", category: "Célébrités & Star System" },
+  { civilian: "Billie Eilish", undercover: "Olivia Rodrigo", category: "Célébrités & Star System" },
+  { civilian: "Zendaya", undercover: "Jenna Ortega", category: "Célébrités & Star System" },
+  { civilian: "Ryan Gosling", undercover: "Ryan Reynolds", category: "Célébrités & Star System" },
+  { civilian: "Leonardo DiCaprio", undercover: "Brad Pitt", category: "Célébrités & Star System" },
+  { civilian: "Will Smith", undercover: "Denzel Washington", category: "Célébrités & Star System" },
+  { civilian: "Tom Cruise", undercover: "Keanu Reeves", category: "Célébrités & Star System" },
+  { civilian: "Dwayne Johnson", undercover: "Vin Diesel", category: "Célébrités & Star System" },
 
   // Objets du quotidien (20)
   { civilian: "Sac à main", undercover: "Sac à dos", category: "Objets du quotidien" },
@@ -150,6 +199,18 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Couteau", undercover: "Fourchette", category: "Objets du quotidien" },
   { civilian: "Cuillère", undercover: "Louche", category: "Objets du quotidien" },
   { civilian: "Balai", undercover: "Aspirateur", category: "Objets du quotidien" },
+
+  // Vêtements & Mode (10)
+  { civilian: "T-shirt", undercover: "Débardeur", category: "Vêtements & Mode" },
+  { civilian: "Pull", undercover: "Sweat à capuche", category: "Vêtements & Mode" },
+  { civilian: "Jean", undercover: "Pantalon de jogging", category: "Vêtements & Mode" },
+  { civilian: "Short", undercover: "Bermudas", category: "Vêtements & Mode" },
+  { civilian: "Manteau", undercover: "Veste", category: "Vêtements & Mode" },
+  { civilian: "Baskets", undercover: "Sneakers", category: "Vêtements & Mode" },
+  { civilian: "Bottes", undercover: "Bottines", category: "Vêtements & Mode" },
+  { civilian: "Pyjama", undercover: "Peignoir", category: "Vêtements & Mode" },
+  { civilian: "Ceinture", undercover: "Bretelles", category: "Vêtements & Mode" },
+  { civilian: "Chaussettes", undercover: "Collants", category: "Vêtements & Mode" },
 
   // Transports (10)
   { civilian: "Voiture", undercover: "Camion", category: "Transports" },
@@ -187,7 +248,7 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Pilote", undercover: "Steward", category: "Métiers" },
   { civilian: "Développeur", undercover: "Designer", category: "Métiers" },
 
-  // Pays & Géographie (10)
+  // Pays & Géographie (20)
   { civilian: "France", undercover: "Belgique", category: "Pays & Géographie" },
   { civilian: "Espagne", undercover: "Portugal", category: "Pays & Géographie" },
   { civilian: "Allemagne", undercover: "Autriche", category: "Pays & Géographie" },
@@ -198,6 +259,16 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Égypte", undercover: "Maroc", category: "Pays & Géographie" },
   { civilian: "Cameroun", undercover: "Congo", category: "Pays & Géographie" },
   { civilian: "Australie", undercover: "Nouvelle-Zélande", category: "Pays & Géographie" },
+  { civilian: "Paris", undercover: "Lyon", category: "Pays & Géographie" },
+  { civilian: "Marseille", undercover: "Nice", category: "Pays & Géographie" },
+  { civilian: "Tokyo", undercover: "Séoul", category: "Pays & Géographie" },
+  { civilian: "New York", undercover: "Los Angeles", category: "Pays & Géographie" },
+  { civilian: "Londres", undercover: "Manchester", category: "Pays & Géographie" },
+  { civilian: "Rome", undercover: "Milan", category: "Pays & Géographie" },
+  { civilian: "Madrid", undercover: "Barcelone", category: "Pays & Géographie" },
+  { civilian: "Dubaï", undercover: "Abou Dhabi", category: "Pays & Géographie" },
+  { civilian: "Rio de Janeiro", undercover: "São Paulo", category: "Pays & Géographie" },
+  { civilian: "Montréal", undercover: "Toronto", category: "Pays & Géographie" },
 
   // Marques (10)
   { civilian: "Nike", undercover: "Adidas", category: "Marques" },
@@ -211,7 +282,7 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Audi", undercover: "BMW", category: "Marques" },
   { civilian: "Mercedes", undercover: "Tesla", category: "Marques" },
 
-  // Mode Expert (20)
+  // Mode Expert (35)
   { civilian: "Nuage", undercover: "Brouillard", category: "Mode Expert" },
   { civilian: "Rivière", undercover: "Fleuve", category: "Mode Expert" },
   { civilian: "Océan", undercover: "Mer", category: "Mode Expert" },
@@ -232,6 +303,21 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Courage", undercover: "Audace", category: "Mode Expert" },
   { civilian: "Vitesse", undercover: "Rapidité", category: "Mode Expert" },
   { civilian: "Chance", undercover: "Hasard", category: "Mode Expert" },
+  { civilian: "Espoir", undercover: "Illusions", category: "Mode Expert" },
+  { civilian: "Rêve", undercover: "Cauchemar", category: "Mode Expert" },
+  { civilian: "Secret", undercover: "Mystère", category: "Mode Expert" },
+  { civilian: "Vérité", undercover: "Réalité", category: "Mode Expert" },
+  { civilian: "Mémoire", undercover: "Souvenir", category: "Mode Expert" },
+  { civilian: "Passé", undercover: "Futur", category: "Mode Expert" },
+  { civilian: "Ombre", undercover: "Pénombre", category: "Mode Expert" },
+  { civilian: "Miroir", undercover: "Reflet", category: "Mode Expert" },
+  { civilian: "Énigme", undercover: "Casse-tête", category: "Mode Expert" },
+  { civilian: "Trésor", undercover: "Fortune", category: "Mode Expert" },
+  { civilian: "Labyrinthe", undercover: "Dédale", category: "Mode Expert" },
+  { civilian: "Illusion", undercover: "Mirage", category: "Mode Expert" },
+  { civilian: "Éclipse", undercover: "Crépuscule", category: "Mode Expert" },
+  { civilian: "Paradis", undercover: "Enfer", category: "Mode Expert" },
+  { civilian: "Ange", undercover: "Démon", category: "Mode Expert" },
 ];
 
 /** Validation stricte de la répartition des rôles */
