@@ -479,13 +479,20 @@ export default function WerewolfGame({ params }: { params: Promise<{ roomId: str
     return (
       <main className="min-h-screen flex flex-col items-center py-6 md:py-10 px-4 md:px-8 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto pb-36">
         <div className="w-full flex items-center justify-between mb-6">
-          <button onClick={() => router.back()} className="h-10 w-10 bg-surface rounded-full flex items-center justify-center border border-white/10">
-            <ChevronLeft className="w-5 h-5" />
+          <button 
+            onClick={() => {
+              sfxTap();
+              if (typeof window !== "undefined" && window.history.length > 1) router.back();
+              else router.push("/library");
+            }} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer z-50"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
           <div className="text-xl font-black flex items-center gap-2">
             🐺 Loup-Garou <span className="text-xs bg-purple-500/20 text-purple-400 font-bold px-2 py-0.5 rounded-full border border-purple-500/30">Local</span>
           </div>
-          <div className="w-10" />
+          <div className="w-16" />
         </div>
 
         {/* Ajout des Joueurs */}

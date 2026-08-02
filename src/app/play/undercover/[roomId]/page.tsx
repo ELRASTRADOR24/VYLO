@@ -278,12 +278,19 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   if (phase === "CONFIG") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-8 pb-32 px-6 max-w-md mx-auto relative">
-        <div className="w-full flex items-center mb-6">
-          <button onClick={() => router.back()} className="h-12 w-12 bg-surface rounded-full flex items-center justify-center">
-            <ChevronLeft size={24} />
+        <div className="w-full flex items-center justify-between mb-6">
+          <button 
+            onClick={() => {
+              sfxTap();
+              if (typeof window !== "undefined" && window.history.length > 1) router.back();
+              else router.push("/library");
+            }} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer z-50"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
-          <div className="flex-1 text-center font-extrabold text-xl">Configuration Undercover</div>
-          <div className="h-12 w-12" />
+          <div className="flex-1 text-center font-black text-lg">Undercover Local</div>
+          <div className="w-16" />
         </div>
 
         {/* Choix de la Catégorie */}

@@ -37,12 +37,19 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   return (
     <main className="min-h-screen flex flex-col items-center px-4 md:px-8 pt-8 pb-32 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto relative">
       {/* Navigation Header */}
-      <div className="w-full flex items-center mb-6">
-        <button onClick={() => router.back()} className="h-12 w-12 bg-surface rounded-full flex items-center justify-center border border-white/10 hover:border-white/20 transition-all">
-          <ChevronLeft className="w-6 h-6" />
+      <div className="w-full flex items-center justify-between mb-6">
+        <button 
+          onClick={() => {
+            sfxTap();
+            if (typeof window !== "undefined" && window.history.length > 1) router.back();
+            else router.push("/library");
+          }} 
+          className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer z-50"
+        >
+          <ChevronLeft size={16} className="text-primary" /> Retour
         </button>
         <div className="flex-1 text-center font-black text-xl capitalize">{gameConfig?.name || gameId}</div>
-        <div className="h-12 w-12" />
+        <div className="w-16" />
       </div>
 
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start">

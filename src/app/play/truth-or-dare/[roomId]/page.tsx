@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Users, UserPlus, Play, Check, X, 
-  RotateCcw, Flame, HelpCircle, Trophy, Trash2, Dices
+  RotateCcw, Flame, HelpCircle, Trophy, Trash2, Dices, LogOut
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getRandomCard, TodCard, TOD_CATEGORIES, IntensityLevel, CardType } from "@/games/truth-or-dare/logic";
@@ -40,6 +40,15 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
   const [currentSpeakerIdx, setCurrentSpeakerIdx] = useState(0);
   const [activeCard, setActiveCard] = useState<TodCard | null>(null);
 
+  const handleLeaveGame = () => {
+    sfxTap();
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/library");
+    }
+  };
+
   const handleAddPlayer = () => {
     if (!newPlayerName.trim()) return;
     setPlayers(prev => [
@@ -56,9 +65,6 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     sfxTap();
   };
 
-  // ─────────────────────────────────────────────────────────
-  // 1. DÉMARRAGE DE LA PARTIE
-  // ─────────────────────────────────────────────────────────
   const handleStartGame = () => {
     if (players.length < 2) return alert("Il faut au moins 2 joueurs !");
     sfxSuspense();
@@ -72,9 +78,6 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     setPhase("SPIN");
   };
 
-  // ─────────────────────────────────────────────────────────
-  // 2. SÉLECTION ACTION OU VÉRITÉ
-  // ─────────────────────────────────────────────────────────
   const handleSelectType = (type: CardType) => {
     sfxReveal();
     const card = getRandomCard(type, intensity);
@@ -82,9 +85,6 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     setPhase("CARD_REVEAL");
   };
 
-  // ─────────────────────────────────────────────────────────
-  // 3. RÉSULTAT DU DÉFI
-  // ─────────────────────────────────────────────────────────
   const handleCompleteChallenge = (success: boolean) => {
     if (success) {
       sfxSuccess();
@@ -97,24 +97,22 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
       sfxError();
     }
 
-    // Tirer directement le joueur suivant
     spinNextPlayer();
   };
-
-  // ─────────────────────────────────────────────────────────
-  // 🎨 SÉRIGRAPHIE DES ÉCRANS
-  // ─────────────────────────────────────────────────────────
 
   // --- ÉCRAN 1 : CONFIGURATION DU JEU ---
   if (phase === "CONFIG") {
     return (
-      <main className="min-h-screen flex flex-col items-center pt-8 pb-32 px-6 max-w-md mx-auto relative">
-        <div className="w-full flex items-center mb-6">
-          <button onClick={() => router.back()} className="h-12 w-12 bg-surface rounded-full flex items-center justify-center">
-            <ChevronLeft size={24} />
+      <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto relative">
+        <div className="w-full flex items-center justify-between mb-6">
+          <button 
+            onClick={handleLeaveGame} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
-          <div className="flex-1 text-center font-extrabold text-xl">Action ou Vérité</div>
-          <div className="h-12 w-12" />
+          <div className="text-xl font-black">Action ou Vérité</div>
+          <div className="w-20" />
         </div>
 
         {/* Sélection de l'intensité */}
@@ -178,9 +176,9 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-xl border-t border-border/50 z-50">
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-2xl border-t border-white/10 z-50">
           <div className="max-w-md mx-auto">
-            <Button variant="primary" className="w-full h-16 text-lg gap-2" onClick={handleStartGame}>
+            <Button variant="primary" className="w-full h-16 text-lg gap-2 shadow-summer-glow" onClick={handleStartGame}>
               <Dices size={22} /> Lancer la partie ({players.length} joueurs)
             </Button>
           </div>
@@ -194,12 +192,22 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     const currentSpeaker = players[currentSpeakerIdx];
 
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto">
+      <main className="min-h-screen flex flex-col items-center justify-between py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto">
         <div className="w-full flex items-center justify-between">
-          <button onClick={() => setPhase("CONFIG")} className="text-foreground/50 text-sm font-bold">← Changer les joueurs</button>
-          <button onClick={() => setPhase("SCORES")} className="flex items-center gap-1 text-yellow-400 text-xs font-bold bg-white/5 px-3 py-1.5 rounded-full">
-            <Trophy size={14} /> Scores
+          <button 
+            onClick={handleLeaveGame} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
+          <div className="flex gap-2">
+            <button onClick={() => setPhase("CONFIG")} className="text-foreground/60 text-xs font-bold bg-white/5 px-3 py-1.5 rounded-full border border-white/5 hover:border-white/10">
+              Joueurs
+            </button>
+            <button onClick={() => setPhase("SCORES")} className="flex items-center gap-1 text-yellow-400 text-xs font-bold bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+              <Trophy size={14} /> Scores
+            </button>
+          </div>
         </div>
 
         <Card className="w-full p-8 flex flex-col items-center text-center border border-white/10 shadow-glow my-auto">
@@ -240,16 +248,22 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     const isTruth = activeCard.type === "TRUTH";
 
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto text-center">
-        <div className="w-full text-center">
-          <span className={`text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full flex items-center justify-center gap-1 w-max mx-auto ${isTruth ? 'bg-primary/20 text-primary' : 'bg-secondary/20 text-secondary'}`}>
+      <main className="min-h-screen flex flex-col items-center justify-between py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto text-center">
+        <div className="w-full flex items-center justify-between">
+          <button 
+            onClick={handleLeaveGame} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
+          </button>
+          <span className={`text-xs font-black uppercase tracking-widest px-3.5 py-1.5 rounded-full flex items-center gap-1 ${isTruth ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-secondary/20 text-secondary border border-secondary/30'}`}>
             {isTruth ? <HelpCircle size={14} /> : <Flame size={14} />}
             {isTruth ? "VÉRITÉ" : "ACTION"}
           </span>
-          <h2 className="text-xl font-extrabold mt-3 text-foreground/70">{currentSpeaker?.name}</h2>
         </div>
 
         <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto relative">
+          <h2 className="text-xl font-extrabold text-foreground/80 mb-4">{currentSpeaker?.name}</h2>
           <span className="text-[10px] font-black uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full text-foreground/50 mb-6">
             Niveau {activeCard.intensity}
           </span>
@@ -259,7 +273,7 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
         <div className="w-full flex flex-col gap-3">
           <Button 
             variant="primary" 
-            className="w-full py-5 text-lg gap-2"
+            className="w-full py-5 text-lg gap-2 shadow-summer-glow"
             onClick={() => handleCompleteChallenge(true)}
           >
             <Check size={22} /> Défi Réussi ! (+50 pts)
@@ -282,10 +296,19 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
 
     return (
-      <main className="min-h-screen flex flex-col items-center py-10 px-6 max-w-md mx-auto">
-        <h1 className="text-3xl font-black mb-8 flex items-center gap-2">
-          <Trophy className="text-yellow-400" /> Classement
-        </h1>
+      <main className="min-h-screen flex flex-col items-center py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto">
+        <div className="w-full flex items-center justify-between mb-6">
+          <button 
+            onClick={handleLeaveGame} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
+          </button>
+          <h1 className="text-2xl font-black flex items-center gap-2">
+            <Trophy className="text-yellow-400" /> Classement
+          </h1>
+          <div className="w-16" />
+        </div>
 
         <Card className="w-full p-6 mb-8 border border-white/10 shadow-glow">
           <div className="space-y-4">
@@ -301,7 +324,7 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
           </div>
         </Card>
 
-        <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={spinNextPlayer}>
+        <Button variant="primary" className="w-full py-5 text-lg gap-2 shadow-summer-glow" onClick={spinNextPlayer}>
           <Dices size={22} /> Joueur Suivant →
         </Button>
       </main>

@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   Eye, EyeOff, Skull, Trophy, Share, Wifi, WifiOff, Users, Crown, QrCode, 
-  Play, Flame, ShieldAlert, Mic, Vote, RefreshCw, ArrowRight, Check, Sparkles
+  Play, Flame, ShieldAlert, Mic, Vote, RefreshCw, ArrowRight, Check, Sparkles, ChevronLeft
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { WORD_PAIRS_DATABASE, CATEGORIES, CategoryName, generateRolesFromConfig } from "@/games/undercover/logic";
@@ -155,8 +155,17 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
 
         {/* Status bar */}
         <div className="w-full flex items-center justify-between mb-6">
-          <button onClick={() => router.back()} className="text-foreground/50 text-sm font-bold hover:text-foreground">← Quitter</button>
-          <div className={`flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full ${isConnected ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+          <button 
+            onClick={() => {
+              sfxTap();
+              if (typeof window !== "undefined" && window.history.length > 1) router.back();
+              else router.push("/library");
+            }} 
+            className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer z-50"
+          >
+            <ChevronLeft size={16} className="text-primary" /> Quitter
+          </button>
+          <div className={`flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full ${isConnected ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
             {isConnected ? <Wifi size={12} /> : <WifiOff size={12} />}
             {isConnected ? "En ligne" : "Connexion..."}
           </div>
