@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  /* Clean Authentic Gaming Palette */
-  --background: #0C0D14; 
-  --surface: #141622;    
-  --surface-elevated: #1C1E2E;
+  /* Playful Summer Sunset Palette */
+  --background: #0C0E1A; 
+  --surface: #151829;    
+  --surface-elevated: #1E2238;
   --foreground: #FFFFFF; 
   --border: rgba(255, 255, 255, 0.08);     
   
-  /* Solid Punchy Brand Colors */
-  --primary: #FF4757;          /* Coral Red */
+  /* Vibrant Warm Brand Colors */
+  --primary: #FF5E36;          /* Warm Sunburst Orange */
   --primary-foreground: #FFFFFF;
-  --secondary: #3742FA;        /* Cobalt Blue */
-  --accent: #FFA502;           /* Warm Amber Gold */
-  --pink: #FF6B81;             /* Rose Pink */
-  --purple: #70A1FF;           /* Sky Blue */
+  --secondary: #00A3FF;        /* Electric Summer Cyan-Blue */
+  --accent: #FF2A6D;           /* Hot Sunset Coral */
+  --pink: #FF9F43;             /* Warm Golden Amber */
+  --purple: #9D4EDD;           /* Vibrant Violet */
   
-  --radius: 1.25rem;     
+  --radius: 1.5rem;     
 }
 
 @theme inline {
@@ -36,6 +36,11 @@
 
 body {
   background-color: var(--background);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(255, 94, 54, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(0, 163, 255, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255, 42, 109, 0.08) 0%, transparent 60%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,40 +48,27 @@ body {
   min-height: 100vh;
 }
 
-/* Boutons & Cartes Tactiles Gaming */
-.btn-tactile-primary {
-  background-color: #FF4757;
-  box-shadow: 0 4px 0 #C0392B;
-  transition: all 0.1s ease;
-}
-.btn-tactile-primary:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 #C0392B;
+/* Gradients Chaleureux & Effets de Lumière */
+.bg-gradient-summer {
+  background: linear-gradient(135deg, #FF5E36 0%, #FF2A6D 50%, #00A3FF 100%);
 }
 
-.btn-tactile-secondary {
-  background-color: #3742FA;
-  box-shadow: 0 4px 0 #1E272C;
-  transition: all 0.1s ease;
-}
-.btn-tactile-secondary:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 #1E272C;
+.text-gradient-summer {
+  background: linear-gradient(135deg, #FF5E36 0%, #FF9F43 40%, #00A3FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.btn-tactile-surface {
-  background-color: #1C1E2E;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 0 #0C0D14;
-  transition: all 0.1s ease;
+.shadow-summer-glow {
+  box-shadow: 0 12px 32px -8px rgba(255, 94, 54, 0.35);
 }
-.btn-tactile-surface:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 #0C0D14;
+
+.shadow-blue-glow {
+  box-shadow: 0 12px 32px -8px rgba(0, 163, 255, 0.35);
 }
 
 @utility shadow-soft {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
 @utility pb-safe {
