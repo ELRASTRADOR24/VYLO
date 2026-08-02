@@ -24,9 +24,10 @@ type PassPhase =
   | "ENTER_NAME"         // 3. Carte cliquable -> Saisie prénom
   | "SHOW_WORD"          // 4. "Voir mon mot secret" -> suspense -> mot -> "J'ai mémorisé"
   | "SPEAKING_TURNS"     // 5. Tour de parole mélangé ("C'est au tour de X")
-  | "VOTING_CIRCULATE"   // 6. Circulation du téléphone pour vote individuel
-  | "VOTE_SUMMARY"       // 7. Résultats du vote & annonce de l'éliminé
-  | "END_GAME";          // 8. Bilan, rôles révélés & attribution des points
+  | "TURN_DECISION"      // 6. Choix après chaque tour : Voter ou Refaire un tour
+  | "VOTING_CIRCULATE"   // 7. Circulation du téléphone pour vote individuel
+  | "VOTE_SUMMARY"       // 8. Résultats du vote & annonce de l'éliminé
+  | "END_GAME";          // 9. Bilan, rôles révélés & attribution des points
 
 export default function UndercoverLocalGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
@@ -49,6 +50,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // --- Gameplay State ---
   const [speakingOrder, setSpeakingOrder] = useState<UndercoverPlayer[]>([]);
   const [currentSpeakerIdx, setCurrentSpeakerIdx] = useState(0);
+  const [clueRoundNumber, setClueRoundNumber] = useState(1);
   const [timerSeconds, setTimerSeconds] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
 
@@ -155,6 +157,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const order = shuffleSpeakingOrder(players);
     setSpeakingOrder(order);
     setCurrentSpeakerIdx(0);
+    setClueRoundNumber(1);
     sfxSuccess();
     setPhase("SPEAKING_TURNS");
   };
@@ -164,9 +167,16 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     if (currentSpeakerIdx < speakingOrder.length - 1) {
       setCurrentSpeakerIdx(prev => prev + 1);
     } else {
-      // Fin du tour de parole ➔ Passage au vote
-      startVotingPhase();
+      // Fin du tour d'indices actuel ➔ Écran de décision (Vote ou Autre tour)
+      setPhase("TURN_DECISION");
     }
+  };
+
+  const startAnotherClueRound = () => {
+    sfxTap();
+    setClueRoundNumber(prev => prev + 1);
+    setCurrentSpeakerIdx(0);
+    setPhase("SPEAKING_TURNS");
   };
 
   // ─────────────────────────────────────────────────────────
@@ -488,8 +498,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     return (
       <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto">
         <div className="w-full text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-primary">Phase d'indices</span>
-          <h1 className="text-2xl font-black mt-1">Tour {currentSpeakerIdx + 1} / {speakingOrder.length}</h1>
+          <span className="text-xs font-bold uppercase tracking-widest text-primary">Tour d'indices n°{clueRoundNumber}</span>
+          <h1 className="text-2xl font-black mt-1">Joueur {currentSpeakerIdx + 1} / {speakingOrder.length}</h1>
         </div>
 
         <Card className="w-full p-10 flex flex-col items-center text-center border border-white/10 shadow-glow my-auto">
@@ -499,13 +509,44 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           <p className="text-sm font-bold text-foreground/50 mb-2">C'est au tour de</p>
           <h2 className="text-4xl font-black text-primary mb-6">{speaker?.name}</h2>
           <p className="text-xs text-foreground/50 max-w-xs">
-            Donne <span className="font-bold text-foreground">un seul mot</span> comme indice sur ton mot secret à voix haute.
+            Donne <span className="font-bold text-foreground">un nouveau mot indice</span> sur ton mot secret à voix haute.
           </p>
         </Card>
 
         <Button variant="primary" className="w-full py-5 text-lg" onClick={handleNextSpeaker}>
-          {currentSpeakerIdx < speakingOrder.length - 1 ? "Tour suivant →" : "Passer au vote final 🗳️"}
+          {currentSpeakerIdx < speakingOrder.length - 1 ? "Joueur suivant →" : "Terminer le tour d'indices ✓"}
         </Button>
+      </main>
+    );
+  }
+
+  // --- ÉCRAN : DÉCISION ENTRE VOTER ET REFAIRE UN TOUR D'INDICES ---
+  if (phase === "TURN_DECISION") {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto text-center">
+        <div className="w-full text-center">
+          <span className="text-xs font-bold uppercase tracking-widest text-primary">Fin du tour d'indices n°{clueRoundNumber}</span>
+          <h1 className="text-3xl font-black mt-1">Que voulez-vous faire ?</h1>
+        </div>
+
+        <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto">
+          <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center text-3xl font-black mb-4">
+            💭
+          </div>
+          <h2 className="text-xl font-extrabold mb-2">Tous les joueurs ont donné leur indice.</h2>
+          <p className="text-foreground/60 text-xs leading-relaxed max-w-xs">
+            Vous pouvez passer au vote pour éliminer un suspect ou faire un nouveau tour d'indices pour en savoir plus.
+          </p>
+        </Card>
+
+        <div className="w-full flex flex-col gap-3">
+          <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={startVotingPhase}>
+            Passer au vote d'élimination 🗳️
+          </Button>
+          <Button variant="surface" className="w-full py-4 text-md gap-2" onClick={startAnotherClueRound}>
+            Faire le tour n°{clueRoundNumber + 1} d'indices 🔄
+          </Button>
+        </div>
       </main>
     );
   }
