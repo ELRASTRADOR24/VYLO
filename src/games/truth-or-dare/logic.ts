@@ -1,5 +1,5 @@
 export type CardType = "TRUTH" | "DARE";
-export type IntensityLevel = "Soft 🌸" | "Fun 🥳" | "Piquant 🌶️" | "Toutes 🔥";
+export type IntensityLevel = "Toutes" | "Soft" | "Fun" | "Piquant";
 
 export interface TodCard {
   type: CardType;
@@ -7,7 +7,7 @@ export interface TodCard {
   intensity: "Soft" | "Fun" | "Piquant";
 }
 
-export const TOD_CATEGORIES: IntensityLevel[] = ["Toutes 🔥", "Soft 🌸", "Fun 🥳", "Piquant 🌶️"];
+export const TOD_CATEGORIES: IntensityLevel[] = ["Toutes", "Soft", "Fun", "Piquant"];
 
 export const TOD_CONTENT: TodCard[] = [
   // 🌸 SOFT — Rigolo, léger & brise-glace
@@ -77,11 +77,11 @@ export const TOD_CONTENT: TodCard[] = [
   { type: "DARE", text: "Accepte de répondre en toute honnêteté à une question choisie sur-le-champ par TOUT le groupe réunis.", intensity: "Piquant" },
 ];
 
-export function getRandomCard(type: CardType, intensity: IntensityLevel = "Toutes 🔥"): TodCard {
+export function getRandomCard(type: CardType, intensity: IntensityLevel = "Toutes"): TodCard {
   let pool = TOD_CONTENT.filter(c => c.type === type);
-  if (intensity === "Soft 🌸") pool = pool.filter(c => c.intensity === "Soft");
-  else if (intensity === "Fun 🥳") pool = pool.filter(c => c.intensity === "Fun");
-  else if (intensity === "Piquant 🌶️") pool = pool.filter(c => c.intensity === "Piquant");
+  if (intensity === "Soft") pool = pool.filter(c => c.intensity === "Soft");
+  else if (intensity === "Fun") pool = pool.filter(c => c.intensity === "Fun");
+  else if (intensity === "Piquant") pool = pool.filter(c => c.intensity === "Piquant");
   
   if (pool.length === 0) pool = TOD_CONTENT.filter(c => c.type === type);
   return pool[Math.floor(Math.random() * pool.length)];

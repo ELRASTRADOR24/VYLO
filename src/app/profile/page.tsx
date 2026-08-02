@@ -1,9 +1,17 @@
 "use client";
 
-import { Trophy, Star, Shield, Edit2 } from "lucide-react";
+import { Trophy, Star, Shield, Edit2, Target, Flame, Search, Ghost, Crown, Lock, User } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { useAppStore } from "@/store/useAppStore";
 import { getUnlockedBadges, BADGES } from "@/lib/badges";
+
+const BADGE_ICONS: Record<string, React.ReactNode> = {
+  debutant: <Target size={24} />,
+  habitue: <Flame size={24} />,
+  detective: <Search size={24} />,
+  fantome: <Ghost size={24} />,
+  maitre: <Crown size={24} />,
+};
 
 export default function Profile() {
   const { guestProfile } = useAppStore();
@@ -13,16 +21,16 @@ export default function Profile() {
   return (
     <main className="flex-1 flex flex-col items-center px-4 pt-10 pb-32 max-w-md mx-auto">
       <div className="w-full flex flex-col items-center mb-10 mt-4 relative">
-        <div className="w-28 h-28 rounded-full bg-surface-elevated border-4 border-surface flex items-center justify-center text-5xl mb-4 shadow-soft relative group">
-          {guestProfile.avatar}
+        <div className="w-28 h-28 rounded-full bg-gradient-summer border-4 border-surface flex items-center justify-center text-white mb-4 shadow-summer-glow relative group">
+          <User size={52} />
           <div className="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer shadow-soft">
             <Edit2 size={14} className="text-white" />
           </div>
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
+        <h1 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-2">
           {guestProfile.pseudo}
         </h1>
-        <p className="text-foreground/50 font-medium mt-1">
+        <p className="text-foreground/50 font-bold mt-1">
           {unlockedBadges.length > 0 ? unlockedBadges[unlockedBadges.length - 1].name : "Novice"}
         </p>
       </div>
@@ -30,42 +38,42 @@ export default function Profile() {
       <div className="w-full grid grid-cols-2 gap-4 mb-8">
         <Card className="flex flex-col items-center justify-center p-6 gap-2 text-center">
           <Trophy className="w-8 h-8 text-accent mb-2" />
-          <span className="text-3xl font-bold">{guestProfile.stats.gamesPlayed}</span>
-          <span className="text-xs font-bold text-foreground/50 uppercase tracking-wider">Parties</span>
+          <span className="text-3xl font-black">{guestProfile.stats.gamesPlayed}</span>
+          <span className="text-xs font-black text-foreground/50 uppercase tracking-wider">Parties</span>
         </Card>
         <Card className="flex flex-col items-center justify-center p-6 gap-2 text-center">
           <Star className="w-8 h-8 text-yellow-400 mb-2" />
-          <span className="text-3xl font-bold">{guestProfile.stats.wins}</span>
-          <span className="text-xs font-bold text-foreground/50 uppercase tracking-wider">Victoires</span>
+          <span className="text-3xl font-black">{guestProfile.stats.wins}</span>
+          <span className="text-xs font-black text-foreground/50 uppercase tracking-wider">Victoires</span>
         </Card>
       </div>
 
       <div className="w-full flex flex-col gap-4">
-        <h2 className="text-xl font-bold flex items-center gap-2">
+        <h2 className="text-xl font-black flex items-center gap-2">
           <Shield className="text-primary" /> Badges ({unlockedBadges.length}/{BADGES.length})
         </h2>
         
         <div className="grid gap-3">
           {unlockedBadges.map(badge => (
             <div key={badge.id} className="bg-surface p-4 rounded-2xl flex items-center gap-4 border border-white/10 shadow-soft">
-              <div className={`w-14 h-14 rounded-full flex items-center justify-center text-2xl ${badge.color}`}>
-                {badge.icon}
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${badge.color}`}>
+                {BADGE_ICONS[badge.id] || <Target size={24} />}
               </div>
               <div className="flex flex-col flex-1">
-                <span className="font-bold text-lg">{badge.name}</span>
-                <span className="text-sm text-foreground/60">{badge.description}</span>
+                <span className="font-extrabold text-lg">{badge.name}</span>
+                <span className="text-sm text-foreground/60 font-medium">{badge.description}</span>
               </div>
             </div>
           ))}
 
           {lockedBadges.map(badge => (
             <div key={badge.id} className="bg-surface/50 p-4 rounded-2xl flex items-center gap-4 border border-white/5 opacity-50 grayscale">
-              <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center text-2xl">
-                🔒
+              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-foreground/40">
+                <Lock size={20} />
               </div>
               <div className="flex flex-col flex-1">
-                <span className="font-bold text-lg">{badge.name}</span>
-                <span className="text-sm text-foreground/40">{badge.description}</span>
+                <span className="font-extrabold text-lg">{badge.name}</span>
+                <span className="text-sm text-foreground/40 font-medium">{badge.description}</span>
               </div>
             </div>
           ))}

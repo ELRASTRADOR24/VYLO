@@ -2,7 +2,7 @@
 
 import { GameCard } from "@/components/game/GameCard";
 import { Button } from "@/components/ui/Button";
-import { Ghost, Flame, Sword, HelpCircle, Users, QrCode } from "lucide-react";
+import { Ghost, Flame, Sword, HelpCircle, Users, QrCode, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { getGameList } from "@/games";
 
@@ -22,8 +22,8 @@ export default function Home() {
           <h1 className="text-5xl font-black tracking-tight text-gradient-summer">
             VYLO
           </h1>
-          <span className="text-[10px] font-black uppercase tracking-widest bg-gradient-summer text-white px-2.5 py-1 rounded-full shadow-summer-glow">
-            Party App ☀️
+          <span className="text-[10px] font-black uppercase tracking-widest bg-gradient-summer text-white px-3 py-1 rounded-full shadow-summer-glow flex items-center gap-1">
+            <Sparkles size={12} /> Party App
           </span>
         </div>
         <p className="text-foreground/70 font-semibold text-sm">Tous vos jeux de soirée réinventés.</p>

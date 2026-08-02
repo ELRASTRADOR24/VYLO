@@ -29,7 +29,7 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
 
   // --- State Configuration ---
   const [phase, setPhase] = useState<LocalPhase>("CONFIG");
-  const [intensity, setIntensity] = useState<IntensityLevel>("Toutes 🔥");
+  const [intensity, setIntensity] = useState<IntensityLevel>("Toutes");
   const [newPlayerName, setNewPlayerName] = useState("");
   const [players, setPlayers] = useState<LocalPlayer[]>([
     { id: "1", name: "Joueur 1", score: 0 },
@@ -242,14 +242,15 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
     return (
       <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto text-center">
         <div className="w-full text-center">
-          <span className={`text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full ${isTruth ? 'bg-primary/20 text-primary' : 'bg-secondary/20 text-secondary'}`}>
-            {isTruth ? "🤫 VÉRITÉ" : "🎯 ACTION"}
+          <span className={`text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full flex items-center justify-center gap-1 w-max mx-auto ${isTruth ? 'bg-primary/20 text-primary' : 'bg-secondary/20 text-secondary'}`}>
+            {isTruth ? <HelpCircle size={14} /> : <Flame size={14} />}
+            {isTruth ? "VÉRITÉ" : "ACTION"}
           </span>
-          <h2 className="text-xl font-extrabold mt-2 text-foreground/70">{currentSpeaker?.name}</h2>
+          <h2 className="text-xl font-extrabold mt-3 text-foreground/70">{currentSpeaker?.name}</h2>
         </div>
 
         <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto relative">
-          <span className="text-[10px] font-black uppercase tracking-widest bg-white/5 px-2.5 py-1 rounded-full text-foreground/40 mb-6">
+          <span className="text-[10px] font-black uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full text-foreground/50 mb-6">
             Niveau {activeCard.intensity}
           </span>
           <p className="text-2xl font-black leading-snug mb-4">{activeCard.text}</p>
@@ -269,7 +270,7 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
             className="w-full py-4 text-md gap-2 text-foreground/60"
             onClick={() => handleCompleteChallenge(false)}
           >
-            <X size={20} /> J'abandonne / Gage ❌
+            <X size={20} /> J'abandonne / Gage
           </Button>
         </div>
       </main>

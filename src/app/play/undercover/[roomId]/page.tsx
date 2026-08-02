@@ -13,7 +13,8 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Eye, EyeOff, Skull, Trophy, Share, Users, 
-  Sparkles, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2
+  Sparkles, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2,
+  HelpCircle, Vote, RefreshCw
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJoin } from "@/lib/audio";
@@ -530,8 +531,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
         </div>
 
         <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto">
-          <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center text-3xl font-black mb-4">
-            💭
+          <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-4">
+            <HelpCircle size={40} />
           </div>
           <h2 className="text-xl font-extrabold mb-2">Tous les joueurs ont donné leur indice.</h2>
           <p className="text-foreground/60 text-xs leading-relaxed max-w-xs">
@@ -541,10 +542,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
         <div className="w-full flex flex-col gap-3">
           <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={startVotingPhase}>
-            Passer au vote d'élimination 🗳️
+            <Vote size={20} /> Passer au vote d'élimination
           </Button>
           <Button variant="surface" className="w-full py-4 text-md gap-2" onClick={startAnotherClueRound}>
-            Faire le tour n°{clueRoundNumber + 1} d'indices 🔄
+            <RefreshCw size={18} /> Faire le tour n°{clueRoundNumber + 1} d'indices
           </Button>
         </div>
       </main>
@@ -590,8 +591,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           Rôle révélé : <span className="font-bold text-red-400">{eliminatedPlayer.gameRole}</span> ({eliminatedPlayer.word})
         </p>
 
-        <Button variant="primary" className="w-full py-5 text-lg" onClick={() => startSpeakingPhase(speakingOrder)}>
-          Repartir pour un tour d'indices 🔄
+        <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={() => startSpeakingPhase(speakingOrder)}>
+          <RefreshCw size={20} /> Repartir pour un tour d'indices
         </Button>
       </main>
     );
