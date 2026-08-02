@@ -46,7 +46,7 @@ export default function Home() {
         </div>
         
         {games.slice(0, 3).map(game => (
-          <Link key={game.id} href={`/play/${game.id}/${Math.floor(100000 + Math.random() * 900000)}`}>
+          <Link key={game.id} href={`/setup/${game.id}`}>
             <GameCard 
               title={game.name}
               description={game.description}

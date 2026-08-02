@@ -61,7 +61,7 @@ export default function Library() {
 
       <div className="w-full max-w-md flex flex-col gap-6">
         {filteredGames.map(game => (
-          <Link key={game.id} href={`/play/${game.id}/${Math.floor(100000 + Math.random() * 900000)}`}>
+          <Link key={game.id} href={`/setup/${game.id}`}>
             <GameCard 
               title={game.name}
               description={game.description}
