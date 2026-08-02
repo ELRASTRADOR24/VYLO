@@ -15,6 +15,8 @@ import {
 } from "@/games/werewolf/logic";
 import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJoin } from "@/lib/audio";
 import { werewolfConfig } from "@/games/werewolf/config";
+import { voiceEngine } from "@/lib/voiceEngine";
+import { VoiceNarratorBanner } from "@/components/ui/VoiceNarrator";
 
 type GamePhase = 
   | "LOBBY"
@@ -87,11 +89,51 @@ export default function WerewolfGame({ params }: { params: Promise<{ roomId: str
       interval = setInterval(() => {
         setTimerSeconds(prev => (prev !== null && prev > 0 ? prev - 1 : 0));
       }, 1000);
-    } else if (timerSeconds === 0) {
-      setTimerActive(false);
     }
     return () => clearInterval(interval);
   }, [timerActive, timerSeconds]);
+  // Voice Engine Narration Automatique
+  useEffect(() => {
+    switch (phase) {
+      case "NIGHT_FALL":
+        voiceEngine.speak("La nuit tombe sur le village... Tout le monde ferme les yeux.", { tone: "NIGHT" });
+        break;
+      case "NIGHT_CUPID":
+        voiceEngine.speak("Cupidon ouvre les yeux et désigne les deux Amoureux.", { tone: "MYSTICAL" });
+        break;
+      case "NIGHT_SEER":
+        voiceEngine.speak("La Voyante ouvre les yeux et scrute un rôle secret.", { tone: "MYSTICAL" });
+        break;
+      case "NIGHT_WOLVES":
+        voiceEngine.speak("Les Loups-Garous ouvrent les yeux et choisissent leur victime.", { tone: "SUSPENSE" });
+        break;
+      case "NIGHT_WITCH":
+        voiceEngine.speak("La Sorcière ouvre les yeux.", { tone: "MYSTICAL" });
+        break;
+      case "NIGHT_GUARDIAN":
+        voiceEngine.speak("Le Gardien ouvre les yeux et protège un villageois.", { tone: "MYSTICAL" });
+        break;
+      case "DAY_SUNRISE":
+        if (nightDeaths.length > 0) {
+          const names = nightDeaths.map(d => d.player.name).join(", ");
+          voiceEngine.speak(`Le soleil se lève sur le village... ${names} est mort cette nuit.`, { tone: "DAY" });
+        } else {
+          voiceEngine.speak("Le soleil se lève sur le village. Une nuit paisible, personne n'est mort !", { tone: "DAY" });
+        }
+        break;
+      case "DAY_VOTE":
+        voiceEngine.speak("Le village se réunit pour le vote d'élimination.", { tone: "SUSPENSE" });
+        break;
+      case "HUNTER_REVENGE":
+        voiceEngine.speak("Le Chasseur tire son dernier coup de fusil !", { tone: "SUSPENSE" });
+        break;
+      case "END_GAME":
+        if (winnerTeam) {
+          voiceEngine.speak(`La partie est terminée ! Victoire des ${winnerTeam.toLowerCase()} !`, { tone: "VICTORY" });
+        }
+        break;
+    }
+  }, [phase, nightDeaths, winnerTeam]);
 
   const handleAddPlayer = () => {
     if (!newPlayerName.trim()) return;
@@ -623,6 +665,7 @@ export default function WerewolfGame({ params }: { params: Promise<{ roomId: str
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 max-w-md mx-auto text-center bg-gradient-to-b from-[#090814] via-[#0d0b24] to-background">
         <Card className="w-full p-8 bg-surface/80 border border-purple-500/20 shadow-glow space-y-6">
+          <VoiceNarratorBanner />
           <Moon size={64} className="text-purple-400 mx-auto animate-pulse" />
           
           <div>
@@ -908,6 +951,7 @@ export default function WerewolfGame({ params }: { params: Promise<{ roomId: str
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 max-w-md mx-auto text-center">
         <Card className="w-full p-8 bg-surface/90 border border-white/10 shadow-glow space-y-6">
+          <VoiceNarratorBanner />
           <Sun size={64} className="text-amber-400 mx-auto animate-pulse" />
 
           <div>
