@@ -3,6 +3,7 @@
 import { use } from "react";
 import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
+import { InfoTooltip } from "@/components/ui/InfoTooltip";
 import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight, Flame, Users, Sparkles, ShieldAlert, BookOpen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getGameConfig } from "@/games";
@@ -35,7 +36,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center px-4 md:px-8 pt-8 pb-32 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto relative">
+    <main className="min-h-screen flex flex-col items-center px-4 md:px-8 pt-6 pb-32 max-w-md md:max-w-4xl mx-auto relative">
       {/* Navigation Header */}
       <div className="w-full flex items-center justify-between mb-6">
         <button 
@@ -48,114 +49,76 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         >
           <ChevronLeft size={16} className="text-primary" /> Retour
         </button>
-        <div className="flex-1 text-center font-black text-xl capitalize">{gameConfig?.name || gameId}</div>
+
+        <div className="flex items-center gap-2 font-black text-xl capitalize">
+          {gameConfig?.name || gameId}
+          {gameConfig && (
+            <InfoTooltip title={gameConfig.name} description={gameConfig.description} />
+          )}
+        </div>
         <div className="w-16" />
       </div>
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-        
-        {/* COLONNE GAUCHE (Présentation du Jeu - Spécial Ordinateur) */}
-        <div className="md:col-span-5 flex flex-col gap-4">
-          <Card className="p-6 bg-surface/90 border border-white/10 space-y-4 shadow-soft">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-black uppercase tracking-widest text-primary">Guide du Salon</span>
-              <span className="text-xs font-bold text-foreground/50">{gameConfig?.players.min}-{gameConfig?.players.max} Joueurs</span>
-            </div>
-
-            <h2 className="text-2xl font-black text-gradient-summer">{gameConfig?.name}</h2>
-            <p className="text-xs text-foreground/70 font-semibold leading-relaxed">
-              {gameConfig?.description}
-            </p>
-
-            <div className="space-y-2 pt-2 border-t border-white/5 text-xs font-bold">
-              <div className="flex items-center justify-between">
-                <span className="text-foreground/50">Difficulté :</span>
-                <span className="text-primary font-black uppercase">{gameConfig?.difficulty}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-foreground/50">Catégorie :</span>
-                <span className="text-accent font-black uppercase">{gameConfig?.category}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-foreground/50">Narrateur Vocal :</span>
-                <span className="text-purple-400 font-black">Inclus 🎙️</span>
-              </div>
-            </div>
-          </Card>
+      <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col text-center mb-2">
+          <h1 className="text-3xl font-black text-foreground">
+            Choisissez le mode de jeu
+          </h1>
+          <span className="text-xs font-bold text-foreground/50 mt-1">
+            {gameConfig?.players.min}-{gameConfig?.players.max} Joueurs • ⏱️ {gameConfig?.durationMins} Mins
+          </span>
         </div>
 
-        {/* COLONNE DROITE (Sélection du Mode de Jeu) */}
-        <div className="md:col-span-7 flex flex-col gap-5">
-          <div className="w-full flex flex-col mb-2">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-primary mb-1">Configuration</span>
-            <h1 className="text-2xl md:text-3xl font-black text-foreground">
-              Comment voulez-vous jouer ?
-            </h1>
-            <p className="text-foreground/60 text-xs md:text-sm mt-1">
-              Choisissez l'expérience adaptée à votre soirée.
-            </p>
+        {/* MODE LOCAL */}
+        <Card 
+          onClick={handleChooseLocal}
+          className="p-6 cursor-pointer border border-white/10 hover:border-primary/50 transition-all flex items-center justify-between group active-press bg-surface/90"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/40 text-primary flex items-center justify-center font-black">
+              <Smartphone size={28} />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-xs font-black text-primary uppercase tracking-wider">Pass-and-Play</span>
+              <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">1 Seul Téléphone</h3>
+            </div>
           </div>
+          <ArrowRight className="text-foreground/40 group-hover:text-primary group-hover:translate-x-1 transition-all" size={24} />
+        </Card>
 
-          {/* MODE LOCAL */}
-          <Card 
-            className="p-6 flex flex-col gap-4 border border-white/10 hover:border-primary/50 transition-all cursor-pointer shadow-soft group bg-surface/90"
-            onClick={handleChooseLocal}
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-14 h-14 rounded-2xl bg-primary/20 text-primary flex items-center justify-center">
-                <Smartphone size={30} />
-              </div>
-              <span className="text-xs font-extrabold text-[#FF4757] bg-[#FF4757]/10 border border-[#FF4757]/25 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm">
-                <Flame size={14} className="text-[#FF4757]" />
-                Recommandé en soirée
-              </span>
+        {/* MODE EN LIGNE */}
+        <Card 
+          onClick={handleChooseOnlineCreate}
+          className="p-6 cursor-pointer border border-white/10 hover:border-cyan-500/50 transition-all flex items-center justify-between group active-press bg-surface/90"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center font-black">
+              <Globe size={28} />
             </div>
-
-            <div>
-              <h2 className="text-xl font-black mb-1">
-                Mode Local (Passe-Téléphone)
-              </h2>
-              <p className="text-foreground/70 text-xs leading-relaxed">
-                Un seul téléphone tourne autour de la table. Confidentialité totale, rôles secrets et narration vocale automatique.
-              </p>
+            <div className="flex flex-col text-left">
+              <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">Multijoueur Web</span>
+              <h3 className="text-xl font-black text-foreground group-hover:text-cyan-400 transition-colors">Chacun son Téléphone</h3>
             </div>
+          </div>
+          <ArrowRight className="text-foreground/40 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" size={24} />
+        </Card>
 
-            <Button variant="primary" className="w-full py-4 text-md font-black gap-2 mt-2 shadow-summer-glow">
-              Lancer le mode local <ArrowRight size={18} />
-            </Button>
-          </Card>
-
-          {/* MODE ONLINE MULTI-PHONES */}
-          <Card 
-            className="p-6 flex flex-col gap-4 border border-white/10 hover:border-accent/50 transition-all bg-surface/90 shadow-soft"
-          >
-            <div className="flex items-center justify-between">
-              <div className="w-14 h-14 rounded-2xl bg-accent/20 text-accent flex items-center justify-center">
-                <Globe size={30} />
-              </div>
-              <span className="text-[11px] font-bold tracking-wider text-foreground/60 bg-white/5 border border-white/10 px-3 py-1 rounded-xl">
-                Multijoueur Online
-              </span>
+        {/* REJOINDRER UN SALON */}
+        <Card 
+          onClick={handleChooseOnlineJoin}
+          className="p-6 cursor-pointer border border-white/10 hover:border-purple-500/50 transition-all flex items-center justify-between group active-press bg-surface/90"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 flex items-center justify-center font-black">
+              <QrCode size={28} />
             </div>
-
-            <div>
-              <h2 className="text-xl font-extrabold mb-1">Mode En Ligne (Multi-Téléphones)</h2>
-              <p className="text-foreground/70 text-xs leading-relaxed">
-                Chaque joueur utilise son propre téléphone connecté en direct via un salon à 6 chiffres ou un QR Code.
-              </p>
+            <div className="flex flex-col text-left">
+              <span className="text-xs font-black text-purple-400 uppercase tracking-wider">Rejoindre</span>
+              <h3 className="text-xl font-black text-foreground group-hover:text-purple-400 transition-colors">Entrer un Code / QR Code</h3>
             </div>
-
-            <div className="grid grid-cols-2 gap-3 mt-2">
-              <Button variant="surface" className="py-3.5 text-xs font-bold gap-1" onClick={handleChooseOnlineCreate}>
-                Créer un salon
-              </Button>
-              <Button variant="surface" className="py-3.5 text-xs font-bold gap-1" onClick={handleChooseOnlineJoin}>
-                <QrCode size={14} /> Rejoindre
-              </Button>
-            </div>
-          </Card>
-        </div>
-
+          </div>
+          <ArrowRight className="text-foreground/40 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" size={24} />
+        </Card>
       </div>
     </main>
   );
