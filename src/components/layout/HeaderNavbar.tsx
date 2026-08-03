@@ -5,17 +5,19 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 import { 
-  Menu, X, Home, LayoutGrid, QrCode, User, Sparkles, Flame, ChevronRight, FlaskConical 
+  Menu, X, Home, LayoutGrid, QrCode, User, Sparkles, Flame, ChevronRight, FlaskConical, Lock, LogIn 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sfxTap } from "@/lib/audio";
 import { ProfileModal } from "@/components/ui/ProfileModal";
+import { AuthModal } from "@/components/ui/AuthModal";
 
 export function HeaderNavbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const { guestProfile } = useAppStore();
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const { guestProfile, activeAccount } = useAppStore();
 
   const isCustomImage = guestProfile.avatar.startsWith("http") || guestProfile.avatar.startsWith("data:");
 
@@ -26,14 +28,10 @@ export function HeaderNavbar() {
     { href: "/profile", icon: User, label: "Mon Profil" },
   ];
 
-  const handleNavClick = () => {
-    sfxTap();
-    setIsOpen(false);
-  };
-
   return (
     <>
       <ProfileModal isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)} />
+      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
 
       {/* Header Bar Globale */}
       <header className="sticky top-0 z-40 w-full bg-surface/90 backdrop-blur-xl border-b border-white/10 shadow-soft">
@@ -68,6 +66,15 @@ export function HeaderNavbar() {
                 </Link>
               );
             })}
+
+            {/* Bouton Connexion Desktop */}
+            <button
+              onClick={() => { sfxTap(); setIsAuthOpen(true); }}
+              className="flex items-center gap-1.5 ml-2 px-3.5 py-2 rounded-xl text-xs font-black bg-white/5 hover:bg-white/10 border border-white/10 text-primary transition-all active:scale-95"
+            >
+              {activeAccount ? <User size={14} /> : <LogIn size={14} />}
+              <span>{activeAccount ? activeAccount.username : "Connexion"}</span>
+            </button>
           </nav>
 
           {/* Bouton Hamburger Mobile (`md:hidden`) */}
@@ -127,7 +134,7 @@ export function HeaderNavbar() {
               {/* Carte Profil dans le Menu */}
               <div 
                 onClick={() => { setIsOpen(false); setIsEditProfileOpen(true); }}
-                className="p-3.5 mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between cursor-pointer hover:border-primary/40 transition-all"
+                className="p-3.5 mb-4 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between cursor-pointer hover:border-primary/40 transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-purple-500/20 border border-white/10 flex items-center justify-center font-black text-sm">
@@ -139,11 +146,24 @@ export function HeaderNavbar() {
                   </div>
                   <div className="flex flex-col text-left">
                     <span className="font-black text-sm text-foreground">{guestProfile.pseudo}</span>
-                    <span className="text-[10px] text-primary font-bold">Modifier le profil</span>
+                    <span className="text-[10px] text-primary font-bold">
+                      {activeAccount ? `Compte : ${activeAccount.username}` : "Modifier le profil"}
+                    </span>
                   </div>
                 </div>
                 <ChevronRight size={16} className="text-foreground/40" />
               </div>
+
+              {/* Bouton Espace Connexion dans le Drawer */}
+              <button
+                onClick={() => { setIsOpen(false); setIsAuthOpen(true); }}
+                className="w-full py-3 mb-6 px-4 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-between text-xs font-black text-primary hover:bg-primary/20 transition-all"
+              >
+                <span className="flex items-center gap-2">
+                  <Lock size={14} /> Espace Connexion / Inscription
+                </span>
+                <ChevronRight size={14} />
+              </button>
 
               {/* Liens de Navigation */}
               <div className="space-y-2">
@@ -154,19 +174,16 @@ export function HeaderNavbar() {
                     <Link
                       key={href}
                       href={href}
-                      onClick={handleNavClick}
+                      onClick={() => { sfxTap(); setIsOpen(false); }}
                       className={cn(
-                        "flex items-center justify-between p-3.5 rounded-2xl font-black text-sm transition-all active:scale-98",
+                        "flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-black transition-all",
                         isActive
                           ? "bg-gradient-summer text-white shadow-summer-glow"
-                          : "bg-white/5 border border-white/5 text-foreground/80 hover:text-foreground hover:bg-white/10"
+                          : "text-foreground/70 hover:text-foreground hover:bg-white/5"
                       )}
                     >
-                      <div className="flex items-center gap-3">
-                        <Icon size={18} className={isActive ? "text-white" : "text-primary"} />
-                        <span>{label}</span>
-                      </div>
-                      <ChevronRight size={16} className={isActive ? "text-white" : "text-foreground/30"} />
+                      <Icon size={18} />
+                      <span>{label}</span>
                     </Link>
                   );
                 })}
