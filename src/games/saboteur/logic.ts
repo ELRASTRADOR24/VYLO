@@ -120,7 +120,20 @@ export function generateSaboteurRoles(totalPlayers: number, saboteurCount: numbe
   return roles;
 }
 
+const usedSaboteurChallengesHistory = new Set<string>();
+
 /** Tirer un mini-défi aléatoire */
 export function getRandomChallenge(): SaboteurChallenge {
-  return SABOTEUR_CHALLENGES_DATABASE[Math.floor(Math.random() * SABOTEUR_CHALLENGES_DATABASE.length)];
+  const pool = SABOTEUR_CHALLENGES_DATABASE;
+  let availablePool = pool.filter(c => !usedSaboteurChallengesHistory.has(c.id));
+
+  if (availablePool.length === 0) {
+    pool.forEach(c => usedSaboteurChallengesHistory.delete(c.id));
+    availablePool = pool;
+  }
+
+  const chosen = availablePool[Math.floor(Math.random() * availablePool.length)];
+  usedSaboteurChallengesHistory.add(chosen.id);
+
+  return chosen;
 }

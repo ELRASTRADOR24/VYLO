@@ -646,6 +646,8 @@ export function validateRoleConfig(
   return { isValid: true };
 }
 
+const usedUndercoverPairsHistory = new Set<string>();
+
 /** Obtenir une paire de mots aléatoire selon la catégorie choisie */
 export function getRandomWordPair(categories: CategoryName | CategoryName[]): UndercoverWordPair {
   let pool = WORD_PAIRS_DATABASE;
@@ -659,7 +661,19 @@ export function getRandomWordPair(categories: CategoryName | CategoryName[]): Un
   }
 
   if (pool.length === 0) pool = WORD_PAIRS_DATABASE;
-  return pool[Math.floor(Math.random() * pool.length)];
+
+  // Filter out word pairs already drawn in this session
+  let availablePool = pool.filter(p => !usedUndercoverPairsHistory.has(`${p.civilian}-${p.undercover}`));
+
+  if (availablePool.length === 0) {
+    pool.forEach(p => usedUndercoverPairsHistory.delete(`${p.civilian}-${p.undercover}`));
+    availablePool = pool;
+  }
+
+  const chosen = availablePool[Math.floor(Math.random() * availablePool.length)];
+  usedUndercoverPairsHistory.add(`${chosen.civilian}-${chosen.undercover}`);
+
+  return chosen;
 }
 
 /** Helper classique de génération automatique des rôles */

@@ -6032,6 +6032,20 @@ export const TOD_CONTENT: TodCard[] = [
   }
 ];
 
+function cleanCardText(text: string): string {
+  if (!text) return "";
+  let cleaned = text
+    .replace(/\s*\((Jeu|Anecdote|Défis?|Q|Qst|N°?|#)\s*#?\d+\)/gi, "")
+    .replace(/\s*\(joueur\s*#?\d+\)/gi, "")
+    .replace(/\bjoueur\s*numéro\s*\d+\b/gi, "un autre joueur")
+    .replace(/\bjoueur\s*#?\d+\b/gi, "un autre joueur")
+    .trim();
+  
+  return cleaned.replace(/\s+/g, " ");
+}
+
+const usedTodCardTextsHistory = new Set<string>();
+
 export function getRandomCard(type: CardType, intensity: IntensityLevel = "Toutes"): TodCard {
   let pool = TOD_CONTENT.filter(c => c.type === type);
   if (intensity === "Soft") pool = pool.filter(c => c.intensity === "Soft");
@@ -6039,5 +6053,23 @@ export function getRandomCard(type: CardType, intensity: IntensityLevel = "Toute
   else if (intensity === "Piquant") pool = pool.filter(c => c.intensity === "Piquant");
   
   if (pool.length === 0) pool = TOD_CONTENT.filter(c => c.type === type);
-  return pool[Math.floor(Math.random() * pool.length)];
+
+  // Filter out cards already drawn in this session
+  let availablePool = pool.filter(c => !usedTodCardTextsHistory.has(c.text));
+
+  // If all cards in this pool have been drawn, reset history for this pool
+  if (availablePool.length === 0) {
+    pool.forEach(c => usedTodCardTextsHistory.delete(c.text));
+    availablePool = pool;
+  }
+
+  // Truly random pick from available pool using Fisher-Yates randomIndex
+  const randomIndex = Math.floor(Math.random() * availablePool.length);
+  const chosen = availablePool[randomIndex];
+  usedTodCardTextsHistory.add(chosen.text);
+
+  return {
+    ...chosen,
+    text: cleanCardText(chosen.text)
+  };
 }
