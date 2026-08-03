@@ -23,9 +23,9 @@ export function HeaderNavbar() {
 
   const links = [
     { href: "/", icon: Home, label: "Accueil" },
-    { href: "/library", icon: LayoutGrid, label: "Jeux & Bibliothèque" },
-    { href: "/join", icon: QrCode, label: "Rejoindre un salon" },
-    { href: "/profile", icon: User, label: "Mon Profil" },
+    { href: "/library", icon: LayoutGrid, label: "Jeux" },
+    { href: "/join", icon: QrCode, label: "Rejoindre" },
+    { href: "/profile", icon: User, label: "Profil" },
   ];
 
   return (
@@ -35,70 +35,72 @@ export function HeaderNavbar() {
 
       {/* Header Bar Globale */}
       <header className="sticky top-0 z-40 w-full bg-surface/90 backdrop-blur-xl border-b border-white/10 shadow-soft">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4">
           
-          {/* Logo Brand */}
-          <Link href="/" className="flex items-center gap-2 group" onClick={() => sfxTap()}>
+          {/* GAUCHE : Logo & Badge Version */}
+          <Link href="/" className="flex items-center gap-2 group shrink-0" onClick={() => sfxTap()}>
             <span className="text-2xl font-black tracking-tight text-gradient-summer">VYLO</span>
-            <span className="text-[10px] font-black uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-md">
+            <span className="text-[10px] font-black uppercase bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full">
               Bêta
             </span>
           </Link>
 
-          {/* Right Header Badges (Bienvenue Johanson & Points) */}
-          <div className="flex items-center gap-2.5">
-            <div 
-              onClick={() => { sfxTap(); setIsEditProfileOpen(true); }}
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-black text-foreground cursor-pointer hover:border-primary/40 transition-all"
-            >
-              <span>👋</span>
-              <span>Bienvenue <strong className="text-primary">{guestProfile.pseudo}</strong> !</span>
-            </div>
+          {/* CENTRE : Navigation Desktop (Affichage propre sans chevauchement) */}
+          <nav className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
+            {links.map(({ href, label, icon: Icon }) => {
+              const isActive = pathname === href;
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => sfxTap()}
+                  className={cn(
+                    "flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap",
+                    isActive
+                      ? "bg-gradient-summer text-white shadow-summer-glow"
+                      : "text-foreground/75 hover:text-foreground hover:bg-white/5"
+                  )}
+                >
+                  <Icon size={15} className="shrink-0" />
+                  <span>{label}</span>
+                </Link>
+              );
+            })}
+          </nav>
 
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-black text-amber-400">
+          {/* DROITE : Badges Stats & Profil (Harmonisé & Responsive) */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Badge Points ⚡ */}
+            <div className="flex items-center gap-1.5 h-9 px-3 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-black text-amber-400 whitespace-nowrap">
               <span>⚡</span>
               <span>2 450</span>
             </div>
 
-            {/* Navigation Desktop (`hidden md:flex`) */}
-            <nav className="hidden md:flex items-center gap-2">
-              {links.map(({ href, label, icon: Icon }) => {
-                const isActive = pathname === href;
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => sfxTap()}
-                    className={cn(
-                      "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all",
-                      isActive
-                        ? "bg-gradient-summer text-white shadow-summer-glow"
-                        : "text-foreground/70 hover:text-foreground hover:bg-white/5"
-                    )}
-                  >
-                    <Icon size={15} />
-                    <span>{label}</span>
-                  </Link>
-                );
-              })}
-
-              {/* Bouton Connexion Desktop */}
-              <button
-                onClick={() => { sfxTap(); setIsAuthOpen(true); }}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black bg-white/5 hover:bg-white/10 border border-white/10 text-primary transition-all active:scale-95"
-              >
-                {activeAccount ? <User size={14} /> : <LogIn size={14} />}
-                <span>{activeAccount ? activeAccount.username : "Connexion"}</span>
-              </button>
-            </nav>
-          </div>
-
-          {/* Bouton Hamburger Mobile (`md:hidden`) */}
-          <div className="flex md:hidden items-center gap-2">
-            {/* Profil miniature mobile */}
+            {/* Badge Bienvenue Profil (Desktop Large) */}
             <button 
-              onClick={() => setIsEditProfileOpen(true)}
-              className="w-8 h-8 rounded-full overflow-hidden bg-purple-500/20 border border-white/10 flex items-center justify-center text-xs font-black"
+              onClick={() => { sfxTap(); setIsEditProfileOpen(true); }}
+              className="hidden lg:flex items-center gap-2 h-9 px-3 rounded-full bg-white/5 border border-white/10 text-xs font-black text-foreground hover:border-primary/40 transition-all whitespace-nowrap"
+            >
+              <span>👋</span>
+              <span className="truncate max-w-[100px]">
+                <strong className="text-primary">{guestProfile.pseudo}</strong>
+              </span>
+            </button>
+
+            {/* Bouton Connexion Desktop */}
+            <button
+              onClick={() => { sfxTap(); setIsAuthOpen(true); }}
+              className="hidden sm:flex items-center gap-1.5 h-9 px-3.5 rounded-xl text-xs font-black bg-white/5 hover:bg-white/10 border border-white/10 text-primary transition-all active:scale-95 whitespace-nowrap"
+            >
+              {activeAccount ? <User size={14} /> : <LogIn size={14} />}
+              <span>{activeAccount ? activeAccount.username : "Connexion"}</span>
+            </button>
+
+            {/* Profil Miniature Mobile / Tablette */}
+            <button 
+              onClick={() => { sfxTap(); setIsEditProfileOpen(true); }}
+              className="flex sm:hidden w-9 h-9 rounded-full overflow-hidden bg-purple-500/20 border border-white/10 items-center justify-center text-xs font-black shrink-0"
+              aria-label="Mon Profil"
             >
               {isCustomImage ? (
                 <img src={guestProfile.avatar} alt="Avatar" className="w-full h-full object-cover" />
@@ -107,12 +109,13 @@ export function HeaderNavbar() {
               )}
             </button>
 
+            {/* Bouton Hamburger Mobile (`md:hidden`) */}
             <button
               onClick={() => { sfxTap(); setIsOpen(!isOpen); }}
-              className="h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft"
+              className="flex md:hidden h-9 w-9 rounded-xl bg-white/5 border border-white/10 items-center justify-center text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft shrink-0"
               aria-label="Menu de navigation"
             >
-              {isOpen ? <X size={22} className="text-primary" /> : <Menu size={22} />}
+              {isOpen ? <X size={20} className="text-primary" /> : <Menu size={20} />}
             </button>
           </div>
 
@@ -181,7 +184,7 @@ export function HeaderNavbar() {
                 <ChevronRight size={14} />
               </button>
 
-              {/* Liens de Navigation */}
+              {/* Liens de Navigation Mobile */}
               <div className="space-y-2">
                 <span className="text-[10px] font-black uppercase tracking-widest text-foreground/40 block mb-2 px-1">Navigation</span>
                 {links.map(({ href, label, icon: Icon }) => {
