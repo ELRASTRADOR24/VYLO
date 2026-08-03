@@ -6,8 +6,8 @@ import { useAppStore } from "@/store/useAppStore";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
-  ChevronLeft, Users, UserPlus, Play, Check, X, 
-  RotateCcw, Trophy, Trash2, Dices, Music, Disc, Volume2, Sparkles 
+  ChevronLeft, UserPlus, Play, Pause, Check, X, 
+  Trophy, Trash2, Music, Disc, Volume2, Sparkles, RefreshCw 
 } from "lucide-react";
 import { 
   BlindTestCategory, BlindTestQuestion, generateBlindTestQuestion 
@@ -52,9 +52,12 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
   const [selectedChoiceIdx, setSelectedChoiceIdx] = useState<number | null>(null);
   const [timeLeftSec, setTimeLeftSec] = useState<number>(30);
   const [roundCount, setRoundCount] = useState<number>(1);
+  const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
+  const [audioError, setAudioError] = useState<boolean>(false);
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Timer 30s
+  // Synchronisation du Timer 30s
   useEffect(() => {
     if (phase !== "PLAYING" || timeLeftSec <= 0) return;
 
@@ -74,11 +77,45 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
   const handleLeaveGame = () => {
     sfxTap();
-    if (audioRef.current) audioRef.current.pause();
+    stopAudio();
     if (typeof window !== "undefined" && window.history.length > 1) {
       router.back();
     } else {
       router.push("/library");
+    }
+  };
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlayingAudio(false);
+  };
+
+  const playAudio = () => {
+    if (!audioRef.current || !currentQuestion?.track.previewUrl) return;
+    sfxTap();
+    setAudioError(false);
+
+    audioRef.current.src = currentQuestion.track.previewUrl;
+    audioRef.current.play()
+      .then(() => setIsPlayingAudio(true))
+      .catch((err) => {
+        console.warn("Audio play blocked or failed", err);
+        setIsPlayingAudio(false);
+        setAudioError(true);
+        // Jouer un son d'ambiance de secours si le MP3/M4A échoue
+        sfxReveal();
+      });
+  };
+
+  const toggleAudio = () => {
+    if (isPlayingAudio) {
+      if (audioRef.current) audioRef.current.pause();
+      setIsPlayingAudio(false);
+    } else {
+      playAudio();
     }
   };
 
@@ -100,6 +137,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
   const loadNextQuestion = async () => {
     sfxTap();
+    stopAudio();
     setPhase("QUESTION_LOADING");
     setSelectedChoiceIdx(null);
     setTimeLeftSec(30);
@@ -108,27 +146,26 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
     setCurrentQuestion(question);
     setPhase("PLAYING");
 
-    // Jouer le son
-    if (question.track.previewUrl) {
-      try {
-        if (audioRef.current) {
-          audioRef.current.src = question.track.previewUrl;
-          audioRef.current.currentTime = 0;
-          audioRef.current.play().catch(e => console.warn("Audio autoplay blocked", e));
-        }
-      } catch (e) {
-        console.warn(e);
+    // Tenter l'autoplay (si autorisé par le navigateur)
+    setTimeout(() => {
+      if (audioRef.current && question.track.previewUrl) {
+        audioRef.current.src = question.track.previewUrl;
+        audioRef.current.play()
+          .then(() => setIsPlayingAudio(true))
+          .catch(() => setIsPlayingAudio(false));
       }
-    }
+    }, 300);
   };
 
   const handleTimeExpired = () => {
+    stopAudio();
     sfxError();
     setPhase("REVEAL");
   };
 
   const handleAnswerChoice = (index: number) => {
     if (phase !== "PLAYING" || !currentQuestion) return;
+    stopAudio();
     setSelectedChoiceIdx(index);
 
     const isCorrect = index === currentQuestion.correctChoiceIndex;
@@ -137,7 +174,6 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
       const speedBonus = Math.max(10, Math.floor(timeLeftSec * 3));
       const pointsEarned = 50 + speedBonus;
       
-      // Créditer le joueur actuel
       setPlayers(prev => prev.map((p, idx) => 
         idx === (roundCount - 1) % players.length ? { ...p, score: p.score + pointsEarned } : p
       ));
@@ -151,8 +187,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
   };
 
   const handleNextRound = () => {
-    if (audioRef.current) audioRef.current.pause();
-
+    stopAudio();
     if (roundCount >= players.length * 3) {
       sfxVictory();
       setPhase("SCORES");
@@ -162,7 +197,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
     }
   };
 
-  // 1. CONFIGURATION
+  // 1. CONFIGURATION DU JEU
   if (phase === "CONFIG") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto relative text-center">
@@ -247,15 +282,15 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
     );
   }
 
-  // 2. CHARGEMENT
+  // 2. CHARGEMENT DE LA QUESTION
   if (phase === "QUESTION_LOADING") {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
         <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 animate-pulse">
           <Disc size={40} className="animate-spin" />
         </div>
-        <h2 className="text-2xl font-black text-foreground">Chargement de la piste...</h2>
-        <p className="text-xs font-bold text-foreground/50 mt-2">Recherche de l'extrait audio officiel 30s</p>
+        <h2 className="text-2xl font-black text-foreground">Recherche de l'extrait...</h2>
+        <p className="text-xs font-bold text-foreground/50 mt-2">Chargement du morceau sur Apple Music</p>
       </main>
     );
   }
@@ -265,7 +300,14 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-between py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto text-center pb-12">
-      <audio ref={audioRef} />
+      {/* Element Audio HTML5 Caché */}
+      <audio 
+        ref={audioRef} 
+        onPlay={() => setIsPlayingAudio(true)}
+        onPause={() => setIsPlayingAudio(false)}
+        onEnded={() => setIsPlayingAudio(false)}
+        onError={() => { setIsPlayingAudio(false); setAudioError(true); }}
+      />
 
       {/* Header */}
       <div className="w-full flex items-center justify-between">
@@ -280,11 +322,18 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
         </div>
       </div>
 
-      {/* Visualiseur Audio Vinyle */}
+      {/* Visualiseur Audio Vinyle & Bouton Lancer la Musique */}
       <div className="w-full flex flex-col items-center my-auto">
-        <div className="relative mb-6">
-          <div className={`w-36 h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 border-4 border-primary/40 flex items-center justify-center shadow-2xl ${phase === 'PLAYING' ? 'animate-spin duration-[4000ms]' : ''}`}>
-            <Disc size={64} className="text-primary/70" />
+        <div 
+          onClick={toggleAudio}
+          className="relative mb-6 cursor-pointer group active-press"
+        >
+          <div className={`w-36 h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-slate-900 via-purple-950 to-slate-900 border-4 border-primary/40 flex items-center justify-center shadow-2xl ${isPlayingAudio ? 'animate-spin duration-[4000ms]' : ''}`}>
+            {isPlayingAudio ? (
+              <Pause size={48} className="text-primary/90" />
+            ) : (
+              <Play size={48} className="text-primary fill-primary translate-x-1" />
+            )}
           </div>
           {phase === "REVEAL" && currentQuestion?.track.artworkUrl && (
             <img 
@@ -295,15 +344,29 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
           )}
         </div>
 
+        {/* Bouton d'action explicite pour lancer le son */}
         {phase === "PLAYING" && (
-          <div className="flex items-center gap-2 text-primary text-xs font-black uppercase tracking-widest bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full mb-4">
-            <Volume2 size={16} className="animate-pulse" /> Extrait en cours d'écoute...
-          </div>
+          <Button 
+            variant="primary" 
+            size="sm" 
+            onClick={toggleAudio}
+            className="mb-4 font-black text-xs gap-2 py-3 px-6 rounded-full shadow-summer-glow"
+          >
+            {isPlayingAudio ? (
+              <>
+                <Volume2 size={16} className="animate-pulse" /> Musique en cours (Pause)
+              </>
+            ) : (
+              <>
+                <Play size={16} className="fill-white" /> ▶️ ÉCOUTER L'EXTRAIT MUSICAL
+              </>
+            )}
+          </Button>
         )}
 
         {phase === "REVEAL" && currentQuestion && (
           <div className="bg-surface/90 border border-white/10 p-5 rounded-3xl w-full max-w-sm mb-6 animate-bounce-in">
-            <span className="text-xs font-black uppercase tracking-wider text-primary block mb-1">Résultat Réveillé</span>
+            <span className="text-xs font-black uppercase tracking-wider text-primary block mb-1">Morceau Dévoilé</span>
             <h2 className="text-2xl font-black text-foreground">{currentQuestion.track.trackName}</h2>
             <p className="text-sm font-extrabold text-foreground/70 mt-1">{currentQuestion.track.artistName}</p>
           </div>

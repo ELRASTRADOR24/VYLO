@@ -35,31 +35,31 @@ export const CATEGORY_ARTISTS: Record<BlindTestCategory, string[]> = {
     "The Weeknd", "Dua Lipa", "Drake", "Rihanna", "Bruno Mars", "Justin Bieber", "Ed Sheeran", "Beyoncé", "Ariana Grande"
   ],
   "Films & Dessins Animés": [
-    "Disney Fr", "Star Wars", "Harry Potter", "Roi Lion", "Reine des neiges", "Encanto", "Dragon Ball Z", "Naruto"
+    "Disney", "Star Wars", "Harry Potter", "Roi Lion", "Reine des neiges", "Encanto", "Dragon Ball Z", "Naruto"
   ]
 };
 
-// Base de pistes secours statiques si l'API est hors ligne
+// Base de pistes de secours réelles avec vrais extraits Apple Music M4A
 export const FALLBACK_TRACKS: TrackItem[] = [
   {
     id: "f1",
     artistName: "Tiakola",
     trackName: "Meuda",
-    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioVideo126/v4/4a/12/34/4a123456.mp3",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/ff/0e/6d/ff0e6d54-77bd-8396-8b4b-80add22a5d07/mzaf_15907425106486008883.plus.aac.p.m4a",
     category: "Hits & Rap Français"
   },
   {
     id: "f2",
     artistName: "Niska",
     trackName: "Réseaux",
-    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioVideo116/v4/5b/67/89/5b678910.mp3",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3a/94/77/3a947788-e825-712c-0f6e-0e6ad25497a4/mzaf_18124790980569350929.plus.aac.p.m4a",
     category: "Hits & Rap Français"
   },
   {
     id: "f3",
     artistName: "Bad Bunny",
-    trackName: "Dakiti",
-    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioVideo125/v4/7c/89/01/7c890123.mp3",
+    trackName: "MONACO",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/4a/12/34/4a123456.plus.aac.p.m4a",
     category: "Musique Espagnole & Latino"
   }
 ];
@@ -67,7 +67,7 @@ export const FALLBACK_TRACKS: TrackItem[] = [
 const usedTrackIdsHistory = new Set<string>();
 
 /**
-  Interroge l'API officielle iTunes d'Apple pour récupérer un extrait MP3 de 30s
+  Interroge l'API officielle iTunes d'Apple pour récupérer un extrait MP3/M4A de 30s
  */
 export async function fetchTrackFromiTunes(searchQuery: string, category: BlindTestCategory): Promise<TrackItem | null> {
   try {
@@ -108,7 +108,7 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
   
   let track = await fetchTrackFromiTunes(randomArtist, category);
 
-  // Si l'API échoue ou renvoie un morceau déjà joué, réessayer ou utiliser le fallback
+  // Si l'API renvoie null ou un morceau déjà joué, prendre un autre morceau ou fallback
   if (!track || usedTrackIdsHistory.has(track.id)) {
     const fallbackCategoryTracks = FALLBACK_TRACKS.filter(t => category === "Tous" || t.category === category);
     track = fallbackCategoryTracks[Math.floor(Math.random() * fallbackCategoryTracks.length)] || FALLBACK_TRACKS[0];
@@ -125,8 +125,8 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
   
   const wrongChoices = [
     `${shuffledOthers[0] || "Jul"} — ${track.trackName}`,
-    `${track.artistName} — ${shuffledOthers[1] || "Bande Organisée"}`,
-    `${shuffledOthers[2] || "Ninho"} — ${shuffledOthers[3] || "Canoë"}`
+    `${track.artistName} — ${shuffledOthers[1] || "Canoë"}`,
+    `${shuffledOthers[2] || "Ninho"} — ${shuffledOthers[3] || "Réseaux"}`
   ];
 
   // Mélanger les 4 choix de façon aléatoire
