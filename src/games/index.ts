@@ -8,12 +8,14 @@ import { tuPreferesConfig } from "./tu-preferes/config";
 import { flagQuizConfig } from "./flag-quiz/config";
 import { wordMasterConfig } from "./word-master/config";
 import { mostLikelyToConfig } from "./most-likely-to/config";
+import { punchlinesConfig } from "./punchlines/config";
 
 // On stocke tous les jeux disponibles
 export const gameRegistry: Record<string, GameConfig> = {
   [undercoverConfig.id]: undercoverConfig,
   [blindTestConfig.id]: blindTestConfig,
   [tuPreferesConfig.id]: tuPreferesConfig,
+  [punchlinesConfig.id]: punchlinesConfig,
   [mostLikelyToConfig.id]: mostLikelyToConfig,
   [wordMasterConfig.id]: wordMasterConfig,
   [flagQuizConfig.id]: flagQuizConfig,

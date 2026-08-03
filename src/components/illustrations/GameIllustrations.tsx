@@ -132,6 +132,20 @@ export function MostLikelyToIllustration({ className = "w-full h-36" }: { classN
   );
 }
 
+// Illustration VYLO Cards — Punchlines (Cartes à jouer Néon Violet)
+export function PunchlinesIllustration({ className = "w-full h-36" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-purple-950/80 via-slate-950 to-pink-950/80 border border-purple-500/30 ${className}`}>
+      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" fill="#C084FC" fillOpacity="0.15" />
+        <rect x="25" y="30" width="30" height="45" rx="6" fill="#7E22CE" transform="rotate(-15 40 52)" />
+        <rect x="45" y="25" width="30" height="45" rx="6" fill="#A855F7" stroke="#F472B6" strokeWidth="2" transform="rotate(10 60 47)" />
+        <text x="60" y="52" textAnchor="middle" fill="#FFFFFF" fontSize="18" fontWeight="900">🔥</text>
+      </svg>
+    </div>
+  );
+}
+
 // Illustration Loup-Garou (Pleine Lune & Loup Mystique)
 export function WerewolfIllustration({ className = "w-full h-36" }: { className?: string }) {
   return (

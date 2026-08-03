@@ -15,6 +15,7 @@ import {
   FlagQuizIllustration,
   WordMasterIllustration,
   MostLikelyToIllustration,
+  PunchlinesIllustration,
   WerewolfIllustration, 
   TodIllustration, 
   SaboteurIllustration 
@@ -296,6 +297,27 @@ export default function Home() {
                 <span>2-20</span>
                 <span>•</span>
                 <span>15 min</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 10 : VYLO Cards — Punchlines */}
+          <Card 
+            onClick={() => { sfxTap(); router.push("/setup/punchlines"); }}
+            className="p-4 flex flex-col gap-3 bg-surface/90 border border-purple-500/20 hover:border-purple-500/50 transition-all cursor-pointer group active-press"
+          >
+            <div className="relative">
+              <PunchlinesIllustration />
+              <div className="absolute top-2.5 right-2.5 z-20">
+                <VBubble title="VYLO Cards — Punchlines" description="Complétez les phrases à trous avec les cartes les plus absurdes, piquantes et hilarantes entre amis !" />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">VYLO Cards</span>
+              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                <span>2-20</span>
+                <span>•</span>
+                <span>20 min</span>
               </div>
             </div>
           </Card>
