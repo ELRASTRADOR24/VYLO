@@ -45,37 +45,53 @@ export function HeaderNavbar() {
             </span>
           </Link>
 
-          {/* Navigation Desktop (`hidden md:flex`) */}
-          <nav className="hidden md:flex items-center gap-2">
-            {links.map(({ href, label, icon: Icon }) => {
-              const isActive = pathname === href;
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => sfxTap()}
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all",
-                    isActive
-                      ? "bg-gradient-summer text-white shadow-summer-glow"
-                      : "text-foreground/70 hover:text-foreground hover:bg-white/5"
-                  )}
-                >
-                  <Icon size={16} />
-                  <span>{label}</span>
-                </Link>
-              );
-            })}
-
-            {/* Bouton Connexion Desktop */}
-            <button
-              onClick={() => { sfxTap(); setIsAuthOpen(true); }}
-              className="flex items-center gap-1.5 ml-2 px-3.5 py-2 rounded-xl text-xs font-black bg-white/5 hover:bg-white/10 border border-white/10 text-primary transition-all active:scale-95"
+          {/* Right Header Badges (Bienvenue Johanson & Points) */}
+          <div className="flex items-center gap-2.5">
+            <div 
+              onClick={() => { sfxTap(); setIsEditProfileOpen(true); }}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-black text-foreground cursor-pointer hover:border-primary/40 transition-all"
             >
-              {activeAccount ? <User size={14} /> : <LogIn size={14} />}
-              <span>{activeAccount ? activeAccount.username : "Connexion"}</span>
-            </button>
-          </nav>
+              <span>👋</span>
+              <span>Bienvenue <strong className="text-primary">{guestProfile.pseudo}</strong> !</span>
+            </div>
+
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-black text-amber-400">
+              <span>⚡</span>
+              <span>2 450</span>
+            </div>
+
+            {/* Navigation Desktop (`hidden md:flex`) */}
+            <nav className="hidden md:flex items-center gap-2">
+              {links.map(({ href, label, icon: Icon }) => {
+                const isActive = pathname === href;
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => sfxTap()}
+                    className={cn(
+                      "flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all",
+                      isActive
+                        ? "bg-gradient-summer text-white shadow-summer-glow"
+                        : "text-foreground/70 hover:text-foreground hover:bg-white/5"
+                    )}
+                  >
+                    <Icon size={15} />
+                    <span>{label}</span>
+                  </Link>
+                );
+              })}
+
+              {/* Bouton Connexion Desktop */}
+              <button
+                onClick={() => { sfxTap(); setIsAuthOpen(true); }}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-black bg-white/5 hover:bg-white/10 border border-white/10 text-primary transition-all active:scale-95"
+              >
+                {activeAccount ? <User size={14} /> : <LogIn size={14} />}
+                <span>{activeAccount ? activeAccount.username : "Connexion"}</span>
+              </button>
+            </nav>
+          </div>
 
           {/* Bouton Hamburger Mobile (`md:hidden`) */}
           <div className="flex md:hidden items-center gap-2">
