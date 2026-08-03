@@ -12,9 +12,26 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "VYLO - Jeux de Soirée (Version Bêta)",
-  description: "La plateforme premium de jeux de soirée en version Bêta.",
+  metadataBase: new URL("https://vylo-nine.vercel.app"),
+  title: {
+    default: "VYLO — L'Application Ultime de Jeux de Soirée",
+    template: "%s | VYLO — Jeux de Soirée",
+  },
+  description: "VYLO est l'application ultime de jeux de soirée entre amis. Jouez à Undercover, Le Saboteur, Loup-Garou et Action ou Vérité en local sur un téléphone ou en ligne.",
+  keywords: ["Jeux de soirée", "Undercover", "Le Saboteur", "Loup-Garou", "Action ou Vérité", "Jeux entre amis", "Multijoueur local"],
+  authors: [{ name: "Johanson", url: "https://johansonweb.vercel.app/" }],
+  alternates: {
+    canonical: "/",
+  },
   manifest: "/manifest.json",
+  openGraph: {
+    title: "VYLO — L'Application Ultime de Jeux de Soirée",
+    description: "Jouez à Undercover, Le Saboteur, Loup-Garou et Action ou Vérité en local ou à distance.",
+    url: "https://vylo-nine.vercel.app",
+    siteName: "VYLO",
+    locale: "fr_FR",
+    type: "website",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -23,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
+  themeColor: "#0B0D19",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,

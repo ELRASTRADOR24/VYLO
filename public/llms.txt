@@ -1,0 +1,9 @@
+# VYLO — Application de Jeux de Soirée
+
+> VYLO est une plateforme web moderne de jeux de soirée multijoueurs (Undercover, Le Saboteur, Loup-Garou, Action ou Vérité) utilisable en local sur un seul téléphone ou en ligne à distance.
+
+## Directives et Liens Utiles
+- Site officiel : https://vylo-nine.vercel.app/
+- Bibliothèque de jeux : https://vylo-nine.vercel.app/library
+- Rejoindre un salon : https://vylo-nine.vercel.app/join
+- Développeur : Johanson (https://johansonweb.vercel.app/)
