@@ -14,8 +14,8 @@ import {
   TuPreferesIllustration,
   FlagQuizIllustration,
   WordMasterIllustration,
-  MostLikelyToIllustration,
   PunchlinesIllustration,
+  VyloPartyIllustration,
   WerewolfIllustration, 
   TodIllustration, 
   SaboteurIllustration 
@@ -280,27 +280,6 @@ export default function Home() {
             </div>
           </Card>
 
-          {/* Card 9 : Qui est le plus susceptible de... ? */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/most-likely-to"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-orange-500/20 hover:border-orange-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <MostLikelyToIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Qui est le plus susceptible de... ?" description="Désignez le joueur du groupe qui correspond le mieux à des situations hilarantes !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-orange-400 transition-colors">Qui est le plus... ?</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>15 min</span>
-              </div>
-            </div>
-          </Card>
-
           {/* Card 10 : VYLO Cards — Punchlines */}
           <Card 
             onClick={() => { sfxTap(); router.push("/setup/punchlines"); }}
@@ -314,6 +293,27 @@ export default function Home() {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">VYLO Cards</span>
+              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                <span>2-20</span>
+                <span>•</span>
+                <span>20 min</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 11 : VYLO Party — Défis & Passe-Mobile */}
+          <Card 
+            onClick={() => { sfxTap(); router.push("/setup/vylo-party"); }}
+            className="p-4 flex flex-col gap-3 bg-surface/90 border border-pink-500/20 hover:border-pink-500/50 transition-all cursor-pointer group active-press"
+          >
+            <div className="relative">
+              <VyloPartyIllustration />
+              <div className="absolute top-2.5 right-2.5 z-20">
+                <VBubble title="VYLO Party — Défis & Passe-Mobile" description="Passez le téléphone de main en main ! Défis déjantés, vérités piquantes et duels survoltés !" />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-black text-foreground group-hover:text-pink-400 transition-colors">VYLO Party</span>
               <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
                 <span>2-20</span>
                 <span>•</span>

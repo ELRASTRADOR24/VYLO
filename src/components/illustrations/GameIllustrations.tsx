@@ -118,20 +118,6 @@ export function WordMasterIllustration({ className = "w-full h-36" }: { classNam
   );
 }
 
-// Illustration Qui est le plus susceptible de... ? (Cible & Flèche Néon)
-export function MostLikelyToIllustration({ className = "w-full h-36" }: { className?: string }) {
-  return (
-    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-950/80 via-slate-950 to-amber-950/80 border border-orange-500/30 ${className}`}>
-      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
-        <circle cx="50" cy="50" r="38" fill="#F97316" fillOpacity="0.15" />
-        <circle cx="50" cy="50" r="28" stroke="#F97316" strokeWidth="4" />
-        <circle cx="50" cy="50" r="16" stroke="#FDBA74" strokeWidth="4" />
-        <circle cx="50" cy="50" r="6" fill="#EA580C" />
-      </svg>
-    </div>
-  );
-}
-
 // Illustration VYLO Cards — Punchlines (Cartes à jouer Néon Violet)
 export function PunchlinesIllustration({ className = "w-full h-36" }: { className?: string }) {
   return (
@@ -141,6 +127,20 @@ export function PunchlinesIllustration({ className = "w-full h-36" }: { classNam
         <rect x="25" y="30" width="30" height="45" rx="6" fill="#7E22CE" transform="rotate(-15 40 52)" />
         <rect x="45" y="25" width="30" height="45" rx="6" fill="#A855F7" stroke="#F472B6" strokeWidth="2" transform="rotate(10 60 47)" />
         <text x="60" y="52" textAnchor="middle" fill="#FFFFFF" fontSize="18" fontWeight="900">🔥</text>
+      </svg>
+    </div>
+  );
+}
+
+// Illustration VYLO Party (Smartphone Lumineux Passe-Mobile & Éclairs)
+export function VyloPartyIllustration({ className = "w-full h-36" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-pink-950/80 via-slate-950 to-purple-950/80 border border-pink-500/30 ${className}`}>
+      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" fill="#EC4899" fillOpacity="0.15" />
+        <rect x="35" y="20" width="30" height="60" rx="6" fill="#1F2937" stroke="#F472B6" strokeWidth="3" />
+        <rect x="39" y="26" width="22" height="44" rx="3" fill="#EC4899" fillOpacity="0.3" />
+        <path d="M50 38L44 48H52L48 58L58 46H50L54 38H50Z" fill="#FACC15" />
       </svg>
     </div>
   );

@@ -7,8 +7,8 @@ import { blindTestConfig } from "./blind-test/config";
 import { tuPreferesConfig } from "./tu-preferes/config";
 import { flagQuizConfig } from "./flag-quiz/config";
 import { wordMasterConfig } from "./word-master/config";
-import { mostLikelyToConfig } from "./most-likely-to/config";
 import { punchlinesConfig } from "./punchlines/config";
+import { vyloPartyConfig } from "./vylo-party/config";
 
 // On stocke tous les jeux disponibles
 export const gameRegistry: Record<string, GameConfig> = {
@@ -16,7 +16,7 @@ export const gameRegistry: Record<string, GameConfig> = {
   [blindTestConfig.id]: blindTestConfig,
   [tuPreferesConfig.id]: tuPreferesConfig,
   [punchlinesConfig.id]: punchlinesConfig,
-  [mostLikelyToConfig.id]: mostLikelyToConfig,
+  [vyloPartyConfig.id]: vyloPartyConfig,
   [wordMasterConfig.id]: wordMasterConfig,
   [flagQuizConfig.id]: flagQuizConfig,
   [saboteurConfig.id]: saboteurConfig,
