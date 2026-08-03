@@ -89,6 +89,20 @@ export function TuPreferesIllustration({ className = "w-full h-36" }: { classNam
   );
 }
 
+// Illustration Devine le Drapeau (Globe & Mât de Drapeau HD)
+export function FlagQuizIllustration({ className = "w-full h-36" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-950/80 via-slate-950 to-teal-950/80 border border-emerald-500/30 ${className}`}>
+      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" fill="#10B981" fillOpacity="0.15" />
+        <line x1="30" y1="20" x2="30" y2="80" stroke="#E2E8F0" strokeWidth="4" strokeLinecap="round" />
+        <path d="M30 22H75L62 38L75 54H30V22Z" fill="#10B981" />
+        <circle cx="30" cy="18" r="4" fill="#FACC15" />
+      </svg>
+    </div>
+  );
+}
+
 // Illustration Loup-Garou (Pleine Lune & Loup Mystique)
 export function WerewolfIllustration({ className = "w-full h-36" }: { className?: string }) {
   return (

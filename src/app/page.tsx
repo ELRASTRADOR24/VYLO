@@ -12,6 +12,7 @@ import {
   UndercoverIllustration, 
   BlindTestIllustration,
   TuPreferesIllustration,
+  FlagQuizIllustration,
   WerewolfIllustration, 
   TodIllustration, 
   SaboteurIllustration 
@@ -226,6 +227,27 @@ export default function Home() {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">Tu Préfères ?</span>
+              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                <span>2-20</span>
+                <span>•</span>
+                <span>15 min</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 7 : Devine le Drapeau */}
+          <Card 
+            onClick={() => { sfxTap(); router.push("/setup/flag-quiz"); }}
+            className="p-4 flex flex-col gap-3 bg-surface/90 border border-emerald-500/20 hover:border-emerald-500/50 transition-all cursor-pointer group active-press"
+          >
+            <div className="relative">
+              <FlagQuizIllustration />
+              <div className="absolute top-2.5 right-2.5 z-20">
+                <VBubble title="Devine le Drapeau" description="Testez vos connaissances en géographie ! Devinez le pays du drapeau affiché le plus vite possible !" />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-black text-foreground group-hover:text-emerald-400 transition-colors">Devine le Drapeau</span>
               <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
                 <span>2-20</span>
                 <span>•</span>
