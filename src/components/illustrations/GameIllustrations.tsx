@@ -103,6 +103,21 @@ export function FlagQuizIllustration({ className = "w-full h-36" }: { className?
   );
 }
 
+// Illustration Le Maître des Mots (Masque de Théâtre & Tabou)
+export function WordMasterIllustration({ className = "w-full h-36" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-pink-950/80 via-slate-950 to-purple-950/80 border border-pink-500/30 ${className}`}>
+      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" fill="#F472B6" fillOpacity="0.15" />
+        <rect x="25" y="30" width="50" height="40" rx="10" fill="#BE185D" />
+        <circle cx="40" cy="45" r="4" fill="#FFFFFF" />
+        <circle cx="60" cy="45" r="4" fill="#FFFFFF" />
+        <line x1="35" y1="58" x2="65" y2="58" stroke="#EF4444" strokeWidth="4" strokeLinecap="round" />
+      </svg>
+    </div>
+  );
+}
+
 // Illustration Loup-Garou (Pleine Lune & Loup Mystique)
 export function WerewolfIllustration({ className = "w-full h-36" }: { className?: string }) {
   return (
