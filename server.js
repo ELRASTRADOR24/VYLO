@@ -65,6 +65,30 @@ app.prepare().then(() => {
     const room = rooms.get(roomCode);
     if (!room) return false;
 
+    // ─── LE SABOTEUR WIN CONDITIONS ───
+    if (room.gameId === "saboteur") {
+      const activePlayers = Array.from(room.players.values()).filter(p => !p.isEliminated);
+      const eliminatedPlayerRole = room.eliminatedPlayer?.role;
+
+      if (eliminatedPlayerRole === "SABOTEUR") {
+        room.state = "END_GAME";
+        room.winnerTeam = "AGENTS";
+        broadcastRoomState(roomCode);
+        return true;
+      }
+
+      const saboteurCount = activePlayers.filter(p => room.secrets?.[p.id]?.role === "SABOTEUR").length;
+      if (saboteurCount > 0 && activePlayers.length <= 2) {
+        room.state = "END_GAME";
+        room.winnerTeam = "SABOTEUR";
+        broadcastRoomState(roomCode);
+        return true;
+      }
+
+      return false;
+    }
+
+    // ─── UNDERCOVER WIN CONDITIONS ───
     const activePlayers = Array.from(room.players.values()).filter(p => !p.isEliminated);
     const activeRoles = activePlayers.map(p => room.secrets?.[p.id]?.role || "Civilian");
 

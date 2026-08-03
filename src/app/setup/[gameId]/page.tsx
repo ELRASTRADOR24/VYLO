@@ -3,7 +3,7 @@
 import { use } from "react";
 import Card from "@/components/ui/Card";
 import { VBubble } from "@/components/ui/VBubble";
-import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight } from "lucide-react";
+import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getGameConfig } from "@/games";
 import { sfxTap, sfxSuccess } from "@/lib/audio";
@@ -14,6 +14,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   const gameConfig = getGameConfig(gameId);
 
   const roomCode = Math.floor(100000 + Math.random() * 900000).toString();
+  const isOnlineSupported = gameId === "undercover" || gameId === "saboteur";
 
   const handleChooseLocal = () => {
     sfxSuccess();
@@ -21,11 +22,16 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   };
 
   const handleChooseOnlineCreate = () => {
+    if (!isOnlineSupported) {
+      sfxTap();
+      return alert(`Le jeu ${gameConfig?.name || gameId} se joue en mode "1 Seul Téléphone" (Pass-and-Play) ! Le mode multijoueur web arrive très bientôt.`);
+    }
+
     sfxSuccess();
     if (gameId === "undercover") {
       router.push(`/online/undercover/${roomCode}`);
-    } else {
-      router.push(`/online/${roomCode}`);
+    } else if (gameId === "saboteur") {
+      router.push(`/online/saboteur/${roomCode}`);
     }
   };
 
@@ -91,15 +97,24 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         {/* MODE EN LIGNE */}
         <Card 
           onClick={handleChooseOnlineCreate}
-          className="p-6 cursor-pointer border border-white/10 hover:border-cyan-500/50 transition-all flex items-center justify-between group active-press bg-surface/90"
+          className={`p-6 cursor-pointer border transition-all flex items-center justify-between group active-press bg-surface/90 ${
+            isOnlineSupported ? 'border-white/10 hover:border-cyan-500/50' : 'border-white/5 opacity-80'
+          }`}
         >
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center font-black">
+            <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center font-black ${
+              isOnlineSupported ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400' : 'bg-white/5 border-white/10 text-foreground/40'
+            }`}>
               <Globe size={28} />
             </div>
             <div className="flex flex-col text-left">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">Multijoueur Web</span>
+                {!isOnlineSupported && (
+                  <span className="text-[10px] font-black uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Sparkles size={10} /> Bientôt en Ligne
+                  </span>
+                )}
                 <VBubble title="Multijoueur Web" description="Chaque joueur se connecte sur son propre téléphone en scannant le QR code du salon." />
               </div>
               <h3 className="text-xl font-black text-foreground group-hover:text-cyan-400 transition-colors">Chacun son Téléphone</h3>
