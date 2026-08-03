@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { getRandomCard, TodCard, TOD_CATEGORIES, IntensityLevel, CardType } from "@/games/truth-or-dare/logic";
 import { sfxTap, sfxSuccess, sfxSuspense, sfxReveal, sfxJoin, sfxError } from "@/lib/audio";
 import { truthOrDareConfig } from "@/games/truth-or-dare/config";
+import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
 
 type LocalPhase = "CONFIG" | "SPIN" | "CARD_REVEAL" | "SCORES";
 
@@ -324,9 +325,15 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
           </div>
         </Card>
 
-        <Button variant="primary" className="w-full py-5 text-lg gap-2 shadow-summer-glow" onClick={spinNextPlayer}>
+        <Button variant="primary" className="w-full py-5 text-lg gap-2 shadow-summer-glow mb-4" onClick={spinNextPlayer}>
           <Dices size={22} /> Joueur Suivant →
         </Button>
+
+        <EndGameActionsCard
+          onReplaySameTeam={spinNextPlayer}
+          onEditTeam={() => setPhase("CONFIG")}
+          onChangeTeam={() => setPhase("CONFIG")}
+        />
       </main>
     );
   }

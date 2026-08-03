@@ -9,6 +9,12 @@ export interface SavedAccount {
   stats: UserStats;
 }
 
+export interface GroupPlayer {
+  id: string;
+  name: string;
+  avatar?: string;
+}
+
 interface AppState {
   theme: "dark" | "light";
   isOffline: boolean;
@@ -31,6 +37,15 @@ interface AppState {
     stats: UserStats;
   };
 
+  // Active Team / Group roster for local games
+  savedGroup: GroupPlayer[];
+
+  setSavedGroup: (players: Array<{ id?: string; name: string; avatar?: string }>) => void;
+  addPlayerToSavedGroup: (name: string, avatar?: string) => void;
+  removePlayerFromSavedGroup: (id: string) => void;
+  updatePlayerInSavedGroup: (id: string, newName: string, newAvatar?: string) => void;
+  clearSavedGroup: () => void;
+
   updateGuestProfile: (updates: Partial<AppState["guestProfile"]>) => void;
   incrementStat: (statKey: keyof UserStats) => void;
 
@@ -49,6 +64,7 @@ export const useAppStore = create<AppState>()(
 
       savedAccounts: {},
       activeAccount: null,
+      savedGroup: [],
 
       guestProfile: {
         pseudo: `Guest_${Math.floor(Math.random() * 9000 + 1000)}`,
@@ -62,11 +78,53 @@ export const useAppStore = create<AppState>()(
         },
       },
 
+      setSavedGroup: (players) => {
+        const formatted: GroupPlayer[] = players.map((p, idx) => ({
+          id: p.id || `gp_${idx}_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+          name: p.name.trim(),
+          avatar: p.avatar || "😎",
+        })).filter(p => p.name.length > 0);
+
+        set({ savedGroup: formatted });
+      },
+
+      addPlayerToSavedGroup: (name, avatar = "😎") => {
+        const cleanName = name.trim();
+        if (!cleanName) return;
+
+        const state = get();
+        const newPlayer: GroupPlayer = {
+          id: `gp_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+          name: cleanName,
+          avatar,
+        };
+
+        set({ savedGroup: [...state.savedGroup, newPlayer] });
+      },
+
+      removePlayerFromSavedGroup: (id) => {
+        set((state) => ({
+          savedGroup: state.savedGroup.filter((p) => p.id !== id),
+        }));
+      },
+
+      updatePlayerInSavedGroup: (id, newName, newAvatar) => {
+        const cleanName = newName.trim();
+        if (!cleanName) return;
+
+        set((state) => ({
+          savedGroup: state.savedGroup.map((p) =>
+            p.id === id ? { ...p, name: cleanName, avatar: newAvatar || p.avatar } : p
+          ),
+        }));
+      },
+
+      clearSavedGroup: () => set({ savedGroup: [] }),
+
       updateGuestProfile: (updates) =>
         set((state) => {
           const newProfile = { ...state.guestProfile, ...updates };
 
-          // Si un compte est actif, on met aussi à jour le compte enregistré
           if (state.activeAccount) {
             const username = state.activeAccount.username.toLowerCase();
             const existing = state.savedAccounts[username];
@@ -155,7 +213,7 @@ export const useAppStore = create<AppState>()(
 
         const newAccount: SavedAccount = {
           username: cleanName,
-          passwordHash: password, // In-app auth simple
+          passwordHash: password,
           avatar: defaultAvatar,
           stats: initialStats,
         };

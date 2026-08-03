@@ -3,6 +3,7 @@
 import { use, useEffect, useState } from "react";
 import { useEngineStore } from "@/engine/store";
 import { useAppStore } from "@/store/useAppStore";
+import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
 import { 
   UndercoverRole, UndercoverPlayer, CATEGORIES, CategoryName, 
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
@@ -33,7 +34,42 @@ type PassPhase =
 export default function UndercoverLocalGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
   const router = useRouter();
-  const { incrementStat } = useAppStore();
+  const { incrementStat, savedGroup, setSavedGroup } = useAppStore();
+
+  // Rejouer instantanément avec la même équipe
+  const handleReplaySameTeam = () => {
+    const wordPair = getRandomWordPair(selectedCategories);
+    const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
+    const count = existingNames.length > 0 ? existingNames.length : playerCount;
+    const roles = generateRolesFromConfig(count, undercoverCount, mrWhiteCount);
+
+    const newPlayers: UndercoverPlayer[] = roles.map((role, i) => {
+      let word = "";
+      if (role === "Civilian") word = wordPair.civilian;
+      else if (role === "Undercover") word = wordPair.undercover;
+      else if (role === "MrWhite") word = "Vous êtes Mr. White";
+
+      return {
+        id: `player_${i}_${Date.now()}`,
+        name: existingNames[i] || `Joueur ${i + 1}`,
+        isHost: i === 0,
+        isReady: true,
+        isConnected: true,
+        score: 0,
+        scorePoints: 0,
+        gameRole: role,
+        word,
+        isEliminated: false,
+      };
+    });
+
+    setPlayerList(newPlayers);
+    setCurrentDistIndex(0);
+    setTempName("");
+    setIsWordRevealed(false);
+    sfxSuspense();
+    setPhase("PASS_TO_PLAYER");
+  };
 
   // --- Configuration State ---
   const [phase, setPhase] = useState<PassPhase>("CONFIG");
@@ -705,13 +741,11 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           </div>
         </Card>
 
-        <Button variant="primary" className="w-full py-4 text-lg mb-4 gap-2" onClick={handleShare}>
-          <Share size={20} /> Partager le score
-        </Button>
-
-        <Button variant="surface" className="w-full py-4 text-lg" onClick={() => setPhase("CONFIG")}>
-          Nouvelle partie 🔄
-        </Button>
+        <EndGameActionsCard
+          onReplaySameTeam={handleReplaySameTeam}
+          onEditTeam={() => setPhase("CONFIG")}
+          onChangeTeam={() => setPhase("CONFIG")}
+        />
       </main>
     );
   }

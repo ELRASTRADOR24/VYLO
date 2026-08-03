@@ -3,6 +3,7 @@
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
+import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
@@ -28,7 +29,46 @@ type PassPhase =
 export default function SaboteurLocalGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
   const router = useRouter();
-  const { incrementStat } = useAppStore();
+  const { incrementStat, savedGroup, setSavedGroup } = useAppStore();
+
+  const handleReplaySameTeam = () => {
+    sfxSuspense();
+    const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
+    const count = existingNames.length > 0 ? existingNames.length : playerCount;
+    const roles = generateSaboteurRoles(count, saboteurCount);
+
+    const initialPlayers: SaboteurPlayer[] = roles.map((role, i) => ({
+      id: `player_${i}_${Date.now()}`,
+      name: existingNames[i] || `Joueur ${i + 1}`,
+      isHost: i === 0,
+      isReady: true,
+      isConnected: true,
+      score: 0,
+      scorePoints: 0,
+      gameRole: role,
+      isEliminated: false,
+    }));
+
+    setPlayerList(initialPlayers);
+    setCurrentDistIndex(0);
+    setTempName("");
+    setIsRoleRevealed(false);
+
+    const challenge = getRandomChallenge();
+    setActiveChallenge(challenge);
+    setMissionTimer(challenge.timeLimitSec);
+    setTimerActive(false);
+    setIsPrepPhase(true);
+    setPrepCountdown(5);
+    setPhase("MISSION");
+
+    setTimeout(() => {
+      voiceEngine.speak(
+        `Nouvelle manche ! Mission : ${challenge.title}. ${challenge.instruction}`,
+        { tone: "SABOTEUR" }
+      );
+    }, 300);
+  };
 
   // --- Configuration ---
   const [phase, setPhase] = useState<PassPhase>("CONFIG");
@@ -518,9 +558,11 @@ export default function SaboteurLocalGame({ params }: { params: Promise<{ roomId
           </span>
         </Card>
 
-        <Button variant="primary" className="w-full py-5 text-lg gap-2 shadow-summer-glow" onClick={() => setPhase("CONFIG")}>
-          <RefreshCw size={20} /> Nouvelle partie
-        </Button>
+        <EndGameActionsCard
+          onReplaySameTeam={handleReplaySameTeam}
+          onEditTeam={() => setPhase("CONFIG")}
+          onChangeTeam={() => setPhase("CONFIG")}
+        />
       </main>
     );
   }

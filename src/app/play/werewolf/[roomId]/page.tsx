@@ -17,6 +17,7 @@ import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJo
 import { werewolfConfig } from "@/games/werewolf/config";
 import { voiceEngine } from "@/lib/voiceEngine";
 import { VoiceNarratorBanner } from "@/components/ui/VoiceNarrator";
+import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
 
 type GamePhase = 
   | "LOBBY"
@@ -1176,17 +1177,16 @@ export default function WerewolfGame({ params }: { params: Promise<{ roomId: str
           </div>
         </Card>
 
-        {/* Action Buttons */}
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-2xl border-t border-white/10 z-50">
-          <div className="max-w-md mx-auto">
-            <Button
-              variant="primary"
-              className="w-full h-16 text-lg font-black gap-2 bg-purple-600 hover:bg-purple-500 border-purple-600 shadow-glow"
-              onClick={() => { sfxTap(); setPhase("LOBBY"); }}
-            >
-              <RefreshCw size={20} /> Rejouer une Partie 🔄
-            </Button>
-          </div>
+        <div className="w-full">
+          <EndGameActionsCard
+            onReplaySameTeam={() => {
+              sfxSuccess();
+              // Distribuer directement les rôles à la même équipe
+              setPhase("LOBBY");
+            }}
+            onEditTeam={() => setPhase("LOBBY")}
+            onChangeTeam={() => setPhase("LOBBY")}
+          />
         </div>
       </main>
     );
