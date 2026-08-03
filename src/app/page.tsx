@@ -40,7 +40,7 @@ export default function Home() {
     <main className="flex-1 flex flex-col items-center px-4 md:px-8 pt-6 md:pt-10 pb-32 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto w-full relative">
 
       {/* SECTION HERO : "Prêt à jouer ?" avec Mascotte 3D */}
-      <div className="w-full bg-surface/90 border border-white/10 rounded-3xl p-6 md:p-8 mb-8 relative overflow-hidden shadow-2xl">
+      <div className="w-full bg-surface/90 border border-white/10 rounded-3xl p-6 md:p-8 mb-8 relative overflow-hidden shadow-2xl animate-fade-up">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           
           <div className="flex flex-col text-left max-w-xl">
@@ -55,7 +55,7 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
               {/* Carte 1 : Lancer une partie (Orange Sunset Gradient) */}
               <Link href="/library" className="block group" onClick={() => sfxTap()}>
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-500 via-orange-500 to-amber-500 text-white shadow-lg group-hover:scale-[1.02] transition-transform flex items-center justify-between relative overflow-hidden active-press">
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-500 via-orange-500 to-amber-500 text-white shadow-lg group-hover:scale-[1.03] group-hover:shadow-xl transition-all duration-200 flex items-center justify-between relative overflow-hidden active-press">
                   <div className="flex items-center gap-3.5">
                     <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
                       <Play className="w-6 h-6 fill-white text-white translate-x-0.5" />
@@ -73,7 +73,7 @@ export default function Home() {
 
               {/* Carte 2 : Rejoindre par code (Electric Royal Blue/Purple Gradient) */}
               <Link href="/join" className="block group" onClick={() => sfxTap()}>
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white shadow-lg group-hover:scale-[1.02] transition-transform flex items-center justify-between relative overflow-hidden active-press">
+                <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white shadow-lg group-hover:scale-[1.03] group-hover:shadow-xl transition-all duration-200 flex items-center justify-between relative overflow-hidden active-press">
                   <div className="flex items-center gap-3.5">
                     <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
                       <QrCode className="w-6 h-6 text-white" />
@@ -93,7 +93,7 @@ export default function Home() {
 
           {/* Mascotte Officielle VYLO 3D Mignonne */}
           <div className="hidden md:flex flex-col items-center justify-center">
-            <VyloMascot className="w-36 h-36 animate-bounce duration-[3000ms]" />
+            <VyloMascot className="w-36 h-36 animate-float" />
           </div>
         </div>
       </div>
