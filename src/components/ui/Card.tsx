@@ -5,7 +5,7 @@ export const Card = React.memo(function Card({ className, ...props }: React.HTML
   return (
     <div
       className={cn(
-        "bg-surface/90 border border-white/10 rounded-[1.5rem] shadow-soft overflow-hidden transition-all duration-200 transform-gpu hover:border-white/20", 
+        "bg-surface/95 border border-white/10 rounded-3xl shadow-soft overflow-hidden transition-all duration-200 transform-gpu hover:border-white/20 active-press", 
         className
       )}
       {...props}
