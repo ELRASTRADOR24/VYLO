@@ -60,13 +60,27 @@ export function UndercoverIllustration({ className = "w-full h-36" }: { classNam
       <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="40" fill="#A855F7" fillOpacity="0.15" />
         <path d="M50 15L20 85H80L50 15Z" fill="#1E1B4B" opacity="0.4" />
-        {/* Silhouette de l'agent secret à capuche */}
         <path d="M50 25C36 25 30 38 30 52C30 70 38 78 50 78C62 78 70 70 70 52C70 38 64 25 50 25Z" fill="#581C87" />
         <path d="M50 28C38 28 34 40 34 52C34 62 40 74 50 74C60 74 66 62 66 52C66 40 62 28 50 28Z" fill="#3B0764" />
-        {/* Lunettes de soleil néon glowing */}
         <rect x="36" y="48" width="12" height="7" rx="3" fill="#C084FC" />
         <rect x="52" y="48" width="12" height="7" rx="3" fill="#C084FC" />
         <line x1="48" y1="51" x2="52" y2="51" stroke="#C084FC" strokeWidth="2" />
+      </svg>
+    </div>
+  );
+}
+
+// Illustration Blind Test Musical (Casque Néon & Vinyle Luminescent)
+export function BlindTestIllustration({ className = "w-full h-36" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-pink-950/80 via-slate-950 to-purple-950/80 border border-pink-500/30 ${className}`}>
+      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" fill="#EC4899" fillOpacity="0.15" />
+        {/* Casque Audio & Onde Sonore */}
+        <circle cx="50" cy="50" r="28" fill="#18181B" stroke="#EC4899" strokeWidth="3" />
+        <circle cx="50" cy="50" r="10" fill="#EC4899" />
+        <circle cx="50" cy="50" r="4" fill="#FFFFFF" />
+        <path d="M22 50C22 34.5 34.5 22 50 22C65.5 22 78 34.5 78 50" stroke="#F472B6" strokeWidth="4" strokeLinecap="round" />
       </svg>
     </div>
   );
@@ -77,13 +91,9 @@ export function WerewolfIllustration({ className = "w-full h-36" }: { className?
   return (
     <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-slate-950 via-purple-950/90 to-slate-950 border border-indigo-500/30 ${className}`}>
       <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
-        {/* Pleine Lune Violette Luminescente */}
         <circle cx="50" cy="45" r="32" fill="#E9D5FF" fillOpacity="0.85" />
-        <circle cx="50" cy="45" r="32" fill="url(#moonGlow)" />
         <circle cx="40" cy="38" r="6" fill="#D8B4FE" opacity="0.5" />
         <circle cx="62" cy="48" r="4" fill="#D8B4FE" opacity="0.4" />
-
-        {/* Silhouette Loup hurlant */}
         <path d="M30 85C35 70 42 62 48 55C50 52 48 45 44 42C48 40 54 44 58 40C62 36 60 30 56 26C64 30 68 38 66 46C70 52 74 65 80 85H30Z" fill="#1E1B4B" />
       </svg>
     </div>
@@ -96,11 +106,8 @@ export function TodIllustration({ className = "w-full h-36" }: { className?: str
     <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-red-950/80 via-slate-950 to-orange-950/80 border border-red-500/30 ${className}`}>
       <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="38" fill="#EF4444" fillOpacity="0.15" />
-        {/* Flamme principale */}
         <path d="M50 18C50 18 68 38 68 58C68 70 60 78 50 78C40 78 32 70 32 58C32 38 50 18 50 18Z" fill="#F97316" />
         <path d="M50 32C50 32 62 46 62 60C62 68 56 74 50 74C44 74 38 68 38 60C38 46 50 32 50 32Z" fill="#FACC15" />
-
-        {/* Yeux mignons sur la flamme */}
         <ellipse cx="44" cy="56" rx="2.5" ry="4" fill="#7C2D12" />
         <ellipse cx="56" cy="56" rx="2.5" ry="4" fill="#7C2D12" />
         <path d="M47 62C47 64 53 64 53 62" stroke="#7C2D12" strokeWidth="2" strokeLinecap="round" />
@@ -115,13 +122,9 @@ export function SaboteurIllustration({ className = "w-full h-36" }: { className?
     <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-amber-950/80 via-slate-950 to-slate-950 border border-amber-500/30 ${className}`}>
       <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="38" fill="#F59E0B" fillOpacity="0.15" />
-
-        {/* Chapeau Fedora Détective Saboteur */}
         <path d="M25 50H75L68 35H32L25 50Z" fill="#1E293B" />
         <ellipse cx="50" cy="50" rx="30" ry="6" fill="#0F172A" />
         <rect x="32" y="44" width="36" height="5" fill="#F59E0B" />
-
-        {/* Visage mystérieux dans l'ombre & Yeux dorés */}
         <path d="M36 52C36 52 38 74 50 74C62 74 64 52 64 52H36Z" fill="#020617" />
         <ellipse cx="43" cy="58" rx="4" ry="2" fill="#F59E0B" />
         <ellipse cx="57" cy="58" rx="4" ry="2" fill="#F59E0B" />

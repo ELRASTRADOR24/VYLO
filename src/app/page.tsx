@@ -10,6 +10,7 @@ import { VBubble } from "@/components/ui/VBubble";
 import { 
   VyloMascot, 
   UndercoverIllustration, 
+  BlindTestIllustration,
   WerewolfIllustration, 
   TodIllustration, 
   SaboteurIllustration 
@@ -190,21 +191,21 @@ export default function Home() {
             </div>
           </Card>
 
-          {/* Card 4 : Le Saboteur */}
+          {/* Card 5 : Blind Test Musical */}
           <Card 
-            onClick={() => { sfxTap(); router.push("/setup/saboteur"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-amber-500/20 hover:border-amber-500/50 transition-all cursor-pointer group active-press"
+            onClick={() => { sfxTap(); router.push("/setup/blind-test"); }}
+            className="p-4 flex flex-col gap-3 bg-surface/90 border border-pink-500/20 hover:border-pink-500/50 transition-all cursor-pointer group active-press"
           >
             <div className="relative">
-              <SaboteurIllustration />
+              <BlindTestIllustration />
               <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Le Saboteur" description="Accomplissez des défis chronométrés pendant qu'un saboteur secret tente d'annuler vos victoires !" />
+                <VBubble title="Blind Test Musical" description="Écoutez des extraits officiels de 30s de Rap FR, Latino & Hits et choisissez la bonne réponse en 30s chrono !" />
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-amber-400 transition-colors">Le Saboteur</span>
+              <span className="text-lg font-black text-foreground group-hover:text-pink-400 transition-colors">Blind Test</span>
               <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>3-16</span>
+                <span>2-16</span>
                 <span>•</span>
                 <span>15 min</span>
               </div>
