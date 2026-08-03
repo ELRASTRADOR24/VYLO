@@ -1,10 +1,9 @@
 "use client";
 
 import { use } from "react";
-import { Button } from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import { InfoTooltip } from "@/components/ui/InfoTooltip";
-import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight, Flame, Users, Sparkles, ShieldAlert, BookOpen } from "lucide-react";
+import { VBubble } from "@/components/ui/VBubble";
+import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { getGameConfig } from "@/games";
 import { sfxTap, sfxSuccess } from "@/lib/audio";
@@ -53,7 +52,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         <div className="flex items-center gap-2 font-black text-xl capitalize">
           {gameConfig?.name || gameId}
           {gameConfig && (
-            <InfoTooltip title={gameConfig.name} description={gameConfig.description} />
+            <VBubble title={gameConfig.name} description={gameConfig.description} />
           )}
         </div>
         <div className="w-16" />
@@ -79,7 +78,10 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
               <Smartphone size={28} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-xs font-black text-primary uppercase tracking-wider">Pass-and-Play</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black text-primary uppercase tracking-wider">Pass-and-Play</span>
+                <VBubble title="Pass-and-Play (1 téléphone)" description="Un seul smartphone circule entre les joueurs à tour de rôle pour recevoir les rôles et instructions." />
+              </div>
               <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">1 Seul Téléphone</h3>
             </div>
           </div>
@@ -96,7 +98,10 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
               <Globe size={28} />
             </div>
             <div className="flex flex-col text-left">
-              <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">Multijoueur Web</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">Multijoueur Web</span>
+                <VBubble title="Multijoueur Web" description="Chaque joueur se connecte sur son propre téléphone en scannant le QR code du salon." />
+              </div>
               <h3 className="text-xl font-black text-foreground group-hover:text-cyan-400 transition-colors">Chacun son Téléphone</h3>
             </div>
           </div>

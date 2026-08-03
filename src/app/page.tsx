@@ -2,13 +2,12 @@
 
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { InfoTooltip } from "@/components/ui/InfoTooltip";
+import { SmartCard } from "@/components/ui/SmartCard";
 import { Ghost, Flame, Sword, HelpCircle, QrCode, Sparkles, Zap, ArrowRight, Play, Bomb } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getGameList } from "@/games";
-import { useAppStore } from "@/store/useAppStore";
 import { ProfileModal } from "@/components/ui/ProfileModal";
 
 const GAME_THEME_CLASSES: Record<string, { theme: string; tag: string; icon: React.ReactNode }> = {
@@ -95,7 +94,7 @@ export default function Home() {
         </form>
       </Card>
 
-      {/* Cartes de Jeux Épurées & Minimalistes */}
+      {/* Cartes de Jeux Intelligentes avec V-Bubble */}
       <div className="w-full max-w-md md:max-w-5xl flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-black flex items-center gap-2 text-foreground">
@@ -115,32 +114,16 @@ export default function Home() {
             };
 
             return (
-              <Link key={game.id} href={`/setup/${game.id}`} className="block">
-                <Card className={`p-4 flex items-center justify-between border ${config.theme} relative group transition-all`}>
-                  <div className="flex items-center gap-3.5">
-                    <div className="p-3 rounded-2xl bg-slate-950/40 border border-white/10">
-                      {config.icon}
-                    </div>
-                    
-                    <div className="flex flex-col text-left">
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">
-                          {game.name}
-                        </h3>
-                        {/* Point d'Interrogation ? avec Tooltip */}
-                        <InfoTooltip title={game.name} description={game.description} />
-                      </div>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-foreground/50">
-                        {game.players.min}-{game.players.max} 👥 • ⏱️ {game.durationMins} mins
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                    <ArrowRight size={18} />
-                  </div>
-                </Card>
-              </Link>
+              <SmartCard 
+                key={game.id}
+                title={game.name}
+                shortTag={config.tag}
+                description={game.description}
+                icon={config.icon}
+                themeClass={config.theme}
+                statsText={`${game.players.min}-${game.players.max} 👥 • ⏱️ ${game.durationMins} mins`}
+                onClick={() => router.push(`/setup/${game.id}`)}
+              />
             );
           })}
         </div>

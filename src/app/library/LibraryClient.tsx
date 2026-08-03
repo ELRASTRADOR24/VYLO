@@ -1,10 +1,9 @@
 "use client";
 
-import { Card } from "@/components/ui/Card";
-import { InfoTooltip } from "@/components/ui/InfoTooltip";
+import { SmartCard } from "@/components/ui/SmartCard";
 import { Ghost, Flame, Sword, HelpCircle, Search, Sparkles, ArrowRight, Bomb } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { getGameList } from "@/games";
 
@@ -34,6 +33,7 @@ const GAME_THEME_CLASSES: Record<string, { theme: string; tag: string; icon: Rea
 };
 
 export default function LibraryClient() {
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("Tous");
   const [searchQuery, setSearchQuery] = useState("");
   const allGames = getGameList();
@@ -87,7 +87,7 @@ export default function LibraryClient() {
         </div>
       </div>
 
-      {/* Grille de Jeux Épurées */}
+      {/* Grille de Smart Cards avec V-Bubble */}
       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {filteredGames.map(game => {
           const config = GAME_THEME_CLASSES[game.id] || {
@@ -97,31 +97,16 @@ export default function LibraryClient() {
           };
 
           return (
-            <Link key={game.id} href={`/setup/${game.id}`} className="block">
-              <Card className={`p-4 flex items-center justify-between border ${config.theme} relative group transition-all`}>
-                <div className="flex items-center gap-3.5">
-                  <div className="p-3 rounded-2xl bg-slate-950/40 border border-white/10">
-                    {config.icon}
-                  </div>
-                  
-                  <div className="flex flex-col text-left">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-black text-foreground group-hover:text-primary transition-colors">
-                        {game.name}
-                      </h3>
-                      <InfoTooltip title={game.name} description={game.description} />
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-foreground/50">
-                      {game.players.min}-{game.players.max} 👥 • ⏱️ {game.durationMins} mins
-                    </span>
-                  </div>
-                </div>
-
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-                  <ArrowRight size={18} />
-                </div>
-              </Card>
-            </Link>
+            <SmartCard 
+              key={game.id}
+              title={game.name}
+              shortTag={config.tag}
+              description={game.description}
+              icon={config.icon}
+              themeClass={config.theme}
+              statsText={`${game.players.min}-${game.players.max} 👥 • ⏱️ ${game.durationMins} mins`}
+              onClick={() => router.push(`/setup/${game.id}`)}
+            />
           );
         })}
 
