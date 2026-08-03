@@ -118,6 +118,20 @@ export function WordMasterIllustration({ className = "w-full h-36" }: { classNam
   );
 }
 
+// Illustration Qui est le plus susceptible de... ? (Cible & Flèche Néon)
+export function MostLikelyToIllustration({ className = "w-full h-36" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-950/80 via-slate-950 to-amber-950/80 border border-orange-500/30 ${className}`}>
+      <svg className="w-28 h-28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="38" fill="#F97316" fillOpacity="0.15" />
+        <circle cx="50" cy="50" r="28" stroke="#F97316" strokeWidth="4" />
+        <circle cx="50" cy="50" r="16" stroke="#FDBA74" strokeWidth="4" />
+        <circle cx="50" cy="50" r="6" fill="#EA580C" />
+      </svg>
+    </div>
+  );
+}
+
 // Illustration Loup-Garou (Pleine Lune & Loup Mystique)
 export function WerewolfIllustration({ className = "w-full h-36" }: { className?: string }) {
   return (
