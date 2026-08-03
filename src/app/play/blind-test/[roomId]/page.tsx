@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, UserPlus, Play, Pause, Check, X, 
-  Trophy, Trash2, Music, Disc, Volume2, Sparkles, RefreshCw 
+  Trophy, Trash2, Music, Disc, Volume2, Infinity as InfinityIcon, Sparkles
 } from "lucide-react";
 import { 
   BlindTestCategory, BlindTestQuestion, generateBlindTestQuestion 
@@ -31,6 +31,15 @@ const CATEGORIES: BlindTestCategory[] = [
   "Films & Dessins Animés"
 ];
 
+const ROUND_OPTIONS: { label: string; value: number }[] = [
+  { label: "5 Tours", value: 5 },
+  { label: "10 Tours", value: 10 },
+  { label: "15 Tours", value: 15 },
+  { label: "20 Tours", value: 20 },
+  { label: "30 Tours", value: 30 },
+  { label: "Illimité ∞", value: -1 },
+];
+
 const KAHOOT_BUTTON_VARIANTS: ("red" | "blue" | "yellow" | "green")[] = [
   "red", "blue", "yellow", "green"
 ];
@@ -42,6 +51,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
   const [phase, setPhase] = useState<LocalPhase>("CONFIG");
   const [selectedCategory, setSelectedCategory] = useState<BlindTestCategory>("Hits & Rap Français");
+  const [maxRounds, setMaxRounds] = useState<number>(10); // 10 par défaut, ou -1 pour illimité
   const [newPlayerName, setNewPlayerName] = useState("");
   const [players, setPlayers] = useState<LocalPlayer[]>([
     { id: "1", name: "Joueur 1", score: 0 },
@@ -105,7 +115,6 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
         console.warn("Audio play blocked or failed", err);
         setIsPlayingAudio(false);
         setAudioError(true);
-        // Jouer un son d'ambiance de secours si le MP3/M4A échoue
         sfxReveal();
       });
   };
@@ -146,7 +155,6 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
     setCurrentQuestion(question);
     setPhase("PLAYING");
 
-    // Tenter l'autoplay (si autorisé par le navigateur)
     setTimeout(() => {
       if (audioRef.current && question.track.previewUrl) {
         audioRef.current.src = question.track.previewUrl;
@@ -188,7 +196,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
   const handleNextRound = () => {
     stopAudio();
-    if (roundCount >= players.length * 3) {
+    if (maxRounds > 0 && roundCount >= maxRounds) {
       sfxVictory();
       setPhase("SCORES");
     } else {
@@ -209,6 +217,28 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
             <Music className="text-primary" /> Blind Test
           </span>
           <div className="w-16" />
+        </div>
+
+        {/* Sélection du Nombre de Tours */}
+        <div className="w-full mb-6">
+          <label className="text-xs font-extrabold uppercase tracking-widest text-foreground/50 mb-3 block text-left">
+            Nombre de Tours de jeu
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {ROUND_OPTIONS.map(opt => (
+              <button
+                key={opt.value}
+                onClick={() => { setMaxRounds(opt.value); sfxTap(); }}
+                className={`py-3 px-3 rounded-2xl font-black text-xs transition-all border flex items-center justify-center gap-1 ${
+                  maxRounds === opt.value 
+                    ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow scale-[1.02]" 
+                    : "bg-surface border-white/5 text-foreground/70 hover:bg-white/5"
+                }`}
+              >
+                {opt.value === -1 ? <InfinityIcon size={14} /> : null} {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Sélection de Catégorie Musicale */}
@@ -274,7 +304,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 border-t border-white/10 z-50">
           <div className="max-w-md mx-auto">
             <Button variant="primary" className="w-full h-16 text-lg gap-2 shadow-summer-glow" onClick={loadNextQuestion}>
-              <Play size={20} /> Lancer le Blind Test ({players.length} joueurs)
+              <Play size={20} /> Lancer le Blind Test ({maxRounds === -1 ? "Illimité" : `${maxRounds} Tours`})
             </Button>
           </div>
         </div>
@@ -290,7 +320,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
           <Disc size={40} className="animate-spin" />
         </div>
         <h2 className="text-2xl font-black text-foreground">Recherche de l'extrait...</h2>
-        <p className="text-xs font-bold text-foreground/50 mt-2">Chargement du morceau sur Apple Music</p>
+        <p className="text-xs font-bold text-foreground/50 mt-2">Génération de choix de pièges réalistes</p>
       </main>
     );
   }
@@ -300,7 +330,6 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-between py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto text-center pb-12">
-      {/* Element Audio HTML5 Caché */}
       <audio 
         ref={audioRef} 
         onPlay={() => setIsPlayingAudio(true)}
@@ -314,9 +343,16 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
         <button onClick={handleLeaveGame} className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground">
           <ChevronLeft size={16} className="text-primary" /> Quitter
         </button>
-        <span className="text-xs font-black text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full">
-          Tour de : {activePlayer?.name}
-        </span>
+        
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-black text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full">
+            Tour de : {activePlayer?.name}
+          </span>
+          <span className="text-xs font-black text-foreground/70 bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+            Tour {roundCount} / {maxRounds === -1 ? "∞" : maxRounds}
+          </span>
+        </div>
+
         <div className="text-xs font-black text-foreground/60 bg-white/5 px-3 py-1 rounded-full">
           ⏱️ {timeLeftSec}s
         </div>
@@ -373,7 +409,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
         )}
       </div>
 
-      {/* Choix de Réponses Style Kahoot 3D */}
+      {/* Choix de Réponses Style Kahoot 3D (Leurres Réalistes) */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
         {currentQuestion?.choices.map((choice, idx) => {
           const variant = KAHOOT_BUTTON_VARIANTS[idx % 4];
@@ -398,9 +434,16 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
       </div>
 
       {phase === "REVEAL" && (
-        <Button variant="primary" className="w-full max-w-sm py-4 text-base gap-2 shadow-summer-glow" onClick={handleNextRound}>
-          Question Suivante →
-        </Button>
+        <div className="w-full max-w-sm flex gap-3">
+          <Button variant="primary" className="flex-1 py-4 text-base gap-2 shadow-summer-glow" onClick={handleNextRound}>
+            Question Suivante →
+          </Button>
+          {maxRounds === -1 && (
+            <Button variant="surface" className="py-4 text-xs font-black gap-1.5" onClick={() => setPhase("SCORES")}>
+              <Trophy size={16} className="text-yellow-400" /> Fin de Partie
+            </Button>
+          )}
+        </div>
       )}
 
       {/* SCORES EN FIN DE PARTIE */}

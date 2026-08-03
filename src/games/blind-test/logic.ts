@@ -16,7 +16,7 @@ export interface TrackItem {
 
 export interface BlindTestQuestion {
   track: TrackItem;
-  choices: string[]; // 4 choix (1 vrai + 3 faux)
+  choices: string[]; // 4 choix crédibles et proches (1 vrai + 3 leurres)
   correctChoiceIndex: number;
 }
 
@@ -37,6 +37,15 @@ export const CATEGORY_ARTISTS: Record<BlindTestCategory, string[]> = {
   "Films & Dessins Animés": [
     "Disney", "Star Wars", "Harry Potter", "Roi Lion", "Reine des neiges", "Encanto", "Dragon Ball Z", "Naruto"
   ]
+};
+
+// Titres leurres plausibles par catégorie pour créer des pièges crédibles
+export const PLAUSIBLE_TRACK_TITLES: Record<BlindTestCategory, string[]> = {
+  "Tous": ["Canoë", "Réseaux", "Meuda", "Dakiti", "Despacito", "Blinding Lights", "Libérée, Délivrée"],
+  "Hits & Rap Français": ["Canoë", "Réseaux", "Meuda", "J'ai mal", "Chocolat", "Bande Organisée", "Djadja", "Bolide Germanique", "Midi dans le ghetto"],
+  "Musique Espagnole & Latino": ["Dakiti", "Despacito", "Con Calma", "Pepas", "Mi Gente", "Bailando", "Provenza", "Gasolina"],
+  "Pop International": ["Blinding Lights", "Levitating", "God's Plan", "Umbrella", "Uptown Funk", "Shape of You", "Starboy"],
+  "Films & Dessins Animés": ["Libérée, Délivrée", "Ce rêve bleu", "L'histoire de la vie", "Ne parlons pas de Bruno", "Chala Head Chala"]
 };
 
 // Base de pistes de secours réelles avec vrais extraits Apple Music M4A
@@ -66,9 +75,7 @@ export const FALLBACK_TRACKS: TrackItem[] = [
 
 const usedTrackIdsHistory = new Set<string>();
 
-/**
-  Interroge l'API officielle iTunes d'Apple pour récupérer un extrait MP3/M4A de 30s
- */
+/** Interroge l'API officielle iTunes d'Apple pour récupérer un extrait MP3/M4A de 30s */
 export async function fetchTrackFromiTunes(searchQuery: string, category: BlindTestCategory): Promise<TrackItem | null> {
   try {
     const encoded = encodeURIComponent(searchQuery);
@@ -78,7 +85,6 @@ export async function fetchTrackFromiTunes(searchQuery: string, category: BlindT
     const data = await res.json();
     
     if (data.results && data.results.length > 0) {
-      // Filtrer les morceaux avec extraits audio valides
       const validResults = data.results.filter((r: any) => r.previewUrl && r.artistName && r.trackName);
       if (validResults.length === 0) return null;
 
@@ -99,16 +105,14 @@ export async function fetchTrackFromiTunes(searchQuery: string, category: BlindT
   }
 }
 
-/**
-  Génère une question complète de Blind Test avec 4 choix (1 vrai + 3 leurres)
- */
+/** Génère une question complète de Blind Test avec 4 choix proches et crédibles */
 export async function generateBlindTestQuestion(category: BlindTestCategory = "Tous"): Promise<BlindTestQuestion> {
   const artistsList = CATEGORY_ARTISTS[category] || CATEGORY_ARTISTS["Tous"];
+  const plausibleTitles = PLAUSIBLE_TRACK_TITLES[category] || PLAUSIBLE_TRACK_TITLES["Tous"];
   const randomArtist = artistsList[Math.floor(Math.random() * artistsList.length)];
   
   let track = await fetchTrackFromiTunes(randomArtist, category);
 
-  // Si l'API renvoie null ou un morceau déjà joué, prendre un autre morceau ou fallback
   if (!track || usedTrackIdsHistory.has(track.id)) {
     const fallbackCategoryTracks = FALLBACK_TRACKS.filter(t => category === "Tous" || t.category === category);
     track = fallbackCategoryTracks[Math.floor(Math.random() * fallbackCategoryTracks.length)] || FALLBACK_TRACKS[0];
@@ -116,21 +120,31 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
 
   usedTrackIdsHistory.add(track.id);
 
-  // Génération des 4 choix (Leurres)
+  // Vraie réponse
   const correctAnswer = `${track.artistName} — ${track.trackName}`;
   
-  // Leurres d'autres artistes
-  const otherArtists = artistsList.filter(a => a !== track?.artistName);
-  const shuffledOthers = [...otherArtists].sort(() => 0.5 - Math.random());
+  // Leurres de la MÊME catégorie (artistes très proches de même style)
+  const relatedArtists = artistsList.filter(a => a.toLowerCase() !== track?.artistName.toLowerCase());
+  const shuffledArtists = [...relatedArtists].sort(() => 0.5 - Math.random());
+  const shuffledTitles = [...plausibleTitles].filter(t => t.toLowerCase() !== track?.trackName.toLowerCase()).sort(() => 0.5 - Math.random());
   
   const wrongChoices = [
-    `${shuffledOthers[0] || "Jul"} — ${track.trackName}`,
-    `${track.artistName} — ${shuffledOthers[1] || "Canoë"}`,
-    `${shuffledOthers[2] || "Ninho"} — ${shuffledOthers[3] || "Réseaux"}`
+    `${shuffledArtists[0] || "Ninho"} — ${track.trackName}`, // Mème nom de chanson, autre artiste proche
+    `${track.artistName} — ${shuffledTitles[0] || "Canoë"}`, // Même artiste, titre alternatif plausible
+    `${shuffledArtists[1] || "SDM"} — ${shuffledTitles[1] || "Midi dans le ghetto"}` // Autre artiste du même genre
   ];
 
-  // Mélanger les 4 choix de façon aléatoire
-  const allChoices = [correctAnswer, ...wrongChoices].sort(() => 0.5 - Math.random());
+  // Mélange aléatoire des 4 choix
+  const allChoices = Array.from(new Set([correctAnswer, ...wrongChoices])).sort(() => 0.5 - Math.random());
+  
+  // Compléter à 4 choix si doublon supprimé
+  while (allChoices.length < 4) {
+    const extraArtist = shuffledArtists[allChoices.length] || "Jul";
+    const extraTitle = shuffledTitles[allChoices.length] || "Morceau";
+    const option = `${extraArtist} — ${extraTitle}`;
+    if (!allChoices.includes(option)) allChoices.push(option);
+  }
+
   const correctChoiceIndex = allChoices.indexOf(correctAnswer);
 
   return {
