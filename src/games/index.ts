@@ -4,11 +4,13 @@ import { truthOrDareConfig } from "./truth-or-dare/config";
 import { werewolfConfig } from "./werewolf/config";
 import { saboteurConfig } from "./saboteur/config";
 import { blindTestConfig } from "./blind-test/config";
+import { tuPreferesConfig } from "./tu-preferes/config";
 
 // On stocke tous les jeux disponibles
 export const gameRegistry: Record<string, GameConfig> = {
   [undercoverConfig.id]: undercoverConfig,
   [blindTestConfig.id]: blindTestConfig,
+  [tuPreferesConfig.id]: tuPreferesConfig,
   [saboteurConfig.id]: saboteurConfig,
   [werewolfConfig.id]: werewolfConfig,
   [truthOrDareConfig.id]: truthOrDareConfig,

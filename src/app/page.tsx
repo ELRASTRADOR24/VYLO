@@ -11,6 +11,7 @@ import {
   VyloMascot, 
   UndercoverIllustration, 
   BlindTestIllustration,
+  TuPreferesIllustration,
   WerewolfIllustration, 
   TodIllustration, 
   SaboteurIllustration 
@@ -206,6 +207,27 @@ export default function Home() {
               <span className="text-lg font-black text-foreground group-hover:text-pink-400 transition-colors">Blind Test</span>
               <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
                 <span>2-16</span>
+                <span>•</span>
+                <span>15 min</span>
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 6 : Tu Préfères ? */}
+          <Card 
+            onClick={() => { sfxTap(); router.push("/setup/tu-preferes"); }}
+            className="p-4 flex flex-col gap-3 bg-surface/90 border border-purple-500/20 hover:border-purple-500/50 transition-all cursor-pointer group active-press"
+          >
+            <div className="relative">
+              <TuPreferesIllustration />
+              <div className="absolute top-2.5 right-2.5 z-20">
+                <VBubble title="Tu Préfères ?" description="Tranchez des dilemmes absurdes et hilarants entre amis ! Option Rouge vs Option Bleu !" />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">Tu Préfères ?</span>
+              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
+                <span>2-20</span>
                 <span>•</span>
                 <span>15 min</span>
               </div>
