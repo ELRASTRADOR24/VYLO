@@ -1,7 +1,8 @@
 /**
- * VYLO VOICE NARRATIVE ENGINE (ENRICHED VERSION)
+ * VYLO VOICE NARRATIVE ENGINE (ULTRA HD & DYNAMIC)
  * Moteur de Narration Vocale Intelligente, Bruitages & Commentaires Drôles.
  * Zéro dépendance externe — Web Speech Synthesis API + Web Audio API.
+ * Sélection automatique des meilleures voix HD naturelles (Google, Apple Natural, Microsoft Online).
  */
 
 import { sfxSuspense, sfxSuccess, sfxError, sfxVictory, sfxReveal } from "./audio";
@@ -27,16 +28,16 @@ export interface VoiceOptions {
 
 export const FUNNY_REMARKS = {
   SUSPICION: [
-    "Ouh là là, l'ambiance devient très tendue dans la pièce !",
-    "Quelqu'un transpire beaucoup ici... Qui ment ?",
-    "Regardez-le bien dans les yeux, ce sourire n'est pas naturel !",
+    "Ouh là là, l'ambiance devient extrêmement tendue ici !",
+    "Quelqu'un transpire beaucoup... Qui est en train de mentir ?",
+    "Regardez-le bien dans les yeux, ce sourire n'est pas du tout naturel !",
     "N'écoutez pas cette excuse bidon, c'est clairement un piège !"
   ],
   VOTE: [
     "Les votes sont scellés. Que le verdict tombe !",
     "La sentence est irrévocable !",
-    "Adieu mon cher ami, le village a parlé !",
-    "Un vote sans pitié... Est-ce le bon choix ?"
+    "Adieu mon cher ami, le groupe a parlé !",
+    "Un vote sans aucune pitié... Est-ce vraiment le bon choix ?"
   ],
   VICTORY: [
     "Quelle prestation magistrale ! Bravo aux vainqueurs !",
@@ -57,6 +58,7 @@ class VoiceEngine {
   public speedMultiplier: number = 1.0; // 1.0 standard, 1.25 rapide, 0.8 lent
   public currentSubtitles: string = "";
   private subtitleListeners: Set<(text: string) => void> = new Set();
+  private isUnlocked: boolean = false;
 
   constructor() {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
@@ -65,16 +67,38 @@ class VoiceEngine {
       if (this.synth.onvoiceschanged !== undefined) {
         this.synth.onvoiceschanged = () => this.initVoices();
       }
+
+      // Auto-déblocage mobile sur le premier clic/toucher
+      const unlockAudio = () => {
+        if (this.isUnlocked) return;
+        this.isUnlocked = true;
+        this.initVoices();
+        window.removeEventListener("pointerdown", unlockAudio);
+        window.removeEventListener("touchstart", unlockAudio);
+      };
+
+      window.addEventListener("pointerdown", unlockAudio, { once: true });
+      window.addEventListener("touchstart", unlockAudio, { once: true });
     }
   }
 
   private initVoices() {
     if (!this.synth) return;
     const voices = this.synth.getVoices();
-    // Préférer les voix françaises naturelles (ex: Google, Thomas, Audrey, Hortense, Virginie)
+    if (!voices || voices.length === 0) return;
+
+    // Sélection intelligente de la meilleure voix française HD disponible sur l'appareil
+    const frVoices = voices.filter(v => v.lang.startsWith("fr") || v.lang.startsWith("FR"));
+
     this.frenchVoice = 
-      voices.find(v => v.lang.startsWith("fr") && (v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Premium"))) ||
-      voices.find(v => v.lang.startsWith("fr")) ||
+      // 1. Voix Google HD / Natural (Android & Chrome Desktop)
+      frVoices.find(v => v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Online")) ||
+      // 2. Voix Apple Premium / Enhanced (iOS & macOS Siri / Thomas / Audrey / Hortense)
+      frVoices.find(v => v.name.includes("Enhanced") || v.name.includes("Premium") || v.name.includes("Thomas") || v.name.includes("Audrey") || v.name.includes("Siri")) ||
+      // 3. Voix Microsoft Natural (Windows Edge / Chrome)
+      frVoices.find(v => v.name.includes("Paul") || v.name.includes("Hortense") || v.name.includes("Julie") || v.name.includes("Denise")) ||
+      // 4. Voix française standard par défaut
+      frVoices[0] ||
       null;
   }
 
@@ -91,10 +115,18 @@ class VoiceEngine {
   }
 
   /**
-   * Énonce un texte vocalement avec le son et les sous-titres associés
+   * Énonce un texte vocalement avec le son d'ambiance et les sous-titres associés
    */
   public speak(text: string, options: VoiceOptions = {}) {
-    this.notifySubtitles(text);
+    if (!text || text.trim().length === 0) return;
+
+    // Formater le texte pour des pauses naturelles à la ponctuation
+    const formattedText = text
+      .replace(/\.\.\./g, "... ")
+      .replace(/!/g, " ! ")
+      .replace(/\?/g, " ? ");
+
+    this.notifySubtitles(formattedText);
 
     if (!this.frenchVoice) {
       this.initVoices();
@@ -106,31 +138,31 @@ class VoiceEngine {
 
     if (!this.enabled || !this.synth) return;
 
-    // Arrêter la narration en cours s'il y en a une
+    // Arrêter la narration précédente
     this.synth.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(formattedText);
     utterance.lang = "fr-FR";
 
     if (this.frenchVoice) {
       utterance.voice = this.frenchVoice;
     }
 
-    // Ajuster le pitch et le débit selon le ton
+    // Ajuster le pitch et le débit selon le ton et les préférences
     switch (tone) {
       case "NIGHT":
       case "MYSTICAL":
-        utterance.pitch = options.pitch ?? 0.7;
-        utterance.rate = (options.rate ?? 0.85) * this.speedMultiplier;
+        utterance.pitch = options.pitch ?? 0.8;
+        utterance.rate = (options.rate ?? 0.9) * this.speedMultiplier;
         break;
       case "SABOTEUR":
       case "DRAMA":
-        utterance.pitch = options.pitch ?? 0.6;
+        utterance.pitch = options.pitch ?? 0.75;
         utterance.rate = (options.rate ?? 0.95) * this.speedMultiplier;
         break;
       case "HUMOR":
-        utterance.pitch = options.pitch ?? 1.2;
-        utterance.rate = (options.rate ?? 1.15) * this.speedMultiplier;
+        utterance.pitch = options.pitch ?? 1.15;
+        utterance.rate = (options.rate ?? 1.1) * this.speedMultiplier;
         break;
       case "QUIZ_HOST":
         utterance.pitch = options.pitch ?? 1.1;
@@ -138,10 +170,10 @@ class VoiceEngine {
         break;
       case "SUSPENSE":
         utterance.pitch = options.pitch ?? 0.9;
-        utterance.rate = (options.rate ?? 1.1) * this.speedMultiplier;
+        utterance.rate = (options.rate ?? 1.05) * this.speedMultiplier;
         break;
       case "VICTORY":
-        utterance.pitch = options.pitch ?? 1.25;
+        utterance.pitch = options.pitch ?? 1.2;
         utterance.rate = (options.rate ?? 1.1) * this.speedMultiplier;
         break;
       default:
@@ -154,13 +186,17 @@ class VoiceEngine {
 
     utterance.onend = () => {
       setTimeout(() => {
-        if (this.currentSubtitles === text) {
+        if (this.currentSubtitles === formattedText) {
           this.notifySubtitles("");
         }
-      }, 3000);
+      }, 2500);
     };
 
-    this.synth.speak(utterance);
+    try {
+      this.synth.speak(utterance);
+    } catch (e) {
+      console.warn("Erreur lors de la lecture vocale", e);
+    }
   }
 
   // --- Raccourcis narratifs enrichis ---
