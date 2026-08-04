@@ -211,16 +211,14 @@ export function HeaderNavbar() {
 
             {/* Footer du Drawer */}
             <div className="pt-4 border-t border-white/10 text-center space-y-2">
-              <div className="flex items-center justify-center gap-1.5 text-xs font-black text-foreground/80">
-                <span>Développé avec</span>
-                <span>🖐️</span>
-                <span>par</span>
+              <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-foreground/70">
+                <span>Développé par</span>
                 <a
                   href="https://johansonweb.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => sfxTap()}
-                  className="text-primary font-black hover:underline"
+                  className="text-white font-extrabold hover:text-primary transition-colors"
                 >
                   Johanson
                 </a>
