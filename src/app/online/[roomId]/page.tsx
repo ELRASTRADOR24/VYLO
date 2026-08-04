@@ -24,6 +24,8 @@ export default function OnlineRoomRedirect({ params }: { params: Promise<{ roomI
         router.replace(`/online/undercover/${roomId}`);
       } else if (gId === "saboteur") {
         router.replace(`/online/saboteur/${roomId}`);
+      } else if (gId === "blind-test") {
+        router.replace(`/online/blind-test/${roomId}`);
       } else {
         router.replace(`/online/${gId}/${roomId}`);
       }
