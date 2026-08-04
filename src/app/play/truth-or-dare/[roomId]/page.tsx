@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import { getRandomCard, TodCard, TOD_CATEGORIES, IntensityLevel, CardType } from "@/games/truth-or-dare/logic";
 import { sfxTap, sfxSuccess, sfxSuspense, sfxReveal, sfxJoin, sfxError } from "@/lib/audio";
-import { truthOrDareConfig } from "@/games/truth-or-dare/config";
+import { cn, cleanPromptText } from "@/lib/utils";
 import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
 
 type LocalPhase = "CONFIG" | "SPIN" | "CARD_REVEAL" | "SCORES";
@@ -268,7 +268,7 @@ export default function TruthOrDareLocalGame({ params }: { params: Promise<{ roo
           <span className="text-[10px] font-black uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full text-foreground/50 mb-6">
             Niveau {activeCard.intensity}
           </span>
-          <p className="text-2xl font-black leading-snug mb-4">{activeCard.text}</p>
+          <p className="text-2xl font-black leading-snug mb-4">{cleanPromptText(activeCard.text)}</p>
         </Card>
 
         <div className="w-full flex flex-col gap-3">

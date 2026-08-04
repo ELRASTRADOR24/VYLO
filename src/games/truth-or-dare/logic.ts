@@ -812,7 +812,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #1) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -822,7 +822,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #2) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -832,7 +832,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #3) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -842,7 +842,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #4) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -852,7 +852,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #5) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -862,7 +862,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #6) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -872,7 +872,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #7) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -882,7 +882,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #8) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -892,7 +892,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #9) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -902,7 +902,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #10) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -912,7 +912,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #11) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -922,7 +922,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #12) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -932,7 +932,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #13) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -942,7 +942,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #14) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -952,7 +952,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #15) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -962,7 +962,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #16) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -972,7 +972,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #17) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -982,7 +982,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #18) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -992,7 +992,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #19) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1002,7 +1002,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #20) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1012,7 +1012,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #21) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1022,7 +1022,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #22) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1032,7 +1032,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #23) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1042,7 +1042,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #24) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1052,7 +1052,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #25) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1062,7 +1062,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #26) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1072,7 +1072,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #27) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1082,7 +1082,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #28) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1092,7 +1092,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #29) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1102,7 +1102,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #30) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1112,7 +1112,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #31) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1122,7 +1122,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #32) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1132,7 +1132,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #33) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1142,7 +1142,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #34) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1152,7 +1152,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #35) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1162,7 +1162,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #36) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1172,7 +1172,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #37) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1182,7 +1182,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #38) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1192,7 +1192,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #39) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1202,7 +1202,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #40) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1212,7 +1212,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #41) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1222,7 +1222,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #42) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1232,7 +1232,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #43) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1242,7 +1242,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #44) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1252,7 +1252,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #45) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1262,7 +1262,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #46) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1272,7 +1272,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #47) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1282,7 +1282,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #48) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1292,7 +1292,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #49) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1302,7 +1302,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #50) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1312,7 +1312,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #51) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1322,7 +1322,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #52) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1332,7 +1332,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #53) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1342,7 +1342,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #54) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1352,7 +1352,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #55) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1362,7 +1362,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #56) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1372,7 +1372,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #57) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1382,7 +1382,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #58) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1392,7 +1392,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #59) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1402,7 +1402,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #60) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1412,7 +1412,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #61) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1422,7 +1422,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #62) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1432,7 +1432,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #63) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1442,7 +1442,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #64) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1452,7 +1452,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #65) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1462,7 +1462,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #66) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1472,7 +1472,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #67) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1482,7 +1482,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #68) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1492,7 +1492,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #69) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1502,7 +1502,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #70) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1512,7 +1512,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #71) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1522,7 +1522,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #72) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1532,7 +1532,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #73) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1542,7 +1542,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #74) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1552,7 +1552,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #75) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1562,7 +1562,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #76) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1572,7 +1572,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #77) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1582,7 +1582,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #78) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1592,7 +1592,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #79) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1602,7 +1602,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #80) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1612,7 +1612,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #81) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1622,7 +1622,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #82) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1632,7 +1632,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #83) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1642,7 +1642,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #84) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1652,7 +1652,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #85) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1662,7 +1662,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #86) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1672,7 +1672,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #87) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1682,7 +1682,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #88) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1692,7 +1692,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #89) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1702,7 +1702,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #90) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1712,7 +1712,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #91) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1722,7 +1722,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #92) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1732,7 +1732,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #93) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1742,7 +1742,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #94) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1752,7 +1752,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #95) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1762,7 +1762,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #96) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1772,7 +1772,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #97) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1782,7 +1782,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #98) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1792,7 +1792,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #99) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1802,7 +1802,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #100) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1812,7 +1812,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #101) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1822,7 +1822,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #102) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1832,7 +1832,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #103) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1842,7 +1842,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #104) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1852,7 +1852,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #105) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1862,7 +1862,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #106) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1872,7 +1872,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #107) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1882,7 +1882,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #108) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1892,7 +1892,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #109) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1902,7 +1902,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #110) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1912,7 +1912,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #111) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1922,7 +1922,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #112) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1932,7 +1932,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #113) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1942,7 +1942,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #114) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1952,7 +1952,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #115) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1962,7 +1962,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #116) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1972,7 +1972,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #117) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1982,7 +1982,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #118) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -1992,7 +1992,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #119) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2002,7 +2002,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #120) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2012,7 +2012,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #121) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2022,7 +2022,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #122) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2032,7 +2032,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #123) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2042,7 +2042,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #124) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2052,7 +2052,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #125) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2062,7 +2062,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #126) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2072,7 +2072,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #127) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2082,7 +2082,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #128) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2092,7 +2092,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #129) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2102,7 +2102,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #130) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2112,7 +2112,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #131) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2122,7 +2122,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #132) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2132,7 +2132,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #133) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2142,7 +2142,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #134) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2152,7 +2152,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #135) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2162,7 +2162,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #136) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2172,7 +2172,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #137) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2182,7 +2182,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #138) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2192,7 +2192,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #139) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2202,7 +2202,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #140) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2212,7 +2212,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #141) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2222,7 +2222,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #142) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2232,7 +2232,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #143) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2242,7 +2242,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #144) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2252,7 +2252,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #145) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2262,7 +2262,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #146) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2272,7 +2272,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #147) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2282,7 +2282,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #148) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2292,7 +2292,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #149) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2302,7 +2302,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #150) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2312,7 +2312,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #151) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2322,7 +2322,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #152) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2332,7 +2332,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #153) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2342,7 +2342,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #154) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2352,7 +2352,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #155) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2362,7 +2362,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #156) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2372,7 +2372,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #157) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2382,7 +2382,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #158) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2392,7 +2392,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #159) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2402,7 +2402,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #160) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2412,7 +2412,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #161) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2422,7 +2422,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #162) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2432,7 +2432,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #163) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2442,7 +2442,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #164) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2452,7 +2452,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #165) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2462,7 +2462,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #166) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2472,7 +2472,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #167) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2482,7 +2482,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #168) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2492,7 +2492,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #169) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2502,7 +2502,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #170) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2512,7 +2512,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #171) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2522,7 +2522,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #172) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2532,7 +2532,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #173) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2542,7 +2542,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée (Anecdote #174) ?",
+    "text": "Quel est le moment le plus drôle ou inattendu qui t'est arrivé pendant une soirée ?",
     "intensity": "Soft"
   },
   {
@@ -2552,7 +2552,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #1), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2562,7 +2562,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #2), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2572,7 +2572,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #3), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2582,7 +2582,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #4), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2592,7 +2592,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #5), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2602,7 +2602,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #6), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2612,7 +2612,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #7), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2622,7 +2622,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #8), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2632,7 +2632,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #9), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2642,7 +2642,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #10), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2652,7 +2652,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #11), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2662,7 +2662,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #12), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2672,7 +2672,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #13), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2682,7 +2682,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #14), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2692,7 +2692,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #15), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2702,7 +2702,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #16), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2712,7 +2712,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #17), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2722,7 +2722,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #18), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2732,7 +2732,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #19), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2742,7 +2742,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #20), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2752,7 +2752,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #21), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2762,7 +2762,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #22), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2772,7 +2772,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #23), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2782,7 +2782,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #24), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2792,7 +2792,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #25), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2802,7 +2802,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #26), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2812,7 +2812,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #27), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2822,7 +2822,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #28), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2832,7 +2832,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #29), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2842,7 +2842,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #30), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2852,7 +2852,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #31), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2862,7 +2862,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #32), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2872,7 +2872,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #33), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2882,7 +2882,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #34), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2892,7 +2892,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #35), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2902,7 +2902,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #36), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2912,7 +2912,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #37), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2922,7 +2922,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #38), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2932,7 +2932,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #39), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2942,7 +2942,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #40), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2952,7 +2952,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #41), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2962,7 +2962,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #42), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2972,7 +2972,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #43), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2982,7 +2982,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #44), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -2992,7 +2992,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #45), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3002,7 +3002,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #46), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3012,7 +3012,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #47), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3022,7 +3022,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #48), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3032,7 +3032,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #49), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3042,7 +3042,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #50), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3052,7 +3052,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #51), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3062,7 +3062,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #52), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3072,7 +3072,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #53), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3082,7 +3082,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #54), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3092,7 +3092,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #55), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3102,7 +3102,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #56), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3112,7 +3112,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #57), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3122,7 +3122,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #58), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3132,7 +3132,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #59), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3142,7 +3142,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #60), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3152,7 +3152,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #61), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3162,7 +3162,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #62), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3172,7 +3172,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #63), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3182,7 +3182,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #64), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3192,7 +3192,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #65), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3202,7 +3202,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #66), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3212,7 +3212,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #67), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3222,7 +3222,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #68), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3232,7 +3232,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #69), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3242,7 +3242,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #70), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3252,7 +3252,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #71), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3262,7 +3262,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #72), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3272,7 +3272,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #73), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3282,7 +3282,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #74), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3292,7 +3292,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #75), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3302,7 +3302,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #76), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3312,7 +3312,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #77), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3322,7 +3322,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #78), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3332,7 +3332,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #79), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3342,7 +3342,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #80), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3352,7 +3352,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #81), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3362,7 +3362,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #82), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3372,7 +3372,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #83), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3382,7 +3382,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #84), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3392,7 +3392,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #85), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3402,7 +3402,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #86), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3412,7 +3412,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #87), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3422,7 +3422,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #88), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3432,7 +3432,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #89), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3442,7 +3442,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #90), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3452,7 +3452,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #91), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3462,7 +3462,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #92), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3472,7 +3472,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #93), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3482,7 +3482,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #94), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3492,7 +3492,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #95), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3502,7 +3502,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #96), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3512,7 +3512,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #97), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3522,7 +3522,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #98), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3532,7 +3532,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #99), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3542,7 +3542,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #100), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3552,7 +3552,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #101), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3562,7 +3562,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #102), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3572,7 +3572,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #103), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3582,7 +3582,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #104), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3592,7 +3592,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #105), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3602,7 +3602,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #106), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3612,7 +3612,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #107), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3622,7 +3622,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #108), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3632,7 +3632,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #109), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3642,7 +3642,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #110), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3652,7 +3652,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #111), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3662,7 +3662,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #112), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3672,7 +3672,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #113), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3682,7 +3682,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #114), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3692,7 +3692,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #115), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3702,7 +3702,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #116), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3712,7 +3712,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #117), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3722,7 +3722,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #118), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3732,7 +3732,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #119), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3742,7 +3742,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #120), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3752,7 +3752,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #121), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3762,7 +3762,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #122), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3772,7 +3772,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #123), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3782,7 +3782,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #124), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3792,7 +3792,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #125), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3802,7 +3802,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #126), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3812,7 +3812,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #127), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3822,7 +3822,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #128), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3832,7 +3832,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #129), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3842,7 +3842,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #130), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3852,7 +3852,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #131), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3862,7 +3862,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #132), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3872,7 +3872,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #133), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3882,7 +3882,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #134), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3892,7 +3892,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #135), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3902,7 +3902,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #136), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3912,7 +3912,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #137), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3922,7 +3922,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #138), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3932,7 +3932,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #139), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3942,7 +3942,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #140), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3952,7 +3952,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #141), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3962,7 +3962,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #142), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3972,7 +3972,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #143), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3982,7 +3982,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #144), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -3992,7 +3992,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #145), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4002,7 +4002,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #146), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4012,7 +4012,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #147), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4022,7 +4022,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #148), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4032,7 +4032,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #149), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4042,7 +4042,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #150), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4052,7 +4052,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #151), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4062,7 +4062,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #152), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4072,7 +4072,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #153), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4082,7 +4082,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #154), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4092,7 +4092,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #155), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4102,7 +4102,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #156), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4112,7 +4112,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #157), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4122,7 +4122,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #158), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4132,7 +4132,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #159), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4142,7 +4142,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #160), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4152,7 +4152,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #161), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4162,7 +4162,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #162), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4172,7 +4172,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #163), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4182,7 +4182,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #164), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4192,7 +4192,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #165), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4202,7 +4202,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #166), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4212,7 +4212,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #167), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4222,7 +4222,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #168), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4232,7 +4232,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #169), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4242,7 +4242,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #170), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4252,7 +4252,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #171), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4262,7 +4262,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #172), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4272,7 +4272,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #173), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4282,7 +4282,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe (Jeu #174), quel serait le principe ?",
+    "text": "Si tu devais inventer un jeu télévisé basé sur la vie du groupe, quel serait le principe ?",
     "intensity": "Fun"
   },
   {
@@ -4292,7 +4292,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #1) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4302,7 +4302,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #2) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4312,7 +4312,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #3) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4322,7 +4322,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #4) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4332,7 +4332,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #5) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4342,7 +4342,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #6) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4352,7 +4352,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #7) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4362,7 +4362,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #8) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4372,7 +4372,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #9) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4382,7 +4382,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #10) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4392,7 +4392,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #11) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4402,7 +4402,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #12) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4412,7 +4412,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #13) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4422,7 +4422,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #14) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4432,7 +4432,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #15) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4442,7 +4442,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #16) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4452,7 +4452,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #17) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4462,7 +4462,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #18) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4472,7 +4472,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #19) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4482,7 +4482,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #20) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4492,7 +4492,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #21) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4502,7 +4502,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #22) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4512,7 +4512,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #23) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4522,7 +4522,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #24) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4532,7 +4532,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #25) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4542,7 +4542,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #26) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4552,7 +4552,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #27) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4562,7 +4562,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #28) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4572,7 +4572,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #29) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4582,7 +4582,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #30) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4592,7 +4592,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #31) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4602,7 +4602,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #32) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4612,7 +4612,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #33) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4622,7 +4622,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #34) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4632,7 +4632,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #35) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4642,7 +4642,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #36) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4652,7 +4652,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #37) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4662,7 +4662,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #38) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4672,7 +4672,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #39) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4682,7 +4682,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #40) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4692,7 +4692,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #41) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4702,7 +4702,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #42) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4712,7 +4712,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #43) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4722,7 +4722,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #44) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4732,7 +4732,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #45) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4742,7 +4742,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #46) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4752,7 +4752,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #47) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4762,7 +4762,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #48) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4772,7 +4772,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #49) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4782,7 +4782,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #50) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4792,7 +4792,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #51) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4802,7 +4802,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #52) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4812,7 +4812,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #53) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4822,7 +4822,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #54) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4832,7 +4832,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #55) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4842,7 +4842,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #56) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4852,7 +4852,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #57) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4862,7 +4862,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #58) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4872,7 +4872,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #59) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4882,7 +4882,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #60) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4892,7 +4892,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #61) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4902,7 +4902,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #62) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4912,7 +4912,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #63) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4922,7 +4922,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #64) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4932,7 +4932,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #65) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4942,7 +4942,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #66) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4952,7 +4952,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #67) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4962,7 +4962,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #68) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4972,7 +4972,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #69) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4982,7 +4982,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #70) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -4992,7 +4992,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #71) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5002,7 +5002,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #72) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5012,7 +5012,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #73) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5022,7 +5022,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #74) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5032,7 +5032,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #75) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5042,7 +5042,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #76) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5052,7 +5052,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #77) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5062,7 +5062,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #78) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5072,7 +5072,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #79) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5082,7 +5082,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #80) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5092,7 +5092,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #81) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5102,7 +5102,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #82) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5112,7 +5112,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #83) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5122,7 +5122,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #84) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5132,7 +5132,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #85) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5142,7 +5142,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #86) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5152,7 +5152,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #87) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5162,7 +5162,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #88) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5172,7 +5172,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #89) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5182,7 +5182,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #90) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5192,7 +5192,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #91) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5202,7 +5202,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #92) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5212,7 +5212,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #93) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5222,7 +5222,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #94) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5232,7 +5232,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #95) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5242,7 +5242,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #96) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5252,7 +5252,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #97) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5262,7 +5262,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #98) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5272,7 +5272,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #99) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5282,7 +5282,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #100) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5292,7 +5292,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #101) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5302,7 +5302,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #102) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5312,7 +5312,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #103) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5322,7 +5322,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #104) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5332,7 +5332,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #105) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5342,7 +5342,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #106) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5352,7 +5352,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #107) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5362,7 +5362,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #108) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5372,7 +5372,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #109) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5382,7 +5382,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #110) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5392,7 +5392,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #111) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5402,7 +5402,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #112) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5412,7 +5412,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #113) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5422,7 +5422,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #114) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5432,7 +5432,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #115) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5442,7 +5442,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #116) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5452,7 +5452,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #117) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5462,7 +5462,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #118) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5472,7 +5472,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #119) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5482,7 +5482,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #120) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5492,7 +5492,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #121) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5502,7 +5502,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #122) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5512,7 +5512,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #123) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5522,7 +5522,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #124) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5532,7 +5532,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #125) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5542,7 +5542,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #126) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5552,7 +5552,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #127) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5562,7 +5562,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #128) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5572,7 +5572,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #129) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5582,7 +5582,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #130) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5592,7 +5592,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #131) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5602,7 +5602,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #132) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5612,7 +5612,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #133) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5622,7 +5622,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #134) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5632,7 +5632,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #135) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5642,7 +5642,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #136) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5652,7 +5652,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #137) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5662,7 +5662,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #138) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5672,7 +5672,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #139) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5682,7 +5682,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #140) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5692,7 +5692,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #141) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5702,7 +5702,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #142) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5712,7 +5712,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #143) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5722,7 +5722,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #144) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5732,7 +5732,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #145) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5742,7 +5742,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #146) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5752,7 +5752,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #147) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5762,7 +5762,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #148) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5772,7 +5772,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #149) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5782,7 +5782,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #150) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5792,7 +5792,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #151) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5802,7 +5802,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #152) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5812,7 +5812,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #153) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5822,7 +5822,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #154) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5832,7 +5832,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #155) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5842,7 +5842,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #156) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5852,7 +5852,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #157) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5862,7 +5862,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #158) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5872,7 +5872,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #159) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5882,7 +5882,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #160) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5892,7 +5892,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #161) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5902,7 +5902,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #162) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5912,7 +5912,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #163) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5922,7 +5922,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #164) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5932,7 +5932,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #165) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5942,7 +5942,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #166) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5952,7 +5952,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #167) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5962,7 +5962,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #168) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5972,7 +5972,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #169) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5982,7 +5982,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #170) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -5992,7 +5992,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #171) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -6002,7 +6002,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #172) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -6012,7 +6012,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #173) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -6022,7 +6022,7 @@ export const TOD_CONTENT: TodCard[] = [
   },
   {
     "type": "TRUTH",
-    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort (Révélation #174) ?",
+    "text": "Quel est un moment de vulnérabilité que tu as traversé et qui t'a rendu plus fort ?",
     "intensity": "Piquant"
   },
   {
@@ -6035,7 +6035,8 @@ export const TOD_CONTENT: TodCard[] = [
 function cleanCardText(text: string): string {
   if (!text) return "";
   let cleaned = text
-    .replace(/\s*\((Jeu|Anecdote|Défis?|Q|Qst|N°?|#)\s*#?\d+\)/gi, "")
+    .replace(/\s*\([^)]*#\d+[^)]*\)/gi, "")
+    .replace(/\s*\([^)]*(Révélation|Anecdote|Défis?|Gage|Qst?|N°?)[^)]*\)/gi, "")
     .replace(/\s*\(joueur\s*#?\d+\)/gi, "")
     .replace(/\bjoueur\s*numéro\s*\d+\b/gi, "un autre joueur")
     .replace(/\bjoueur\s*#?\d+\b/gi, "un autre joueur")
