@@ -153,7 +153,7 @@ export default function PlayfulPremiumHomePage() {
               Le meilleur des jeux de groupe.
             </h1>
             <p className="text-base md:text-lg font-bold text-foreground/70">
-              Un seul téléphone, <span className="text-primary font-black">des heures de fun.</span>
+              En local ou <span className="text-primary font-black">en ligne à distance</span> avec vos amis.
             </p>
             
             <div className="pt-2">
@@ -166,14 +166,26 @@ export default function PlayfulPremiumHomePage() {
             </div>
           </div>
 
-          {/* Illustration visuelle d'ambiance soirée */}
-          <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl relative shrink-0">
-            <img 
-              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80" 
-              alt="Soirée entre amis"
-              className="w-full h-full object-cover opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-transparent" />
+          {/* Composition 3D de Cartes de Jeux Vectorielles Premium */}
+          <div className="relative w-56 h-56 md:w-64 md:h-64 shrink-0 flex items-center justify-center select-none">
+            {/* Carte arrière gauche (Loup Garou - Bleu) */}
+            <div className="absolute -left-3 top-2 w-36 h-48 md:w-40 md:h-52 rounded-2xl bg-gradient-to-br from-blue-900 via-surface to-indigo-950 border-2 border-blue-500/40 shadow-2xl -rotate-12 transform-gpu hover:rotate-0 transition-transform duration-300 flex flex-col items-center justify-center p-3">
+              <WerewolfIllustration className="w-16 h-16 md:w-20 md:h-20 mb-2" />
+              <span className="text-[10px] font-black text-blue-300 uppercase tracking-widest">Loup-Garou</span>
+            </div>
+
+            {/* Carte arrière droite (Blind Test - Vert) */}
+            <div className="absolute -right-3 top-4 w-36 h-48 md:w-40 md:h-52 rounded-2xl bg-gradient-to-br from-emerald-900 via-surface to-teal-950 border-2 border-emerald-500/40 shadow-2xl rotate-12 transform-gpu hover:rotate-0 transition-transform duration-300 flex flex-col items-center justify-center p-3">
+              <BlindTestIllustration className="w-16 h-16 md:w-20 md:h-20 mb-2" />
+              <span className="text-[10px] font-black text-emerald-300 uppercase tracking-widest">Blind Test</span>
+            </div>
+
+            {/* Carte centrale avant (Undercover - Violet) */}
+            <div className="absolute z-10 w-40 h-52 md:w-44 md:h-56 rounded-2xl bg-gradient-to-br from-purple-900 via-surface to-pink-950 border-2 border-purple-400 shadow-[0_10px_30px_rgba(147,51,234,0.5)] hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center p-4">
+              <UndercoverIllustration className="w-20 h-20 md:w-24 md:h-24 mb-2" />
+              <span className="text-xs font-black text-purple-200 uppercase tracking-widest">Undercover</span>
+              <span className="text-[9px] font-extrabold text-purple-400 bg-purple-500/20 px-2 py-0.5 rounded-full border border-purple-500/30 mt-1">Jeu N°1</span>
+            </div>
           </div>
         </div>
 
