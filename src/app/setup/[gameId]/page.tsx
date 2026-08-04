@@ -137,6 +137,8 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
       router.push(`/online/undercover/${roomCode}`);
     } else if (gameId === "saboteur") {
       router.push(`/online/saboteur/${roomCode}`);
+    } else if (gameId === "blind-test") {
+      router.push(`/online/blind-test/${roomCode}`);
     } else {
       router.push(`/online/${gameId}/${roomCode}`);
     }
