@@ -26,6 +26,14 @@ export default function OnlineRoomRedirect({ params }: { params: Promise<{ roomI
         router.replace(`/online/saboteur/${roomId}`);
       } else if (gId === "blind-test") {
         router.replace(`/online/blind-test/${roomId}`);
+      } else if (gId === "truth-or-dare") {
+        router.replace(`/online/truth-or-dare/${roomId}`);
+      } else if (gId === "tu-preferes") {
+        router.replace(`/online/tu-preferes/${roomId}`);
+      } else if (gId === "word-master") {
+        router.replace(`/online/word-master/${roomId}`);
+      } else if (gId === "flag-quiz") {
+        router.replace(`/online/flag-quiz/${roomId}`);
       } else {
         router.replace(`/online/${gId}/${roomId}`);
       }

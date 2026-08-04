@@ -139,6 +139,14 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
       router.push(`/online/saboteur/${roomCode}`);
     } else if (gameId === "blind-test") {
       router.push(`/online/blind-test/${roomCode}`);
+    } else if (gameId === "truth-or-dare") {
+      router.push(`/online/truth-or-dare/${roomCode}`);
+    } else if (gameId === "tu-preferes") {
+      router.push(`/online/tu-preferes/${roomCode}`);
+    } else if (gameId === "word-master") {
+      router.push(`/online/word-master/${roomCode}`);
+    } else if (gameId === "flag-quiz") {
+      router.push(`/online/flag-quiz/${roomCode}`);
     } else {
       router.push(`/online/${gameId}/${roomCode}`);
     }
