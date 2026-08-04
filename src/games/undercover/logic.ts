@@ -1,6 +1,6 @@
 import { Player } from "@/engine/types";
 
-export type UndercoverRole = "Civilian" | "Undercover" | "MrWhite";
+export type UndercoverRole = "Civilian" | "Undercover" | "MrWhite" | "Joker" | "Cameleon" | "DoubleAgent";
 
 export interface UndercoverPlayer extends Player {
   gameRole?: UndercoverRole;
@@ -686,18 +686,63 @@ export function generateRoles(playerCount: number): UndercoverRole[] {
   return generateRolesFromConfig(playerCount, undercoverCount, mrWhiteCount);
 }
 
-/** Génération mélangée des rôles */
+/** Génération du Mode Mystère : répartition 100% inconnue des rôles avec majorité garantie de Civils (60-70%) */
+export function generateMysteryRoles(totalPlayers: number): UndercoverRole[] {
+  const civilianCount = Math.max(2, Math.floor(totalPlayers * 0.65));
+  const remainingSlots = totalPlayers - civilianCount;
+  
+  const possibleSpecialRoles: UndercoverRole[] = [
+    "Undercover", "MrWhite", "Joker", "Cameleon", "DoubleAgent"
+  ];
+
+  const roles: UndercoverRole[] = [];
+  for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
+
+  for (let i = 0; i < remainingSlots; i++) {
+    const randomRole = possibleSpecialRoles[Math.floor(Math.random() * possibleSpecialRoles.length)];
+    roles.push(randomRole);
+  }
+
+  if (!roles.includes("Undercover")) {
+    roles[civilianCount] = "Undercover";
+  }
+
+  for (let i = roles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [roles[i], roles[j]] = [roles[j], roles[i]];
+  }
+
+  return roles;
+}
+
+/** Génération mélangée des rôles classique */
 export function generateRolesFromConfig(
   totalPlayers: number,
   undercoverCount: number,
   mrWhiteCount: number
 ): UndercoverRole[] {
-  const civilianCount = totalPlayers - undercoverCount - mrWhiteCount;
+  return generateRolesFromConfigExtended(totalPlayers, undercoverCount, mrWhiteCount, 0, 0, 0);
+}
+
+/** Génération paramétrée incluant tous les rôles (Joker, Caméléon, Double-Agent) */
+export function generateRolesFromConfigExtended(
+  totalPlayers: number,
+  undercoverCount: number,
+  mrWhiteCount: number,
+  jokerCount: number = 0,
+  cameleonCount: number = 0,
+  doubleAgentCount: number = 0
+): UndercoverRole[] {
+  const specialTotal = undercoverCount + mrWhiteCount + jokerCount + cameleonCount + doubleAgentCount;
+  const civilianCount = Math.max(1, totalPlayers - specialTotal);
   const roles: UndercoverRole[] = [];
 
   for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
   for (let i = 0; i < undercoverCount; i++) roles.push("Undercover");
   for (let i = 0; i < mrWhiteCount; i++) roles.push("MrWhite");
+  for (let i = 0; i < jokerCount; i++) roles.push("Joker");
+  for (let i = 0; i < cameleonCount; i++) roles.push("Cameleon");
+  for (let i = 0; i < doubleAgentCount; i++) roles.push("DoubleAgent");
 
   // Mélange de Fisher-Yates
   for (let i = roles.length - 1; i > 0; i--) {

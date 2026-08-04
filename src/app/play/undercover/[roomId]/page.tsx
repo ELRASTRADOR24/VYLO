@@ -7,6 +7,7 @@ import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
 import { 
   UndercoverRole, UndercoverPlayer, CATEGORIES, CategoryName, 
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
+  generateMysteryRoles, generateRolesFromConfigExtended,
   shuffleSpeakingOrder 
 } from "@/games/undercover/logic";
 import { undercoverConfig } from "@/games/undercover/config";
@@ -77,6 +78,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [playerCount, setPlayerCount] = useState(4);
   const [undercoverCount, setUndercoverCount] = useState(1);
   const [mrWhiteCount, setMrWhiteCount] = useState(0);
+  const [jokerCount, setJokerCount] = useState(0);
+  const [cameleonCount, setCameleonCount] = useState(0);
+  const [doubleAgentCount, setDoubleAgentCount] = useState(0);
+  const [isMysteryMode, setIsMysteryMode] = useState(false);
 
   const handleToggleCategory = (cat: CategoryName) => {
     sfxTap();
@@ -138,8 +143,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
     // 1. Choix des mots (Multi-catégories)
     const wordPair = getRandomWordPair(selectedCategories);
-    // 2. Génération des rôles
-    const roles = generateRolesFromConfig(playerCount, undercoverCount, mrWhiteCount);
+    // 2. Génération des rôles (Mode Mystère ou Paramétré)
+    const roles = isMysteryMode 
+      ? generateMysteryRoles(playerCount)
+      : generateRolesFromConfigExtended(playerCount, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
 
     // 3. Préparation des slots de joueurs
     const initialPlayers: UndercoverPlayer[] = roles.map((role, i) => {
@@ -147,6 +154,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
       else if (role === "MrWhite") word = "Vous êtes Mr. White";
+      else if (role === "Joker") word = "🃏 Vous êtes le JOKER ! Faites-vous éliminer par le village pour GAGNER !";
+      else if (role === "Cameleon") word = "🪞 Vous êtes le CAMÉLÉON ! Copiez la description du 1er joueur !";
+      else if (role === "DoubleAgent") word = `${wordPair.civilian} (💣 DOUBLE-AGENT : si vous mourez au vote, vous éliminez 1 joueur avec vous !)`;
 
       return {
         id: `player_${i}_${Date.now()}`,
@@ -284,7 +294,14 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const updatedList = speakingOrder.map(p => 
       p.id === eliminated.id ? { ...p, isEliminated: true } : p
     );
-    setSpeakingOrder(updatedList);
+    // Si le joueur éliminé au vote est le JOKER -> Victoire immédiate du Joker !
+    if (eliminated.gameRole === "Joker") {
+      sfxVictory();
+      setWinnerTeam("JOKER" as any);
+      incrementStat("gamesPlayed");
+      setPhase("END_GAME");
+      return;
+    }
 
     // Vérification de victoire
     const remainingAlive = updatedList.filter(p => !p.isEliminated);

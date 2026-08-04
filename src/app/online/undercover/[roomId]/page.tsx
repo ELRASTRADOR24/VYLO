@@ -10,7 +10,7 @@ import {
   Play, Flame, ShieldAlert, Mic, Vote, RefreshCw, ArrowRight, Check, Sparkles, ChevronLeft
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { WORD_PAIRS_DATABASE, CATEGORIES, CategoryName, generateRolesFromConfig, getRandomWordPair } from "@/games/undercover/logic";
+import { WORD_PAIRS_DATABASE, CATEGORIES, CategoryName, generateRolesFromConfig, generateMysteryRoles, generateRolesFromConfigExtended, getRandomWordPair } from "@/games/undercover/logic";
 import { sfxTap, sfxReveal, sfxVictory, sfxError, sfxSuspense, sfxSuccess, sfxJoin } from "@/lib/audio";
 import { QRCodeModal } from "@/components/ui/QRCodeModal";
 
@@ -108,6 +108,8 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
   const totalCount = players.length;
   const canStart = totalCount >= 3 && (guests.length === 0 || guestsReadyCount === guests.length);
 
+  const [isMysteryMode, setIsMysteryMode] = useState<boolean>(false);
+
   // Lancement de la partie par l'hôte
   const handleHostStart = () => {
     if (totalCount < 3) {
@@ -116,7 +118,9 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
     }
 
     const mrWhiteCount = includeMrWhite ? 1 : 0;
-    const roles = generateRolesFromConfig(totalCount, undercoverCount, mrWhiteCount);
+    const roles = isMysteryMode 
+      ? generateMysteryRoles(totalCount)
+      : generateRolesFromConfig(totalCount, undercoverCount, mrWhiteCount);
 
     // Choix du mot (Multi-catégories)
     const wordPair = getRandomWordPair(selectedCategories);
@@ -131,7 +135,10 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
       let word = "";
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
-      else word = "Mr. White"; // Mr. White n'a pas de mot
+      else if (role === "MrWhite") word = "Mr. White";
+      else if (role === "Joker") word = "🃏 Le Joker (Votre but : faites-vous éliminer au vote !)";
+      else if (role === "Cameleon") word = "🪞 Le Caméléon (Copiez la description du 1er joueur !)";
+      else if (role === "DoubleAgent") word = `${wordPair.civilian} (💣 Double-Agent : emporte 1 joueur à sa mort)`;
 
       playerSecrets[p.id] = { role, word, category: wordPair.category };
     });
@@ -302,6 +309,20 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
                 className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${hideCategory ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
               >
                 {hideCategory ? "Caché 🤫 (Mystère)" : "Visible 💡"}
+              </button>
+            </div>
+
+            {/* Mode Mystère (Rôles & Imposteurs Aléatoires) */}
+            <div className="flex items-center justify-between border-t border-white/5 pt-3">
+              <div className="flex flex-col text-left">
+                <span className="text-xs font-black text-amber-300">🎲 Mode Mystère (Rôles Aléatoires)</span>
+                <span className="text-[10px] text-foreground/50">La répartition exacte reste 100% inconnue !</span>
+              </div>
+              <button
+                onClick={() => setIsMysteryMode(!isMysteryMode)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-black border transition-all ${isMysteryMode ? 'bg-gradient-summer text-white border-primary shadow-summer-glow' : 'bg-white/5 border-white/10 text-foreground/40'}`}
+              >
+                {isMysteryMode ? "ACTIF 🎲" : "Désactivé"}
               </button>
             </div>
 
