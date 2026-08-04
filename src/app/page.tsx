@@ -20,102 +20,12 @@ export default function PlayfulPremiumHomePage() {
   const [activeTab, setActiveTab] = useState<string>("accueil");
 
   return (
-    <div className="min-h-screen bg-[#0B0914] text-foreground flex flex-col md:flex-row relative overflow-x-hidden font-sans selection:bg-primary/30">
+    <div className="min-h-screen bg-[#0B0914] text-foreground flex flex-col relative overflow-x-hidden font-sans selection:bg-primary/30">
       {/* 1. Arrière-plan Vivant Respirant & Particules */}
       <LivingBackground accentColor={ambientColor} />
 
-      {/* 2. SIDEBAR LEFT (DESKTOP) */}
-      <aside className="hidden md:flex flex-col justify-between w-64 p-6 bg-surface/40 backdrop-blur-2xl border-r border-white/10 z-30 sticky top-0 h-screen">
-        <div className="space-y-8">
-          {/* Logo VYLO */}
-          <div 
-            onClick={() => { sfxTap(); router.push("/"); }}
-            className="flex items-center gap-3 cursor-pointer group"
-          >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-summer flex items-center justify-center text-white font-black text-xl shadow-summer-glow group-hover:scale-105 transition-all">
-              V
-            </div>
-            <span className="text-2xl font-black tracking-widest text-foreground group-hover:text-primary transition-colors">
-              VYLO
-            </span>
-          </div>
-
-          {/* Nav Items Principal */}
-          <nav className="space-y-2">
-            <button
-              onClick={() => { setActiveTab("accueil"); sfxTap(); }}
-              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
-                activeTab === "accueil"
-                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
-                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
-              }`}
-            >
-              <Home size={20} /> Accueil
-            </button>
-
-            <button
-              onClick={() => { setActiveTab("jeux"); sfxTap(); router.push("/library"); }}
-              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
-                activeTab === "jeux"
-                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
-                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
-              }`}
-            >
-              <Grid size={20} /> Tous les jeux
-            </button>
-
-            <button
-              onClick={() => { setActiveTab("parties"); sfxTap(); }}
-              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
-                activeTab === "parties"
-                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
-                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
-              }`}
-            >
-              <Clock size={20} /> Mes parties
-            </button>
-
-            <button
-              onClick={() => { setActiveTab("favoris"); sfxTap(); }}
-              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
-                activeTab === "favoris"
-                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
-                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
-              }`}
-            >
-              <Heart size={20} /> Favoris
-            </button>
-          </nav>
-
-          <hr className="border-white/10" />
-
-          {/* Profil & Paramètres */}
-          <nav className="space-y-2">
-            <button
-              onClick={() => { sfxTap(); router.push("/profile"); }}
-              className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm text-foreground/70 hover:bg-white/5 hover:text-white transition-all"
-            >
-              <User size={20} /> Profil
-            </button>
-
-            <button
-              onClick={() => { sfxTap(); }}
-              className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm text-foreground/70 hover:bg-white/5 hover:text-white transition-all"
-            >
-              <Settings size={20} /> Paramètres
-            </button>
-          </nav>
-        </div>
-
-        {/* Mascotte VYLO Bot Bottom Left */}
-        <div className="p-4 rounded-3xl bg-gradient-to-br from-purple-950/60 via-surface/80 to-purple-900/60 border border-purple-500/30 text-center relative overflow-hidden shadow-glow group hover:scale-[1.02] transition-transform cursor-pointer">
-          <VyloMascot className="w-16 h-16 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
-          <p className="text-xs font-black text-purple-200">Prêt pour une nouvelle partie ?</p>
-        </div>
-      </aside>
-
-      {/* 3. MAIN CONTENT CONTAINER */}
-      <main className="flex-1 min-h-screen px-4 md:px-10 pt-6 pb-36 max-w-6xl mx-auto z-10 space-y-10">
+      {/* 2. MAIN CONTENT CONTAINER (Pleine largeur avec Header Supérieur) */}
+      <main className="w-full flex-1 min-h-screen px-4 md:px-8 pt-6 pb-36 max-w-7xl mx-auto z-10 space-y-10">
         
         {/* Header Bar Top (Groupe Actuel & Cloche Notification) */}
         <div className="w-full flex items-center justify-between gap-4">
