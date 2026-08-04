@@ -374,6 +374,33 @@ export default function PlayfulPremiumHomePage() {
           </div>
         </div>
 
+        {/* Encart Indexation Googlebot & Référencement Naturel (SEO) */}
+        <section className="w-full mt-16 p-6 rounded-3xl bg-surface/40 border border-white/5 text-left text-xs text-foreground/50 space-y-4">
+          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+            VYLO — Plateforme N°1 de Jeux de Soirée, de Société & de Famille
+          </h2>
+          <p>
+            Bienvenue sur <strong>VYLO</strong>, la référence ultime des jeux d'ambiance, jeux de société et jeux de famille gratuits en ligne et en local. Retrouvez vos jeux favoris directement sur votre smartphone, tablette ou ordinateur sans aucun téléchargement.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div>
+              <h3 className="font-extrabold text-white mb-1">🕵️‍♂️ Undercover & Le Saboteur en Ligne</h3>
+              <p>Infiltrez-vous ou démasquez les imposteurs avec le jeu d'enquête culte Undercover et Le Saboteur en mode multijoueur synchrone.</p>
+            </div>
+            <div>
+              <h3 className="font-extrabold text-white mb-1">🎶 Blind Test Musical & Quiz Drapeaux</h3>
+              <p>Testez vos connaissances musicales sur des milliers d'extraits audio synchronisés ou affrontez vos amis dans un duel de culture générale.</p>
+            </div>
+            <div>
+              <h3 className="font-extrabold text-white mb-1">🔥 Action ou Vérité & Tu Préfères ?</h3>
+              <p>Relevez des défis déjantés, révélez vos secrets ou votez sur des dilemmes visuels 3D avec des statistiques de groupe en direct.</p>
+            </div>
+            <div>
+              <h3 className="font-extrabold text-white mb-1">🐺 Loup-Garou & Le Maître des Mots</h3>
+              <p>Formez votre village, débattez la nuit et faites deviner des mots secrets à vos coéquipiers en temps réel sur smartphone.</p>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* 4. MOBILE BOTTOM NAVIGATION BAR */}
