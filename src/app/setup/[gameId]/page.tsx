@@ -14,7 +14,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   const gameConfig = getGameConfig(gameId);
 
   const roomCode = Math.floor(100000 + Math.random() * 900000).toString();
-  const isOnlineSupported = gameId === "undercover" || gameId === "saboteur";
+  const isOnlineSupported = true; // Tous les jeux sont désormais supportés en ligne !
 
   const handleChooseLocal = () => {
     sfxSuccess();
@@ -22,16 +22,13 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   };
 
   const handleChooseOnlineCreate = () => {
-    if (!isOnlineSupported) {
-      sfxTap();
-      return alert(`Le jeu ${gameConfig?.name || gameId} se joue en mode "1 Seul Téléphone" (Pass-and-Play) ! Le mode multijoueur web arrive très bientôt.`);
-    }
-
     sfxSuccess();
     if (gameId === "undercover") {
       router.push(`/online/undercover/${roomCode}`);
     } else if (gameId === "saboteur") {
       router.push(`/online/saboteur/${roomCode}`);
+    } else {
+      router.push(`/online/${gameId}/${roomCode}`);
     }
   };
 

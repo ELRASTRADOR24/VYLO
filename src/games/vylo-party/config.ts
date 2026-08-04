@@ -11,6 +11,6 @@ export const vyloPartyConfig: GameConfig = {
   },
   durationMins: 20,
   difficulty: "Facile",
-  modes: ["local"],
+  modes: ["local", "online"],
   themeColor: "pink",
 };

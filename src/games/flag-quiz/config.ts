@@ -11,6 +11,6 @@ export const flagQuizConfig: GameConfig = {
   },
   durationMins: 15,
   difficulty: "Facile",
-  modes: ["local"],
+  modes: ["local", "online"],
   themeColor: "purple",
 };

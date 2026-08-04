@@ -58,6 +58,7 @@ app.prepare().then(() => {
       winnerTeam: room.winnerTeam || null,
       category: room.category || "",
       civilianWord: room.civilianWord || "",
+      gameData: room.gameData || {},
     });
   };
 
@@ -345,6 +346,18 @@ app.prepare().then(() => {
       room.clueRound += 1;
       room.votes = {};
       broadcastRoomState(roomCode);
+    });
+
+    // ─── SYNCHRONISATION GENERIQUE MULTIJOUEUR EN LIGNE ────
+    socket.on("game:sync_state", ({ roomCode, newState, gameData }) => {
+      const room = rooms.get(roomCode);
+      if (!room) return;
+
+      if (newState) room.state = newState;
+      if (gameData) room.gameData = { ...(room.gameData || {}), ...gameData };
+
+      broadcastRoomState(roomCode);
+      console.log(`🌐 Etat synchronisé dans le salon ${roomCode}: ${newState || "state"}`);
     });
 
     // ─── RELANCER LE LOBBY (REJOUER) ─────────────────────

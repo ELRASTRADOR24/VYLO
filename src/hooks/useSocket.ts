@@ -33,6 +33,7 @@ export interface RoomState {
   winnerTeam?: "CIVILIANS" | "UNDERCOVER" | "MR_WHITE" | null;
   category?: string;
   civilianWord?: string;
+  gameData?: Record<string, any>;
 }
 
 export interface SecretData {
@@ -57,6 +58,7 @@ interface UseSocketReturn {
   submitMrWhiteGuess: (roomCode: string, guess: string) => void;
   continueRound: (roomCode: string) => void;
   restartLobby: (roomCode: string) => void;
+  syncGameState: (roomCode: string, newState?: string, gameData?: any) => void;
 }
 
 export function useSocket(): UseSocketReturn {
@@ -151,6 +153,10 @@ export function useSocket(): UseSocketReturn {
     socketRef.current?.emit("game:restart_lobby", { roomCode });
   }, []);
 
+  const syncGameState = useCallback((roomCode: string, newState?: string, gameData?: any) => {
+    socketRef.current?.emit("game:sync_state", { roomCode, newState, gameData });
+  }, []);
+
   return {
     socket: socketRef.current,
     isConnected,
@@ -166,5 +172,6 @@ export function useSocket(): UseSocketReturn {
     submitMrWhiteGuess,
     continueRound,
     restartLobby,
+    syncGameState,
   };
 }

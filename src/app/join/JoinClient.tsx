@@ -57,7 +57,7 @@ export default function JoinClient() {
     if (e) e.preventDefault();
     if (code.length === 6) {
       sfxSuccess();
-      router.push(`/online/undercover/${code}`);
+      router.push(`/online/${code}`);
     }
   };
 
