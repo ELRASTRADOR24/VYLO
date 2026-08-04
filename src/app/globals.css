@@ -216,6 +216,16 @@ body::before {
   animation: floatIdle 3s ease-in-out infinite;
 }
 
+/* Emojis Flottants Animation */
+@keyframes floatUp {
+  0%   { opacity: 1; transform: translateY(0) scale(0.8); }
+  50%  { opacity: 1; transform: translateY(-150px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-300px) scale(1); }
+}
+.animate-float-up {
+  animation: floatUp 2.8s ease-out forwards;
+}
+
 /* Shimmer : Pour les cartes au repos */
 @keyframes shimmer {
   0%   { background-position: -200% center; }

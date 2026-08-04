@@ -360,6 +360,15 @@ app.prepare().then(() => {
       console.log(`🌐 Etat synchronisé dans le salon ${roomCode}: ${newState || "state"}`);
     });
 
+    // ─── RÉACTIONS EMOJIS EN TEMPS RÉEL ───────────────────────
+    socket.on("game:emoji_reaction", ({ roomCode, emoji, senderName }) => {
+      io.to(roomCode).emit("game:emoji_reaction", { 
+        emoji, 
+        senderName, 
+        id: Date.now() + Math.random() 
+      });
+    });
+
     // ─── RELANCER LE LOBBY (REJOUER) ─────────────────────
     socket.on("game:restart_lobby", ({ roomCode }) => {
       const room = rooms.get(roomCode);

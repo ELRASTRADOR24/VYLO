@@ -144,3 +144,25 @@ export function sfxReveal() {
 export function sfxTick() {
   playTone(1000, 0.03, "square", 0.04);
 }
+
+let lobbyInterval: any = null;
+
+/** Musique / Synthé d'ambiance pour le salon d'attente (Lobby) */
+export function startLobbyBeats() {
+  if (lobbyInterval) return;
+  let step = 0;
+  const notes = [261.63, 329.63, 392.00, 523.25];
+  lobbyInterval = setInterval(() => {
+    const freq = notes[step % notes.length];
+    playTone(freq, 0.08, "sine", 0.03);
+    step++;
+  }, 650);
+}
+
+/** Arrêter la musique d'ambiance */
+export function stopLobbyBeats() {
+  if (lobbyInterval) {
+    clearInterval(lobbyInterval);
+    lobbyInterval = null;
+  }
+}

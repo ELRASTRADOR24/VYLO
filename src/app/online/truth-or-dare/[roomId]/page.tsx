@@ -16,6 +16,8 @@ import {
 import { sfxTap, sfxSuccess, sfxError, sfxVictory, sfxReveal, sfxSuspense } from "@/lib/audio";
 import { LivingBackground } from "@/components/ui/LivingBackground";
 import { cleanPromptText } from "@/lib/utils";
+import { LobbyQRCodeCard } from "@/components/ui/LobbyQRCodeCard";
+import { FloatingEmojis } from "@/components/ui/FloatingEmojis";
 
 export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
@@ -122,16 +124,10 @@ export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ ro
           <div className="w-16" />
         </div>
 
-        <Card className="w-full p-5 mb-6 bg-surface/90 border-2 border-pink-500/40 z-10 flex flex-col items-center">
-          <span className="text-[10px] font-black uppercase tracking-widest text-pink-400 mb-1">Code du Salon</span>
-          <div className="flex items-center gap-3">
-            <span className="text-4xl font-black text-white tracking-widest">{roomId}</span>
-            <button onClick={handleCopyCode} className="p-2 rounded-xl bg-white/5 border border-white/10 text-foreground/70 hover:text-foreground">
-              {copiedCode ? <Check size={18} className="text-pink-400" /> : <Copy size={18} />}
-            </button>
-          </div>
-          <span className="text-[11px] font-bold text-foreground/50 mt-2">Partagez ce code pour jouer sur plusieurs téléphones !</span>
-        </Card>
+        {/* Code de Salon & QR Code Interactif */}
+        <div className="w-full mb-6">
+          <LobbyQRCodeCard roomCode={roomId} />
+        </div>
 
         {isHost && (
           <div className="w-full mb-6 text-left z-10">
@@ -290,9 +286,10 @@ export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ ro
             Attente de la réalisation du défi par {currentSpeaker?.name}...
           </div>
         )}
-      </main>
-    );
-  }
+      <FloatingEmojis socket={socket} roomCode={roomId} senderName={guestProfile.pseudo} />
+    </main>
+  );
+}
 
   return null;
 }

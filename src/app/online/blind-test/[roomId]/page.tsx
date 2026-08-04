@@ -15,6 +15,8 @@ import {
 } from "@/games/blind-test/logic";
 import { sfxTap, sfxSuccess, sfxError, sfxVictory, sfxReveal } from "@/lib/audio";
 import { LivingBackground } from "@/components/ui/LivingBackground";
+import { LobbyQRCodeCard } from "@/components/ui/LobbyQRCodeCard";
+import { FloatingEmojis } from "@/components/ui/FloatingEmojis";
 
 const KAHOOT_BUTTON_VARIANTS: ("red" | "blue" | "yellow" | "green")[] = [
   "red", "blue", "yellow", "green"
@@ -176,17 +178,10 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
           <div className="w-16" />
         </div>
 
-        {/* Code de Salon 6 Chiffres */}
-        <Card className="w-full p-5 mb-6 bg-surface/90 border-2 border-emerald-500/40 z-10 flex flex-col items-center">
-          <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-1">Code du Salon</span>
-          <div className="flex items-center gap-3">
-            <span className="text-4xl font-black text-white tracking-widest">{roomId}</span>
-            <button onClick={handleCopyCode} className="p-2 rounded-xl bg-white/5 border border-white/10 text-foreground/70 hover:text-foreground">
-              {copiedCode ? <Check size={18} className="text-emerald-400" /> : <Copy size={18} />}
-            </button>
-          </div>
-          <span className="text-[11px] font-bold text-foreground/50 mt-2">Partagez ce code pour jouer sur plusieurs téléphones !</span>
-        </Card>
+        {/* Code de Salon & QR Code Interactif */}
+        <div className="w-full mb-6">
+          <LobbyQRCodeCard roomCode={roomId} />
+        </div>
 
         {/* Paramètres par l'Hôte */}
         {isHost && (
@@ -365,6 +360,8 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
           )}
         </div>
       )}
+      {/* Réactions Emojis Flottants en Temps Réel */}
+      <FloatingEmojis socket={socket} roomCode={roomId} senderName={guestProfile.pseudo} />
     </main>
   );
 }
