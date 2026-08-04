@@ -245,7 +245,7 @@ export default function UniversalOnlineGamePage({ params }: { params: Promise<{ 
               }}
               className="p-8 rounded-3xl bg-gradient-to-br from-red-600 to-rose-700 text-white font-black text-xl hover:scale-105 transition-all shadow-xl"
             >
-              🔴 {gameData.optionA || "Option A"}
+              Option A: {gameData.optionA || "Option A"}
             </button>
 
             <button 
@@ -258,7 +258,7 @@ export default function UniversalOnlineGamePage({ params }: { params: Promise<{ 
               }}
               className="p-8 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-black text-xl hover:scale-105 transition-all shadow-xl"
             >
-              🔵 {gameData.optionB || "Option B"}
+              Option B: {gameData.optionB || "Option B"}
             </button>
           </div>
         )}

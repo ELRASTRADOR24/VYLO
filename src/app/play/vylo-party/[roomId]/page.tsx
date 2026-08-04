@@ -139,7 +139,7 @@ export default function VyloPartyGamePage({ params }: { params: Promise<{ roomId
             <ChevronLeft size={16} className="text-primary" /> Quitter
           </button>
           <span className="text-xl font-black flex items-center gap-2">
-            🔥 VYLO Party
+            VYLO Party
           </span>
           <div className="w-16" />
         </div>

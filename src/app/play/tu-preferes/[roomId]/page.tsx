@@ -254,7 +254,7 @@ export default function TuPreferesGamePage({ params }: { params: Promise<{ roomI
             Passez le téléphone à : <strong>{currentVoter?.name}</strong>
           </span>
 
-          {/* Option A (Rouge Kahoot 🔴) */}
+          {/* Option A (Rouge Kahoot) */}
           <button
             onClick={() => handleVote("A")}
             className="p-6 rounded-3xl btn-kahoot-red text-left font-black text-lg md:text-xl active-press shadow-2xl transition-transform hover:scale-[1.02] flex items-center justify-between border-2 border-white/20"
@@ -263,14 +263,14 @@ export default function TuPreferesGamePage({ params }: { params: Promise<{ roomI
               <span className="text-xs uppercase tracking-widest text-white/80 font-black">Option A</span>
               <span>{currentDilemma.optionA}</span>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl font-black shrink-0">
-              🔴
+            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-sm font-black shrink-0 uppercase tracking-widest">
+              A
             </div>
           </button>
 
           <span className="text-sm font-black text-foreground/40 uppercase tracking-widest">— OU —</span>
 
-          {/* Option B (Bleu Kahoot 🔵) */}
+          {/* Option B (Bleu Kahoot) */}
           <button
             onClick={() => handleVote("B")}
             className="p-6 rounded-3xl btn-kahoot-blue text-left font-black text-lg md:text-xl active-press shadow-2xl transition-transform hover:scale-[1.02] flex items-center justify-between border-2 border-white/20"
@@ -279,8 +279,8 @@ export default function TuPreferesGamePage({ params }: { params: Promise<{ roomI
               <span className="text-xs uppercase tracking-widest text-white/80 font-black">Option B</span>
               <span>{currentDilemma.optionB}</span>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl font-black shrink-0">
-              🔵
+            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-sm font-black shrink-0 uppercase tracking-widest">
+              B
             </div>
           </button>
         </div>
@@ -316,7 +316,7 @@ export default function TuPreferesGamePage({ params }: { params: Promise<{ roomI
             {/* Résultat Option A */}
             <div className={`p-5 rounded-3xl border-2 transition-all ${countA >= countB ? 'bg-red-600/90 border-red-400 text-white shadow-xl scale-[1.02]' : 'bg-surface border-white/10 opacity-70'}`}>
               <div className="flex justify-between items-center mb-2 font-black">
-                <span className="text-sm uppercase tracking-wider">🔴 Option A</span>
+                <span className="text-sm uppercase tracking-wider">Option A</span>
                 <span className="text-2xl">{percentA}% ({countA} votes)</span>
               </div>
               <p className="text-base font-bold text-left mb-2">{currentDilemma.optionA}</p>
@@ -328,7 +328,7 @@ export default function TuPreferesGamePage({ params }: { params: Promise<{ roomI
             {/* Résultat Option B */}
             <div className={`p-5 rounded-3xl border-2 transition-all ${countB >= countA ? 'bg-blue-600/90 border-blue-400 text-white shadow-xl scale-[1.02]' : 'bg-surface border-white/10 opacity-70'}`}>
               <div className="flex justify-between items-center mb-2 font-black">
-                <span className="text-sm uppercase tracking-wider">🔵 Option B</span>
+                <span className="text-sm uppercase tracking-wider">Option B</span>
                 <span className="text-2xl">{percentB}% ({countB} votes)</span>
               </div>
               <p className="text-base font-bold text-left mb-2">{currentDilemma.optionB}</p>
