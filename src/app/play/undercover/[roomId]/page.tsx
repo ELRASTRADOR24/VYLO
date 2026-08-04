@@ -433,55 +433,90 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
           {/* Colonne Droite : Répartition des Rôles */}
           <div className="md:col-span-6 flex flex-col gap-4">
+            {/* CARTE MODE MYSTÈRE ALÉATOIRE */}
+            <Card className="w-full p-5 bg-gradient-to-r from-amber-950/80 via-surface to-purple-950/80 border-2 border-amber-500/40 shadow-glow">
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col text-left pr-2">
+                  <span className="text-xs font-black uppercase tracking-widest text-amber-300 flex items-center gap-1.5 mb-1">
+                    🎲 Mode Mystère (Aléatoire)
+                  </span>
+                  <p className="text-[11px] font-extrabold text-foreground/70 leading-snug">
+                    Personne ne saura combien il y a d'Undercovers, de Mr. White ou de Jokers !
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => { setIsMysteryMode(!isMysteryMode); sfxTap(); }}
+                  className={`h-11 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border active:scale-95 shrink-0 ${
+                    isMysteryMode
+                      ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
+                      : "bg-surface/80 border-white/10 text-foreground/50 hover:text-white"
+                  }`}
+                >
+                  {isMysteryMode ? "ACTIF 🎲" : "Désactivé"}
+                </button>
+              </div>
+            </Card>
+
+            {/* Répartition des Rôles */}
             <Card className="w-full p-6 bg-surface/90 border border-white/10 shadow-soft">
               <span className="text-xs font-extrabold uppercase tracking-widest text-foreground/50 mb-4 block">
-                Répartition des Rôles ({playerCount} Joueurs)
+                {isMysteryMode ? "Mode Mystère Sélectionné" : `Répartition Manuelle (${playerCount} Joueurs)`}
               </span>
 
-              <div className="space-y-3">
-                <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                  <span className="font-bold flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-blue-400"></span> Civils
-                  </span>
-                  <span className="font-extrabold text-blue-400 text-lg">
-                    {playerCount - undercoverCount - mrWhiteCount}
-                  </span>
+              {isMysteryMode ? (
+                <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-extrabold space-y-2 text-left">
+                  <span className="block font-black uppercase tracking-wider text-amber-400">🎲 Répartition 100% Secrète</span>
+                  <p className="text-[11px] leading-relaxed text-foreground/80">
+                    VYLO va distribuer aléatoirement les rôles (Civils, Undercovers, Mr. White, Jokers, Caméléons) en gardant une majorité de Civils. Le nombre exact d'imposteurs reste inconnu de tous !
+                  </p>
                 </div>
+              ) : (
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-blue-400"></span> Civils
+                    </span>
+                    <span className="font-extrabold text-blue-400 text-lg">
+                      {playerCount - undercoverCount - mrWhiteCount}
+                    </span>
+                  </div>
 
-                <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                  <span className="font-bold flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-red-500"></span> Undercover
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <button 
-                      onClick={() => { setUndercoverCount(Math.max(0, undercoverCount - 1)); sfxTap(); }}
-                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-                    >-</button>
-                    <span className="font-extrabold text-red-500">{undercoverCount}</span>
-                    <button 
-                      onClick={() => { setUndercoverCount(Math.min(playerCount - 2 - mrWhiteCount, undercoverCount + 1)); sfxTap(); }}
-                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-                    >+</button>
+                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-red-500"></span> Undercover
+                    </span>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => { setUndercoverCount(Math.max(0, undercoverCount - 1)); sfxTap(); }}
+                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                      >-</button>
+                      <span className="font-extrabold text-red-500">{undercoverCount}</span>
+                      <button 
+                        onClick={() => { setUndercoverCount(Math.min(playerCount - 2 - mrWhiteCount, undercoverCount + 1)); sfxTap(); }}
+                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                      >+</button>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-purple-400"></span> Mr. White
+                    </span>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => { setMrWhiteCount(Math.max(0, mrWhiteCount - 1)); sfxTap(); }}
+                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                      >-</button>
+                      <span className="font-extrabold text-purple-400">{mrWhiteCount}</span>
+                      <button 
+                        onClick={() => { setMrWhiteCount(Math.min(playerCount - 2 - undercoverCount, mrWhiteCount + 1)); sfxTap(); }}
+                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                      >+</button>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                  <span className="font-bold flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-purple-400"></span> Mr. White
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <button 
-                      onClick={() => { setMrWhiteCount(Math.max(0, mrWhiteCount - 1)); sfxTap(); }}
-                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-                    >-</button>
-                    <span className="font-extrabold text-purple-400">{mrWhiteCount}</span>
-                    <button 
-                      onClick={() => { setMrWhiteCount(Math.min(playerCount - 2 - undercoverCount, mrWhiteCount + 1)); sfxTap(); }}
-                      className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
-                    >+</button>
-                  </div>
-                </div>
-              </div>
+              )}
             </Card>
 
             {/* Indicateur d'erreur de config */}
