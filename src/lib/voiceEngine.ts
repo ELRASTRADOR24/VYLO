@@ -248,6 +248,15 @@ class VoiceEngine {
     }
   }
 
+  public getCurrentVoiceName(): string {
+    if (!this.frenchVoice) this.initVoices();
+    return this.frenchVoice ? this.frenchVoice.name : "Voix par défaut du navigateur";
+  }
+
+  public testVoice() {
+    this.speak("Bonjour ! Je suis la voix de VYLO. Bienvenue dans la partie !", { tone: "ANNOUNCEMENT" });
+  }
+
   public stop() {
     if (this.synth) {
       this.synth.cancel();
