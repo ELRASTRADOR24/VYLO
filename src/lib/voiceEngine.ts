@@ -87,17 +87,20 @@ class VoiceEngine {
     const voices = this.synth.getVoices();
     if (!voices || voices.length === 0) return;
 
-    // Sélection avec priorité ABSOLUE aux voix Siri & Apple Françaises HD
+    // Priorité ABSOLUE à la voix Audrey Premium / Apple HD
     const frVoices = voices.filter(v => v.lang.startsWith("fr") || v.lang.startsWith("FR"));
 
     this.frenchVoice = 
-      // 1. Voix Siri Officielle (iPhone, iPad, Mac)
+      // 1. Voix Audrey Premium / Enhanced (Apple / iOS / macOS HD)
+      frVoices.find(v => v.name.toLowerCase().includes("audrey") && (v.name.includes("Premium") || v.name.includes("Enhanced") || v.name.includes("Améliorée"))) ||
+      frVoices.find(v => v.name.toLowerCase().includes("audrey")) ||
+      // 2. Voix Siri Officielle
       frVoices.find(v => v.name.toLowerCase().includes("siri")) ||
-      // 2. Voix Apple Premium HD (Thomas, Audrey, Hortense, Amélie, Virginie, Enhanced)
-      frVoices.find(v => v.name.includes("Thomas") || v.name.includes("Audrey") || v.name.includes("Hortense") || v.name.includes("Amélie") || v.name.includes("Virginie") || v.name.includes("Enhanced") || v.name.includes("Premium")) ||
-      // 3. Voix Google / Microsoft Natural HD (Fallback PC & Android)
+      // 3. Autres voix Apple HD (Thomas, Hortense, Virginie, Amélie)
+      frVoices.find(v => v.name.includes("Thomas") || v.name.includes("Hortense") || v.name.includes("Virginie") || v.name.includes("Enhanced") || v.name.includes("Premium")) ||
+      // 4. Voix Google / Microsoft Natural HD (Fallback PC & Android)
       frVoices.find(v => v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Online")) ||
-      // 4. Toute autre voix française
+      // 5. Toute autre voix française
       frVoices[0] ||
       null;
   }
