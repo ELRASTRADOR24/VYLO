@@ -87,17 +87,17 @@ class VoiceEngine {
     const voices = this.synth.getVoices();
     if (!voices || voices.length === 0) return;
 
-    // Sélection intelligente de la meilleure voix française HD disponible sur l'appareil
+    // Sélection avec priorité ABSOLUE aux voix Siri & Apple Françaises HD
     const frVoices = voices.filter(v => v.lang.startsWith("fr") || v.lang.startsWith("FR"));
 
     this.frenchVoice = 
-      // 1. Voix Google HD / Natural (Android & Chrome Desktop)
+      // 1. Voix Siri Officielle (iPhone, iPad, Mac)
+      frVoices.find(v => v.name.toLowerCase().includes("siri")) ||
+      // 2. Voix Apple Premium HD (Thomas, Audrey, Hortense, Amélie, Virginie, Enhanced)
+      frVoices.find(v => v.name.includes("Thomas") || v.name.includes("Audrey") || v.name.includes("Hortense") || v.name.includes("Amélie") || v.name.includes("Virginie") || v.name.includes("Enhanced") || v.name.includes("Premium")) ||
+      // 3. Voix Google / Microsoft Natural HD (Fallback PC & Android)
       frVoices.find(v => v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Online")) ||
-      // 2. Voix Apple Premium / Enhanced (iOS & macOS Siri / Thomas / Audrey / Hortense)
-      frVoices.find(v => v.name.includes("Enhanced") || v.name.includes("Premium") || v.name.includes("Thomas") || v.name.includes("Audrey") || v.name.includes("Siri")) ||
-      // 3. Voix Microsoft Natural (Windows Edge / Chrome)
-      frVoices.find(v => v.name.includes("Paul") || v.name.includes("Hortense") || v.name.includes("Julie") || v.name.includes("Denise")) ||
-      // 4. Voix française standard par défaut
+      // 4. Toute autre voix française
       frVoices[0] ||
       null;
   }
