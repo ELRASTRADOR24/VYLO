@@ -416,18 +416,31 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
           const isSelected = selectedChoiceIdx === idx;
           const isCorrect = phase === "REVEAL" && idx === currentQuestion.correctChoiceIndex;
 
+          const parts = choice.split(" — ");
+          const songTitle = parts[0];
+          const artistName = parts[1] || "";
+
           return (
             <Button
               key={idx}
               variant={variant}
               disabled={phase === "REVEAL"}
               onClick={() => handleAnswerChoice(idx)}
-              className={`h-16 text-sm md:text-base font-black normal-case leading-snug justify-between px-5 ${
+              className={`h-20 text-left font-black normal-case leading-tight justify-between px-5 py-3 ${
                 isCorrect ? 'ring-4 ring-green-400 scale-105' : ''
               }`}
             >
-              <span className="truncate">{choice}</span>
-              {phase === "REVEAL" && isCorrect && <Check size={20} className="text-white" />}
+              <div className="flex flex-col text-left overflow-hidden pr-2">
+                <span className="text-sm md:text-base font-black text-white truncate block">
+                  {songTitle}
+                </span>
+                {artistName && (
+                  <span className="text-[11px] font-bold text-white/80 truncate block mt-0.5">
+                    {artistName}
+                  </span>
+                )}
+              </div>
+              {phase === "REVEAL" && isCorrect && <Check size={22} className="text-white shrink-0 ml-2" />}
             </Button>
           );
         })}

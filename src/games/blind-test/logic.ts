@@ -16,11 +16,11 @@ export interface TrackItem {
 
 export interface BlindTestQuestion {
   track: TrackItem;
-  choices: string[]; // 4 choix crédibles et proches (1 vrai + 3 leurres)
+  choices: string[]; // 4 choix affichant CLAIREMENT le titre de la chanson en premier !
   correctChoiceIndex: number;
 }
 
-// Artistes & Titres Clés pour la recherche dynamique Apple Music iTunes API
+// Artistes & Mots-clés de recherche iTunes par catégorie
 export const CATEGORY_ARTISTS: Record<BlindTestCategory, string[]> = {
   "Tous": [
     "Tiakola", "Niska", "Ninho", "Gazo", "SDM", "Jul", "Aya Nakamura", "Werenoi", "Bad Bunny", "Rosalía", "Daddy Yankee", "Dua Lipa", "Disney"
@@ -35,20 +35,64 @@ export const CATEGORY_ARTISTS: Record<BlindTestCategory, string[]> = {
     "The Weeknd", "Dua Lipa", "Drake", "Rihanna", "Bruno Mars", "Justin Bieber", "Ed Sheeran", "Beyoncé", "Ariana Grande"
   ],
   "Films & Dessins Animés": [
-    "Disney", "Star Wars", "Harry Potter", "Roi Lion", "Reine des neiges", "Encanto", "Dragon Ball Z", "Naruto"
+    "Disney", "Roi Lion", "Reine des neiges", "Encanto", "Aladdin", "Mulan", "Tarzan", "Vaiana", "Hercules"
   ]
 };
 
-// Titres leurres plausibles par catégorie pour créer des pièges crédibles
-export const PLAUSIBLE_TRACK_TITLES: Record<BlindTestCategory, string[]> = {
-  "Tous": ["Canoë", "Réseaux", "Meuda", "Dakiti", "Despacito", "Blinding Lights", "Libérée, Délivrée"],
-  "Hits & Rap Français": ["Canoë", "Réseaux", "Meuda", "J'ai mal", "Chocolat", "Bande Organisée", "Djadja", "Bolide Germanique", "Midi dans le ghetto"],
-  "Musique Espagnole & Latino": ["Dakiti", "Despacito", "Con Calma", "Pepas", "Mi Gente", "Bailando", "Provenza", "Gasolina"],
-  "Pop International": ["Blinding Lights", "Levitating", "God's Plan", "Umbrella", "Uptown Funk", "Shape of You", "Starboy"],
-  "Films & Dessins Animés": ["Libérée, Délivrée", "Ce rêve bleu", "L'histoire de la vie", "Ne parlons pas de Bruno", "Chala Head Chala"]
+// Vrais titres de chansons célèbres par catégorie pour créer des leurres ultra-crédibles
+export const CATEGORY_WRONG_TITLES: Record<BlindTestCategory, { title: string; artist: string }[]> = {
+  "Tous": [
+    { title: "Meuda", artist: "Tiakola" },
+    { title: "Réseaux", artist: "Niska" },
+    { title: "Canoë", artist: "Ninho" },
+    { title: "Hakuna Matata", artist: "Le Roi Lion" },
+    { title: "Despacito", artist: "Luis Fonsi" },
+    { title: "Blinding Lights", artist: "The Weeknd" },
+    { title: "Libérée, Délivrée", artist: "La Reine des Neiges" },
+    { title: "Ce rêve bleu", artist: "Aladdin" }
+  ],
+  "Hits & Rap Français": [
+    { title: "Meuda", artist: "Tiakola" },
+    { title: "Réseaux", artist: "Niska" },
+    { title: "Canoë", artist: "Ninho" },
+    { title: "Bande Organisée", artist: "Jul" },
+    { title: "Djadja", artist: "Aya Nakamura" },
+    { title: "Bolide Germanique", artist: "SDM" },
+    { title: "Midi dans le ghetto", artist: "Gazo" },
+    { title: "Chocolat", artist: "Keblack" }
+  ],
+  "Musique Espagnole & Latino": [
+    { title: "Despacito", artist: "Luis Fonsi" },
+    { title: "Dakiti", artist: "Bad Bunny" },
+    { title: "Con Calma", artist: "Daddy Yankee" },
+    { title: "Pepas", artist: "Farruko" },
+    { title: "Mi Gente", artist: "J Balvin" },
+    { title: "Bailando", artist: "Enrique Iglesias" },
+    { title: "Provenza", artist: "Karol G" },
+    { title: "Gasolina", artist: "Daddy Yankee" }
+  ],
+  "Pop International": [
+    { title: "Blinding Lights", artist: "The Weeknd" },
+    { title: "Levitating", artist: "Dua Lipa" },
+    { title: "God's Plan", artist: "Drake" },
+    { title: "Umbrella", artist: "Rihanna" },
+    { title: "Uptown Funk", artist: "Bruno Mars" },
+    { title: "Shape of You", artist: "Ed Sheeran" },
+    { title: "Starboy", artist: "The Weeknd" }
+  ],
+  "Films & Dessins Animés": [
+    { title: "Hakuna Matata", artist: "Le Roi Lion" },
+    { title: "Libérée, Délivrée", artist: "La Reine des Neiges" },
+    { title: "Ce rêve bleu", artist: "Aladdin" },
+    { title: "L'histoire de la vie", artist: "Le Roi Lion" },
+    { title: "Ne parlons pas de Bruno", artist: "Encanto" },
+    { title: "Comme un homme", artist: "Mulan" },
+    { title: "Le bleu du ciel", artist: "Vaiana" },
+    { title: "Je voudrais déjà être roi", artist: "Le Roi Lion" }
+  ]
 };
 
-// Base de pistes de secours réelles avec vrais extraits Apple Music M4A
+// Base de secours réelle avec extraits Apple Music
 export const FALLBACK_TRACKS: TrackItem[] = [
   {
     id: "f1",
@@ -66,14 +110,25 @@ export const FALLBACK_TRACKS: TrackItem[] = [
   },
   {
     id: "f3",
-    artistName: "Bad Bunny",
-    trackName: "MONACO",
-    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/4a/12/34/4a123456.plus.aac.p.m4a",
+    artistName: "Luis Fonsi",
+    trackName: "Despacito",
+    previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bf/1e/8c/bf1e8c68-efcb-49d7-bf6f-b2e3e5b3f1a2/mzaf_1648057280738622143.plus.aac.p.m4a",
     category: "Musique Espagnole & Latino"
   }
 ];
 
 const usedTrackIdsHistory = new Set<string>();
+
+/** Nettoie le nom de l'artiste s'il est trop long ou contient des virgules multiples */
+function cleanArtistName(rawArtist: string): string {
+  if (!rawArtist) return "Artiste";
+  // Si c'est une liste de comédiens/artistes très longue ("Jamel Debbouze, Alban Ivanov..."), garder le premier principal
+  const parts = rawArtist.split(",");
+  if (parts.length > 2) {
+    return parts[0].trim();
+  }
+  return rawArtist.trim();
+}
 
 /** Interroge l'API officielle iTunes d'Apple pour récupérer un extrait MP3/M4A de 30s */
 export async function fetchTrackFromiTunes(searchQuery: string, category: BlindTestCategory): Promise<TrackItem | null> {
@@ -91,7 +146,7 @@ export async function fetchTrackFromiTunes(searchQuery: string, category: BlindT
       const randomTrack = validResults[Math.floor(Math.random() * validResults.length)];
       return {
         id: randomTrack.trackId?.toString() || Math.random().toString(),
-        artistName: randomTrack.artistName,
+        artistName: cleanArtistName(randomTrack.artistName),
         trackName: randomTrack.trackName,
         previewUrl: randomTrack.previewUrl,
         artworkUrl: randomTrack.artworkUrl100?.replace("100x100bb", "300x300bb"),
@@ -105,10 +160,15 @@ export async function fetchTrackFromiTunes(searchQuery: string, category: BlindT
   }
 }
 
-/** Génère une question complète de Blind Test avec 4 choix proches et crédibles */
+/** Formatage standardisé d'un choix : Le Titre de la Chanson en PREMIER ! */
+function formatChoiceText(title: string, artist: string): string {
+  return `${title} — ${artist}`;
+}
+
+/** Génère une question complète de Blind Test avec le TITRE DE LA CHANSON TOUJOURS CLAIREMENT VISIBLE */
 export async function generateBlindTestQuestion(category: BlindTestCategory = "Tous"): Promise<BlindTestQuestion> {
   const artistsList = CATEGORY_ARTISTS[category] || CATEGORY_ARTISTS["Tous"];
-  const plausibleTitles = PLAUSIBLE_TRACK_TITLES[category] || PLAUSIBLE_TRACK_TITLES["Tous"];
+  const wrongPool = CATEGORY_WRONG_TITLES[category] || CATEGORY_WRONG_TITLES["Tous"];
   const randomArtist = artistsList[Math.floor(Math.random() * artistsList.length)];
   
   let track = await fetchTrackFromiTunes(randomArtist, category);
@@ -120,31 +180,43 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
 
   usedTrackIdsHistory.add(track.id);
 
-  // Vraie réponse
-  const correctAnswer = `${track.artistName} — ${track.trackName}`;
+  // Vraie réponse (TITRE EN PREMIER !)
+  const correctAnswer = formatChoiceText(track.trackName, track.artistName);
   
-  // Leurres de la MÊME catégorie (artistes très proches de même style)
-  const relatedArtists = artistsList.filter(a => a.toLowerCase() !== track?.artistName.toLowerCase());
-  const shuffledArtists = [...relatedArtists].sort(() => 0.5 - Math.random());
-  const shuffledTitles = [...plausibleTitles].filter(t => t.toLowerCase() !== track?.trackName.toLowerCase()).sort(() => 0.5 - Math.random());
+  // Leurres crédibles avec vrais titres de chansons de la même catégorie
+  const availableWrong = wrongPool.filter(w => w.title.toLowerCase() !== track?.trackName.toLowerCase());
+  const shuffledWrong = [...availableWrong].sort(() => 0.5 - Math.random());
   
-  const wrongChoices = [
-    `${shuffledArtists[0] || "Ninho"} — ${track.trackName}`, // Mème nom de chanson, autre artiste proche
-    `${track.artistName} — ${shuffledTitles[0] || "Canoë"}`, // Même artiste, titre alternatif plausible
-    `${shuffledArtists[1] || "SDM"} — ${shuffledTitles[1] || "Midi dans le ghetto"}` // Autre artiste du même genre
-  ];
+  const choicesSet = new Set<string>();
+  choicesSet.add(correctAnswer);
 
-  // Mélange aléatoire des 4 choix
-  const allChoices = Array.from(new Set([correctAnswer, ...wrongChoices])).sort(() => 0.5 - Math.random());
-  
-  // Compléter à 4 choix si doublon supprimé
-  while (allChoices.length < 4) {
-    const extraArtist = shuffledArtists[allChoices.length] || "Jul";
-    const extraTitle = shuffledTitles[allChoices.length] || "Morceau";
-    const option = `${extraArtist} — ${extraTitle}`;
-    if (!allChoices.includes(option)) allChoices.push(option);
+  // 1. Même artiste, mais autre titre célèbre
+  if (shuffledWrong.length > 0) {
+    choicesSet.add(formatChoiceText(shuffledWrong[0].title, track.artistName));
   }
 
+  // 2. Autre titre célèbre avec son propre artiste
+  if (shuffledWrong.length > 1) {
+    choicesSet.add(formatChoiceText(shuffledWrong[1].title, shuffledWrong[1].artist));
+  }
+
+  // 3. Autre titre célèbre
+  if (shuffledWrong.length > 2) {
+    choicesSet.add(formatChoiceText(shuffledWrong[2].title, shuffledWrong[2].artist));
+  }
+
+  // Compléter à 4 choix uniques si besoin
+  let fallbackIndex = 0;
+  while (choicesSet.size < 4 && fallbackIndex < wrongPool.length) {
+    const item = wrongPool[fallbackIndex];
+    const candidate = formatChoiceText(item.title, item.artist);
+    if (!choicesSet.has(candidate)) {
+      choicesSet.add(candidate);
+    }
+    fallbackIndex++;
+  }
+
+  const allChoices = Array.from(choicesSet).sort(() => 0.5 - Math.random());
   const correctChoiceIndex = allChoices.indexOf(correctAnswer);
 
   return {
