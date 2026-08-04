@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { X, Sparkles } from "lucide-react";
 import { sfxTap } from "@/lib/audio";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
 
 interface VBubbleProps {
   title: string;
@@ -15,21 +13,28 @@ interface VBubbleProps {
 
 export function VBubble({ title, description, className = "", size = "md" }: VBubbleProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLSpanElement>(null);
 
-  const handleOpen = (e: React.MouseEvent | React.TouchEvent) => {
+  // Fermeture si clic en dehors
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     sfxTap();
-    setIsOpen(true);
-  };
-
-  const handleClose = (e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    sfxTap();
-    setIsOpen(false);
+    setIsOpen(!isOpen);
   };
 
   const sizeClasses = {
@@ -39,53 +44,36 @@ export function VBubble({ title, description, className = "", size = "md" }: VBu
   }[size];
 
   return (
-    <span className={`inline-flex items-center ${className}`} onClick={(e) => e.stopPropagation()}>
-      {/* Pastille V Néon Luminescente avec Pulse Glow */}
+    <span ref={containerRef} className={`relative inline-flex items-center ${className}`} onClick={(e) => e.stopPropagation()}>
+      {/* Pastille V Néon Luminescente */}
       <button
         type="button"
-        onClick={handleOpen}
-        className={`${sizeClasses} rounded-full bg-gradient-to-br from-primary/40 via-purple-500/30 to-secondary/30 border border-primary/60 hover:border-primary flex items-center justify-center text-primary font-black animate-pulse-glow transition-all cursor-pointer active-press z-20 hover:scale-125`}
+        onClick={handleToggle}
+        className={`${sizeClasses} rounded-full bg-gradient-to-br from-primary/40 via-purple-500/30 to-secondary/30 border border-primary/60 hover:border-primary flex items-center justify-center text-primary font-black animate-pulse-glow transition-all cursor-pointer active-press z-20 hover:scale-110`}
         aria-label={`V Bubble : ${title}`}
       >
         V
       </button>
 
-      {/* Modal Overlay V Bubble */}
+      {/* Popover Discret Positionné (Pas de Modal plein écran masquant le texte !) */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-lg flex items-center justify-center p-5"
-          onClick={handleClose}
-        >
-          <div 
-            className="w-full max-w-sm bg-surface border-2 border-primary/40 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 text-left animate-bounce-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-[10px] font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
-                <Sparkles size={12} /> V·BUBBLE
-              </span>
-              <button 
-                type="button"
-                onClick={handleClose}
-                className="h-7 w-7 rounded-full bg-white/5 flex items-center justify-center text-foreground/50 hover:text-foreground active-press"
-              >
-                <X size={14} />
-              </button>
-            </div>
-
-            {/* Contenu */}
-            <div>
-              <h3 className="text-lg font-black text-foreground mb-2">{title}</h3>
-              <p className="text-xs font-semibold text-foreground/80 leading-relaxed bg-white/5 p-3.5 rounded-2xl border border-white/5">
-                {description}
-              </p>
-            </div>
-
-            <Button variant="primary" size="sm" className="w-full py-2.5 text-xs" onClick={handleClose}>
-              Compris 👍
-            </Button>
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 md:w-72 bg-surface/95 border-2 border-primary/50 backdrop-blur-2xl p-4 rounded-2xl shadow-2xl z-50 animate-in zoom-in-95 fade-in duration-150 text-left">
+          <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10">
+            <span className="text-[9px] font-black uppercase tracking-widest text-primary flex items-center gap-1">
+              <Sparkles size={11} /> V·BUBBLE
+            </span>
+            <button
+              type="button"
+              onClick={handleToggle}
+              className="h-5 w-5 rounded-full bg-white/5 flex items-center justify-center text-foreground/50 hover:text-foreground"
+            >
+              <X size={12} />
+            </button>
           </div>
+          <h4 className="text-xs font-black text-foreground mb-1">{title}</h4>
+          <p className="text-[11px] font-semibold text-foreground/80 leading-snug">
+            {description}
+          </p>
         </div>
       )}
     </span>
