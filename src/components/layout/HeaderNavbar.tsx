@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 import { 
-  Menu, X, Home, LayoutGrid, QrCode, User, Sparkles, Flame, ChevronRight, FlaskConical, Lock, LogIn 
+  Menu, X, Home, LayoutGrid, QrCode, User, Sparkles, Flame, ChevronRight, FlaskConical, Lock, LogIn, BookOpen 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sfxTap } from "@/lib/audio";
@@ -24,6 +24,7 @@ export function HeaderNavbar() {
   const links = [
     { href: "/", icon: Home, label: "Accueil" },
     { href: "/library", icon: LayoutGrid, label: "Jeux" },
+    { href: "/rules", icon: BookOpen, label: "Règles" },
     { href: "/join", icon: QrCode, label: "Rejoindre" },
     { href: "/profile", icon: User, label: "Profil" },
   ];
