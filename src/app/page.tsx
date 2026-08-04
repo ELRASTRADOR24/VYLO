@@ -1,396 +1,423 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Play, QrCode, ArrowRight, Sparkles, Smartphone, Zap, Users, Heart, Volume2 } from "lucide-react";
-import Card from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { VBubble } from "@/components/ui/VBubble";
 import { 
-  VyloMascot, 
-  UndercoverIllustration, 
-  BlindTestIllustration,
-  TuPreferesIllustration,
-  FlagQuizIllustration,
-  WordMasterIllustration,
-  PunchlinesIllustration,
-  VyloPartyIllustration,
-  WerewolfIllustration, 
-  TodIllustration, 
-  SaboteurIllustration 
+  Home, Grid, Clock, Heart, User, Settings, Users, Bell, Plus, Play, RotateCcw, ChevronRight, Sparkles 
+} from "lucide-react";
+import { LivingBackground } from "@/components/ui/LivingBackground";
+import { GameCard3D } from "@/components/ui/GameCard3D";
+import { 
+  VyloMascot, UndercoverIllustration, WerewolfIllustration, BlindTestIllustration, 
+  TodIllustration, FlagQuizIllustration, TuPreferesIllustration, SaboteurIllustration, 
+  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration 
 } from "@/components/illustrations/GameIllustrations";
-import { getGameList } from "@/games";
-import { voiceEngine } from "@/lib/voiceEngine";
-import { sfxTap } from "@/lib/audio";
+import { sfxTap, sfxSuccess } from "@/lib/audio";
 
-export default function Home() {
+export default function PlayfulPremiumHomePage() {
   const router = useRouter();
-  const [quickCode, setQuickCode] = useState("");
-  const games = getGameList();
-
-  const handleQuickJoin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (quickCode.trim().length === 6) {
-      sfxTap();
-      router.push(`/online/undercover/${quickCode.trim()}`);
-    }
-  };
-
-  const handleNarratorSpeak = () => {
-    sfxTap();
-    voiceEngine.speak("Bienvenue sur VYLO ! Choisis ton jeu et lance une partie en quelques secondes avec tes amis !", { tone: "ANNOUNCEMENT" });
-  };
+  const [ambientColor, setAmbientColor] = useState<string>("#9333EA");
+  const [activeTab, setActiveTab] = useState<string>("accueil");
 
   return (
-    <main className="flex-1 flex flex-col items-center px-4 md:px-8 pt-6 md:pt-10 pb-32 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto w-full relative">
+    <div className="min-h-screen bg-[#0B0914] text-foreground flex flex-col md:flex-row relative overflow-x-hidden font-sans selection:bg-primary/30">
+      {/* 1. Arrière-plan Vivant Respirant & Particules */}
+      <LivingBackground accentColor={ambientColor} />
 
-      {/* SECTION HERO : "Prêt à jouer ?" avec Mascotte 3D */}
-      <div className="w-full bg-surface/90 border border-white/10 rounded-3xl p-6 md:p-8 mb-8 relative overflow-hidden shadow-2xl animate-fade-up">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-          
-          <div className="flex flex-col text-left max-w-xl">
-            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-foreground flex items-center gap-2 mb-2">
-              Prêt à jouer ? <span className="text-primary">~</span>
-            </h1>
-            <p className="text-foreground/70 font-bold text-sm md:text-base mb-6">
-              Choisis ton jeu et lance une partie en quelques secondes !
-            </p>
-
-            {/* DUAL ACTION CARDS (Lancer une partie & Rejoindre par code) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-              {/* Carte 1 : Lancer une partie (Orange Sunset Gradient) */}
-              <Link href="/library" className="block group" onClick={() => sfxTap()}>
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-rose-500 via-orange-500 to-amber-500 text-white shadow-lg group-hover:scale-[1.03] group-hover:shadow-xl transition-all duration-200 flex items-center justify-between relative overflow-hidden active-press">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
-                      <Play className="w-6 h-6 fill-white text-white translate-x-0.5" />
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-lg font-black leading-tight">Lancer une partie</span>
-                      <span className="text-[11px] font-semibold opacity-90">Crée ta partie et invite tes amis</span>
-                    </div>
-                  </div>
-                  <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight size={18} />
-                  </div>
-                </div>
-              </Link>
-
-              {/* Carte 2 : Rejoindre par code (Electric Royal Blue/Purple Gradient) */}
-              <Link href="/join" className="block group" onClick={() => sfxTap()}>
-                <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-600 text-white shadow-lg group-hover:scale-[1.03] group-hover:shadow-xl transition-all duration-200 flex items-center justify-between relative overflow-hidden active-press">
-                  <div className="flex items-center gap-3.5">
-                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
-                      <QrCode className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-lg font-black leading-tight">Rejoindre par code</span>
-                      <span className="text-[11px] font-semibold opacity-90">Entre un code et rejoins la partie</span>
-                    </div>
-                  </div>
-                  <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight size={18} />
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </div>
-
-          {/* Mascotte Officielle VYLO 3D Mignonne */}
-          <div className="hidden md:flex flex-col items-center justify-center">
-            <VyloMascot className="w-36 h-36 animate-float" />
-          </div>
-        </div>
-      </div>
-
-      {/* REJOINDRER RAPIDE FORM */}
-      <Card className="w-full p-4 mb-10 bg-surface/90 border border-white/10 shadow-soft">
-        <form onSubmit={handleQuickJoin} className="flex gap-3 items-center">
-          <input
-            type="text"
-            maxLength={6}
-            value={quickCode}
-            onChange={(e) => setQuickCode(e.target.value.toUpperCase())}
-            placeholder="Saisissez un code de salon (ex: A7K92)..."
-            className="flex-1 bg-background border border-white/10 rounded-2xl px-5 py-3 text-xs font-black tracking-widest text-foreground focus:outline-none focus:border-primary uppercase"
-          />
-          <Button type="submit" variant="primary" className="px-6 py-3 font-black text-xs gap-2 shadow-summer-glow" disabled={quickCode.length !== 6}>
-            GO <ArrowRight size={14} />
-          </Button>
-        </form>
-      </Card>
-
-      {/* SECTION "NOS JEUX" AVEC ILLUSTRATIONS 3D ET V-BUBBLE */}
-      <div className="w-full flex flex-col gap-4 mb-12">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-black flex items-center gap-2 text-foreground">
-            <Sparkles className="w-5 h-5 text-primary" /> Nos Jeux
-          </h2>
-          <Link href="/library" className="text-xs font-black text-primary hover:underline flex items-center gap-1">
-            Voir tout <ArrowRight size={14} />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Card 1 : Undercover */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/undercover"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-purple-500/20 hover:border-purple-500/50 transition-all cursor-pointer group active-press"
+      {/* 2. SIDEBAR LEFT (DESKTOP) */}
+      <aside className="hidden md:flex flex-col justify-between w-64 p-6 bg-surface/40 backdrop-blur-2xl border-r border-white/10 z-30 sticky top-0 h-screen">
+        <div className="space-y-8">
+          {/* Logo VYLO */}
+          <div 
+            onClick={() => { sfxTap(); router.push("/"); }}
+            className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="relative">
-              <UndercoverIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Undercover" description="Infiltrés contre Innocents ! Décrivez votre mot secret sans révéler votre véritable identité." />
-              </div>
+            <div className="w-10 h-10 rounded-2xl bg-gradient-summer flex items-center justify-center text-white font-black text-xl shadow-summer-glow group-hover:scale-105 transition-all">
+              V
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">Undercover</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>30 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 2 : Loup-Garou */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/werewolf"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-indigo-500/20 hover:border-indigo-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <WerewolfIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Loup-Garou" description="Le village se réveille ! Identifiez les loups cachés parmi les villageois avant qu'il ne soit trop tard." />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-indigo-400 transition-colors">Loup-Garou</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>6-20</span>
-                <span>•</span>
-                <span>30 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 3 : Action ou Vérité */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/truth-or-dare"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-orange-500/20 hover:border-orange-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <TodIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Action ou Vérité" description="Révélez vos pires secrets ou accomplissez des défis déjantés entre amis !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-orange-400 transition-colors">Action ou Vérité</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>30 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 5 : Blind Test Musical */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/blind-test"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-pink-500/20 hover:border-pink-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <BlindTestIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Blind Test Musical" description="Écoutez des extraits officiels de 30s de Rap FR, Latino & Hits et choisissez la bonne réponse en 30s chrono !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-pink-400 transition-colors">Blind Test</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-16</span>
-                <span>•</span>
-                <span>15 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 6 : Tu Préfères ? */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/tu-preferes"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-purple-500/20 hover:border-purple-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <TuPreferesIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Tu Préfères ?" description="Tranchez des dilemmes absurdes et hilarants entre amis ! Option Rouge vs Option Bleu !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">Tu Préfères ?</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>15 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 7 : Devine le Drapeau */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/flag-quiz"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-emerald-500/20 hover:border-emerald-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <FlagQuizIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Devine le Drapeau" description="Testez vos connaissances en géographie ! Devinez le pays du drapeau affiché le plus vite possible !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-emerald-400 transition-colors">Devine le Drapeau</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>15 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 8 : Le Maître des Mots */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/word-master"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-pink-500/20 hover:border-pink-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <WordMasterIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="Le Maître des Mots" description="Faites deviner le mot secret à votre équipe sans jamais prononcer les 4 mots interdits (Tabou) !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-pink-400 transition-colors">Le Maître des Mots</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-16</span>
-                <span>•</span>
-                <span>15 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 10 : VYLO Cards — Punchlines */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/punchlines"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-purple-500/20 hover:border-purple-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <PunchlinesIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="VYLO Cards — Punchlines" description="Complétez les phrases à trous avec les cartes les plus absurdes, piquantes et hilarantes entre amis !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-purple-400 transition-colors">VYLO Cards</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>20 min</span>
-              </div>
-            </div>
-          </Card>
-
-          {/* Card 11 : VYLO Party — Défis & Passe-Mobile */}
-          <Card 
-            onClick={() => { sfxTap(); router.push("/setup/vylo-party"); }}
-            className="p-4 flex flex-col gap-3 bg-surface/90 border border-pink-500/20 hover:border-pink-500/50 transition-all cursor-pointer group active-press"
-          >
-            <div className="relative">
-              <VyloPartyIllustration />
-              <div className="absolute top-2.5 right-2.5 z-20">
-                <VBubble title="VYLO Party — Défis & Passe-Mobile" description="Passez le téléphone de main en main ! Défis déjantés, vérités piquantes et duels survoltés !" />
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-lg font-black text-foreground group-hover:text-pink-400 transition-colors">VYLO Party</span>
-              <div className="flex gap-2 text-[10px] font-black uppercase text-foreground/60 bg-white/5 px-2.5 py-1 rounded-full border border-white/10">
-                <span>2-20</span>
-                <span>•</span>
-                <span>20 min</span>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </div>
-
-      {/* BANNIÈRE DE FONCTIONNALITÉS EN 4 COLONNES */}
-      <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-        <Card className="p-4 flex items-center gap-3 bg-surface/80 border border-white/5">
-          <div className="p-3 rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
-            <Smartphone size={20} />
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="text-xs font-black text-foreground">1 téléphone</span>
-            <span className="text-[10px] font-bold text-foreground/50">Suffit pour jouer</span>
-          </div>
-        </Card>
-
-        <Card className="p-4 flex items-center gap-3 bg-surface/80 border border-white/5">
-          <div className="p-3 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            <Zap size={20} />
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="text-xs font-black text-foreground">Facile à comprendre</span>
-            <span className="text-[10px] font-bold text-foreground/50">Aucun texte inutile</span>
-          </div>
-        </Card>
-
-        <Card className="p-4 flex items-center gap-3 bg-surface/80 border border-white/5">
-          <div className="p-3 rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
-            <Users size={20} />
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="text-xs font-black text-foreground">Adapté à tous</span>
-            <span className="text-[10px] font-bold text-foreground/50">Toutes les occasions</span>
-          </div>
-        </Card>
-
-        <Card className="p-4 flex items-center gap-3 bg-surface/80 border border-white/5">
-          <div className="p-3 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
-            <Heart size={20} />
-          </div>
-          <div className="flex flex-col text-left">
-            <span className="text-xs font-black text-foreground">100% fun</span>
-            <span className="text-[10px] font-bold text-foreground/50">Crée des souvenirs !</span>
-          </div>
-        </Card>
-      </div>
-
-      {/* WIDGET NARRATEUR OPTIONNEL AVEC MASCOTTE */}
-      <div className="w-full bg-slate-900/90 border border-purple-500/30 rounded-3xl p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
-        <div className="flex items-center gap-4">
-          <VyloMascot className="w-14 h-14" />
-          <div className="flex flex-col text-left">
-            <span className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
-              <Volume2 size={14} /> Narrateur Optionnel
+            <span className="text-2xl font-black tracking-widest text-foreground group-hover:text-primary transition-colors">
+              VYLO
             </span>
-            <p className="text-xs font-semibold text-foreground/80 mt-1">
-              "Le narrateur peut donner des conseils courts à la place du texte. Prêt à lancer la partie ?"
-            </p>
+          </div>
+
+          {/* Nav Items Principal */}
+          <nav className="space-y-2">
+            <button
+              onClick={() => { setActiveTab("accueil"); sfxTap(); }}
+              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
+                activeTab === "accueil"
+                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
+                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <Home size={20} /> Accueil
+            </button>
+
+            <button
+              onClick={() => { setActiveTab("jeux"); sfxTap(); router.push("/library"); }}
+              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
+                activeTab === "jeux"
+                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
+                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <Grid size={20} /> Tous les jeux
+            </button>
+
+            <button
+              onClick={() => { setActiveTab("parties"); sfxTap(); }}
+              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
+                activeTab === "parties"
+                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
+                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <Clock size={20} /> Mes parties
+            </button>
+
+            <button
+              onClick={() => { setActiveTab("favoris"); sfxTap(); }}
+              className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm transition-all ${
+                activeTab === "favoris"
+                  ? "bg-primary text-white shadow-summer-glow scale-[1.02]"
+                  : "text-foreground/70 hover:bg-white/5 hover:text-white"
+              }`}
+            >
+              <Heart size={20} /> Favoris
+            </button>
+          </nav>
+
+          <hr className="border-white/10" />
+
+          {/* Profil & Paramètres */}
+          <nav className="space-y-2">
+            <button
+              onClick={() => { sfxTap(); router.push("/profile"); }}
+              className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm text-foreground/70 hover:bg-white/5 hover:text-white transition-all"
+            >
+              <User size={20} /> Profil
+            </button>
+
+            <button
+              onClick={() => { sfxTap(); }}
+              className="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl font-extrabold text-sm text-foreground/70 hover:bg-white/5 hover:text-white transition-all"
+            >
+              <Settings size={20} /> Paramètres
+            </button>
+          </nav>
+        </div>
+
+        {/* Mascotte VYLO Bot Bottom Left */}
+        <div className="p-4 rounded-3xl bg-gradient-to-br from-purple-950/60 via-surface/80 to-purple-900/60 border border-purple-500/30 text-center relative overflow-hidden shadow-glow group hover:scale-[1.02] transition-transform cursor-pointer">
+          <VyloMascot className="w-16 h-16 mx-auto mb-2 group-hover:scale-110 transition-transform duration-300" />
+          <p className="text-xs font-black text-purple-200">Prêt pour une nouvelle partie ?</p>
+        </div>
+      </aside>
+
+      {/* 3. MAIN CONTENT CONTAINER */}
+      <main className="flex-1 min-h-screen px-4 md:px-10 pt-6 pb-36 max-w-6xl mx-auto z-10 space-y-10">
+        
+        {/* Header Bar Top (Groupe Actuel & Cloche Notification) */}
+        <div className="w-full flex items-center justify-between gap-4">
+          {/* Mobile Logo */}
+          <div className="flex md:hidden items-center gap-2">
+            <div className="w-9 h-9 rounded-2xl bg-gradient-summer flex items-center justify-center text-white font-black text-lg shadow-summer-glow">
+              V
+            </div>
+            <span className="text-xl font-black tracking-widest text-foreground">VYLO</span>
+          </div>
+
+          <div className="hidden sm:block" />
+
+          {/* Groupe Pill & Notifications */}
+          <div className="flex items-center gap-3 ml-auto">
+            <div className="flex items-center gap-3 px-4 py-2 bg-surface/90 border border-white/10 rounded-full text-xs font-extrabold shadow-soft">
+              <span className="text-foreground/50">Groupe actuel</span>
+              <span className="text-primary font-black">Soirée entre amis</span>
+              <span className="flex items-center gap-1 text-foreground/70 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
+                <Users size={12} /> 5
+              </span>
+            </div>
+
+            <button className="w-10 h-10 rounded-full bg-surface/90 border border-white/10 flex items-center justify-center text-foreground hover:bg-white/10 transition-all relative">
+              <Bell size={18} />
+              <span className="w-2.5 h-2.5 rounded-full bg-primary absolute top-2 right-2 animate-ping" />
+            </button>
           </div>
         </div>
 
-        <Button 
-          variant="surface" 
-          size="sm" 
-          onClick={handleNarratorSpeak}
-          className="px-5 py-2.5 font-black text-xs gap-2 border border-primary/30 text-primary hover:bg-primary/10 rounded-full"
-        >
-          <Volume2 size={14} /> Écouter le Narrateur
-        </Button>
-      </div>
+        {/* HERO BANNER DE SOIRÉE */}
+        <div className="relative w-full rounded-3xl overflow-hidden bg-gradient-to-r from-purple-950/90 via-surface to-indigo-950/90 border-2 border-purple-500/30 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          <div className="space-y-4 text-center md:text-left max-w-xl z-10">
+            <h1 className="text-3xl md:text-5xl font-black text-foreground leading-tight">
+              Le meilleur des jeux de groupe.
+            </h1>
+            <p className="text-base md:text-lg font-bold text-foreground/70">
+              Un seul téléphone, <span className="text-primary font-black">des heures de fun.</span>
+            </p>
+            
+            <div className="pt-2">
+              <button 
+                onClick={() => { sfxSuccess(); router.push("/setup/undercover"); }}
+                className="h-14 px-8 rounded-2xl bg-gradient-summer text-white font-black text-base shadow-summer-glow hover:scale-105 active:scale-95 transition-all flex items-center gap-2 mx-auto md:mx-0"
+              >
+                <Plus size={20} /> Créer une partie
+              </button>
+            </div>
+          </div>
 
-    </main>
+          {/* Illustration visuelle d'ambiance soirée */}
+          <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl relative shrink-0">
+            <img 
+              src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80" 
+              alt="Soirée entre amis"
+              className="w-full h-full object-cover opacity-80"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-transparent" />
+          </div>
+        </div>
+
+        {/* SECTION 1 : NOS JEUX PHARES */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-black text-foreground flex items-center gap-2">
+              Nos jeux phares
+            </h2>
+            <button 
+              onClick={() => router.push("/library")}
+              className="text-xs font-extrabold text-primary hover:text-primary/80 flex items-center gap-1"
+            >
+              Voir tout <ChevronRight size={16} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Card 1: Undercover (🟣 Purple) */}
+            <GameCard3D
+              title="UNDERCOVER"
+              description="Démasquez l'Undercover et Mr. White qui se cachent parmi les Civils !"
+              playersMin={4}
+              playersMax={12}
+              durationMins={15}
+              themeColor="purple"
+              accentHex="#9333EA"
+              illustration={<UndercoverIllustration />}
+              onClick={() => router.push("/setup/undercover")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
+            {/* Card 2: Loup-Garou (🔵 Blue) */}
+            <GameCard3D
+              title="LOUP-GAROU"
+              description="Le village se réveille... Démasquez les loups-garous avant qu'ils ne dévorent les innocents !"
+              playersMin={6}
+              playersMax={18}
+              durationMins={20}
+              themeColor="blue"
+              accentHex="#2563EB"
+              illustration={<WerewolfIllustration />}
+              onClick={() => router.push("/setup/werewolf")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
+            {/* Card 3: Blind Test (🟢 Green) */}
+            <GameCard3D
+              title="BLIND TEST"
+              description="Testez votre culture musicale ! Écoutez 30s d'extraits officiels et soyez le plus rapide !"
+              playersMin={2}
+              playersMax={20}
+              durationMins={15}
+              themeColor="green"
+              accentHex="#10B981"
+              illustration={<BlindTestIllustration />}
+              onClick={() => router.push("/setup/blind-test")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
+            {/* Card 4: Action ou Vérité (🟠 Orange) */}
+            <GameCard3D
+              title="ACTION OU VÉRITÉ"
+              description="Le jeu classique des secrets et des défis ! Vérité pimentée ou action osée !"
+              playersMin={2}
+              playersMax={20}
+              durationMins={20}
+              themeColor="orange"
+              accentHex="#F97316"
+              illustration={<TodIllustration />}
+              onClick={() => router.push("/setup/truth-or-dare")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+          </div>
+        </div>
+
+        {/* SECTION 2 : AUTRES JEUX */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-black text-foreground flex items-center gap-2">
+              Autres jeux
+            </h2>
+            <button 
+              onClick={() => router.push("/library")}
+              className="text-xs font-extrabold text-primary hover:text-primary/80 flex items-center gap-1"
+            >
+              Voir tout <ChevronRight size={16} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Card 5: Devine le Drapeau (🟡 Yellow) */}
+            <GameCard3D
+              title="DEVINE LE DRAPEAU"
+              description="Devinez le pays correspondant au drapeau affiché le plus vite possible !"
+              playersMin={2}
+              playersMax={20}
+              durationMins={15}
+              themeColor="yellow"
+              accentHex="#FACC15"
+              illustration={<FlagQuizIllustration />}
+              onClick={() => router.push("/setup/flag-quiz")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
+            {/* Card 6: Tu Préfères (❤️ Red) */}
+            <GameCard3D
+              title="TU PRÉFÈRES ?"
+              description="Tranchez des dilemmes absurdes et hilarants entre amis ! Option A ou Option B ?"
+              playersMin={2}
+              playersMax={20}
+              durationMins={15}
+              themeColor="red"
+              accentHex="#EF4444"
+              illustration={<TuPreferesIllustration />}
+              onClick={() => router.push("/setup/tu-preferes")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
+            {/* Card 7: Le Saboteur (🩵 Cyan) */}
+            <GameCard3D
+              title="LE SABOTEUR"
+              description="Réalisez les défis de la mission tout en découvrant qui fait rater le groupe !"
+              playersMin={3}
+              playersMax={10}
+              durationMins={20}
+              themeColor="cyan"
+              accentHex="#06B6D4"
+              illustration={<SaboteurIllustration />}
+              onClick={() => router.push("/setup/saboteur")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
+            {/* Card 8: Le Maître des Mots (🔷 Pink) */}
+            <GameCard3D
+              title="MAÎTRE DES MOTS"
+              description="Faites deviner le mot secret à votre équipe sans prononcer les 4 mots interdits !"
+              playersMin={2}
+              playersMax={12}
+              durationMins={15}
+              themeColor="pink"
+              accentHex="#EC4899"
+              illustration={<WordMasterIllustration />}
+              onClick={() => router.push("/setup/word-master")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+          </div>
+        </div>
+
+        {/* SECTION 3 : REPRENDRE UNE PARTIE */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-black text-foreground flex items-center gap-2">
+            Reprendre une partie
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Session 1 */}
+            <div className="p-5 rounded-3xl bg-surface/90 border border-purple-500/20 hover:border-purple-500/50 transition-all flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-xs font-black text-purple-400">Undercover</span>
+                <p className="text-xs text-foreground/50 font-bold">Soirée d'hier • 8/12 joueurs</p>
+                <button 
+                  onClick={() => router.push("/setup/undercover")}
+                  className="mt-2 text-xs font-black text-purple-300 bg-purple-500/20 px-3.5 py-1.5 rounded-full border border-purple-500/30 flex items-center gap-1 hover:bg-purple-500/30 transition-all"
+                >
+                  <RotateCcw size={12} /> Reprendre
+                </button>
+              </div>
+            </div>
+
+            {/* Session 2 */}
+            <div className="p-5 rounded-3xl bg-surface/90 border border-blue-500/20 hover:border-blue-500/50 transition-all flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-xs font-black text-blue-400">Loup-Garou</span>
+                <p className="text-xs text-foreground/50 font-bold">Vendredi soir • 10/18 joueurs</p>
+                <button 
+                  onClick={() => router.push("/setup/werewolf")}
+                  className="mt-2 text-xs font-black text-blue-300 bg-blue-500/20 px-3.5 py-1.5 rounded-full border border-blue-500/30 flex items-center gap-1 hover:bg-blue-500/30 transition-all"
+                >
+                  <RotateCcw size={12} /> Reprendre
+                </button>
+              </div>
+            </div>
+
+            {/* Session 3 */}
+            <div className="p-5 rounded-3xl bg-surface/90 border border-orange-500/20 hover:border-orange-500/50 transition-all flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <span className="text-xs font-black text-orange-400">Action ou Vérité</span>
+                <p className="text-xs text-foreground/50 font-bold">Soirée entre amis • 6/20 joueurs</p>
+                <button 
+                  onClick={() => router.push("/setup/truth-or-dare")}
+                  className="mt-2 text-xs font-black text-orange-300 bg-orange-500/20 px-3.5 py-1.5 rounded-full border border-orange-500/30 flex items-center gap-1 hover:bg-orange-500/30 transition-all"
+                >
+                  <RotateCcw size={12} /> Reprendre
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      {/* 4. MOBILE BOTTOM NAVIGATION BAR */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-surface/95 backdrop-blur-2xl border-t border-white/10 z-50 flex items-center justify-around px-2 shadow-2xl">
+        <button 
+          onClick={() => { setActiveTab("accueil"); sfxTap(); router.push("/"); }}
+          className={`flex flex-col items-center gap-1 ${activeTab === "accueil" ? "text-primary font-black" : "text-foreground/50 font-bold"}`}
+        >
+          <Home size={22} />
+          <span className="text-[10px]">Accueil</span>
+        </button>
+
+        <button 
+          onClick={() => { setActiveTab("jeux"); sfxTap(); router.push("/library"); }}
+          className={`flex flex-col items-center gap-1 ${activeTab === "jeux" ? "text-primary font-black" : "text-foreground/50 font-bold"}`}
+        >
+          <Grid size={22} />
+          <span className="text-[10px]">Jeux</span>
+        </button>
+
+        {/* Central Action Button */}
+        <button 
+          onClick={() => { sfxSuccess(); router.push("/setup/undercover"); }}
+          className="w-14 h-14 rounded-full bg-gradient-summer flex items-center justify-center text-white font-black text-2xl shadow-summer-glow -translate-y-4 border-4 border-[#0B0914]"
+        >
+          +
+        </button>
+
+        <button 
+          onClick={() => { setActiveTab("parties"); sfxTap(); }}
+          className={`flex flex-col items-center gap-1 ${activeTab === "parties" ? "text-primary font-black" : "text-foreground/50 font-bold"}`}
+        >
+          <Clock size={22} />
+          <span className="text-[10px]">Parties</span>
+        </button>
+
+        <button 
+          onClick={() => { sfxTap(); router.push("/profile"); }}
+          className="flex flex-col items-center gap-1 text-foreground/50 font-bold"
+        >
+          <User size={22} />
+          <span className="text-[10px]">Profil</span>
+        </button>
+      </nav>
+    </div>
   );
 }
