@@ -473,45 +473,102 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                    <span className="font-bold flex items-center gap-2">
+                  {/* Civils (Calculé automatiquement) */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
                       <span className="w-3 h-3 rounded-full bg-blue-400"></span> Civils
                     </span>
-                    <span className="font-extrabold text-blue-400 text-lg">
-                      {playerCount - undercoverCount - mrWhiteCount}
+                    <span className="font-extrabold text-blue-400 text-base">
+                      {Math.max(1, playerCount - undercoverCount - mrWhiteCount - jokerCount - cameleonCount - doubleAgentCount)}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                    <span className="font-bold flex items-center gap-2">
+                  {/* Undercover */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
                       <span className="w-3 h-3 rounded-full bg-red-500"></span> Undercover
                     </span>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       <button 
                         onClick={() => { setUndercoverCount(Math.max(0, undercoverCount - 1)); sfxTap(); }}
-                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
                       >-</button>
-                      <span className="font-extrabold text-red-500">{undercoverCount}</span>
+                      <span className="font-extrabold text-red-500 text-sm">{undercoverCount}</span>
                       <button 
-                        onClick={() => { setUndercoverCount(Math.min(playerCount - 2 - mrWhiteCount, undercoverCount + 1)); sfxTap(); }}
-                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                        onClick={() => { setUndercoverCount(undercoverCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
                       >+</button>
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
-                    <span className="font-bold flex items-center gap-2">
+                  {/* Mr. White */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
                       <span className="w-3 h-3 rounded-full bg-purple-400"></span> Mr. White
                     </span>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       <button 
                         onClick={() => { setMrWhiteCount(Math.max(0, mrWhiteCount - 1)); sfxTap(); }}
-                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
                       >-</button>
-                      <span className="font-extrabold text-purple-400">{mrWhiteCount}</span>
+                      <span className="font-extrabold text-purple-400 text-sm">{mrWhiteCount}</span>
                       <button 
-                        onClick={() => { setMrWhiteCount(Math.min(playerCount - 2 - undercoverCount, mrWhiteCount + 1)); sfxTap(); }}
-                        className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center font-bold"
+                        onClick={() => { setMrWhiteCount(mrWhiteCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >+</button>
+                    </div>
+                  </div>
+
+                  {/* Le Joker */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
+                      <span className="w-3 h-3 rounded-full bg-amber-400"></span> 🃏 Le Joker
+                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <button 
+                        onClick={() => { setJokerCount(Math.max(0, jokerCount - 1)); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >-</button>
+                      <span className="font-extrabold text-amber-400 text-sm">{jokerCount}</span>
+                      <button 
+                        onClick={() => { setJokerCount(jokerCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >+</button>
+                    </div>
+                  </div>
+
+                  {/* Le Caméléon */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
+                      <span className="w-3 h-3 rounded-full bg-cyan-400"></span> 🪞 Caméléon
+                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <button 
+                        onClick={() => { setCameleonCount(Math.max(0, cameleonCount - 1)); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >-</button>
+                      <span className="font-extrabold text-cyan-400 text-sm">{cameleonCount}</span>
+                      <button 
+                        onClick={() => { setCameleonCount(cameleonCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >+</button>
+                    </div>
+                  </div>
+
+                  {/* Double Agent */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
+                      <span className="w-3 h-3 rounded-full bg-pink-400"></span> 💣 Double-Agent
+                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <button 
+                        onClick={() => { setDoubleAgentCount(Math.max(0, doubleAgentCount - 1)); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >-</button>
+                      <span className="font-extrabold text-pink-400 text-sm">{doubleAgentCount}</span>
+                      <button 
+                        onClick={() => { setDoubleAgentCount(doubleAgentCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
                       >+</button>
                     </div>
                   </div>

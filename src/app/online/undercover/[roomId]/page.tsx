@@ -31,6 +31,9 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
   const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(["Toutes les catégories"]);
   const [undercoverCount, setUndercoverCount] = useState<number>(1);
   const [includeMrWhite, setIncludeMrWhite] = useState<boolean>(false);
+  const [jokerCount, setJokerCount] = useState<number>(0);
+  const [cameleonCount, setCameleonCount] = useState<number>(0);
+  const [doubleAgentCount, setDoubleAgentCount] = useState<number>(0);
   const [turnTimerSec, setTurnTimerSec] = useState<number>(30);
   const [hideCategory, setHideCategory] = useState<boolean>(false);
   const [revealRoleOnElimination, setRevealRoleOnElimination] = useState<boolean>(true);
@@ -120,7 +123,7 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
     const mrWhiteCount = includeMrWhite ? 1 : 0;
     const roles = isMysteryMode 
       ? generateMysteryRoles(totalCount)
-      : generateRolesFromConfig(totalCount, undercoverCount, mrWhiteCount);
+      : generateRolesFromConfigExtended(totalCount, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
 
     // Choix du mot (Multi-catégories)
     const wordPair = getRandomWordPair(selectedCategories);
@@ -277,6 +280,39 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
                 className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${includeMrWhite ? 'bg-purple-500/20 text-purple-400 border-purple-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
               >
                 {includeMrWhite ? "Activé 🤍" : "Désactivé"}
+              </button>
+            </div>
+
+            {/* Toggle Joker */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold">Inclure 🃏 Le Joker</span>
+              <button
+                onClick={() => setJokerCount(jokerCount > 0 ? 0 : 1)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${jokerCount > 0 ? 'bg-amber-500/20 text-amber-400 border-amber-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
+              >
+                {jokerCount > 0 ? "Activé 🃏" : "Désactivé"}
+              </button>
+            </div>
+
+            {/* Toggle Caméléon */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold">Inclure 🪞 Caméléon</span>
+              <button
+                onClick={() => setCameleonCount(cameleonCount > 0 ? 0 : 1)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${cameleonCount > 0 ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
+              >
+                {cameleonCount > 0 ? "Activé 🪞" : "Désactivé"}
+              </button>
+            </div>
+
+            {/* Toggle Double Agent */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold">Inclure 💣 Double-Agent</span>
+              <button
+                onClick={() => setDoubleAgentCount(doubleAgentCount > 0 ? 0 : 1)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${doubleAgentCount > 0 ? 'bg-pink-500/20 text-pink-400 border-pink-500/40' : 'bg-white/5 border-white/10 text-foreground/40'}`}
+              >
+                {doubleAgentCount > 0 ? "Activé 💣" : "Désactivé"}
               </button>
             </div>
 
