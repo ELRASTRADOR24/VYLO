@@ -136,7 +136,7 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
       else if (role === "MrWhite") word = "Mr. White";
-      else if (role === "Joker") word = "🃏 Le Joker (Votre but : faites-vous éliminer au vote !)";
+      else if (role === "Joker") word = "🃏 Le Joker (Votre but : faites-vous éliminer au TOUT PREMIER VOTE du Tour 1 pour GAGNER !)";
       else if (role === "Cameleon") word = "🪞 Le Caméléon (Copiez la description du 1er joueur !)";
       else if (role === "DoubleAgent") word = `${wordPair.civilian} (💣 Double-Agent : emporte 1 joueur à sa mort)`;
 

@@ -154,7 +154,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
       else if (role === "MrWhite") word = "Vous êtes Mr. White";
-      else if (role === "Joker") word = "🃏 Vous êtes le JOKER ! Faites-vous éliminer par le village pour GAGNER !";
+      else if (role === "Joker") word = "🃏 Vous êtes le JOKER ! Faites-vous éliminer au TOUT PREMIER VOTE (Tour 1) pour GAGNER !";
       else if (role === "Cameleon") word = "🪞 Vous êtes le CAMÉLÉON ! Copiez la description du 1er joueur !";
       else if (role === "DoubleAgent") word = `${wordPair.civilian} (💣 DOUBLE-AGENT : si vous mourez au vote, vous éliminez 1 joueur avec vous !)`;
 
@@ -294,8 +294,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const updatedList = speakingOrder.map(p => 
       p.id === eliminated.id ? { ...p, isEliminated: true } : p
     );
-    // Si le joueur éliminé au vote est le JOKER -> Victoire immédiate du Joker !
-    if (eliminated.gameRole === "Joker") {
+    // Le Joker gagne UNIQUEMENT s'il se fait éliminer au TOUT PREMIER VOTE (Tour 1) !
+    if (eliminated.gameRole === "Joker" && clueRoundNumber === 1) {
       sfxVictory();
       setWinnerTeam("JOKER" as any);
       incrementStat("gamesPlayed");
