@@ -87,11 +87,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${outfit.variable} h-full antialiased`}>
+    <html lang="fr" className={`${outfit.variable} min-h-screen antialiased`}>
       <head>
         <GoogleStructuredData />
       </head>
-      <body className="min-h-full flex flex-col relative">
+      <body className="min-h-screen flex flex-col relative overflow-x-hidden overflow-y-auto">
         <BetaBanner />
         <HeaderNavbar />
         {children}

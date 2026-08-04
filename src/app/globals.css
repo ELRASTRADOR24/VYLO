@@ -47,11 +47,11 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   overflow-x: hidden;
-  touch-action: manipulation;
-  user-select: none;
-  contain: layout style;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -62,6 +62,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Arrière-plan Ambient Vivant avec Couleurs Chaudes & Isolation GPU */
