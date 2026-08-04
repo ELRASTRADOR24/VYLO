@@ -7,6 +7,25 @@ import { ChevronLeft, Smartphone, Globe, QrCode, ArrowRight, Sparkles } from "lu
 import { useRouter } from "next/navigation";
 import { getGameConfig } from "@/games";
 import { sfxTap, sfxSuccess } from "@/lib/audio";
+import { LivingBackground } from "@/components/ui/LivingBackground";
+import { 
+  UndercoverIllustration, WerewolfIllustration, BlindTestIllustration, 
+  TodIllustration, FlagQuizIllustration, TuPreferesIllustration, SaboteurIllustration, 
+  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration 
+} from "@/components/illustrations/GameIllustrations";
+
+const GAME_ART_MAP: Record<string, { themeColor: string; hex: string; illustration: React.ReactNode }> = {
+  "undercover": { themeColor: "purple", hex: "#9333EA", illustration: <UndercoverIllustration className="w-full h-44" /> },
+  "werewolf": { themeColor: "blue", hex: "#2563EB", illustration: <WerewolfIllustration className="w-full h-44" /> },
+  "blind-test": { themeColor: "green", hex: "#10B981", illustration: <BlindTestIllustration className="w-full h-44" /> },
+  "truth-or-dare": { themeColor: "orange", hex: "#F97316", illustration: <TodIllustration className="w-full h-44" /> },
+  "flag-quiz": { themeColor: "yellow", hex: "#FACC15", illustration: <FlagQuizIllustration className="w-full h-44" /> },
+  "tu-preferes": { themeColor: "red", hex: "#EF4444", illustration: <TuPreferesIllustration className="w-full h-44" /> },
+  "saboteur": { themeColor: "cyan", hex: "#06B6D4", illustration: <SaboteurIllustration className="w-full h-44" /> },
+  "word-master": { themeColor: "pink", hex: "#EC4899", illustration: <WordMasterIllustration className="w-full h-44" /> },
+  "punchlines": { themeColor: "purple", hex: "#8B5CF6", illustration: <PunchlinesIllustration className="w-full h-44" /> },
+  "vylo-party": { themeColor: "pink", hex: "#EC4899", illustration: <VyloPartyIllustration className="w-full h-44" /> },
+};
 
 export default function GameSetup({ params }: { params: Promise<{ gameId: string }> }) {
   const { gameId } = use(params);
@@ -14,7 +33,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
   const gameConfig = getGameConfig(gameId);
 
   const roomCode = Math.floor(100000 + Math.random() * 900000).toString();
-  const isOnlineSupported = true; // Tous les jeux sont désormais supportés en ligne !
+  const art = GAME_ART_MAP[gameId] || { themeColor: "purple", hex: "#9333EA", illustration: <UndercoverIllustration className="w-full h-44" /> };
 
   const handleChooseLocal = () => {
     sfxSuccess();
@@ -39,8 +58,10 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
 
   return (
     <main className="min-h-screen flex flex-col items-center px-4 md:px-8 pt-6 pb-32 max-w-md md:max-w-4xl mx-auto relative">
+      <LivingBackground accentColor={art.hex} />
+
       {/* Navigation Header */}
-      <div className="w-full flex items-center justify-between mb-6">
+      <div className="w-full flex items-center justify-between mb-6 z-10">
         <button 
           onClick={() => {
             sfxTap();
@@ -61,7 +82,12 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         <div className="w-16" />
       </div>
 
-      <div className="w-full flex flex-col gap-4">
+      {/* Aperçu Carte Tarot Vector */}
+      <div className="w-full max-w-sm mb-6 z-10">
+        {art.illustration}
+      </div>
+
+      <div className="w-full flex flex-col gap-4 z-10">
         <div className="w-full flex flex-col text-center mb-2">
           <h1 className="text-3xl font-black text-foreground">
             Choisissez le mode de jeu
@@ -94,25 +120,16 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         {/* MODE EN LIGNE */}
         <Card 
           onClick={handleChooseOnlineCreate}
-          className={`p-6 cursor-pointer border transition-all flex items-center justify-between group active-press bg-surface/90 ${
-            isOnlineSupported ? 'border-white/10 hover:border-cyan-500/50' : 'border-white/5 opacity-80'
-          }`}
+          className="p-6 cursor-pointer border border-white/10 hover:border-cyan-500/50 transition-all flex items-center justify-between group active-press bg-surface/90"
         >
           <div className="flex items-center gap-4">
-            <div className={`w-14 h-14 rounded-2xl border flex items-center justify-center font-black ${
-              isOnlineSupported ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400' : 'bg-white/5 border-white/10 text-foreground/40'
-            }`}>
+            <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center font-black">
               <Globe size={28} />
             </div>
             <div className="flex flex-col text-left">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-black text-cyan-400 uppercase tracking-wider">Multijoueur Web</span>
-                {!isOnlineSupported && (
-                  <span className="text-[10px] font-black uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <Sparkles size={10} /> Bientôt en Ligne
-                  </span>
-                )}
-                <VBubble title="Multijoueur Web" description="Chaque joueur se connecte sur son propre téléphone en scannant le QR code du salon." />
+                <VBubble title="Multijoueur En Ligne" description="Chaque joueur rejoint la partie sur son propre téléphone en saisissant le code à 6 chiffres." />
               </div>
               <h3 className="text-xl font-black text-foreground group-hover:text-cyan-400 transition-colors">Chacun son Téléphone</h3>
             </div>
@@ -120,22 +137,14 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
           <ArrowRight className="text-foreground/40 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" size={24} />
         </Card>
 
-        {/* REJOINDRER UN SALON */}
-        <Card 
+        {/* REJOINDRE AVEC UN CODE */}
+        <button
           onClick={handleChooseOnlineJoin}
-          className="p-6 cursor-pointer border border-white/10 hover:border-purple-500/50 transition-all flex items-center justify-between group active-press bg-surface/90"
+          className="w-full p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/30 text-xs font-black text-foreground/70 hover:text-foreground flex items-center justify-center gap-2 transition-all active-press mt-2"
         >
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 flex items-center justify-center font-black">
-              <QrCode size={28} />
-            </div>
-            <div className="flex flex-col text-left">
-              <span className="text-xs font-black text-purple-400 uppercase tracking-wider">Rejoindre</span>
-              <h3 className="text-xl font-black text-foreground group-hover:text-purple-400 transition-colors">Entrer un Code / QR Code</h3>
-            </div>
-          </div>
-          <ArrowRight className="text-foreground/40 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" size={24} />
-        </Card>
+          <QrCode size={16} />
+          Vous avez déjà un code ? Rejoindre un salon
+        </button>
       </div>
     </main>
   );
