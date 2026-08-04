@@ -16,7 +16,7 @@ export interface TrackItem {
 
 export interface BlindTestQuestion {
   track: TrackItem;
-  choices: string[]; // 4 choix affichant CLAIREMENT le titre de la chanson en premier !
+  choices: { trackName: string; artistName: string }[];
   correctChoiceIndex: number;
 }
 
@@ -39,56 +39,56 @@ export const CATEGORY_ARTISTS: Record<BlindTestCategory, string[]> = {
   ]
 };
 
-// Vrais titres de chansons célèbres par catégorie pour créer des leurres ultra-crédibles
-export const CATEGORY_WRONG_TITLES: Record<BlindTestCategory, { title: string; artist: string }[]> = {
+// Leurres crédibles de la MÊME catégorie avec vrais artistes et vraies chansons correspondantes !
+export const CATEGORY_WRONG_TITLES: Record<BlindTestCategory, { trackName: string; artistName: string }[]> = {
   "Tous": [
-    { title: "Meuda", artist: "Tiakola" },
-    { title: "Réseaux", artist: "Niska" },
-    { title: "Canoë", artist: "Ninho" },
-    { title: "Hakuna Matata", artist: "Le Roi Lion" },
-    { title: "Despacito", artist: "Luis Fonsi" },
-    { title: "Blinding Lights", artist: "The Weeknd" },
-    { title: "Libérée, Délivrée", artist: "La Reine des Neiges" },
-    { title: "Ce rêve bleu", artist: "Aladdin" }
+    { trackName: "Meuda", artistName: "Tiakola" },
+    { trackName: "Réseaux", artistName: "Niska" },
+    { trackName: "Canoë", artistName: "Ninho" },
+    { trackName: "Hakuna Matata", artistName: "Le Roi Lion" },
+    { trackName: "Despacito", artistName: "Luis Fonsi" },
+    { trackName: "Blinding Lights", artistName: "The Weeknd" },
+    { trackName: "Libérée, Délivrée", artistName: "La Reine des Neiges" },
+    { trackName: "Ce rêve bleu", artistName: "Aladdin" }
   ],
   "Hits & Rap Français": [
-    { title: "Meuda", artist: "Tiakola" },
-    { title: "Réseaux", artist: "Niska" },
-    { title: "Canoë", artist: "Ninho" },
-    { title: "Bande Organisée", artist: "Jul" },
-    { title: "Djadja", artist: "Aya Nakamura" },
-    { title: "Bolide Germanique", artist: "SDM" },
-    { title: "Midi dans le ghetto", artist: "Gazo" },
-    { title: "Chocolat", artist: "Keblack" }
+    { trackName: "Meuda", artistName: "Tiakola" },
+    { trackName: "Réseaux", artistName: "Niska" },
+    { trackName: "Canoë", artistName: "Ninho" },
+    { trackName: "Bande Organisée", artistName: "Jul" },
+    { trackName: "Djadja", artistName: "Aya Nakamura" },
+    { trackName: "Bolide Germanique", artistName: "SDM" },
+    { trackName: "Midi dans le ghetto", artistName: "Gazo" },
+    { trackName: "Chocolat", artistName: "Keblack" }
   ],
   "Musique Espagnole & Latino": [
-    { title: "Despacito", artist: "Luis Fonsi" },
-    { title: "Dakiti", artist: "Bad Bunny" },
-    { title: "Con Calma", artist: "Daddy Yankee" },
-    { title: "Pepas", artist: "Farruko" },
-    { title: "Mi Gente", artist: "J Balvin" },
-    { title: "Bailando", artist: "Enrique Iglesias" },
-    { title: "Provenza", artist: "Karol G" },
-    { title: "Gasolina", artist: "Daddy Yankee" }
+    { trackName: "Despacito", artistName: "Luis Fonsi" },
+    { trackName: "Dakiti", artistName: "Bad Bunny" },
+    { trackName: "Con Calma", artistName: "Daddy Yankee" },
+    { trackName: "Pepas", artistName: "Farruko" },
+    { trackName: "Mi Gente", artistName: "J Balvin" },
+    { trackName: "Bailando", artistName: "Enrique Iglesias" },
+    { trackName: "Provenza", artistName: "Karol G" },
+    { trackName: "Gasolina", artistName: "Daddy Yankee" }
   ],
   "Pop International": [
-    { title: "Blinding Lights", artist: "The Weeknd" },
-    { title: "Levitating", artist: "Dua Lipa" },
-    { title: "God's Plan", artist: "Drake" },
-    { title: "Umbrella", artist: "Rihanna" },
-    { title: "Uptown Funk", artist: "Bruno Mars" },
-    { title: "Shape of You", artist: "Ed Sheeran" },
-    { title: "Starboy", artist: "The Weeknd" }
+    { trackName: "Blinding Lights", artistName: "The Weeknd" },
+    { trackName: "Levitating", artistName: "Dua Lipa" },
+    { trackName: "God's Plan", artistName: "Drake" },
+    { trackName: "Umbrella", artistName: "Rihanna" },
+    { trackName: "Uptown Funk", artistName: "Bruno Mars" },
+    { trackName: "Shape of You", artistName: "Ed Sheeran" },
+    { trackName: "Starboy", artistName: "The Weeknd" }
   ],
   "Films & Dessins Animés": [
-    { title: "Hakuna Matata", artist: "Le Roi Lion" },
-    { title: "Libérée, Délivrée", artist: "La Reine des Neiges" },
-    { title: "Ce rêve bleu", artist: "Aladdin" },
-    { title: "L'histoire de la vie", artist: "Le Roi Lion" },
-    { title: "Ne parlons pas de Bruno", artist: "Encanto" },
-    { title: "Comme un homme", artist: "Mulan" },
-    { title: "Le bleu du ciel", artist: "Vaiana" },
-    { title: "Je voudrais déjà être roi", artist: "Le Roi Lion" }
+    { trackName: "Hakuna Matata", artistName: "Le Roi Lion" },
+    { trackName: "Libérée, Délivrée", artistName: "La Reine des Neiges" },
+    { trackName: "Ce rêve bleu", artistName: "Aladdin" },
+    { trackName: "L'histoire de la vie", artistName: "Le Roi Lion" },
+    { trackName: "Ne parlons pas de Bruno", artistName: "Encanto" },
+    { trackName: "Comme un homme", artistName: "Mulan" },
+    { trackName: "Le bleu du ciel", artistName: "Vaiana" },
+    { trackName: "Je voudrais déjà être roi", artistName: "Le Roi Lion" }
   ]
 };
 
@@ -122,7 +122,6 @@ const usedTrackIdsHistory = new Set<string>();
 /** Nettoie le nom de l'artiste s'il est trop long ou contient des virgules multiples */
 function cleanArtistName(rawArtist: string): string {
   if (!rawArtist) return "Artiste";
-  // Si c'est une liste de comédiens/artistes très longue ("Jamel Debbouze, Alban Ivanov..."), garder le premier principal
   const parts = rawArtist.split(",");
   if (parts.length > 2) {
     return parts[0].trim();
@@ -160,12 +159,7 @@ export async function fetchTrackFromiTunes(searchQuery: string, category: BlindT
   }
 }
 
-/** Formatage standardisé d'un choix : Le Titre de la Chanson en PREMIER ! */
-function formatChoiceText(title: string, artist: string): string {
-  return `${title} — ${artist}`;
-}
-
-/** Génère une question complète de Blind Test avec le TITRE DE LA CHANSON TOUJOURS CLAIREMENT VISIBLE */
+/** Génère une question de Blind Test avec des paires { trackName, artistName } 100% Cohérentes ! */
 export async function generateBlindTestQuestion(category: BlindTestCategory = "Tous"): Promise<BlindTestQuestion> {
   const artistsList = CATEGORY_ARTISTS[category] || CATEGORY_ARTISTS["Tous"];
   const wrongPool = CATEGORY_WRONG_TITLES[category] || CATEGORY_WRONG_TITLES["Tous"];
@@ -180,48 +174,41 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
 
   usedTrackIdsHistory.add(track.id);
 
-  // Vraie réponse (TITRE EN PREMIER !)
-  const correctAnswer = formatChoiceText(track.trackName, track.artistName);
-  
-  // Leurres crédibles avec vrais titres de chansons de la même catégorie
-  const availableWrong = wrongPool.filter(w => w.title.toLowerCase() !== track?.trackName.toLowerCase());
+  // Vraie réponse
+  const correctChoice = {
+    trackName: track.trackName,
+    artistName: track.artistName
+  };
+
+  // Leurres crédibles avec de VRAIES paires { trackName, artistName } de la même catégorie !
+  const availableWrong = wrongPool.filter(w => w.trackName.toLowerCase() !== track?.trackName.toLowerCase());
   const shuffledWrong = [...availableWrong].sort(() => 0.5 - Math.random());
-  
-  const choicesSet = new Set<string>();
-  choicesSet.add(correctAnswer);
 
-  // 1. Même artiste, mais autre titre célèbre
-  if (shuffledWrong.length > 0) {
-    choicesSet.add(formatChoiceText(shuffledWrong[0].title, track.artistName));
-  }
+  const choicesList: { trackName: string; artistName: string }[] = [correctChoice];
 
-  // 2. Autre titre célèbre avec son propre artiste
-  if (shuffledWrong.length > 1) {
-    choicesSet.add(formatChoiceText(shuffledWrong[1].title, shuffledWrong[1].artist));
-  }
-
-  // 3. Autre titre célèbre
-  if (shuffledWrong.length > 2) {
-    choicesSet.add(formatChoiceText(shuffledWrong[2].title, shuffledWrong[2].artist));
-  }
-
-  // Compléter à 4 choix uniques si besoin
-  let fallbackIndex = 0;
-  while (choicesSet.size < 4 && fallbackIndex < wrongPool.length) {
-    const item = wrongPool[fallbackIndex];
-    const candidate = formatChoiceText(item.title, item.artist);
-    if (!choicesSet.has(candidate)) {
-      choicesSet.add(candidate);
+  for (const wrongItem of shuffledWrong) {
+    if (choicesList.length >= 4) break;
+    const exists = choicesList.some(c => c.trackName.toLowerCase() === wrongItem.trackName.toLowerCase());
+    if (!exists) {
+      choicesList.push(wrongItem);
     }
-    fallbackIndex++;
   }
 
-  const allChoices = Array.from(choicesSet).sort(() => 0.5 - Math.random());
-  const correctChoiceIndex = allChoices.indexOf(correctAnswer);
+  // Compléter à 4 si besoin
+  while (choicesList.length < 4) {
+    const dummy = { trackName: `Titre ${choicesList.length + 1}`, artistName: track.artistName };
+    choicesList.push(dummy);
+  }
+
+  // Mélange aléatoire des 4 choix
+  const shuffledChoices = [...choicesList].sort(() => 0.5 - Math.random());
+  const correctChoiceIndex = shuffledChoices.findIndex(
+    c => c.trackName === correctChoice.trackName && c.artistName === correctChoice.artistName
+  );
 
   return {
     track,
-    choices: allChoices,
+    choices: shuffledChoices,
     correctChoiceIndex
   };
 }

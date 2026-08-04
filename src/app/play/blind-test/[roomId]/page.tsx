@@ -409,16 +409,12 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
         )}
       </div>
 
-      {/* Choix de Réponses Style Kahoot 3D (Leurres Réalistes) */}
+      {/* Choix de Réponses Style Kahoot 3D (Leurres Réalistes & Cohérents) */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
         {currentQuestion?.choices.map((choice, idx) => {
           const variant = KAHOOT_BUTTON_VARIANTS[idx % 4];
           const isSelected = selectedChoiceIdx === idx;
           const isCorrect = phase === "REVEAL" && idx === currentQuestion.correctChoiceIndex;
-
-          const parts = choice.split(" — ");
-          const songTitle = parts[0];
-          const artistName = parts[1] || "";
 
           return (
             <Button
@@ -432,13 +428,11 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
             >
               <div className="flex flex-col text-left overflow-hidden pr-2">
                 <span className="text-sm md:text-base font-black text-white truncate block">
-                  {songTitle}
+                  {choice.trackName}
                 </span>
-                {artistName && (
-                  <span className="text-[11px] font-bold text-white/80 truncate block mt-0.5">
-                    {artistName}
-                  </span>
-                )}
+                <span className="text-[11px] font-bold text-white/80 truncate block mt-0.5">
+                  {choice.artistName}
+                </span>
               </div>
               {phase === "REVEAL" && isCorrect && <Check size={22} className="text-white shrink-0 ml-2" />}
             </Button>
