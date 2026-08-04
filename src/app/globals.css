@@ -40,7 +40,7 @@
 }
 
 /* ======================================
-   GPU & FLUIDITÉ MOBILE NATIVE
+   GPU & FLUIDITÉ MOBILE NATIVE (Samsung S3 Compatible)
    ====================================== */
 * {
   -webkit-tap-highlight-color: transparent;
@@ -51,6 +51,7 @@ html, body {
   overflow-x: hidden;
   touch-action: manipulation;
   user-select: none;
+  contain: layout style;
 }
 
 body {
@@ -63,7 +64,7 @@ body {
   position: relative;
 }
 
-/* Arrière-plan Ambient Vivant avec Couleurs Chaudes */
+/* Arrière-plan Ambient Vivant avec Couleurs Chaudes & Isolation GPU */
 body::before {
   content: "";
   position: fixed;
@@ -76,7 +77,20 @@ body::before {
     radial-gradient(ellipse at 50% 80%, rgba(19, 104, 206, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 70%, rgba(216, 158, 0, 0.08) 0%, transparent 40%);
   transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
   pointer-events: none;
+}
+
+/* Allègement des filtres flous lourds sur mobiles peu puissants */
+@media (max-width: 768px) {
+  .backdrop-blur-2xl,
+  .backdrop-blur-md,
+  .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(22, 25, 51, 0.96) !important;
+  }
 }
 
 /* ======================================

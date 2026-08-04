@@ -28,14 +28,17 @@ export function LivingBackground({ accentColor = "#9333EA" }: LivingBackgroundPr
 
     window.addEventListener("resize", handleResize);
 
-    // Particules flottantes lumineuses
-    const particles = Array.from({ length: 35 }).map(() => ({
+    // Particules flottantes lumineuses (adaptées à la puissance de l'appareil)
+    const isMobile = width < 768;
+    const particleCount = isMobile ? 12 : 30;
+
+    const particles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
       radius: Math.random() * 2 + 1,
       alpha: Math.random() * 0.5 + 0.1,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: -Math.random() * 0.5 - 0.2,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: -Math.random() * 0.4 - 0.2,
     }));
 
     let pulse = 0;
