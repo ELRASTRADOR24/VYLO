@@ -68,6 +68,34 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
     return () => clearInterval(timer);
   }, [roomState?.state, timeLeftSec]);
 
+  // Lecture de l'extrait audio lors du changement de question
+  useEffect(() => {
+    const previewUrl = roomState?.gameData?.currentQuestion?.track?.previewUrl;
+    if (roomState?.state === "PLAYING" && previewUrl && audioRef.current) {
+      audioRef.current.src = previewUrl;
+      audioRef.current.load();
+      audioRef.current.play().then(() => {
+        setIsPlayingAudio(true);
+      }).catch((err) => {
+        console.warn("Autoplay audio bloqué par le navigateur:", err);
+        setIsPlayingAudio(false);
+      });
+    } else if (roomState?.state === "REVEAL" && audioRef.current) {
+      audioRef.current.pause();
+      setIsPlayingAudio(false);
+    }
+  }, [roomState?.state, roomState?.gameData?.currentQuestion?.track?.previewUrl]);
+
+  const toggleManualAudioPlay = () => {
+    if (!audioRef.current) return;
+    if (audioRef.current.paused) {
+      audioRef.current.play().then(() => setIsPlayingAudio(true)).catch(console.error);
+    } else {
+      audioRef.current.pause();
+      setIsPlayingAudio(false);
+    }
+  };
+
   const isHost = roomState?.players?.find((p) => p.id === socket?.id)?.isHost || false;
   const gameData = roomState?.gameData || {};
   const currentQuestion: BlindTestQuestion | undefined = gameData.currentQuestion;
@@ -278,11 +306,28 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
         </div>
       </div>
 
-      {/* Visuel Extrait Musical */}
+      {/* Visuel Extrait Musical & Contrôle Tactile */}
       <div className="w-full flex flex-col items-center my-auto z-10">
-        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 border-4 border-emerald-500/50 flex items-center justify-center shadow-2xl mb-4 animate-spin duration-[4000ms]">
-          <Disc size={44} className="text-emerald-400" />
-        </div>
+        <button 
+          onClick={toggleManualAudioPlay}
+          className={`w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 border-4 border-emerald-500/50 flex flex-col items-center justify-center shadow-2xl mb-4 transition-transform active:scale-95 cursor-pointer ${
+            isPlayingAudio ? 'animate-spin duration-[4000ms]' : ''
+          }`}
+        >
+          <Disc size={44} className="text-emerald-400 mb-1" />
+          <span className="text-[10px] font-black uppercase text-emerald-300">
+            {isPlayingAudio ? "En lecture..." : "▶ Ecouter"}
+          </span>
+        </button>
+
+        {!isPlayingAudio && roomState.state === "PLAYING" && (
+          <button 
+            onClick={toggleManualAudioPlay}
+            className="mb-4 text-xs font-black text-emerald-300 bg-emerald-500/20 px-4 py-2 rounded-full border border-emerald-500/30 flex items-center gap-1.5 animate-pulse"
+          >
+            🔊 Cliquez pour lancer l'extrait audio
+          </button>
+        )}
 
         {roomState.state === "REVEAL" && currentQuestion && (
           <div className="bg-surface/90 border-2 border-emerald-500/50 p-5 rounded-3xl w-full max-w-sm mb-4 animate-bounce-in">

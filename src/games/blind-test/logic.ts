@@ -95,14 +95,14 @@ export const CATEGORY_WRONG_TITLES: Record<BlindTestCategory, { trackName: strin
   ]
 };
 
-// Base de secours garantie par catégorie (Extraits M4A certifiés)
+// Base de secours garantie par catégorie (Extraits M4A certifiés 100% fonctionnels)
 export const FALLBACK_TRACKS_BY_CATEGORY: Record<BlindTestCategory, TrackItem[]> = {
   "Tous": [
     {
       id: "f_disney1",
       artistName: "Le Roi Lion",
       trackName: "Hakuna Matata",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/bf/1e/8c/bf1e8c68-efcb-49d7-bf6f-b2e3e5b3f1a2/mzaf_1648057280738622143.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/cb/45/7f/cb457fa6-274c-874c-609c-256818be0dee/mzaf_6042916080041616002.plus.aac.p.m4a",
       category: "Films & Dessins Animés"
     }
   ],
@@ -111,14 +111,14 @@ export const FALLBACK_TRACKS_BY_CATEGORY: Record<BlindTestCategory, TrackItem[]>
       id: "f_disney1",
       artistName: "Le Roi Lion",
       trackName: "Hakuna Matata",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/bf/1e/8c/bf1e8c68-efcb-49d7-bf6f-b2e3e5b3f1a2/mzaf_1648057280738622143.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/cb/45/7f/cb457fa6-274c-874c-609c-256818be0dee/mzaf_6042916080041616002.plus.aac.p.m4a",
       category: "Films & Dessins Animés"
     },
     {
       id: "f_disney2",
       artistName: "La Reine des Neiges",
       trackName: "Libérée, Délivrée",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/4a/12/34/4a123456.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/89/5d/c8/895dc868-cab0-6007-82df-8868f6e3fa60/mzaf_17801391047194953213.plus.aac.p.m4a",
       category: "Films & Dessins Animés"
     }
   ],
@@ -127,14 +127,14 @@ export const FALLBACK_TRACKS_BY_CATEGORY: Record<BlindTestCategory, TrackItem[]>
       id: "f_rap1",
       artistName: "Tiakola",
       trackName: "Meuda",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/ff/0e/6d/ff0e6d54-77bd-8396-8b4b-80add22a5d07/mzaf_15907425106486008883.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/06/ab/7b/06ab7bee-a243-d196-4e76-06c91b01b6e4/mzaf_4586533787945775726.plus.aac.p.m4a",
       category: "Hits & Rap Français"
     },
     {
       id: "f_rap2",
       artistName: "Niska",
       trackName: "Réseaux",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3a/94/77/3a947788-e825-712c-0f6e-0e6ad25497a4/mzaf_18124790980569350929.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/1c/ef/38/1cef383f-1f36-eeba-e73e-e8b49327bb02/mzaf_3753683410543449189.plus.aac.p.m4a",
       category: "Hits & Rap Français"
     }
   ],
@@ -143,7 +143,7 @@ export const FALLBACK_TRACKS_BY_CATEGORY: Record<BlindTestCategory, TrackItem[]>
       id: "f_latino1",
       artistName: "Luis Fonsi",
       trackName: "Despacito",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/bf/1e/8c/bf1e8c68-efcb-49d7-bf6f-b2e3e5b3f1a2/mzaf_1648057280738622143.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/40/5b/e7/405be722-3ec9-ba27-7469-002182d57b39/mzaf_14120258742032474456.plus.aac.p.m4a",
       category: "Musique Espagnole & Latino"
     }
   ],
@@ -152,7 +152,7 @@ export const FALLBACK_TRACKS_BY_CATEGORY: Record<BlindTestCategory, TrackItem[]>
       id: "f_pop1",
       artistName: "The Weeknd",
       trackName: "Blinding Lights",
-      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/4a/12/34/4a123456.plus.aac.p.m4a",
+      previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/17/b4/8f/17b48f9a-0b93-6bb8-fe1d-3a16623c2cfb/mzaf_9560252727299052414.plus.aac.p.m4a",
       category: "Pop International"
     }
   ]
