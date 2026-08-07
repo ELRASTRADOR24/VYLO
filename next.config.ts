@@ -7,8 +7,10 @@ const withPWA = withPWAInit({
 });
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  compress: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
 };
 
 export default withPWA(nextConfig);

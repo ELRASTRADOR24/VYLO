@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
@@ -9,8 +10,9 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sfxTap } from "@/lib/audio";
-import { ProfileModal } from "@/components/ui/ProfileModal";
-import { AuthModal } from "@/components/ui/AuthModal";
+
+const ProfileModal = dynamic(() => import("@/components/ui/ProfileModal").then(mod => mod.ProfileModal), { ssr: false });
+const AuthModal = dynamic(() => import("@/components/ui/AuthModal").then(mod => mod.AuthModal), { ssr: false });
 
 export function HeaderNavbar() {
   const pathname = usePathname();
