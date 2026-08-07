@@ -56,6 +56,7 @@ export function HeaderNavbar() {
                 <Link
                   key={href}
                   href={href}
+                  prefetch={true}
                   onClick={() => sfxTap()}
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-black transition-all whitespace-nowrap",

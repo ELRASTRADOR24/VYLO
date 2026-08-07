@@ -6,7 +6,7 @@ interface LivingBackgroundProps {
   accentColor?: string; // Couleur néon dynamique (ex: #9333EA, #2563EB, #10B981, #F97316)
 }
 
-export function LivingBackground({ accentColor = "#9333EA" }: LivingBackgroundProps) {
+export const LivingBackground = React.memo(function LivingBackground({ accentColor = "#9333EA" }: LivingBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -98,4 +98,4 @@ export function LivingBackground({ accentColor = "#9333EA" }: LivingBackgroundPr
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
     </div>
   );
-}
+});
