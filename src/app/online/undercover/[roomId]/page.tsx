@@ -237,7 +237,7 @@ export default function OnlineUndercoverGame({ params }: { params: Promise<{ roo
                       key={cat}
                       type="button"
                       onClick={() => handleToggleCategory(cat)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all active:scale-95 border ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all border ${
                         cat === "Toutes les catégories"
                           ? isAllSelected
                             ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"

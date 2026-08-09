@@ -239,7 +239,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         {/* MODE LOCAL */}
         <Card 
           onClick={handleChooseLocal}
-          className="p-5 cursor-pointer border border-white/10 hover:border-primary/60 transition-all flex items-center justify-between group active-press bg-surface/90 shadow-xl"
+          className="p-5 cursor-pointer border border-white/10 hover:border-primary/60 transition-colors flex items-center justify-between group bg-surface/90 shadow-xl"
         >
           <div className="flex items-center gap-4 text-left">
             <div className="w-12 h-12 rounded-2xl bg-primary/20 border border-primary/40 text-primary flex items-center justify-center font-black shrink-0">
@@ -257,7 +257,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         {/* MODE EN LIGNE */}
         <Card 
           onClick={handleChooseOnlineCreate}
-          className="p-5 cursor-pointer border border-white/10 hover:border-cyan-500/60 transition-all flex items-center justify-between group active-press bg-surface/90 shadow-xl"
+          className="p-5 cursor-pointer border border-white/10 hover:border-cyan-500/60 transition-colors flex items-center justify-between group bg-surface/90 shadow-xl"
         >
           <div className="flex items-center gap-4 text-left">
             <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center font-black shrink-0">
@@ -275,7 +275,7 @@ export default function GameSetup({ params }: { params: Promise<{ gameId: string
         {/* REJOINDRE AVEC UN CODE */}
         <button
           onClick={handleChooseOnlineJoin}
-          className="w-full p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/30 text-xs font-black text-foreground/70 hover:text-foreground flex items-center justify-center gap-2 transition-all active-press mt-1"
+          className="w-full p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/30 text-xs font-black text-foreground/70 hover:text-foreground flex items-center justify-center gap-2 transition-colors mt-1"
         >
           <QrCode size={16} />
           Vous avez déjà un code ? Rejoindre un salon

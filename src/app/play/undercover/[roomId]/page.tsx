@@ -392,7 +392,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                     <button
                       key={cat}
                       onClick={() => handleToggleCategory(cat)}
-                      className={`px-3.5 py-2 rounded-full text-xs font-black transition-all active:scale-95 border ${
+                      className={`px-3.5 py-2 rounded-full text-xs font-black transition-all border ${
                         cat === "Toutes les catégories"
                           ? isAllSelected
                             ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
@@ -447,7 +447,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
                 <button
                   onClick={() => { setIsMysteryMode(!isMysteryMode); sfxTap(); }}
-                  className={`h-11 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border active:scale-95 shrink-0 ${
+                  className={`h-11 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border shrink-0 ${
                     isMysteryMode
                       ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
                       : "bg-surface/80 border-white/10 text-foreground/50 hover:text-white"
