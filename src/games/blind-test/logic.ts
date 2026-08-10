@@ -160,6 +160,20 @@ export const FALLBACK_TRACKS_BY_CATEGORY: Record<BlindTestCategory, TrackItem[]>
 
 const usedTrackIdsHistory = new Set<string>();
 
+/** Normalise un titre pour comparaison fiable (supprime feat, parenthèses, accents, casse) */
+function normalizeTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // supprime accents
+    .replace(/\s*\(.*?\)/g, "")      // supprime (feat. X), (Remix), etc.
+    .replace(/\s*\[.*?\]/g, "")      // supprime [Deluxe], [Live], etc.
+    .replace(/\s*feat\.?\s.*/i, "")  // supprime "feat. Rsko" en fin
+    .replace(/\s*ft\.?\s.*/i, "")   // supprime "ft. Rsko" en fin
+    .replace(/[^a-z0-9\s]/g, "")    // supprime ponctuation
+    .replace(/\s+/g, " ")           // normalise espaces
+    .trim();
+}
+
 /** Nettoie le nom de l'artiste s'il est trop long ou contient des virgules multiples */
 function cleanArtistName(rawArtist: string, category: BlindTestCategory): string {
   if (!rawArtist) return "Artiste";
@@ -193,13 +207,14 @@ export async function fetchTrackFromiTunes(searchQuery: string, category: BlindT
       const validResults = data.results.filter((r: any) => r.previewUrl && r.artistName && r.trackName);
       if (validResults.length === 0) return null;
 
-      const randomTrack = validResults[Math.floor(Math.random() * validResults.length)];
+      // Toujours prendre le PREMIER résultat (le plus pertinent par l'API iTunes)
+      const bestTrack = validResults[0];
       return {
-        id: randomTrack.trackId?.toString() || Math.random().toString(),
-        artistName: cleanArtistName(randomTrack.artistName, category),
-        trackName: randomTrack.trackName,
-        previewUrl: randomTrack.previewUrl,
-        artworkUrl: randomTrack.artworkUrl100?.replace("100x100bb", "300x300bb"),
+        id: bestTrack.trackId?.toString() || Math.random().toString(),
+        artistName: cleanArtistName(bestTrack.artistName, category),
+        trackName: bestTrack.trackName,
+        previewUrl: bestTrack.previewUrl,
+        artworkUrl: bestTrack.artworkUrl100?.replace("100x100bb", "300x300bb"),
         category
       };
     }
@@ -235,15 +250,17 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
     artistName: track.artistName
   };
 
-  // Leurres crédibles de la MÊME CATÉGORIE
-  const availableWrong = wrongPool.filter(w => w.trackName.toLowerCase() !== track?.trackName.toLowerCase());
+  // Leurres crédibles de la MÊME CATÉGORIE — comparaison normalisée
+  const normalizedCorrect = normalizeTitle(track.trackName);
+  const availableWrong = wrongPool.filter(w => normalizeTitle(w.trackName) !== normalizedCorrect);
   const shuffledWrong = [...availableWrong].sort(() => 0.5 - Math.random());
 
   const choicesList: { trackName: string; artistName: string }[] = [correctChoice];
 
   for (const wrongItem of shuffledWrong) {
     if (choicesList.length >= 4) break;
-    const exists = choicesList.some(c => c.trackName.toLowerCase() === wrongItem.trackName.toLowerCase());
+    const normalizedWrong = normalizeTitle(wrongItem.trackName);
+    const exists = choicesList.some(c => normalizeTitle(c.trackName) === normalizedWrong);
     if (!exists) {
       choicesList.push(wrongItem);
     }
@@ -257,9 +274,17 @@ export async function generateBlindTestQuestion(category: BlindTestCategory = "T
 
   // Mélange aléatoire des 4 choix
   const shuffledChoices = [...choicesList].sort(() => 0.5 - Math.random());
-  const correctChoiceIndex = shuffledChoices.findIndex(
+
+  // GARANTIE ABSOLUE : la bonne réponse DOIT être dans les choix
+  let correctChoiceIndex = shuffledChoices.findIndex(
     c => c.trackName === correctChoice.trackName && c.artistName === correctChoice.artistName
   );
+
+  // Sécurité : si la bonne réponse est introuvable (ne devrait jamais arriver), forcer en position 0
+  if (correctChoiceIndex === -1) {
+    shuffledChoices[0] = correctChoice;
+    correctChoiceIndex = 0;
+  }
 
   return {
     track,
