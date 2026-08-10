@@ -68,8 +68,12 @@ export default function PlayfulPremiumHomePage() {
             
             <div className="pt-2">
               <button 
-                onClick={() => { sfxSuccess(); router.push("/setup/undercover"); }}
-                className="h-14 px-8 rounded-2xl bg-gradient-summer text-white font-black text-base shadow-summer-glow hover:scale-105 active:scale-95 transition-all flex items-center gap-2 mx-auto md:mx-0"
+                onClick={() => { 
+                  sfxSuccess(); 
+                  const roomCode = Math.floor(100000 + Math.random() * 900000).toString();
+                  router.push(`/lobby/${roomCode}`); 
+                }}
+                className="h-14 px-8 rounded-2xl bg-gradient-summer text-white font-black text-base shadow-summer-glow hover:scale-105 active:scale-95 transition-all flex items-center gap-2 mx-auto md:mx-0 cursor-pointer"
               >
                 <Plus size={20} /> Créer une partie
               </button>
@@ -343,10 +347,14 @@ export default function PlayfulPremiumHomePage() {
           <span className="text-[10px]">Jeux</span>
         </button>
 
-        {/* Central Action Button */}
+        {/* Central Action Button (Créer une partie dans le lobby) */}
         <button 
-          onClick={() => { sfxSuccess(); router.push("/setup/undercover"); }}
-          className="w-14 h-14 rounded-full bg-gradient-summer flex items-center justify-center text-white font-black text-2xl shadow-summer-glow -translate-y-4 border-4 border-[#0B0914]"
+          onClick={() => { 
+            sfxSuccess(); 
+            const roomCode = Math.floor(100000 + Math.random() * 900000).toString();
+            router.push(`/lobby/${roomCode}`); 
+          }}
+          className="w-14 h-14 rounded-full bg-gradient-summer flex items-center justify-center text-white font-black text-2xl shadow-summer-glow -translate-y-4 border-4 border-[#0B0914] cursor-pointer"
         >
           +
         </button>

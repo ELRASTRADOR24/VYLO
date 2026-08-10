@@ -75,7 +75,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // --- Configuration State ---
   const [phase, setPhase] = useState<PassPhase>("CONFIG");
   const [selectedCategories, setSelectedCategories] = useState<CategoryName[]>(["Toutes les catégories"]);
-  const [playerCount, setPlayerCount] = useState(4);
+  const [playerCount, setPlayerCount] = useState<number>(() => savedGroup.length >= 3 ? savedGroup.length : 4);
   const [undercoverCount, setUndercoverCount] = useState(1);
   const [mrWhiteCount, setMrWhiteCount] = useState(0);
   const [jokerCount, setJokerCount] = useState(0);
@@ -160,7 +160,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
       return {
         id: `player_${i}_${Date.now()}`,
-        name: "",
+        name: savedGroup[i]?.name || "",
         isHost: i === 0,
         isReady: true,
         isConnected: true,
@@ -174,7 +174,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
     setPlayerList(initialPlayers);
     setCurrentDistIndex(0);
-    setTempName("");
+    setTempName(savedGroup[0]?.name || "");
     setIsWordRevealed(false);
     sfxSuspense();
     setPhase("PASS_TO_PLAYER");
@@ -204,10 +204,11 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const handleMemorized = () => {
     sfxTap();
     setIsWordRevealed(false);
-    setTempName("");
 
     if (currentDistIndex < playerList.length - 1) {
-      setCurrentDistIndex(prev => prev + 1);
+      const nextIdx = currentDistIndex + 1;
+      setCurrentDistIndex(nextIdx);
+      setTempName(savedGroup[nextIdx]?.name || "");
       setPhase("PASS_TO_PLAYER");
     } else {
       // TOUS LES JOUEURS ONT LEUR MOT ➔ LANCEMENT DU TOUR DE PAROLE

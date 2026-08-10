@@ -47,16 +47,21 @@ const KAHOOT_BUTTON_VARIANTS: ("red" | "blue" | "yellow" | "green")[] = [
 export default function BlindTestGamePage({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
   const router = useRouter();
-  const { incrementStat } = useAppStore();
+  const { incrementStat, savedGroup } = useAppStore();
 
   const [phase, setPhase] = useState<LocalPhase>("CONFIG");
   const [selectedCategory, setSelectedCategory] = useState<BlindTestCategory>("Hits & Rap Français");
   const [maxRounds, setMaxRounds] = useState<number>(10); // 10 par défaut, ou -1 pour illimité
   const [newPlayerName, setNewPlayerName] = useState("");
-  const [players, setPlayers] = useState<LocalPlayer[]>([
-    { id: "1", name: "Joueur 1", score: 0 },
-    { id: "2", name: "Joueur 2", score: 0 }
-  ]);
+  const [players, setPlayers] = useState<LocalPlayer[]>(() => {
+    if (savedGroup && savedGroup.length >= 2) {
+      return savedGroup.map((p, idx) => ({ id: p.id || String(idx + 1), name: p.name, score: 0 }));
+    }
+    return [
+      { id: "1", name: "Joueur 1", score: 0 },
+      { id: "2", name: "Joueur 2", score: 0 }
+    ];
+  });
 
   const [currentQuestion, setCurrentQuestion] = useState<BlindTestQuestion | null>(null);
   const [selectedChoiceIdx, setSelectedChoiceIdx] = useState<number | null>(null);
