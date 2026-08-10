@@ -10,7 +10,7 @@ import {
   Trophy, Trash2, Music, Disc, Volume2, Infinity as InfinityIcon, Sparkles
 } from "lucide-react";
 import { 
-  BlindTestCategory, BlindTestQuestion, generateBlindTestQuestion 
+  BlindTestCategory, BlindTestQuestion, generateBlindTestQuestion, resetBlindTestHistory 
 } from "@/games/blind-test/logic";
 import { sfxTap, sfxSuccess, sfxError, sfxVictory, sfxReveal } from "@/lib/audio";
 import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
@@ -144,9 +144,15 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
     sfxTap();
   };
 
-  const loadNextQuestion = async () => {
+  const loadNextQuestion = async (isFirstRound = false) => {
     sfxTap();
     stopAudio();
+
+    // Reset de l'historique anti-répétition au début d'une nouvelle partie
+    if (isFirstRound) {
+      resetBlindTestHistory();
+    }
+
     setPhase("QUESTION_LOADING");
     setSelectedChoiceIdx(null);
     setTimeLeftSec(30);
@@ -303,7 +309,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
 
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 border-t border-white/10 z-50">
           <div className="max-w-md mx-auto">
-            <Button variant="primary" className="w-full h-16 text-lg gap-2 shadow-summer-glow" onClick={loadNextQuestion}>
+            <Button variant="primary" className="w-full h-16 text-lg gap-2 shadow-summer-glow" onClick={() => loadNextQuestion(true)}>
               <Play size={20} /> Lancer le Blind Test ({maxRounds === -1 ? "Illimité" : `${maxRounds} Tours`})
             </Button>
           </div>
@@ -472,7 +478,7 @@ export default function BlindTestGamePage({ params }: { params: Promise<{ roomId
           </Card>
 
           <EndGameActionsCard
-            onReplaySameTeam={() => { setRoundCount(1); loadNextQuestion(); }}
+            onReplaySameTeam={() => { setRoundCount(1); loadNextQuestion(true); }}
             onEditTeam={() => setPhase("CONFIG")}
             onChangeTeam={() => setPhase("CONFIG")}
           />
