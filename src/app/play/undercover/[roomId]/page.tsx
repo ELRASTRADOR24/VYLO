@@ -155,12 +155,11 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       ? generateMysteryRoles(playerCount)
       : generateRolesFromConfigExtended(playerCount, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
 
-    const playerNames = Array.from({ length: playerCount }, (_, i) => savedGroup[i]?.name || `Joueur ${i + 1}`);
-    const assignedRoles = assignRolesFairly(playerNames, roles);
+    const playerIdentifiers = Array.from({ length: playerCount }, (_, i) => `Joueur ${i + 1}`);
+    const assignedRoles = assignRolesFairly(playerIdentifiers, roles);
 
-    // 3. Préparation des slots de joueurs
-    const initialPlayers: UndercoverPlayer[] = playerNames.map((name, i) => {
-      const role = assignedRoles[name] || "Civilian";
+    // 3. Première partie : les noms sont vides pour forcer la saisie manuelle de chaque joueur
+    const initialPlayers: UndercoverPlayer[] = roles.map((role, i) => {
       let word = "";
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
@@ -171,7 +170,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
       return {
         id: `player_${i}_${Date.now()}`,
-        name,
+        name: "", // Premier tour : saisie manuelle requise
         isHost: i === 0,
         isReady: true,
         isConnected: true,
@@ -185,7 +184,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
     setPlayerList(initialPlayers);
     setCurrentDistIndex(0);
-    setTempName(savedGroup[0]?.name || "");
+    setTempName("");
     setIsWordRevealed(false);
     sfxSuspense();
     setPhase("PASS_TO_PLAYER");
