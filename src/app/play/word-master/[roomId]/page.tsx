@@ -10,7 +10,7 @@ import {
   Trophy, Trash2, Infinity as InfinityIcon, Sparkles, AlertTriangle, ShieldAlert 
 } from "lucide-react";
 import { 
-  WordMasterCategory, TabooCard, WORD_MASTER_CATEGORIES, getRandomTabooCard 
+  WordMasterCategory, TabooCard, WORD_MASTER_CATEGORIES, getRandomTabooCard, resetWordMasterHistory 
 } from "@/games/word-master/logic";
 import { sfxTap, sfxSuccess, sfxError, sfxVictory, sfxReveal } from "@/lib/audio";
 import { EndGameActionsCard } from "@/components/ui/EndGameActionsCard";
@@ -50,6 +50,11 @@ export default function WordMasterGamePage({ params }: { params: Promise<{ roomI
   const [timeLeftSec, setTimeLeftSec] = useState<number>(60);
   const [roundCount, setRoundCount] = useState<number>(1);
   const [roundResult, setRoundResult] = useState<"GUESS" | "INFRACTION" | "TIMEOUT" | null>(null);
+
+  // Reset de l'historique quand le composant est monté
+  useEffect(() => {
+    resetWordMasterHistory();
+  }, []);
 
   // Synchronisation du Timer 60s
   useEffect(() => {
@@ -96,6 +101,9 @@ export default function WordMasterGamePage({ params }: { params: Promise<{ roomI
 
   const startNextWord = () => {
     sfxTap();
+    if (roundCount === 1) {
+      resetWordMasterHistory();
+    }
     setRoundResult(null);
     setTimeLeftSec(60);
 

@@ -11,7 +11,7 @@ import {
   Sparkles, Crown, Copy, Send, HelpCircle 
 } from "lucide-react";
 import { 
-  getRandomTabooCard, WORD_MASTER_CATEGORIES, WordMasterCategory, TabooCard 
+  getRandomTabooCard, WORD_MASTER_CATEGORIES, WordMasterCategory, TabooCard, resetWordMasterHistory 
 } from "@/games/word-master/logic";
 import { sfxTap, sfxSuccess, sfxError, sfxVictory, sfxReveal } from "@/lib/audio";
 import { LivingBackground } from "@/components/ui/LivingBackground";
@@ -58,6 +58,7 @@ export default function OnlineWordMasterGame({ params }: { params: Promise<{ roo
 
   const handleHostStartGame = () => {
     sfxTap();
+    resetWordMasterHistory();
     const players = roomState?.players || [];
     if (players.length === 0) return;
 
