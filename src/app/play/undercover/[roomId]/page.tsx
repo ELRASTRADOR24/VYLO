@@ -721,24 +721,35 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const speaker = aliveSpeakers[currentSpeakerIdx];
 
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto">
+      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto relative">
         <div className="w-full text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-primary">Tour d'indices n°{clueRoundNumber}</span>
           <h1 className="text-2xl font-black mt-1">Joueur {currentSpeakerIdx + 1} / {aliveSpeakers.length}</h1>
         </div>
 
-        <Card className="w-full p-10 flex flex-col items-center text-center border border-white/10 shadow-glow my-auto">
-          <div className="w-24 h-24 rounded-full bg-primary/20 text-primary flex items-center justify-center text-4xl font-black mb-6">
+        <Card className="w-full p-8 flex flex-col items-center text-center border border-white/10 shadow-glow my-auto relative">
+          <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center text-4xl font-black mb-4">
             {speaker?.name.charAt(0).toUpperCase()}
           </div>
-          <p className="text-sm font-bold text-foreground/50 mb-2">C'est au tour de</p>
-          <h2 className="text-4xl font-black text-primary mb-6">{speaker?.name}</h2>
-          <p className="text-xs text-foreground/50 max-w-xs">
+          <p className="text-sm font-bold text-foreground/50 mb-1">C'est au tour de</p>
+          <h2 className="text-3xl font-black text-primary mb-4">{speaker?.name}</h2>
+          <p className="text-xs text-foreground/50 max-w-xs mb-6">
             Donne <span className="font-bold text-foreground">un nouveau mot indice</span> sur ton mot secret à voix haute.
           </p>
+
+          {/* Bouton pour revoir son mot en cas d'oubli */}
+          <button
+            onMouseDown={() => setIsWordRevealed(true)}
+            onMouseUp={() => setIsWordRevealed(false)}
+            onTouchStart={() => setIsWordRevealed(true)}
+            onTouchEnd={() => setIsWordRevealed(false)}
+            className="w-full py-3 px-4 rounded-2xl bg-white/5 border border-white/10 text-xs font-black text-primary hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer select-none"
+          >
+            <Eye size={16} /> {isWordRevealed ? `Mot : ${speaker?.word}` : "Maintenir pour revoir ton mot 👁️"}
+          </button>
         </Card>
 
-        <Button variant="primary" className="w-full py-5 text-lg" onClick={handleNextSpeaker}>
+        <Button variant="primary" className="w-full py-5 text-lg" onClick={() => { setIsWordRevealed(false); handleNextSpeaker(); }}>
           {currentSpeakerIdx < aliveSpeakers.length - 1 ? "Joueur suivant →" : "Terminer le tour d'indices ✓"}
         </Button>
       </main>
