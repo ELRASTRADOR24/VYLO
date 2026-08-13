@@ -8,7 +8,7 @@ import {
   UndercoverRole, UndercoverPlayer, CATEGORIES, CategoryName, 
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
   generateMysteryRoles, generateRolesFromConfigExtended,
-  shuffleSpeakingOrder 
+  shuffleSpeakingOrder, assignRolesFairly
 } from "@/games/undercover/logic";
 import { undercoverConfig } from "@/games/undercover/config";
 import Button from "@/components/ui/Button";
@@ -42,17 +42,24 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const wordPair = getRandomWordPair(selectedCategories);
     const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
     const count = existingNames.length > 0 ? existingNames.length : playerCount;
-    const roles = generateRolesFromConfig(count, undercoverCount, mrWhiteCount);
+    const playerNames = existingNames.length > 0 ? existingNames : Array.from({ length: count }, (_, i) => `Joueur ${i + 1}`);
 
-    const newPlayers: UndercoverPlayer[] = roles.map((role, i) => {
+    const roles = generateRolesFromConfigExtended(count, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
+    const assignedRoles = assignRolesFairly(playerNames, roles);
+
+    const newPlayers: UndercoverPlayer[] = playerNames.map((name, i) => {
+      const role = assignedRoles[name] || "Civilian";
       let word = "";
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
       else if (role === "MrWhite") word = "Vous êtes Mr. White";
+      else if (role === "Joker") word = "🃏 Vous êtes le JOKER ! Faites-vous éliminer au TOUT PREMIER VOTE (Tour 1) pour GAGNER !";
+      else if (role === "Cameleon") word = "🪞 Vous êtes le CAMÉLÉON ! Copiez la description du 1er joueur !";
+      else if (role === "DoubleAgent") word = `${wordPair.civilian} (💣 DOUBLE-AGENT : si vous mourez au vote, vous éliminez 1 joueur avec vous !)`;
 
       return {
         id: `player_${i}_${Date.now()}`,
-        name: existingNames[i] || `Joueur ${i + 1}`,
+        name,
         isHost: i === 0,
         isReady: true,
         isConnected: true,
@@ -148,8 +155,12 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       ? generateMysteryRoles(playerCount)
       : generateRolesFromConfigExtended(playerCount, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
 
+    const playerNames = Array.from({ length: playerCount }, (_, i) => savedGroup[i]?.name || `Joueur ${i + 1}`);
+    const assignedRoles = assignRolesFairly(playerNames, roles);
+
     // 3. Préparation des slots de joueurs
-    const initialPlayers: UndercoverPlayer[] = roles.map((role, i) => {
+    const initialPlayers: UndercoverPlayer[] = playerNames.map((name, i) => {
+      const role = assignedRoles[name] || "Civilian";
       let word = "";
       if (role === "Civilian") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
@@ -160,7 +171,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
       return {
         id: `player_${i}_${Date.now()}`,
-        name: savedGroup[i]?.name || "",
+        name,
         isHost: i === 0,
         isReady: true,
         isConnected: true,

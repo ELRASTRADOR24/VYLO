@@ -753,6 +753,70 @@ export function generateRolesFromConfigExtended(
   return roles;
 }
 
+// Historique global des rôles spéciaux attribués par joueur (pour éviter qu'un même joueur soit souvent rôle spécial)
+const playerSpecialRoleScores = new Map<string, number>();
+
+/** Réinitialise l'historique d'équilibrage des rôles */
+export function resetUndercoverRoleHistory(): void {
+  playerSpecialRoleScores.clear();
+}
+
+/**
+ * Attribue équitablement les rôles générés aux joueurs en évitant
+ * qu'un même joueur retombe plusieurs fois d'affilée sur un rôle spécial (Undercover, MrWhite, etc.).
+ */
+export function assignRolesFairly(
+  playerNamesOrIds: string[],
+  roles: UndercoverRole[]
+): Record<string, UndercoverRole> {
+  const result: Record<string, UndercoverRole> = {};
+
+  // Séparer les rôles spéciaux (Undercover, MrWhite, Joker, Cameleon, DoubleAgent) et les Civils
+  const specialRoles = roles.filter(r => r !== "Civilian");
+
+  // Mélanger les rôles spéciaux entre eux
+  const shuffledSpecials = [...specialRoles];
+  for (let i = shuffledSpecials.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledSpecials[i], shuffledSpecials[j]] = [shuffledSpecials[j], shuffledSpecials[i]];
+  }
+
+  // Classer les joueurs selon la fréquence à laquelle ils ont reçu un rôle spécial
+  // (Ceux qui en ont eu le moins sont prioritaires pour en recevoir un)
+  const playerPool = playerNamesOrIds.map(name => {
+    const key = name.trim().toLowerCase() || name;
+    const count = playerSpecialRoleScores.get(key) || 0;
+    return { name, key, count, randomTie: Math.random() };
+  });
+
+  playerPool.sort((a, b) => {
+    if (a.count !== b.count) return a.count - b.count;
+    return a.randomTie - b.randomTie;
+  });
+
+  // Les joueurs ayant le plus faible score reçoivent les rôles spéciaux disponibles
+  shuffledSpecials.forEach((role, idx) => {
+    if (idx < playerPool.length) {
+      const candidate = playerPool[idx];
+      result[candidate.name] = role;
+      // On augmente leur score (priorité réduite pour les prochains tours)
+      playerSpecialRoleScores.set(candidate.key, candidate.count + 2);
+    }
+  });
+
+  // Tous les autres joueurs deviennent Civils
+  playerPool.forEach(item => {
+    if (!result[item.name]) {
+      result[item.name] = "Civilian";
+      // On diminue légèrement leur score pour augmenter leur chance au prochain tour
+      const currentScore = playerSpecialRoleScores.get(item.key) || 0;
+      playerSpecialRoleScores.set(item.key, Math.max(0, currentScore - 1));
+    }
+  });
+
+  return result;
+}
+
 /** Ordre de parole mélangé avec probabilité réduite pour Mr. White d'être le premier joueur */
 export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPlayer[] {
   let shuffled = [...players];
