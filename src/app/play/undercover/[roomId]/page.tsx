@@ -220,21 +220,22 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // 3. DÉBUT DE LA PHASE DE PAROLE
   // ─────────────────────────────────────────────────────────
   const startSpeakingPhase = (players: UndercoverPlayer[]) => {
-    // Ordre aléatoire avec probabilité réduite pour Mr White d'être 1er
-    const order = shuffleSpeakingOrder(players);
-    setSpeakingOrder(order);
+    // Seuls les joueurs vivants parlent
+    const alivePlayers = players.filter(p => !p.isEliminated);
+    const order = shuffleSpeakingOrder(alivePlayers);
+    setSpeakingOrder(players); // On garde TOUS les joueurs (pour le vote summary et les scores)
     setCurrentSpeakerIdx(0);
-    setClueRoundNumber(1);
+    setClueRoundNumber(prev => prev); // Garder le numéro de tour actuel
     sfxSuccess();
     setPhase("SPEAKING_TURNS");
   };
 
   const handleNextSpeaker = () => {
     sfxTap();
-    if (currentSpeakerIdx < speakingOrder.length - 1) {
+    const aliveSpeakers = speakingOrder.filter(p => !p.isEliminated);
+    if (currentSpeakerIdx < aliveSpeakers.length - 1) {
       setCurrentSpeakerIdx(prev => prev + 1);
     } else {
-      // Fin du tour d'indices actuel ➔ Écran de décision (Vote ou Autre tour)
       setPhase("TURN_DECISION");
     }
   };
@@ -243,6 +244,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     sfxTap();
     setClueRoundNumber(prev => prev + 1);
     setCurrentSpeakerIdx(0);
+    // Les joueurs éliminés sont déjà filtrés dans l'affichage via speakingOrder
     setPhase("SPEAKING_TURNS");
   };
 
@@ -291,10 +293,11 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const eliminated = speakingOrder.find(p => p.id === eliminatedId) || speakingOrder[0];
     setEliminatedPlayer(eliminated);
 
-    // Marquer éliminé
+    // Marquer éliminé et sauvegarder dans le state
     const updatedList = speakingOrder.map(p => 
       p.id === eliminated.id ? { ...p, isEliminated: true } : p
     );
+    setSpeakingOrder(updatedList);
     // Le Joker gagne UNIQUEMENT s'il se fait éliminer au TOUT PREMIER VOTE (Tour 1) !
     if (eliminated.gameRole === "Joker" && clueRoundNumber === 1) {
       sfxVictory();
@@ -714,13 +717,14 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   // --- ÉCRAN 5 : TOUR DE PAROLE MÉLANGÉ ---
   if (phase === "SPEAKING_TURNS") {
-    const speaker = speakingOrder[currentSpeakerIdx];
+    const aliveSpeakers = speakingOrder.filter(p => !p.isEliminated);
+    const speaker = aliveSpeakers[currentSpeakerIdx];
 
     return (
       <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto">
         <div className="w-full text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-primary">Tour d'indices n°{clueRoundNumber}</span>
-          <h1 className="text-2xl font-black mt-1">Joueur {currentSpeakerIdx + 1} / {speakingOrder.length}</h1>
+          <h1 className="text-2xl font-black mt-1">Joueur {currentSpeakerIdx + 1} / {aliveSpeakers.length}</h1>
         </div>
 
         <Card className="w-full p-10 flex flex-col items-center text-center border border-white/10 shadow-glow my-auto">
@@ -735,7 +739,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
         </Card>
 
         <Button variant="primary" className="w-full py-5 text-lg" onClick={handleNextSpeaker}>
-          {currentSpeakerIdx < speakingOrder.length - 1 ? "Joueur suivant →" : "Terminer le tour d'indices ✓"}
+          {currentSpeakerIdx < aliveSpeakers.length - 1 ? "Joueur suivant →" : "Terminer le tour d'indices ✓"}
         </Button>
       </main>
     );
