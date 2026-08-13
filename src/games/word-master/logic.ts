@@ -22,7 +22,7 @@ export const WORD_MASTER_CATEGORIES: WordMasterCategory[] = [
 
 export const TABOO_DATABASE: TabooCard[] = [
   // ══════════════════════════════════════════════════════════════════════════
-  // 🎬 POP CULTURE & CINÉMA (25 CARTES)
+  // 🎬 POP CULTURE & CINÉMA (50 CARTES)
   // ══════════════════════════════════════════════════════════════════════════
   { id: "pc1", targetWord: "Harry Potter", forbiddenWords: ["Sorcier", "Magie", "Poudlard", "Lunettes"], category: "Pop Culture & Cinéma" },
   { id: "pc2", targetWord: "Titanic", forbiddenWords: ["Bateau", "Iceberg", "Noyade", "Film"], category: "Pop Culture & Cinéma" },
@@ -49,9 +49,34 @@ export const TABOO_DATABASE: TabooCard[] = [
   { id: "pc23", targetWord: "Fast & Furious", forbiddenWords: ["Voiture", "Course", "Vin Diesel", "Vitesse"], category: "Pop Culture & Cinéma" },
   { id: "pc24", targetWord: "Disney", forbiddenWords: ["Château", "Souris", "Dessin animé", "Parc"], category: "Pop Culture & Cinéma" },
   { id: "pc25", targetWord: "Game of Thrones", forbiddenWords: ["Trône", "Dragon", "Stark", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc26", targetWord: "Marvel", forbiddenWords: ["BD", "Comics", "Héros", "Film"], category: "Pop Culture & Cinéma" },
+  { id: "pc27", targetWord: "Top Gun", forbiddenWords: ["Avion", "Tom Cruise", "Pilote", "Vitesse"], category: "Pop Culture & Cinéma" },
+  { id: "pc28", targetWord: "Joker", forbiddenWords: ["Rire", "Maquillage", "Batman", "Gotham"], category: "Pop Culture & Cinéma" },
+  { id: "pc29", targetWord: "Indiana Jones", forbiddenWords: ["Fouet", "Chapeau", "Trésor", "Archéologue"], category: "Pop Culture & Cinéma" },
+  { id: "pc30", targetWord: "Minecraft", forbiddenWords: ["Blocs", "Jeu", "Creeper", "Pixel"], category: "Pop Culture & Cinéma" },
+  { id: "pc31", targetWord: "Iron Man", forbiddenWords: ["Armure", "Tony Stark", "Rouge", "Marvel"], category: "Pop Culture & Cinéma" },
+  { id: "pc32", targetWord: "Oppenheimer", forbiddenWords: ["Bombe", "Atomique", "Physique", "Film"], category: "Pop Culture & Cinéma" },
+  { id: "pc33", targetWord: "Mercredi Addams", forbiddenWords: ["Tresses", "Noir", "Danse", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc34", targetWord: "One Piece", forbiddenWords: ["Luffy", "Pirate", "Chapeau de paille", "Manga"], category: "Pop Culture & Cinéma" },
+  { id: "pc35", targetWord: "Naruto", forbiddenWords: ["Ninja", "Ramen", "Sasuke", "Manga"], category: "Pop Culture & Cinéma" },
+  { id: "pc36", targetWord: "Dragon Ball", forbiddenWords: ["Goku", "Saïyan", "Boules", "Manga"], category: "Pop Culture & Cinéma" },
+  { id: "pc37", targetWord: "Pokémon", forbiddenWords: ["Attrapez-les", "Pokéball", "Dresseur", "Jeu"], category: "Pop Culture & Cinéma" },
+  { id: "pc38", targetWord: "Zelda", forbiddenWords: ["Link", "Épée", "Princesse", "Nintendo"], category: "Pop Culture & Cinéma" },
+  { id: "pc39", targetWord: "Sonic", forbiddenWords: ["Hérisson", "Bleu", "Rings", "Vitesse"], category: "Pop Culture & Cinéma" },
+  { id: "pc40", targetWord: "GTA", forbiddenWords: ["Voiture", "Braquage", "Jeu", "Ville"], category: "Pop Culture & Cinéma" },
+  { id: "pc41", targetWord: "Fortnite", forbiddenWords: ["Top 1", "Danse", "Tir", "Jeu"], category: "Pop Culture & Cinéma" },
+  { id: "pc42", targetWord: "The Last of Us", forbiddenWords: ["Zombie", "Joel", "Ellie", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc43", targetWord: "The Walking Dead", forbiddenWords: ["Zombie", "Survie", "Série", "Morts"], category: "Pop Culture & Cinéma" },
+  { id: "pc44", targetWord: "Peaky Blinders", forbiddenWords: ["Casquette", "Tommy Shelby", "Série", "Gangster"], category: "Pop Culture & Cinéma" },
+  { id: "pc45", targetWord: "Breaking Bad", forbiddenWords: ["Walter White", "Chimie", "Drogue", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc46", targetWord: "La Casa de Papel", forbiddenWords: ["Masque", "Braquage", "Professeur", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc47", targetWord: "Euphoria", forbiddenWords: ["Lycée", "Zendaya", "Maquillage", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc48", targetWord: "Cyberpunk", forbiddenWords: ["Futur", "Robot", "Ville", "Jeu"], category: "Pop Culture & Cinéma" },
+  { id: "pc49", targetWord: "Pac-Man", forbiddenWords: ["Fantôme", "Jaune", "Arcade", "Labyrinthe"], category: "Pop Culture & Cinéma" },
+  { id: "pc50", targetWord: "Spider-Man: New Generation", forbiddenWords: ["Miles Morales", "Spider-Verse", "Dessin", "Marvel"], category: "Pop Culture & Cinéma" },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // 🍕 VIE QUOTIDIENNE & CUISINE (25 CARTES)
+  // 🍕 VIE QUOTIDIENNE & CUISINE (50 CARTES)
   // ══════════════════════════════════════════════════════════════════════════
   { id: "vq1", targetWord: "Pizza", forbiddenWords: ["Italie", "Fromage", "Pâte", "Sauce"], category: "Vie Quotidienne & Cuisine" },
   { id: "vq2", targetWord: "Café", forbiddenWords: ["Chaud", "Matin", "Tasse", "Expresso"], category: "Vie Quotidienne & Cuisine" },
@@ -78,9 +103,34 @@ export const TABOO_DATABASE: TabooCard[] = [
   { id: "vq23", targetWord: "Valise", forbiddenWords: ["Voyage", "Bagage", "Roulettes", "Vêtements"], category: "Vie Quotidienne & Cuisine" },
   { id: "vq24", targetWord: "Ascenseur", forbiddenWords: ["Étage", "Bâtiment", "Monter", "Descendre"], category: "Vie Quotidienne & Cuisine" },
   { id: "vq25", targetWord: "Horloge", forbiddenWords: ["Heure", "Temps", "Aiguille", "Mur"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq26", targetWord: "Dentifrice", forbiddenWords: ["Brosse", "Dents", "Bouche", "Propre"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq27", targetWord: "Shampooing", forbiddenWords: ["Cheveux", "Mousse", "Douche", "Laver"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq28", targetWord: "Serviette", forbiddenWords: ["Essuyer", "Eau", "Bain", "Douche"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq29", targetWord: "Tasse", forbiddenWords: ["Boire", "Café", "Thé", "Anse"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq30", targetWord: "Ciseaux", forbiddenWords: ["Couper", "Lames", "Papier", "Mains"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq31", targetWord: "Stylo", forbiddenWords: ["Écrire", "Encre", "Feuille", "Papier"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq32", targetWord: "Télécommande", forbiddenWords: ["Zapper", "Télévision", "Boutons", "Piles"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq33", targetWord: "Chargeur", forbiddenWords: ["Batterie", "Téléphone", "Câble", "Prise"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq34", targetWord: "Chaussures", forbiddenWords: ["Pieds", "Lacets", "Marcher", "Mettre"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq35", targetWord: "Manteau", forbiddenWords: ["Froid", "Veste", "Hiver", "Porter"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq36", targetWord: "Ceinture", forbiddenWords: ["Pantalon", "Taille", "Boucle", "Serrer"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq37", targetWord: "Chapeau", forbiddenWords: ["Tête", "Soleil", "Casquette", "Porter"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq38", targetWord: "Coussin", forbiddenWords: ["Lit", "Canapé", "Tête", "Doux"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq39", targetWord: "Tapis", forbiddenWords: ["Sol", "Salon", "Pieds", "Décoration"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq40", targetWord: "Porte", forbiddenWords: ["Ouvrir", "Entrer", "Poignée", "Pièce"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq41", targetWord: "Poêle", forbiddenWords: ["Cuire", "Cuisine", "Feu", "Casserole"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq42", targetWord: "Fourchette", forbiddenWords: ["Manger", "Couverts", "Piquer", "Assiette"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq43", targetWord: "Couteau", forbiddenWords: ["Couper", "Lame", "Couverts", "Trancher"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq44", targetWord: "Assiette", forbiddenWords: ["Repas", "Plat", "Table", "Manger"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq45", targetWord: "Bouteille", forbiddenWords: ["Boire", "Eau", "Bouchon", "Verre"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq46", targetWord: "Sucre", forbiddenWords: ["Sucré", "Blanc", "Café", "Dessert"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq47", targetWord: "Sel", forbiddenWords: ["Poivre", "Salé", "Assaisonner", "Mer"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq48", targetWord: "Pâtes", forbiddenWords: ["Italie", "Spaghetti", "Sauce", "Boillir"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq49", targetWord: "Glace", forbiddenWords: ["Sorbet", "Froid", "Cornet", "Été"], category: "Vie Quotidienne & Cuisine" },
+  { id: "vq50", targetWord: "Fromage", forbiddenWords: ["Lait", "Camembert", "Pain", "France"], category: "Vie Quotidienne & Cuisine" },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // ⚽ SPORTS & CÉLÉBRITÉS (25 CARTES)
+  // ⚽ SPORTS & CÉLÉBRITÉS (50 CARTES)
   // ══════════════════════════════════════════════════════════════════════════
   { id: "sc1", targetWord: "Football", forbiddenWords: ["Ballon", "But", "Joueur", "Stade"], category: "Sports & Célébrités" },
   { id: "sc2", targetWord: "Tennis", forbiddenWords: ["Raquette", "Balle", "Filet", "Roland-Garros"], category: "Sports & Célébrités" },
@@ -107,9 +157,34 @@ export const TABOO_DATABASE: TabooCard[] = [
   { id: "sc23", targetWord: "Gymnastique", forbiddenWords: ["Souplesse", "Équilibre", "Sol", "Poutre"], category: "Sports & Célébrités" },
   { id: "sc24", targetWord: "Céline Dion", forbiddenWords: ["Chanteuse", "Voix", "Titanic", "Québec"], category: "Sports & Célébrités" },
   { id: "sc25", targetWord: "Teddy Riner", forbiddenWords: ["Judo", "Champion", "Lourd", "Kimono"], category: "Sports & Célébrités" },
+  { id: "sc26", targetWord: "Neymar", forbiddenWords: ["Brésil", "Dribble", "Foot", "PSG"], category: "Sports & Célébrités" },
+  { id: "sc27", targetWord: "Antoine Griezmann", forbiddenWords: ["Bleus", "Atlético", "Foot", "France"], category: "Sports & Célébrités" },
+  { id: "sc28", targetWord: "Usain Bolt", forbiddenWords: ["Vitesse", "100m", "Jamaïque", "Sprint"], category: "Sports & Célébrités" },
+  { id: "sc29", targetWord: "Serena Williams", forbiddenWords: ["Tennis", "Grand Chelem", "Raquette", "Championne"], category: "Sports & Célébrités" },
+  { id: "sc30", targetWord: "LeBron James", forbiddenWords: ["NBA", "Lakers", "Basket", "Roi"], category: "Sports & Célébrités" },
+  { id: "sc31", targetWord: "Tiger Woods", forbiddenWords: ["Golf", "Trou", "Club", "Master"], category: "Sports & Célébrités" },
+  { id: "sc32", targetWord: "Lewis Hamilton", forbiddenWords: ["Formule 1", "Mercedes", "Champion", "Pilote"], category: "Sports & Célébrités" },
+  { id: "sc33", targetWord: "Mike Tyson", forbiddenWords: ["Boxe", "K-O", "Poids lourd", "Oreille"], category: "Sports & Célébrités" },
+  { id: "sc34", targetWord: "Conor McGregor", forbiddenWords: ["UFC", "MMA", "Irlande", "Combat"], category: "Sports & Célébrités" },
+  { id: "sc35", targetWord: "Taylor Swift", forbiddenWords: ["Chanteuse", "Pop", "Eras Tour", "Musique"], category: "Sports & Célébrités" },
+  { id: "sc36", targetWord: "Rihanna", forbiddenWords: ["Chanteuse", "Umbrella", "Fenty", "Musique"], category: "Sports & Célébrités" },
+  { id: "sc37", targetWord: "Drake", forbiddenWords: ["Rappeur", "Canada", "God's Plan", "Musique"], category: "Sports & Célébrités" },
+  { id: "sc38", targetWord: "Eminem", forbiddenWords: ["Rap", "Slim Shady", "Détroit", "Chanson"], category: "Sports & Célébrités" },
+  { id: "sc39", targetWord: "Kanye West", forbiddenWords: ["Ye", "Rappeur", "Yeezy", "Musique"], category: "Sports & Célébrités" },
+  { id: "sc40", targetWord: "Lady Gaga", forbiddenWords: ["Chanteuse", "Poker Face", "Pop", "Star"], category: "Sports & Célébrités" },
+  { id: "sc41", targetWord: "Justin Bieber", forbiddenWords: ["Chanteur", "Baby", "Pop", "Canada"], category: "Sports & Célébrités" },
+  { id: "sc42", targetWord: "Ariana Grande", forbiddenWords: ["Chanteuse", "Voix", "7 Rings", "Pop"], category: "Sports & Célébrités" },
+  { id: "sc43", targetWord: "Shakira", forbiddenWords: ["Waka Waka", "Chanteuse", "Danse", "Colombie"], category: "Sports & Célébrités" },
+  { id: "sc44", targetWord: "Snoop Dogg", forbiddenWords: ["Rap", "Californie", "Rappeur", "Légende"], category: "Sports & Célébrités" },
+  { id: "sc45", targetWord: "Will Smith", forbiddenWords: ["Acteur", "Prince de Bel-Air", "Gifle", "Film"], category: "Sports & Célébrités" },
+  { id: "sc46", targetWord: "Leonardo DiCaprio", forbiddenWords: ["Titanic", "Oscar", "Acteur", "Inception"], category: "Sports & Célébrités" },
+  { id: "sc47", targetWord: "Brad Pitt", forbiddenWords: ["Acteur", "Fight Club", "Hollywood", "Film"], category: "Sports & Célébrités" },
+  { id: "sc48", targetWord: "Tom Cruise", forbiddenWords: ["Mission Impossible", "Cascade", "Top Gun", "Acteur"], category: "Sports & Célébrités" },
+  { id: "sc49", targetWord: "Ryan Gosling", forbiddenWords: ["Barbie", "Drive", "Ken", "Acteur"], category: "Sports & Célébrités" },
+  { id: "sc50", targetWord: "Zendaya", forbiddenWords: ["Euphoria", "Spider-Man", "Actrice", "Dune"], category: "Sports & Célébrités" },
 
   // ══════════════════════════════════════════════════════════════════════════
-  // 🌴 VOYAGES & NATURE (25 CARTES)
+  // 🌴 VOYAGES & NATURE (50 CARTES)
   // ══════════════════════════════════════════════════════════════════════════
   { id: "vn1", targetWord: "Plage", forbiddenWords: ["Sable", "Mer", "Soleil", "Vacances"], category: "Voyages & Nature" },
   { id: "vn2", targetWord: "Avion", forbiddenWords: ["Voler", "Ciel", "Pilote", "Aéroport"], category: "Voyages & Nature" },
@@ -136,6 +211,31 @@ export const TABOO_DATABASE: TabooCard[] = [
   { id: "vn23", targetWord: "Boussole", forbiddenWords: ["Nord", "Direction", "Aiguille", "Perdu"], category: "Voyages & Nature" },
   { id: "vn24", targetWord: "Lune", forbiddenWords: ["Nuit", "Ciel", "Cratère", "Étoiles"], category: "Voyages & Nature" },
   { id: "vn25", targetWord: "Aurore boréale", forbiddenWords: ["Vert", "Nuit", "Ciel", "Lumière"], category: "Voyages & Nature" },
+  { id: "vn26", targetWord: "Grande Muraille", forbiddenWords: ["Chine", "Pierre", "Chinois", "Monument"], category: "Voyages & Nature" },
+  { id: "vn27", targetWord: "Taj Mahal", forbiddenWords: ["Inde", "Blanc", "Monument", "Amour"], category: "Voyages & Nature" },
+  { id: "vn28", targetWord: "Colisée", forbiddenWords: ["Rome", "Italie", "Gladiateur", "Arène"], category: "Voyages & Nature" },
+  { id: "vn29", targetWord: "Grand Canyon", forbiddenWords: ["USA", "Rouge", "Roche", "Fleuve"], category: "Voyages & Nature" },
+  { id: "vn30", targetWord: "Amazonie", forbiddenWords: ["Fleuve", "Forêt", "Brésil", "Poumon"], category: "Voyages & Nature" },
+  { id: "vn31", targetWord: "Sahara", forbiddenWords: ["Désert", "Afrique", "Sable", "Chaud"], category: "Voyages & Nature" },
+  { id: "vn32", targetWord: "Antarctique", forbiddenWords: ["Pôle Sud", "Glace", "Manchot", "Froid"], category: "Voyages & Nature" },
+  { id: "vn33", targetWord: "Safari", forbiddenWords: ["Afrique", "Animaux", "Jeep", "Savane"], category: "Voyages & Nature" },
+  { id: "vn34", targetWord: "Bateau", forbiddenWords: ["Naviguer", "Mer", "Capitaine", "Eau"], category: "Voyages & Nature" },
+  { id: "vn35", targetWord: "Train", forbiddenWords: ["Rails", "Gare", "Voyage", "Wagon"], category: "Voyages & Nature" },
+  { id: "vn36", targetWord: "Hélicoptère", forbiddenWords: ["Hélice", "Voler", "Ciel", "Pilote"], category: "Voyages & Nature" },
+  { id: "vn37", targetWord: "Plongée", forbiddenWords: ["Masque", "Poissons", "Eau", "Mer"], category: "Voyages & Nature" },
+  { id: "vn38", targetWord: "Étoile", forbiddenWords: ["Nuit", "Ciel", "Briller", "Espace"], category: "Voyages & Nature" },
+  { id: "vn39", targetWord: "Rivière", forbiddenWords: ["Eau", "Courant", "Poisson", "Fleuve"], category: "Voyages & Nature" },
+  { id: "vn40", targetWord: "Fleur", forbiddenWords: ["Rose", "Pétale", "Jardin", "Parfum"], category: "Voyages & Nature" },
+  { id: "vn41", targetWord: "Papillon", forbiddenWords: ["Ailes", "Insecte", "Chenille", "Voler"], category: "Voyages & Nature" },
+  { id: "vn42", targetWord: "Dauphin", forbiddenWords: ["Mer", "Flipper", "Sauter", "Mammifère"], category: "Voyages & Nature" },
+  { id: "vn43", targetWord: "Requin", forbiddenWords: ["Aileron", "Dents", "Océan", "Attaque"], category: "Voyages & Nature" },
+  { id: "vn44", targetWord: "Lion", forbiddenWords: ["Roi", "Savane", "Rugir", "Felin"], category: "Voyages & Nature" },
+  { id: "vn45", targetWord: "Éléphant", forbiddenWords: ["Trompe", "Défenses", "Gros", "Afrique"], category: "Voyages & Nature" },
+  { id: "vn46", targetWord: "Pingouin", forbiddenWords: ["Banquise", "Noir et blanc", "Glace", "Oiseau"], category: "Voyages & Nature" },
+  { id: "vn47", targetWord: "Ours", forbiddenWords: ["Forêt", "Miel", "Polar", "Hiberner"], category: "Voyages & Nature" },
+  { id: "vn48", targetWord: "Tremblement de terre", forbiddenWords: ["Séisme", "Sol", "Secousse", "Faillle"], category: "Voyages & Nature" },
+  { id: "vn49", targetWord: "Tsunami", forbiddenWords: ["Vague", "Océan", "Eau", "Catastrophe"], category: "Voyages & Nature" },
+  { id: "vn50", targetWord: "Tornade", forbiddenWords: ["Vent", "Tourbillon", "Tempête", "Degats"], category: "Voyages & Nature" },
 ];
 
 const usedTabooIdsHistory = new Set<string>();
