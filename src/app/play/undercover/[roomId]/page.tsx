@@ -66,7 +66,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
     setPlayerList(newPlayers);
     setCurrentDistIndex(0);
-    setTempName("");
+    setTempName(existingNames[0] || "");
     setIsWordRevealed(false);
     sfxSuspense();
     setPhase("PASS_TO_PLAYER");
@@ -605,6 +605,19 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   // --- ÉCRAN 2 : INTERSTITIEL SECURISE ("PASSEZ LE TÉLÉPHONE") ---
   if (phase === "PASS_TO_PLAYER") {
+    const currentPlayerHasName = playerList[currentDistIndex]?.name?.trim().length > 0;
+    const displayName = currentPlayerHasName ? playerList[currentDistIndex].name : `Joueur n°${currentDistIndex + 1}`;
+
+    const handlePassReady = () => {
+      if (currentPlayerHasName) {
+        // Le nom est déjà connu (replay ou lobby) → direct au mot secret
+        setPhase("SHOW_WORD");
+      } else {
+        // Nouveau joueur → demander le prénom
+        setPhase("ENTER_NAME");
+      }
+    };
+
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto relative">
         <div className="w-24 h-24 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-6 animate-pulse">
@@ -612,15 +625,15 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
         </div>
         <h2 className="text-3xl font-black mb-3">Passez le téléphone</h2>
         <p className="text-foreground/50 text-base mb-12">
-          Donnez le smartphone au <span className="font-extrabold text-primary">joueur n°{currentDistIndex + 1}</span>.
+          Donnez le smartphone à <span className="font-extrabold text-primary">{displayName}</span>.
         </p>
 
         <Button 
           variant="primary" 
           className="w-full py-5 text-lg"
-          onClick={() => setPhase("ENTER_NAME")}
+          onClick={handlePassReady}
         >
-          C'est moi ! 👋
+          {currentPlayerHasName ? `C'est moi, ${playerList[currentDistIndex].name} ! 👋` : "C'est moi ! 👋"}
         </Button>
       </main>
     );
