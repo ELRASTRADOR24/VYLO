@@ -233,23 +233,22 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   };
 
   // ─────────────────────────────────────────────────────────
-  // 3. DÉBUT DE LA PHASE DE PAROLE
+  // 3. DÉBUT DE LA PHASE DE PAROLE (Ordre de parole 100% aléatoire)
   // ─────────────────────────────────────────────────────────
   const startSpeakingPhase = (players: UndercoverPlayer[]) => {
-    // Seuls les joueurs vivants parlent
+    // Seuls les joueurs vivants parlent, mélangés aléatoirement
     const alivePlayers = players.filter(p => !p.isEliminated);
     const order = shuffleSpeakingOrder(alivePlayers);
-    setSpeakingOrder(players); // On garde TOUS les joueurs (pour le vote summary et les scores)
+    setSpeakingOrder(order);
     setCurrentSpeakerIdx(0);
-    setClueRoundNumber(prev => prev); // Garder le numéro de tour actuel
+    setClueRoundNumber(1);
     sfxSuccess();
     setPhase("SPEAKING_TURNS");
   };
 
   const handleNextSpeaker = () => {
     sfxTap();
-    const aliveSpeakers = speakingOrder.filter(p => !p.isEliminated);
-    if (currentSpeakerIdx < aliveSpeakers.length - 1) {
+    if (currentSpeakerIdx < speakingOrder.length - 1) {
       setCurrentSpeakerIdx(prev => prev + 1);
     } else {
       setPhase("TURN_DECISION");
@@ -258,9 +257,11 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   const startAnotherClueRound = () => {
     sfxTap();
+    const alivePlayers = speakingOrder.filter(p => !p.isEliminated);
+    const newOrder = shuffleSpeakingOrder(alivePlayers);
+    setSpeakingOrder(newOrder);
     setClueRoundNumber(prev => prev + 1);
     setCurrentSpeakerIdx(0);
-    // Les joueurs éliminés sont déjà filtrés dans l'affichage via speakingOrder
     setPhase("SPEAKING_TURNS");
   };
 
