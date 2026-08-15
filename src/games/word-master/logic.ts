@@ -1,4 +1,4 @@
-export type WordMasterCategory = 
+export type WordMasterCategory =
   | "Toutes"
   | "Pop Culture & Cinéma"
   | "Vie Quotidienne & Cuisine"
@@ -22,8 +22,9 @@ export const WORD_MASTER_CATEGORIES: WordMasterCategory[] = [
 
 export const TABOO_DATABASE: TabooCard[] = [
   // ══════════════════════════════════════════════════════════════════════════
-  // 🎬 POP CULTURE & CINÉMA (50 CARTES)
+  // 🎬 POP CULTURE & CINÉMA (100 CARTES)
   // ══════════════════════════════════════════════════════════════════════════
+
   { id: "pc1", targetWord: "Harry Potter", forbiddenWords: ["Sorcier", "Magie", "Poudlard", "Lunettes"], category: "Pop Culture & Cinéma" },
   { id: "pc2", targetWord: "Titanic", forbiddenWords: ["Bateau", "Iceberg", "Noyade", "Film"], category: "Pop Culture & Cinéma" },
   { id: "pc3", targetWord: "Star Wars", forbiddenWords: ["Espace", "Sabre", "Vador", "Jedi"], category: "Pop Culture & Cinéma" },
@@ -74,6 +75,56 @@ export const TABOO_DATABASE: TabooCard[] = [
   { id: "pc48", targetWord: "Cyberpunk", forbiddenWords: ["Futur", "Robot", "Ville", "Jeu"], category: "Pop Culture & Cinéma" },
   { id: "pc49", targetWord: "Pac-Man", forbiddenWords: ["Fantôme", "Jaune", "Arcade", "Labyrinthe"], category: "Pop Culture & Cinéma" },
   { id: "pc50", targetWord: "Spider-Man: New Generation", forbiddenWords: ["Miles Morales", "Spider-Verse", "Dessin", "Marvel"], category: "Pop Culture & Cinéma" },
+  { id: "pc51", targetWord: "Le Seigneur des Anneaux", forbiddenWords: ["Frodon", "Gandalf", "Anneau", "Mordor"], category: "Pop Culture & Cinéma" },
+  { id: "pc52", targetWord: "Harry Potter et la Chambre des Secrets", forbiddenWords: ["Poudlard", "Serpent", "Tom Jedusor", "Hogwarts"], category: "Pop Culture & Cinéma" },
+  { id: "pc53", targetWord: "Interstellar", forbiddenWords: ["Espace", "Planète", "Trou noir", "Cooper"], category: "Pop Culture & Cinéma" },
+  { id: "pc54", targetWord: "Gladiator", forbiddenWords: ["Rome", "Empereur", "Arène", "Maximus"], category: "Pop Culture & Cinéma" },
+  { id: "pc55", targetWord: "Le Parrain", forbiddenWords: ["Mafia", "Famille", "Don", "Corleone"], category: "Pop Culture & Cinéma" },
+  { id: "pc56", targetWord: "Retour vers le futur", forbiddenWords: ["DeLorean", "Marty", "Doc", "Temps"], category: "Pop Culture & Cinéma" },
+  { id: "pc57", targetWord: "Terminator", forbiddenWords: ["Robot", "Arnold", "Futur", "Skynet"], category: "Pop Culture & Cinéma" },
+  { id: "pc58", targetWord: "Alien", forbiddenWords: ["Espace", "Créature", "Vaisseau", "Horreur"], category: "Pop Culture & Cinéma" },
+  { id: "pc59", targetWord: "Predator", forbiddenWords: ["Chasseur", "Extraterrestre", "Forêt", "Arnold"], category: "Pop Culture & Cinéma" },
+  { id: "pc60", targetWord: "John Wick", forbiddenWords: ["Tueur", "Chien", "Keanu", "Pistolet"], category: "Pop Culture & Cinéma" },
+  { id: "pc61", targetWord: "Mission Impossible", forbiddenWords: ["Ethan", "Tom Cruise", "Espion", "Mission"], category: "Pop Culture & Cinéma" },
+  { id: "pc62", targetWord: "Rocky", forbiddenWords: ["Boxe", "Balboa", "Ring", "Sylvester"], category: "Pop Culture & Cinéma" },
+  { id: "pc63", targetWord: "Creed", forbiddenWords: ["Boxe", "Rocky", "Adonis", "Combat"], category: "Pop Culture & Cinéma" },
+  { id: "pc64", targetWord: "Hunger Games", forbiddenWords: ["Katniss", "Arène", "District", "Flèche"], category: "Pop Culture & Cinéma" },
+  { id: "pc65", targetWord: "Divergente", forbiddenWords: ["Tris", "Faction", "Chicago", "Film"], category: "Pop Culture & Cinéma" },
+  { id: "pc66", targetWord: "Twilight", forbiddenWords: ["Vampire", "Edward", "Bella", "Loup"], category: "Pop Culture & Cinéma" },
+  { id: "pc67", targetWord: "Les Simpson", forbiddenWords: ["Homer", "Bart", "Jaune", "Famille"], category: "Pop Culture & Cinéma" },
+  { id: "pc68", targetWord: "South Park", forbiddenWords: ["Cartman", "Kyle", "Stan", "Dessin animé"], category: "Pop Culture & Cinéma" },
+  { id: "pc69", targetWord: "Rick et Morty", forbiddenWords: ["Rick", "Morty", "Portail", "Science"], category: "Pop Culture & Cinéma" },
+  { id: "pc70", targetWord: "Family Guy", forbiddenWords: ["Peter", "Stewie", "Griffin", "Série"], category: "Pop Culture & Cinéma" },
+  { id: "pc71", targetWord: "Les Minions", forbiddenWords: ["Jaune", "Banane", "Gru", "Petits"], category: "Pop Culture & Cinéma" },
+  { id: "pc72", targetWord: "Moi, Moche et Méchant", forbiddenWords: ["Gru", "Minions", "Agnes", "Lune"], category: "Pop Culture & Cinéma" },
+  { id: "pc73", targetWord: "Toy Story", forbiddenWords: ["Woody", "Buzz", "Jouet", "Andy"], category: "Pop Culture & Cinéma" },
+  { id: "pc74", targetWord: "Cars", forbiddenWords: ["Flash McQueen", "Voiture", "Course", "Piston"], category: "Pop Culture & Cinéma" },
+  { id: "pc75", targetWord: "Ratatouille", forbiddenWords: ["Rat", "Cuisine", "Paris", "Rémy"], category: "Pop Culture & Cinéma" },
+  { id: "pc76", targetWord: "Nemo", forbiddenWords: ["Poisson", "Océan", "Dory", "Clown"], category: "Pop Culture & Cinéma" },
+  { id: "pc77", targetWord: "WALL-E", forbiddenWords: ["Robot", "Terre", "Espace", "EVE"], category: "Pop Culture & Cinéma" },
+  { id: "pc78", targetWord: "Kung Fu Panda", forbiddenWords: ["Po", "Panda", "Kung Fu", "Tai Lung"], category: "Pop Culture & Cinéma" },
+  { id: "pc79", targetWord: "Madagascar", forbiddenWords: ["Lion", "Zèbre", "Pingouins", "Alex"], category: "Pop Culture & Cinéma" },
+  { id: "pc80", targetWord: "L'Âge de Glace", forbiddenWords: ["Manny", "Sid", "Diego", "Mammouth"], category: "Pop Culture & Cinéma" },
+  { id: "pc81", targetWord: "Les Indestructibles", forbiddenWords: ["Super-héros", "Famille", "Elastigirl", "Violet"], category: "Pop Culture & Cinéma" },
+  { id: "pc82", targetWord: "Kung Fu Hustle", forbiddenWords: ["Kung Fu", "Chine", "Combat", "Hache"], category: "Pop Culture & Cinéma" },
+  { id: "pc83", targetWord: "Kill Bill", forbiddenWords: ["Uma Thurman", "Sabre", "Mariée", "Vengeance"], category: "Pop Culture & Cinéma" },
+  { id: "pc84", targetWord: "Django Unchained", forbiddenWords: ["Esclave", "Cow-boy", "Tarentino", "Bounty"], category: "Pop Culture & Cinéma" },
+  { id: "pc85", targetWord: "Pulp Fiction", forbiddenWords: ["Tarantino", "Mia", "Vincent", "Portefeuille"], category: "Pop Culture & Cinéma" },
+  { id: "pc86", targetWord: "The Dark Knight", forbiddenWords: ["Batman", "Joker", "Gotham", "Christopher Nolan"], category: "Pop Culture & Cinéma" },
+  { id: "pc87", targetWord: "Deadpool", forbiddenWords: ["Marvel", "Ryan Reynolds", "Mercenaire", "Rouge"], category: "Pop Culture & Cinéma" },
+  { id: "pc88", targetWord: "Venom", forbiddenWords: ["Symbiote", "Eddie", "Spider-Man", "Alien"], category: "Pop Culture & Cinéma" },
+  { id: "pc89", targetWord: "Black Panther", forbiddenWords: ["Wakanda", "T'Challa", "Vibranium", "Marvel"], category: "Pop Culture & Cinéma" },
+  { id: "pc90", targetWord: "Guardians of the Galaxy", forbiddenWords: ["Star-Lord", "Groot", "Rocket", "Marvel"], category: "Pop Culture & Cinéma" },
+  { id: "pc91", targetWord: "Doctor Strange", forbiddenWords: ["Magie", "Marvel", "Sorcier", "Œil"], category: "Pop Culture & Cinéma" },
+  { id: "pc92", targetWord: "Thor", forbiddenWords: ["Marteau", "Asgard", "Dieu", "Éclair"], category: "Pop Culture & Cinéma" },
+  { id: "pc93", targetWord: "Hulk", forbiddenWords: ["Vert", "Bruce Banner", "Force", "Marvel"], category: "Pop Culture & Cinéma" },
+  { id: "pc94", targetWord: "Captain America", forbiddenWords: ["Bouclier", "Steve Rogers", "Marvel", "Soldat"], category: "Pop Culture & Cinéma" },
+  { id: "pc95", targetWord: "Black Widow", forbiddenWords: ["Natasha", "Espionne", "Marvel", "Rouge"], category: "Pop Culture & Cinéma" },
+  { id: "pc96", targetWord: "Demon Slayer", forbiddenWords: ["Tanjiro", "Nezuko", "Démon", "Katana"], category: "Pop Culture & Cinéma" },
+  { id: "pc97", targetWord: "Jujutsu Kaisen", forbiddenWords: ["Gojo", "Yuji", "Sukuna", "Fléau"], category: "Pop Culture & Cinéma" },
+  { id: "pc98", targetWord: "Attack on Titan", forbiddenWords: ["Titan", "Eren", "Mikasa", "Muraille"], category: "Pop Culture & Cinéma" },
+  { id: "pc99", targetWord: "Death Note", forbiddenWords: ["Light", "Ryuk", "Cahier", "Shinigami"], category: "Pop Culture & Cinéma" },
+  { id: "pc100", targetWord: "Hunter x Hunter", forbiddenWords: ["Gon", "Killua", "Hunter", "Nen"], category: "Pop Culture & Cinéma" },
 
   // ══════════════════════════════════════════════════════════════════════════
   // 🍕 VIE QUOTIDIENNE & CUISINE (50 CARTES)
@@ -237,6 +288,7 @@ export const TABOO_DATABASE: TabooCard[] = [
   { id: "vn49", targetWord: "Tsunami", forbiddenWords: ["Vague", "Océan", "Eau", "Catastrophe"], category: "Voyages & Nature" },
   { id: "vn50", targetWord: "Tornade", forbiddenWords: ["Vent", "Tourbillon", "Tempête", "Degats"], category: "Voyages & Nature" },
 ];
+
 
 const usedTabooIdsHistory = new Set<string>();
 

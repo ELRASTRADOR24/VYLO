@@ -8,7 +8,7 @@ import {
   UndercoverRole, UndercoverPlayer, CATEGORIES, CategoryName, 
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
   generateMysteryRoles, generateRolesFromConfigExtended,
-  shuffleSpeakingOrder, assignRolesFairly
+  shuffleSpeakingOrder, assignRolesFairly, shuffleArray
 } from "@/games/undercover/logic";
 import { undercoverConfig } from "@/games/undercover/config";
 import Button from "@/components/ui/Button";
@@ -71,9 +71,12 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       };
     });
 
-    setPlayerList(newPlayers);
+    // Mélange aléatoire de l'ordre des joueurs pour la distribution du mot secret !
+    const shuffledPlayers = shuffleArray(newPlayers);
+
+    setPlayerList(shuffledPlayers);
     setCurrentDistIndex(0);
-    setTempName(existingNames[0] || "");
+    setTempName(shuffledPlayers[0]?.name || "");
     setIsWordRevealed(false);
     sfxSuspense();
     setPhase("PASS_TO_PLAYER");
@@ -182,9 +185,12 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       };
     });
 
-    setPlayerList(initialPlayers);
+    // Mélange aléatoire de l'ordre des joueurs pour la distribution du mot secret !
+    const shuffledInitial = shuffleArray(initialPlayers);
+
+    setPlayerList(shuffledInitial);
     setCurrentDistIndex(0);
-    setTempName("");
+    setTempName(shuffledInitial[0]?.name || "");
     setIsWordRevealed(false);
     sfxSuspense();
     setPhase("PASS_TO_PLAYER");
@@ -218,7 +224,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     if (currentDistIndex < playerList.length - 1) {
       const nextIdx = currentDistIndex + 1;
       setCurrentDistIndex(nextIdx);
-      setTempName(savedGroup[nextIdx]?.name || "");
+      setTempName(playerList[nextIdx]?.name || "");
       setPhase("PASS_TO_PLAYER");
     } else {
       // TOUS LES JOUEURS ONT LEUR MOT ➔ LANCEMENT DU TOUR DE PAROLE

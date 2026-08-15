@@ -817,14 +817,19 @@ export function assignRolesFairly(
   return result;
 }
 
+/** Mélange générique de Fisher-Yates */
+export function shuffleArray<T>(array: T[]): T[] {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
 /** Ordre de parole mélangé avec probabilité réduite pour Mr. White d'être le premier joueur */
 export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPlayer[] {
-  let shuffled = [...players];
-  
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
+  let shuffled = shuffleArray(players);
 
   // Si le premier joueur tiré est Mr. White, on lui applique 90% de chance d'être déplacé plus loin
   if (shuffled[0].gameRole === "MrWhite" && Math.random() < 0.9 && shuffled.length > 2) {
