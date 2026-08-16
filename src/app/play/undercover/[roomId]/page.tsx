@@ -8,7 +8,7 @@ import {
   UndercoverRole, UndercoverPlayer, CATEGORIES, CategoryName, 
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
   generateMysteryRoles, generateRolesFromConfigExtended,
-  shuffleSpeakingOrder, assignRolesFairly, shuffleArray
+  shuffleSpeakingOrder, assignRolesFairly, shuffleArray, checkMrWhiteGuess
 } from "@/games/undercover/logic";
 import { undercoverConfig } from "@/games/undercover/config";
 import Button from "@/components/ui/Button";
@@ -16,7 +16,7 @@ import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Eye, EyeOff, Skull, Trophy, Share, Users, 
   Smartphone, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2,
-  HelpCircle, Vote, RefreshCw
+  HelpCircle, Vote, RefreshCw, BookOpen, Zap, Lock, Unlock, AlertCircle, CheckCircle, XCircle
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJoin } from "@/lib/audio";
@@ -29,8 +29,9 @@ type PassPhase =
   | "SPEAKING_TURNS"     // 5. Tour de parole mélangé ("C'est au tour de X")
   | "TURN_DECISION"      // 6. Choix après chaque tour : Voter ou Refaire un tour
   | "VOTING_CIRCULATE"   // 7. Circulation du téléphone pour vote individuel
-  | "VOTE_SUMMARY"       // 8. Résultats du vote & annonce de l'éliminé
-  | "END_GAME";          // 9. Bilan, rôles révélés & attribution des points
+  | "MR_WHITE_GUESS"     // 8. Ultime devinette de Mr. White
+  | "VOTE_SUMMARY"       // 9. Résultats du vote & annonce de l'éliminé
+  | "END_GAME";          // 10. Bilan, rôles révélés & attribution des points
 
 export default function UndercoverLocalGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
@@ -40,6 +41,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // Rejouer instantanément avec la même équipe
   const handleReplaySameTeam = () => {
     const wordPair = getRandomWordPair(selectedCategories);
+    setCurrentCivilianWord(wordPair.civilian);
     const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
     const count = existingNames.length > 0 ? existingNames.length : playerCount;
     const playerNames = existingNames.length > 0 ? existingNames : Array.from({ length: count }, (_, i) => `Joueur ${i + 1}`);
@@ -92,6 +94,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [cameleonCount, setCameleonCount] = useState(0);
   const [doubleAgentCount, setDoubleAgentCount] = useState(0);
   const [isMysteryMode, setIsMysteryMode] = useState(false);
+  const [votingMode, setVotingMode] = useState<"EXPRESS" | "CIRCULATE">("EXPRESS");
+  const [speakingTimerMax, setSpeakingTimerMax] = useState<number>(0); // 0 = sans limite
 
   const handleToggleCategory = (cat: CategoryName) => {
     sfxTap();
@@ -117,6 +121,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [currentDistIndex, setCurrentDistIndex] = useState(0);
   const [tempName, setTempName] = useState("");
   const [isWordRevealed, setIsWordRevealed] = useState(false);
+  const [currentCivilianWord, setCurrentCivilianWord] = useState("");
 
   // --- Gameplay State ---
   const [speakingOrder, setSpeakingOrder] = useState<UndercoverPlayer[]>([]);
@@ -125,11 +130,13 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [timerSeconds, setTimerSeconds] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
 
-  // --- Voting State ---
+  // --- Voting & Special Phase State ---
   const [voterIndex, setVoterIndex] = useState(0);
   const [votesMap, setVotesMap] = useState<Record<string, string>>({}); // voterId -> targetId
   const [eliminatedPlayer, setEliminatedPlayer] = useState<UndercoverPlayer | null>(null);
-  const [winnerTeam, setWinnerTeam] = useState<"CIVILIANS" | "UNDERCOVER" | null>(null);
+  const [winnerTeam, setWinnerTeam] = useState<"CIVILIANS" | "UNDERCOVER" | "JOKER" | null>(null);
+  const [mrWhiteGuess, setMrWhiteGuess] = useState("");
+  const [showJournalModal, setShowJournalModal] = useState(false);
 
   // Validation de la configuration
   const configValidation = validateRoleConfig(playerCount, undercoverCount, mrWhiteCount);
@@ -153,6 +160,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
     // 1. Choix des mots (Multi-catégories)
     const wordPair = getRandomWordPair(selectedCategories);
+    setCurrentCivilianWord(wordPair.civilian);
+
     // 2. Génération des rôles (Mode Mystère ou Paramétré)
     const roles = isMysteryMode 
       ? generateMysteryRoles(playerCount)
@@ -242,6 +251,15 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     setSpeakingOrder(order);
     setCurrentSpeakerIdx(0);
     setClueRoundNumber(1);
+
+    if (speakingTimerMax > 0) {
+      setTimerSeconds(speakingTimerMax);
+      setTimerActive(true);
+    } else {
+      setTimerSeconds(null);
+      setTimerActive(false);
+    }
+
     sfxSuccess();
     setPhase("SPEAKING_TURNS");
   };
@@ -250,7 +268,12 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     sfxTap();
     if (currentSpeakerIdx < speakingOrder.length - 1) {
       setCurrentSpeakerIdx(prev => prev + 1);
+      if (speakingTimerMax > 0) {
+        setTimerSeconds(speakingTimerMax);
+        setTimerActive(true);
+      }
     } else {
+      setTimerActive(false);
       setPhase("TURN_DECISION");
     }
   };
@@ -262,13 +285,20 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     setSpeakingOrder(newOrder);
     setClueRoundNumber(prev => prev + 1);
     setCurrentSpeakerIdx(0);
+
+    if (speakingTimerMax > 0) {
+      setTimerSeconds(speakingTimerMax);
+      setTimerActive(true);
+    }
+
     setPhase("SPEAKING_TURNS");
   };
 
   // ─────────────────────────────────────────────────────────
-  // 4. PHASE DE VOTE (Circulation du téléphone)
+  // 4. PHASE DE VOTE (Circulation ou Express)
   // ─────────────────────────────────────────────────────────
   const startVotingPhase = () => {
+    setTimerActive(false);
     setVoterIndex(0);
     setVotesMap({});
     sfxSuspense();
@@ -290,7 +320,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   };
 
   // ─────────────────────────────────────────────────────────
-  // 5. DÉPOUILLEMENT & VÉRIFICATION DES VICTOIRES
+  // 5. DÉPOUILLEMENT, TENTATIVE DE MR. WHITE & VICTOIRES
   // ─────────────────────────────────────────────────────────
   const tallyVotes = (finalVotes: Record<string, string>) => {
     const voteCounts: Record<string, number> = {};
@@ -308,17 +338,59 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     });
 
     const eliminated = speakingOrder.find(p => p.id === eliminatedId) || speakingOrder[0];
+    handleEliminatePlayer(eliminated);
+  };
+
+  const handleEliminatePlayer = (eliminated: UndercoverPlayer) => {
     setEliminatedPlayer(eliminated);
 
-    // Marquer éliminé et sauvegarder dans le state
+    // Si Mr. White se fait éliminer au vote, il a droit à une devinette ultime !
+    if (eliminated.gameRole === "MrWhite") {
+      setMrWhiteGuess("");
+      sfxSuspense();
+      setPhase("MR_WHITE_GUESS");
+      return;
+    }
+
+    continueAfterElimination(eliminated);
+  };
+
+  const handleMrWhiteGuessSubmit = () => {
+    if (!mrWhiteGuess.trim() || !eliminatedPlayer) return;
+    sfxTap();
+
+    const isCorrect = checkMrWhiteGuess(mrWhiteGuess, currentCivilianWord);
+    if (isCorrect) {
+      sfxVictory();
+      setWinnerTeam("UNDERCOVER");
+      incrementStat("gamesPlayed");
+      incrementStat("wins");
+      incrementStat("undercoverWins");
+
+      const updatedList = speakingOrder.map(p => 
+        p.id === eliminatedPlayer.id 
+          ? { ...p, isEliminated: true, scorePoints: p.scorePoints + 300 } 
+          : p
+      );
+      setSpeakingOrder(updatedList);
+      setPhase("END_GAME");
+    } else {
+      sfxError();
+      continueAfterElimination(eliminatedPlayer);
+    }
+  };
+
+  const continueAfterElimination = (eliminated: UndercoverPlayer) => {
     const updatedList = speakingOrder.map(p => 
       p.id === eliminated.id ? { ...p, isEliminated: true } : p
     );
     setSpeakingOrder(updatedList);
+    setPlayerList(prev => prev.map(p => p.id === eliminated.id ? { ...p, isEliminated: true } : p));
+
     // Le Joker gagne UNIQUEMENT s'il se fait éliminer au TOUT PREMIER VOTE (Tour 1) !
     if (eliminated.gameRole === "Joker" && clueRoundNumber === 1) {
       sfxVictory();
-      setWinnerTeam("JOKER" as any);
+      setWinnerTeam("JOKER");
       incrementStat("gamesPlayed");
       setPhase("END_GAME");
       return;
@@ -330,7 +402,6 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const civiliansLeft = remainingAlive.filter(p => p.gameRole === "Civilian").length;
 
     if (undercoversLeft === 0) {
-      // VICTOIRE DES CIVILS
       awardPoints(updatedList, "CIVILIANS");
       sfxVictory();
       setWinnerTeam("CIVILIANS");
@@ -339,7 +410,6 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       incrementStat("civilianWins");
       setPhase("END_GAME");
     } else if (undercoversLeft >= civiliansLeft) {
-      // VICTOIRE DES IMPOSTEURS
       awardPoints(updatedList, "UNDERCOVER");
       sfxVictory();
       setWinnerTeam("UNDERCOVER");
@@ -452,8 +522,72 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </Card>
           </div>
 
-          {/* Colonne Droite : Répartition des Rôles */}
-          <div className="md:col-span-6 flex flex-col gap-4">
+            {/* CARTE MODE DE VOTE (EXPRESS VS CIRCULANT) */}
+            <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
+              <div className="flex flex-col text-left space-y-3">
+                <span className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-1.5">
+                  <Vote size={16} /> Mode de Vote
+                </span>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => { setVotingMode("EXPRESS"); sfxTap(); }}
+                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                      votingMode === "EXPRESS"
+                        ? "bg-primary/20 border-primary text-white shadow-glow"
+                        : "bg-surface/50 border-white/5 text-foreground/50 hover:text-white"
+                    }`}
+                  >
+                    <span className="font-extrabold text-xs flex items-center gap-1">
+                      <Zap size={14} className="text-amber-400" /> Express (Table)
+                    </span>
+                    <span className="text-[10px] opacity-70 mt-1">Main levée à voix haute</span>
+                  </button>
+
+                  <button
+                    onClick={() => { setVotingMode("CIRCULATE"); sfxTap(); }}
+                    className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between ${
+                      votingMode === "CIRCULATE"
+                        ? "bg-primary/20 border-primary text-white shadow-glow"
+                        : "bg-surface/50 border-white/5 text-foreground/50 hover:text-white"
+                    }`}
+                  >
+                    <span className="font-extrabold text-xs flex items-center gap-1">
+                      <Lock size={14} className="text-blue-400" /> Circulant (Téléphone)
+                    </span>
+                    <span className="text-[10px] opacity-70 mt-1">Vote secret individuel</span>
+                  </button>
+                </div>
+              </div>
+            </Card>
+
+            {/* CARTE CHRONOMÈTRE DE PAROLE */}
+            <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
+              <div className="flex justify-between items-center">
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-1.5 mb-1">
+                    <Clock size={16} /> Chrono de parole
+                  </span>
+                  <span className="text-[11px] text-foreground/60 font-medium">Temps d'indice par joueur</span>
+                </div>
+
+                <div className="flex items-center gap-1 bg-white/5 p-1 rounded-2xl border border-white/5">
+                  {[0, 15, 30, 45, 60].map(sec => (
+                    <button
+                      key={sec}
+                      onClick={() => { setSpeakingTimerMax(sec); sfxTap(); }}
+                      className={`px-2.5 py-1.5 rounded-xl font-extrabold text-xs transition-all ${
+                        speakingTimerMax === sec
+                          ? "bg-primary text-white shadow-sm"
+                          : "text-foreground/50 hover:text-white"
+                      }`}
+                    >
+                      {sec === 0 ? "Off" : `${sec}s`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </Card>
+
             {/* CARTE MODE MYSTÈRE ALÉATOIRE */}
             <Card className="w-full p-5 bg-gradient-to-r from-amber-950/80 via-surface to-purple-950/80 border-2 border-amber-500/40 shadow-glow">
               <div className="flex items-center justify-between">
@@ -738,11 +872,33 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     const speaker = aliveSpeakers[currentSpeakerIdx];
 
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto relative">
-        <div className="w-full text-center">
-          <span className="text-xs font-bold uppercase tracking-widest text-primary">Tour d'indices n°{clueRoundNumber}</span>
-          <h1 className="text-2xl font-black mt-1">Joueur {currentSpeakerIdx + 1} / {aliveSpeakers.length}</h1>
+      <main className="min-h-screen flex flex-col items-center justify-between py-8 px-6 max-w-md mx-auto relative">
+        {/* Header avec Journal d'Indices & Numéro de tour */}
+        <div className="w-full flex justify-between items-center">
+          <div className="text-left">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary block">Tour d'indices n°{clueRoundNumber}</span>
+            <h1 className="text-xl font-black">Joueur {currentSpeakerIdx + 1} / {aliveSpeakers.length}</h1>
+          </div>
+
+          <button
+            onClick={() => { setShowJournalModal(true); sfxTap(); }}
+            className="p-3 rounded-2xl bg-white/5 border border-white/10 text-primary hover:bg-white/10 transition-all flex items-center gap-1.5 font-extrabold text-xs"
+          >
+            <BookOpen size={16} /> Journal
+          </button>
         </div>
+
+        {/* Chronomètre dynamique si configuré */}
+        {speakingTimerMax > 0 && timerSeconds !== null && (
+          <div className="w-full my-2 bg-surface/80 p-3 rounded-2xl border border-white/10 flex items-center justify-between shadow-soft">
+            <div className="flex items-center gap-2 text-xs font-black text-amber-400">
+              <Clock size={16} className="animate-pulse" /> Temps d'indice
+            </div>
+            <div className="text-lg font-black text-white">
+              {timerSeconds}s
+            </div>
+          </div>
+        )}
 
         <Card className="w-full p-8 flex flex-col items-center text-center border border-white/10 shadow-glow my-auto relative">
           <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center text-4xl font-black mb-4">
@@ -769,33 +925,112 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
         <Button variant="primary" className="w-full py-5 text-lg" onClick={() => { setIsWordRevealed(false); handleNextSpeaker(); }}>
           {currentSpeakerIdx < aliveSpeakers.length - 1 ? "Joueur suivant →" : "Terminer le tour d'indices ✓"}
         </Button>
+
+        {/* MODALE JOURNAL D'INDICES & COMPOSITION DE L'ÉQUIPE */}
+        {showJournalModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-6 animate-in fade-in duration-200">
+            <Card className="w-full max-w-sm p-6 border border-white/15 bg-surface/95 shadow-glow flex flex-col max-h-[80vh]">
+              <div className="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 className="font-black text-lg flex items-center gap-2 text-primary">
+                  <BookOpen size={20} /> Journal de Partie
+                </h3>
+                <button 
+                  onClick={() => setShowJournalModal(false)}
+                  className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-sm"
+                >✕</button>
+              </div>
+
+              <div className="overflow-y-auto space-y-3 pr-1 text-left flex-1">
+                <span className="text-[11px] font-black uppercase tracking-wider text-foreground/50">Joueurs vivants ({speakingOrder.filter(p => !p.isEliminated).length})</span>
+                <div className="space-y-1.5">
+                  {speakingOrder.filter(p => !p.isEliminated).map(p => (
+                    <div key={p.id} className="p-2.5 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between text-xs font-bold">
+                      <span>{p.name}</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-extrabold">VIVANT</span>
+                    </div>
+                  ))}
+                </div>
+
+                {speakingOrder.some(p => p.isEliminated) && (
+                  <>
+                    <span className="text-[11px] font-black uppercase tracking-wider text-red-400 block pt-2">Joueurs éliminés</span>
+                    <div className="space-y-1.5">
+                      {speakingOrder.filter(p => p.isEliminated).map(p => (
+                        <div key={p.id} className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-between text-xs font-bold">
+                          <span>{p.name}</span>
+                          <span className="text-[10px] font-extrabold text-red-400">{p.gameRole}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <Button variant="surface" className="w-full mt-4 py-3 text-sm" onClick={() => setShowJournalModal(false)}>
+                Fermer le journal
+              </Button>
+            </Card>
+          </div>
+        )}
       </main>
     );
   }
 
   // --- ÉCRAN : DÉCISION ENTRE VOTER ET REFAIRE UN TOUR D'INDICES ---
   if (phase === "TURN_DECISION") {
+    const alivePlayers = speakingOrder.filter(p => !p.isEliminated);
+
     return (
-      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto text-center">
+      <main className="min-h-screen flex flex-col items-center justify-between py-8 px-6 max-w-md mx-auto text-center">
         <div className="w-full text-center">
           <span className="text-xs font-bold uppercase tracking-widest text-primary">Fin du tour d'indices n°{clueRoundNumber}</span>
           <h1 className="text-3xl font-black mt-1">Que voulez-vous faire ?</h1>
         </div>
 
-        <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto">
-          <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-4">
-            <HelpCircle size={40} />
+        {votingMode === "EXPRESS" ? (
+          <div className="w-full my-auto space-y-4">
+            <Card className="w-full p-5 text-left bg-primary/10 border border-primary/30">
+              <h3 className="font-extrabold text-sm text-primary flex items-center gap-1.5 mb-1">
+                <Zap size={16} /> Vote Express à Main Levée
+              </h3>
+              <p className="text-xs text-foreground/70">
+                Débattez ensemble à la table, puis touchez le nom du joueur désigné par la majorité pour l'éliminer :
+              </p>
+            </Card>
+
+            <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+              {alivePlayers.map(player => (
+                <Card
+                  key={player.id}
+                  className="p-4 flex justify-between items-center cursor-pointer hover:border-red-500/50 bg-surface/80 active:scale-[0.98] transition-all"
+                  onClick={() => { sfxTap(); handleEliminatePlayer(player); }}
+                >
+                  <span className="font-bold text-base">{player.name}</span>
+                  <span className="text-xs font-extrabold text-red-400 flex items-center gap-1">
+                    Éliminer <Skull size={16} />
+                  </span>
+                </Card>
+              ))}
+            </div>
           </div>
-          <h2 className="text-xl font-extrabold mb-2">Tous les joueurs ont donné leur indice.</h2>
-          <p className="text-foreground/60 text-xs leading-relaxed max-w-xs">
-            Vous pouvez passer au vote pour éliminer un suspect ou faire un nouveau tour d'indices pour en savoir plus.
-          </p>
-        </Card>
+        ) : (
+          <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto">
+            <div className="w-20 h-20 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-4">
+              <HelpCircle size={40} />
+            </div>
+            <h2 className="text-xl font-extrabold mb-2">Tous les joueurs ont donné leur indice.</h2>
+            <p className="text-foreground/60 text-xs leading-relaxed max-w-xs">
+              Vous pouvez passer au vote secret sur téléphone ou faire un nouveau tour d'indices.
+            </p>
+          </Card>
+        )}
 
         <div className="w-full flex flex-col gap-3">
-          <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={startVotingPhase}>
-            <Vote size={20} /> Passer au vote d'élimination
-          </Button>
+          {votingMode === "CIRCULATE" && (
+            <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={startVotingPhase}>
+              <Vote size={20} /> Lancer le vote secret au téléphone
+            </Button>
+          )}
           <Button variant="surface" className="w-full py-4 text-md gap-2" onClick={startAnotherClueRound}>
             <RefreshCw size={18} /> Faire le tour n°{clueRoundNumber + 1} d'indices
           </Button>
@@ -804,7 +1039,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     );
   }
 
-  // --- ÉCRAN 6 : VOTE INDIVIDUEL ET DISCRET ---
+  // --- ÉCRAN 6 : VOTE INDIVIDUEL ET DISCRET (MODE CIRCULANT) ---
   if (phase === "VOTING_CIRCULATE") {
     const activeVoters = speakingOrder.filter(p => !p.isEliminated);
     const currentVoter = activeVoters[voterIndex];
@@ -833,7 +1068,46 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     );
   }
 
-  // --- ÉCRAN 7 : RÉSULTATS DU VOTE (SI LA PARTIE CONTINUE) ---
+  // --- ÉCRAN 7 : ULTIME CHANCE DE MR. WHITE (DEVINETTE DU MOT) ---
+  if (phase === "MR_WHITE_GUESS" && eliminatedPlayer) {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">
+        <div className="w-20 h-20 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center mb-6 animate-pulse">
+          <ShieldAlert size={48} />
+        </div>
+        <h1 className="text-3xl font-black mb-2 text-purple-400">{eliminatedPlayer.name} était Mr. White !</h1>
+        <p className="text-foreground/70 text-sm mb-8 leading-relaxed">
+          Mr. White a été démasqué ! Mais il peut encore <span className="font-extrabold text-white">voler la victoire</span> s'il arrive à deviner le mot secret des Civils !
+        </p>
+
+        <Card className="w-full p-6 flex flex-col items-center mb-6 border border-purple-500/30 shadow-glow">
+          <label className="text-xs font-black uppercase tracking-wider text-purple-300 mb-3 block">
+            Quelle est la devinette de Mr. White ?
+          </label>
+          <input
+            type="text"
+            value={mrWhiteGuess}
+            onChange={(e) => setMrWhiteGuess(e.target.value)}
+            placeholder="Tapez le mot des Civils..."
+            className="w-full bg-surface border-2 border-purple-500/20 rounded-2xl px-5 py-4 text-center font-black text-xl focus:border-purple-400 outline-none transition-colors mb-2"
+            autoFocus
+            onKeyDown={(e) => { if (e.key === "Enter" && mrWhiteGuess.trim()) handleMrWhiteGuessSubmit(); }}
+          />
+        </Card>
+
+        <Button
+          variant="primary"
+          className="w-full py-5 text-lg bg-gradient-to-r from-purple-600 to-indigo-600 border-none shadow-glow"
+          disabled={!mrWhiteGuess.trim()}
+          onClick={handleMrWhiteGuessSubmit}
+        >
+          Valider la devinette ✨
+        </Button>
+      </main>
+    );
+  }
+
+  // --- ÉCRAN 8 : RÉSULTATS DU VOTE (SI LA PARTIE CONTINUE) ---
   if (phase === "VOTE_SUMMARY" && eliminatedPlayer) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">

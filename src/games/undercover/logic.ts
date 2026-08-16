@@ -839,3 +839,22 @@ export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPla
 
   return shuffled;
 }
+
+/** Normalisation d'une chaîne pour comparaison de mots (sans accents, minuscules, sans espaces superflus) */
+export function normalizeString(str: string): string {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .trim();
+}
+
+/** Vérifie si la devinette de Mr. White correspond au mot secret des Civils */
+export function checkMrWhiteGuess(guess: string, civilianWord: string): boolean {
+  const normGuess = normalizeString(guess);
+  const normCivilian = normalizeString(civilianWord);
+
+  if (!normGuess || !normCivilian) return false;
+  return normGuess === normCivilian || (normCivilian.includes(normGuess) && normGuess.length >= 3);
+}
