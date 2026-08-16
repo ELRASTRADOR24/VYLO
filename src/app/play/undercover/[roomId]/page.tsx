@@ -99,6 +99,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [isMysteryMode, setIsMysteryMode] = useState(false);
   const [votingMode, setVotingMode] = useState<"EXPRESS" | "CIRCULATE">("EXPRESS");
   const [speakingTimerMax, setSpeakingTimerMax] = useState<number>(0); // 0 = sans limite
+  const [minRoundsBeforeVote, setMinRoundsBeforeVote] = useState<number>(1); // min 1 tour avant de pouvoir voter
 
   const handleToggleCategory = (cat: CategoryName) => {
     sfxTap();
@@ -159,6 +160,13 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     }
     return () => clearInterval(interval);
   }, [timerActive, timerSeconds]);
+
+  // Vibration haptique lors du passage du téléphone
+  useEffect(() => {
+    if (phase === "PASS_TO_PLAYER" && typeof navigator !== "undefined" && navigator.vibrate) {
+      try { navigator.vibrate(200); } catch {}
+    }
+  }, [phase, currentDistIndex]);
 
   // ─────────────────────────────────────────────────────────
   // 1. LANCEMENT DE LA DISTRIBUTION DES RÔLES
@@ -316,6 +324,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   const handleCastVote = (voterId: string, targetId: string) => {
     sfxTap();
+    // targetId "ABSTAIN" = vote blanc
     const updated = { ...votesMap, [voterId]: targetId };
     setVotesMap(updated);
 
@@ -323,8 +332,18 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     if (voterIndex < activeVoters.length - 1) {
       setVoterIndex(prev => prev + 1);
     } else {
-      // Dépouillement des votes
-      tallyVotes(updated);
+      // Dépouillement des votes (on ignore les votes blancs)
+      const realVotes: Record<string, string> = {};
+      Object.entries(updated).forEach(([vid, tid]) => {
+        if (tid !== "ABSTAIN") realVotes[vid] = tid;
+      });
+      // Si tout le monde s'abstient, on relance un tour d'indices
+      if (Object.keys(realVotes).length === 0) {
+        sfxError();
+        startAnotherClueRound();
+        return;
+      }
+      tallyVotes(realVotes);
     }
   };
 
@@ -594,6 +613,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </Card>
           </div>
 
+          {/* Colonne Droite : Options de jeu & Rôles */}
+          <div className="md:col-span-6 flex flex-col gap-6">
             {/* CARTE MODE DE VOTE (EXPRESS VS CIRCULANT) */}
             <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
               <div className="flex flex-col text-left space-y-3">
@@ -654,6 +675,34 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                       }`}
                     >
                       {sec === 0 ? "Off" : `${sec}s`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </Card>
+
+            {/* CARTE TOURS MINIMUM AVANT LE VOTE */}
+            <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
+              <div className="flex justify-between items-center">
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-1.5 mb-1">
+                    <Vote size={16} /> Tours min. avant vote
+                  </span>
+                  <span className="text-[11px] text-foreground/60 font-medium">Nombre de tours d'indices obligatoires</span>
+                </div>
+
+                <div className="flex items-center gap-1 bg-white/5 p-1 rounded-2xl border border-white/5">
+                  {[1, 2, 3].map(n => (
+                    <button
+                      key={n}
+                      onClick={() => { setMinRoundsBeforeVote(n); sfxTap(); }}
+                      className={`px-3 py-1.5 rounded-xl font-extrabold text-xs transition-all ${
+                        minRoundsBeforeVote === n
+                          ? "bg-primary text-white shadow-sm"
+                          : "text-foreground/50 hover:text-white"
+                      }`}
+                    >
+                      {n}
                     </button>
                   ))}
                 </div>
@@ -843,6 +892,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
         setPhase("ENTER_NAME");
       }
     };
+
 
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto relative">
@@ -1099,17 +1149,28 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
         {votingMode === "EXPRESS" ? (
           <div className="w-full my-auto space-y-4">
-            <Card className="w-full p-5 text-left bg-primary/10 border border-primary/30">
-              <h3 className="font-extrabold text-sm text-primary flex items-center gap-1.5 mb-1">
-                <Zap size={16} /> Vote Express à Main Levée
-              </h3>
-              <p className="text-xs text-foreground/70">
-                Débattez ensemble à la table, puis touchez le nom du joueur désigné par la majorité pour l'éliminer :
-              </p>
-            </Card>
+            {clueRoundNumber < minRoundsBeforeVote ? (
+              <Card className="w-full p-5 text-center bg-amber-500/10 border border-amber-500/30">
+                <p className="text-sm font-bold text-amber-400">
+                  ⚠️ Vote disponible après le tour n°{minRoundsBeforeVote}
+                </p>
+                <p className="text-xs text-foreground/50 mt-1">
+                  Encore {minRoundsBeforeVote - clueRoundNumber} tour(s) d'indices obligatoire(s).
+                </p>
+              </Card>
+            ) : (
+              <>
+              <Card className="w-full p-5 text-left bg-primary/10 border border-primary/30">
+                <h3 className="font-extrabold text-sm text-primary flex items-center gap-1.5 mb-1">
+                  <Zap size={16} /> Vote Express à Main Levée
+                </h3>
+                <p className="text-xs text-foreground/70">
+                  Débattez ensemble à la table, puis touchez le nom du joueur désigné par la majorité pour l'éliminer :
+                </p>
+              </Card>
 
-            <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-              {alivePlayers.map(player => (
+              <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                {alivePlayers.map(player => (
                 <Card
                   key={player.id}
                   className="p-4 flex justify-between items-center cursor-pointer hover:border-red-500/50 bg-surface/80 active:scale-[0.98] transition-all"
@@ -1122,6 +1183,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 </Card>
               ))}
             </div>
+            </>
+            )}
           </div>
         ) : (
           <Card className="w-full p-8 flex flex-col items-center border border-white/10 shadow-glow my-auto">
@@ -1130,13 +1193,16 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </div>
             <h2 className="text-xl font-extrabold mb-2">Tous les joueurs ont donné leur indice.</h2>
             <p className="text-foreground/60 text-xs leading-relaxed max-w-xs">
-              Vous pouvez passer au vote secret sur téléphone ou faire un nouveau tour d'indices.
+              {clueRoundNumber < minRoundsBeforeVote 
+                ? `Vote disponible après le tour n°${minRoundsBeforeVote}. Encore ${minRoundsBeforeVote - clueRoundNumber} tour(s).`
+                : "Vous pouvez passer au vote secret sur téléphone ou faire un nouveau tour d'indices."
+              }
             </p>
           </Card>
         )}
 
         <div className="w-full flex flex-col gap-3">
-          {votingMode === "CIRCULATE" && (
+          {votingMode === "CIRCULATE" && clueRoundNumber >= minRoundsBeforeVote && (
             <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={startVotingPhase}>
               <Vote size={20} /> Lancer le vote secret au téléphone
             </Button>
@@ -1205,6 +1271,15 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
               </Card>
             );
           })}
+
+          {/* Bouton Vote Blanc / S'abstenir */}
+          <Card
+            className="p-5 flex justify-between items-center cursor-pointer hover:border-amber-500/50 transition-all active:scale-[0.98] border-dashed border-white/20"
+            onClick={() => handleCastVote(currentVoter.id, "ABSTAIN")}
+          >
+            <span className="font-bold text-lg text-foreground/50">S'abstenir (vote blanc)</span>
+            <span className="text-xs font-extrabold text-amber-400">Passer</span>
+          </Card>
         </div>
       </main>
     );
