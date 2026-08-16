@@ -31,6 +31,8 @@ type PassPhase =
   | "VOTING_CIRCULATE"   // 7. Circulation du téléphone pour vote individuel
   | "MR_WHITE_GUESS"     // 8. Ultime devinette de Mr. White
   | "VOTE_SUMMARY"       // 9. Résultats du vote & annonce de l'éliminé
+  | "VOTE_TIE"           // Égalité au vote
+  | "DOUBLE_AGENT_REVENGE" // Double Agent emporte un joueur
   | "END_GAME";          // 10. Bilan, rôles révélés & attribution des points
 
 export default function UndercoverLocalGame({ params }: { params: Promise<{ roomId: string }> }) {
@@ -42,6 +44,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const handleReplaySameTeam = () => {
     const wordPair = getRandomWordPair(selectedCategories);
     setCurrentCivilianWord(wordPair.civilian);
+    setCurrentUndercoverWord(wordPair.undercover);
     const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
     const count = existingNames.length > 0 ? existingNames.length : playerCount;
     const playerNames = existingNames.length > 0 ? existingNames : Array.from({ length: count }, (_, i) => `Joueur ${i + 1}`);
@@ -137,6 +140,11 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [winnerTeam, setWinnerTeam] = useState<"CIVILIANS" | "UNDERCOVER" | "JOKER" | null>(null);
   const [mrWhiteGuess, setMrWhiteGuess] = useState("");
   const [showJournalModal, setShowJournalModal] = useState(false);
+  const [tiedPlayers, setTiedPlayers] = useState<UndercoverPlayer[]>([]);
+  const [expressConfirmTarget, setExpressConfirmTarget] = useState<UndercoverPlayer | null>(null);
+  const [currentUndercoverWord, setCurrentUndercoverWord] = useState("");
+  const [showRulesModal, setShowRulesModal] = useState(false);
+  const [cumulativeScores, setCumulativeScores] = useState<Record<string, number>>({});
 
   // Validation de la configuration
   const configValidation = validateRoleConfig(playerCount, undercoverCount, mrWhiteCount);
@@ -161,6 +169,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     // 1. Choix des mots (Multi-catégories)
     const wordPair = getRandomWordPair(selectedCategories);
     setCurrentCivilianWord(wordPair.civilian);
+    setCurrentUndercoverWord(wordPair.undercover);
 
     // 2. Génération des rôles (Mode Mystère ou Paramétré)
     const roles = isMysteryMode 
@@ -329,16 +338,31 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     });
 
     let maxVotes = 0;
-    let eliminatedId = "";
     Object.entries(voteCounts).forEach(([id, count]) => {
       if (count > maxVotes) {
         maxVotes = count;
-        eliminatedId = id;
       }
     });
 
-    const eliminated = speakingOrder.find(p => p.id === eliminatedId) || speakingOrder[0];
-    handleEliminatePlayer(eliminated);
+    const tiedIds = Object.entries(voteCounts).filter(([id, count]) => count === maxVotes).map(([id]) => id);
+    const tied = speakingOrder.filter(p => tiedIds.includes(p.id));
+
+    if (tied.length > 1) {
+      if (phase === "VOTE_TIE") {
+        const eliminated = tied[Math.floor(Math.random() * tied.length)];
+        handleEliminatePlayer(eliminated);
+      } else {
+        setTiedPlayers(tied);
+        setTimerActive(false);
+        setVoterIndex(0);
+        setVotesMap({});
+        setPhase("VOTE_TIE");
+      }
+    } else {
+      const eliminatedId = tiedIds[0];
+      const eliminated = speakingOrder.find(p => p.id === eliminatedId) || speakingOrder[0];
+      handleEliminatePlayer(eliminated);
+    }
   };
 
   const handleEliminatePlayer = (eliminated: UndercoverPlayer) => {
@@ -352,7 +376,47 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       return;
     }
 
+    if (eliminated.gameRole === "DoubleAgent") {
+      sfxSuspense();
+      setPhase("DOUBLE_AGENT_REVENGE");
+      return;
+    }
+
     continueAfterElimination(eliminated);
+  };
+
+  const handleDoubleAgentRevenge = (target: UndercoverPlayer) => {
+    const updatedList = speakingOrder.map(p => 
+      (p.id === eliminatedPlayer?.id || p.id === target.id) ? { ...p, isEliminated: true } : p
+    );
+    setSpeakingOrder(updatedList);
+    setPlayerList(prev => prev.map(p => (p.id === eliminatedPlayer?.id || p.id === target.id) ? { ...p, isEliminated: true } : p));
+    setEliminatedPlayer(target);
+
+    const remainingAlive = updatedList.filter(p => !p.isEliminated);
+    const undercoversLeft = remainingAlive.filter(p => p.gameRole === "Undercover" || p.gameRole === "MrWhite").length;
+    const civiliansLeft = remainingAlive.filter(p => p.gameRole === "Civilian").length;
+
+    if (undercoversLeft === 0) {
+      awardPoints(updatedList, "CIVILIANS");
+      sfxVictory();
+      setWinnerTeam("CIVILIANS");
+      incrementStat("gamesPlayed");
+      incrementStat("wins");
+      incrementStat("civilianWins");
+      setPhase("END_GAME");
+    } else if (undercoversLeft >= civiliansLeft) {
+      awardPoints(updatedList, "UNDERCOVER");
+      sfxVictory();
+      setWinnerTeam("UNDERCOVER");
+      incrementStat("gamesPlayed");
+      incrementStat("wins");
+      incrementStat("undercoverWins");
+      setPhase("END_GAME");
+    } else {
+      sfxError();
+      setPhase("VOTE_SUMMARY");
+    }
   };
 
   const handleMrWhiteGuessSubmit = () => {
@@ -373,6 +437,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           : p
       );
       setSpeakingOrder(updatedList);
+      setCumulativeScores(prev => ({ ...prev, [eliminatedPlayer.name]: (prev[eliminatedPlayer.name] || 0) + 300 }));
       setPhase("END_GAME");
     } else {
       sfxError();
@@ -392,6 +457,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       sfxVictory();
       setWinnerTeam("JOKER");
       incrementStat("gamesPlayed");
+      setCumulativeScores(prev => ({ ...prev, [eliminated.name]: (prev[eliminated.name] || 0) + 300 }));
       setPhase("END_GAME");
       return;
     }
@@ -425,10 +491,16 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   const awardPoints = (finalPlayers: UndercoverPlayer[], winner: "CIVILIANS" | "UNDERCOVER") => {
     finalPlayers.forEach(p => {
+      let pts = 0;
       if (winner === "CIVILIANS" && p.gameRole === "Civilian") {
         p.scorePoints += 100;
+        pts = 100;
       } else if (winner === "UNDERCOVER" && (p.gameRole === "Undercover" || p.gameRole === "MrWhite")) {
         p.scorePoints += 200;
+        pts = 200;
+      }
+      if (pts > 0) {
+        setCumulativeScores(prev => ({ ...prev, [p.name]: (prev[p.name] || 0) + pts }));
       }
     });
   };
@@ -880,12 +952,20 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             <h1 className="text-xl font-black">Joueur {currentSpeakerIdx + 1} / {aliveSpeakers.length}</h1>
           </div>
 
-          <button
-            onClick={() => { setShowJournalModal(true); sfxTap(); }}
-            className="p-3 rounded-2xl bg-white/5 border border-white/10 text-primary hover:bg-white/10 transition-all flex items-center gap-1.5 font-extrabold text-xs"
-          >
-            <BookOpen size={16} /> Journal
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => { setShowRulesModal(true); sfxTap(); }}
+              className="p-3 rounded-2xl bg-white/5 border border-white/10 text-primary hover:bg-white/10 transition-all flex items-center justify-center font-extrabold text-xs"
+            >
+              <HelpCircle size={16} />
+            </button>
+            <button
+              onClick={() => { setShowJournalModal(true); sfxTap(); }}
+              className="p-3 rounded-2xl bg-white/5 border border-white/10 text-primary hover:bg-white/10 transition-all flex items-center gap-1.5 font-extrabold text-xs"
+            >
+              <BookOpen size={16} /> Journal
+            </button>
+          </div>
         </div>
 
         {/* Chronomètre dynamique si configuré */}
@@ -972,6 +1052,36 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </Card>
           </div>
         )}
+
+        {/* MODALE RÈGLES DU JEU */}
+        {showRulesModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-6 animate-in fade-in duration-200">
+            <Card className="w-full max-w-sm p-6 border border-white/15 bg-surface/95 shadow-glow flex flex-col max-h-[80vh]">
+              <div className="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 className="font-black text-lg flex items-center gap-2 text-primary">
+                  <HelpCircle size={20} /> Règles du jeu
+                </h3>
+                <button 
+                  onClick={() => setShowRulesModal(false)}
+                  className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-sm"
+                >✕</button>
+              </div>
+
+              <div className="overflow-y-auto space-y-3 pr-1 text-left flex-1 text-sm">
+                <p><strong>Civils:</strong> Trouvez les imposteurs grâce aux indices.</p>
+                <p><strong>Undercover:</strong> Vous avez un mot similaire mais différent. Restez discret.</p>
+                <p><strong>Mr. White:</strong> Vous n'avez aucun mot. Bluffez pour survivre. Si éliminé, devinez le mot des Civils pour gagner.</p>
+                <p><strong>Joker:</strong> Faites-vous éliminer au Tour 1 pour gagner.</p>
+                <p><strong>Caméléon:</strong> Copiez le 1er joueur.</p>
+                <p><strong>Double Agent:</strong> Mot des Civils, mais si éliminé, vous emportez un joueur avec vous.</p>
+              </div>
+
+              <Button variant="surface" className="w-full mt-4 py-3 text-sm" onClick={() => setShowRulesModal(false)}>
+                Fermer
+              </Button>
+            </Card>
+          </div>
+        )}
       </main>
     );
   }
@@ -1003,7 +1113,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 <Card
                   key={player.id}
                   className="p-4 flex justify-between items-center cursor-pointer hover:border-red-500/50 bg-surface/80 active:scale-[0.98] transition-all"
-                  onClick={() => { sfxTap(); handleEliminatePlayer(player); }}
+                  onClick={() => { sfxTap(); setExpressConfirmTarget(player); }}
                 >
                   <span className="font-bold text-base">{player.name}</span>
                   <span className="text-xs font-extrabold text-red-400 flex items-center gap-1">
@@ -1035,6 +1145,38 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             <RefreshCw size={18} /> Faire le tour n°{clueRoundNumber + 1} d'indices
           </Button>
         </div>
+
+        {/* Modal Express Confirm */}
+        {expressConfirmTarget && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-6 animate-in fade-in duration-200">
+            <Card className="w-full max-w-sm p-6 border border-red-500/30 bg-surface/95 shadow-glow flex flex-col items-center text-center">
+              <Skull size={48} className="text-red-500 mb-4" />
+              <h3 className="font-black text-xl mb-6">
+                Éliminer {expressConfirmTarget.name} ?
+              </h3>
+              <div className="flex gap-4 w-full">
+                <Button 
+                  variant="surface" 
+                  className="flex-1 py-3" 
+                  onClick={() => setExpressConfirmTarget(null)}
+                >
+                  ✕ Annuler
+                </Button>
+                <Button 
+                  variant="primary" 
+                  className="flex-1 py-3 bg-red-500 border-red-500 hover:bg-red-600" 
+                  onClick={() => {
+                    const target = expressConfirmTarget;
+                    setExpressConfirmTarget(null);
+                    handleEliminatePlayer(target);
+                  }}
+                >
+                  ✓ Confirmer
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
       </main>
     );
   }
@@ -1124,6 +1266,74 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     );
   }
 
+  // --- ÉCRAN : DOUBLE AGENT REVENGE ---
+  if (phase === "DOUBLE_AGENT_REVENGE" && eliminatedPlayer) {
+    const aliveTargets = speakingOrder.filter(p => !p.isEliminated && p.id !== eliminatedPlayer.id);
+
+    return (
+      <main className="min-h-screen flex flex-col items-center py-10 px-6 max-w-md mx-auto">
+        <div className="w-20 h-20 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center mb-6 animate-pulse">
+          <Skull size={48} />
+        </div>
+        <h1 className="text-2xl font-black mb-2 text-center text-pink-400">
+          💣 {eliminatedPlayer.name} était un Double Agent ! Il emporte un joueur avec lui !
+        </h1>
+        <p className="text-foreground/70 text-sm mb-8 text-center">
+          Choisissez qui vous voulez éliminer avec vous :
+        </p>
+
+        <div className="w-full space-y-3 mb-8">
+          {aliveTargets.map(target => (
+            <Card
+              key={target.id}
+              className="p-5 flex justify-between items-center cursor-pointer hover:border-pink-500/50 transition-all active:scale-[0.98]"
+              onClick={() => {
+                sfxTap();
+                handleDoubleAgentRevenge(target);
+              }}
+            >
+              <span className="font-bold text-lg">{target.name}</span>
+              <Skull className="text-white/20" size={20} />
+            </Card>
+          ))}
+        </div>
+      </main>
+    );
+  }
+
+  // --- ÉCRAN : ÉGALITÉ AU VOTE ---
+  if (phase === "VOTE_TIE") {
+    const activeVoters = speakingOrder.filter(p => !p.isEliminated);
+    const currentVoter = activeVoters[voterIndex];
+
+    return (
+      <main className="min-h-screen flex flex-col items-center py-10 px-6 max-w-md mx-auto">
+        <h2 className="text-xl font-bold text-foreground/50 mb-1">Re-vote Égalité ({voterIndex + 1}/{activeVoters.length})</h2>
+        <h1 className="text-3xl font-black text-red-500 mb-8">{currentVoter?.name}, qui éliminer ?</h1>
+        
+        <div className="w-full bg-red-500/10 p-4 rounded-xl text-red-400 mb-6 text-sm font-bold text-center">
+          Égalité ! Re-vote entre les ex-aequo
+        </div>
+
+        <div className="w-full space-y-3 mb-8">
+          {tiedPlayers.map(target => {
+            if (target.id === currentVoter?.id) return null;
+            return (
+              <Card
+                key={target.id}
+                className="p-5 flex justify-between items-center cursor-pointer hover:border-red-500/50 transition-all active:scale-[0.98]"
+                onClick={() => handleCastVote(currentVoter.id, target.id)}
+              >
+                <span className="font-bold text-lg">{target.name}</span>
+                <Skull className="text-white/20" size={20} />
+              </Card>
+            );
+          })}
+        </div>
+      </main>
+    );
+  }
+
   // --- ÉCRAN 8 : FIN DE PARTIE & RÉSULTATS DE SCORE ---
   if (phase === "END_GAME") {
     const isCivilianWin = winnerTeam === "CIVILIANS";
@@ -1151,6 +1361,14 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
           </h2>
 
           <div className="w-full space-y-3 mt-6">
+            <Card className="p-4 bg-white/5 border-white/10 mb-4 text-center">
+              <h3 className="text-sm font-black mb-3">Les mots de cette partie</h3>
+              <div className="flex flex-col gap-2 text-sm font-bold">
+                <span className="text-blue-400">Mot des Civils: {currentCivilianWord}</span>
+                <span className="text-red-400">Mot des Undercovers: {currentUndercoverWord}</span>
+              </div>
+            </Card>
+
             {speakingOrder.map(p => (
               <div key={p.id} className="flex justify-between items-center text-sm py-2 border-b border-white/5 last:border-0">
                 <div className="flex items-center gap-2">
@@ -1169,6 +1387,26 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             ))}
           </div>
         </Card>
+
+        {Object.keys(cumulativeScores).length > 0 && (
+          <Card className="w-full flex flex-col p-6 mb-8 border-white/10 shadow-glow">
+            <h3 className="text-lg font-black mb-4 flex items-center gap-2 justify-center text-yellow-400">
+              <Trophy size={20} /> Classement Général
+            </h3>
+            <div className="space-y-2">
+              {Object.entries(cumulativeScores)
+                .sort(([, a], [, b]) => b - a)
+                .map(([name, points], idx) => (
+                <div key={name} className="flex justify-between items-center text-sm py-2 border-b border-white/5 last:border-0">
+                  <span className="font-bold flex items-center gap-2">
+                    <span className="text-foreground/50 w-4">{idx + 1}.</span> {name}
+                  </span>
+                  <span className="font-black text-yellow-400">{points} pts</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
 
         <EndGameActionsCard
           onReplaySameTeam={handleReplaySameTeam}
