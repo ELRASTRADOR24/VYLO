@@ -12,7 +12,7 @@ export interface UndercoverPlayer extends Player {
 export interface UndercoverWordPair {
   civilian: string;
   undercover: string;
-  category: string;
+  category?: string;
 }
 
 export const CATEGORIES = [
