@@ -12,7 +12,7 @@ export interface UndercoverPlayer extends Player {
 export interface UndercoverWordPair {
   civilian: string;
   undercover: string;
-  category?: string;
+  category: string;
 }
 
 export const CATEGORIES = [
@@ -652,15 +652,16 @@ const usedUndercoverPairsHistory = new Set<string>();
 /** Obtenir une paire de mots aléatoire selon la catégorie choisie */
 export function getRandomWordPair(
   categories: CategoryName | CategoryName[],
-  customPairs: UndercoverWordPair[] = []
+  customPairs: Array<{ civilian: string; undercover: string; category?: string }> = []
 ): UndercoverWordPair {
   let pool = [...WORD_PAIRS_DATABASE];
 
   // Si des mots personnalisés existent, on les inclut avec la catégorie "✨ Mots Personnalisés"
   if (customPairs.length > 0) {
-    const formattedCustom = customPairs.map(p => ({
-      ...p,
-      category: "✨ Mots Personnalisés",
+    const formattedCustom: UndercoverWordPair[] = customPairs.map(p => ({
+      civilian: p.civilian,
+      undercover: p.undercover,
+      category: p.category || "✨ Mots Personnalisés",
     }));
     pool = [...pool, ...formattedCustom];
   }
