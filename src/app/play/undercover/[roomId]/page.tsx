@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJoin } from "@/lib/audio";
+import { voiceEngine } from "@/lib/voiceEngine";
 
 type PassPhase = 
   | "CONFIG"             // 1. Choix catégorie, nb joueurs & rôles
@@ -94,6 +95,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     setTempName(shuffledPlayers[0]?.name || "");
     setIsWordRevealed(false);
     sfxSuspense();
+    if (enableVoiceNarrator) {
+      voiceEngine.speak("Nouvelle manche ! Passez le smartphone au premier joueur.", { tone: "ANNOUNCEMENT" });
+    }
     setPhase("PASS_TO_PLAYER");
   };
 
@@ -113,6 +117,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [enableConstraintsMode, setEnableConstraintsMode] = useState(false);
   const [currentConstraint, setCurrentConstraint] = useState<string>("");
   const [enableUndercoverAlliance, setEnableUndercoverAlliance] = useState(false);
+  const [enableVoiceNarrator, setEnableVoiceNarrator] = useState(false);
+  const [isRoleRevealedOnElimination, setIsRoleRevealedOnElimination] = useState(false);
   const [showCustomWordsModal, setShowCustomWordsModal] = useState(false);
   const [newCivilianWord, setNewCivilianWord] = useState("");
   const [newUndercoverWord, setNewUndercoverWord] = useState("");
@@ -240,6 +246,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     setTempName(shuffledInitial[0]?.name || "");
     setIsWordRevealed(false);
     sfxSuspense();
+    if (enableVoiceNarrator) {
+      voiceEngine.speak("Distribution des mots secrets ! Passez le smartphone au premier joueur.", { tone: "ANNOUNCEMENT" });
+    }
     setPhase("PASS_TO_PLAYER");
   };
 
@@ -300,19 +309,30 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
     sfxSuccess();
     setPhase("SPEAKING_TURNS");
+    if (enableVoiceNarrator && order[0]) {
+      voiceEngine.speak(`Début du premier tour d'indices. C'est au tour de ${order[0].name} !`, { tone: "ANNOUNCEMENT" });
+    }
   };
 
   const handleNextSpeaker = () => {
     sfxTap();
-    if (currentSpeakerIdx < speakingOrder.length - 1) {
-      setCurrentSpeakerIdx(prev => prev + 1);
+    const aliveSpeakers = speakingOrder.filter(p => !p.isEliminated);
+    if (currentSpeakerIdx < aliveSpeakers.length - 1) {
+      const nextIdx = currentSpeakerIdx + 1;
+      setCurrentSpeakerIdx(nextIdx);
       if (speakingTimerMax > 0) {
         setTimerSeconds(speakingTimerMax);
         setTimerActive(true);
       }
+      if (enableVoiceNarrator && aliveSpeakers[nextIdx]) {
+        voiceEngine.speak(`C'est au tour de ${aliveSpeakers[nextIdx].name} !`, { tone: "ANNOUNCEMENT" });
+      }
     } else {
       setTimerActive(false);
       setPhase("TURN_DECISION");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Fin du tour d'indices ! Que voulez-vous faire ?", { tone: "SUSPENSE" });
+      }
     }
   };
 
@@ -334,6 +354,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     }
 
     setPhase("SPEAKING_TURNS");
+    if (enableVoiceNarrator && newOrder[0]) {
+      voiceEngine.speak(`Tour d'indices numéro ${clueRoundNumber + 1}. C'est au tour de ${newOrder[0].name} !`, { tone: "ANNOUNCEMENT" });
+    }
   };
 
   // ─────────────────────────────────────────────────────────
@@ -411,18 +434,25 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
   const handleEliminatePlayer = (eliminated: UndercoverPlayer) => {
     setEliminatedPlayer(eliminated);
+    setIsRoleRevealedOnElimination(false);
 
     // Si Mr. White se fait éliminer au vote, il a droit à une devinette ultime !
     if (eliminated.gameRole === "MrWhite") {
       setMrWhiteGuess("");
       sfxSuspense();
       setPhase("MR_WHITE_GUESS");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak(`${eliminated.name} est Mr. White ! Il tente sa chance pour deviner le mot !`, { tone: "SUSPENSE" });
+      }
       return;
     }
 
     if (eliminated.gameRole === "DoubleAgent") {
       sfxSuspense();
       setPhase("DOUBLE_AGENT_REVENGE");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak(`${eliminated.name} était un Double Agent ! Il va éliminer un joueur avec lui !`, { tone: "DRAMA" });
+      }
       return;
     }
 
@@ -436,6 +466,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     setSpeakingOrder(updatedList);
     setPlayerList(prev => prev.map(p => (p.id === eliminatedPlayer?.id || p.id === target.id) ? { ...p, isEliminated: true } : p));
     setEliminatedPlayer(target);
+    setIsRoleRevealedOnElimination(false);
 
     const remainingAlive = updatedList.filter(p => !p.isEliminated);
     const undercoversLeft = remainingAlive.filter(p => p.gameRole === "Undercover" || p.gameRole === "MrWhite").length;
@@ -448,6 +479,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       incrementStat("gamesPlayed");
       incrementStat("wins");
       incrementStat("civilianWins");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Partie terminée ! Victoire des Civils !", { tone: "VICTORY" });
+      }
       setPhase("END_GAME");
     } else if (undercoversLeft >= civiliansLeft) {
       awardPoints(updatedList, "UNDERCOVER");
@@ -456,9 +490,15 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       incrementStat("gamesPlayed");
       incrementStat("wins");
       incrementStat("undercoverWins");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Partie terminée ! Victoire des Imposteurs !", { tone: "VICTORY" });
+      }
       setPhase("END_GAME");
     } else {
       sfxError();
+      if (enableVoiceNarrator) {
+        voiceEngine.speak(`Le groupe a voté contre ${target.name} !`, { tone: "DRAMA" });
+      }
       setPhase("VOTE_SUMMARY");
     }
   };
@@ -482,6 +522,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       );
       setSpeakingOrder(updatedList);
       setCumulativeScores(prev => ({ ...prev, [eliminatedPlayer.name]: (prev[eliminatedPlayer.name] || 0) + 300 }));
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Incroyable ! Mr. White a deviné le mot secret et vole la victoire !", { tone: "VICTORY" });
+      }
       setPhase("END_GAME");
     } else {
       sfxError();
@@ -495,6 +538,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     );
     setSpeakingOrder(updatedList);
     setPlayerList(prev => prev.map(p => p.id === eliminated.id ? { ...p, isEliminated: true } : p));
+    setIsRoleRevealedOnElimination(false);
 
     // Le Joker gagne UNIQUEMENT s'il se fait éliminer au TOUT PREMIER VOTE (Tour 1) !
     if (eliminated.gameRole === "Joker" && clueRoundNumber === 1) {
@@ -502,6 +546,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       setWinnerTeam("JOKER");
       incrementStat("gamesPlayed");
       setCumulativeScores(prev => ({ ...prev, [eliminated.name]: (prev[eliminated.name] || 0) + 300 }));
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Coup de génie ! Le Joker a été éliminé au premier tour et remporte la victoire en solitaire !", { tone: "VICTORY" });
+      }
       setPhase("END_GAME");
       return;
     }
@@ -518,6 +565,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       incrementStat("gamesPlayed");
       incrementStat("wins");
       incrementStat("civilianWins");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Tous les imposteurs sont démasqués ! Victoire éclatante des Civils !", { tone: "VICTORY" });
+      }
       setPhase("END_GAME");
     } else if (undercoversLeft >= civiliansLeft) {
       awardPoints(updatedList, "UNDERCOVER");
@@ -526,9 +576,15 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
       incrementStat("gamesPlayed");
       incrementStat("wins");
       incrementStat("undercoverWins");
+      if (enableVoiceNarrator) {
+        voiceEngine.speak("Les imposteurs sont majoritaires ! Victoire des Undercovers !", { tone: "VICTORY" });
+      }
       setPhase("END_GAME");
     } else {
       sfxError();
+      if (enableVoiceNarrator) {
+        voiceEngine.speak(`Le groupe a voté contre ${eliminated.name} !`, { tone: "DRAMA" });
+      }
       setPhase("VOTE_SUMMARY");
     }
   };
@@ -775,10 +831,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col text-left pr-2">
                     <span className="text-xs font-black uppercase tracking-widest text-red-400 flex items-center gap-1.5 mb-1">
-                      <HeartHandshake size={16} /> Alliance Undercover
+                      <HeartHandshake size={16} /> Alliance Undercover (Variante)
                     </span>
                     <p className="text-[11px] font-extrabold text-foreground/70 leading-snug">
-                      Les Undercovers découvrent qui sont leurs collègues secrets.
+                      Par défaut désactivé (dans les règles classiques, ils s'ignorent). Si activé, les Undercovers voient leurs alliés.
                     </p>
                   </div>
 
@@ -795,6 +851,40 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 </div>
               </Card>
             )}
+
+            {/* CARTE VOIX NARRATRICE (MAÎTRE DU JEU) */}
+            <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col text-left pr-2">
+                  <span className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-1.5 mb-1">
+                    <Volume2 size={16} /> Voix Narratrice (Maître du Jeu)
+                  </span>
+                  <p className="text-[11px] font-extrabold text-foreground/70 leading-snug">
+                    Le smartphone annonce les tours de parole et les éliminations à voix haute.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => {
+                    const next = !enableVoiceNarrator;
+                    setEnableVoiceNarrator(next);
+                    sfxTap();
+                    if (next) {
+                      voiceEngine.testVoice();
+                    } else {
+                      voiceEngine.stop();
+                    }
+                  }}
+                  className={`h-11 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border shrink-0 ${
+                    enableVoiceNarrator
+                      ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow"
+                      : "bg-surface/80 border-white/10 text-foreground/50 hover:text-white"
+                  }`}
+                >
+                  {enableVoiceNarrator ? "ACTIF 🎙️" : "Désactivé"}
+                </button>
+              </div>
+            </Card>
 
             {/* CARTE MODE MYSTÈRE ALÉATOIRE */}
             <Card className="w-full p-5 bg-gradient-to-r from-amber-950/80 via-surface to-purple-950/80 border-2 border-amber-500/40 shadow-glow">
@@ -1539,15 +1629,63 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // --- ÉCRAN 8 : RÉSULTATS DU VOTE (SI LA PARTIE CONTINUE) ---
   if (phase === "VOTE_SUMMARY" && eliminatedPlayer) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">
-        <Skull size={64} className="text-red-500 mb-6 animate-bounce" />
-        <h1 className="text-3xl font-black mb-2">{eliminatedPlayer.name} est éliminé !</h1>
-        <p className="text-foreground/50 text-base mb-8">
-          Rôle révélé : <span className="font-bold text-red-400">{eliminatedPlayer.gameRole}</span> ({eliminatedPlayer.word})
-        </p>
+      <main className="min-h-screen flex flex-col items-center justify-between py-10 px-6 max-w-md mx-auto text-center">
+        <div className="w-full">
+          <div className="w-20 h-20 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mx-auto mb-4 animate-bounce">
+            <Skull size={44} />
+          </div>
+          <span className="text-xs font-black uppercase tracking-widest text-red-400 block mb-1">Verdict du Vote</span>
+          <h1 className="text-3xl font-black">{eliminatedPlayer.name} a été éliminé !</h1>
+        </div>
 
-        <Button variant="primary" className="w-full py-5 text-lg gap-2" onClick={() => startSpeakingPhase(speakingOrder)}>
-          <RefreshCw size={20} /> Repartir pour un tour d'indices
+        {/* CARTE SUSPENSE FLIP 3D */}
+        <div className="w-full my-auto py-4">
+          {!isRoleRevealedOnElimination ? (
+            <div 
+              onClick={() => {
+                setIsRoleRevealedOnElimination(true);
+                sfxReveal();
+                if (enableVoiceNarrator) {
+                  const roleLabel = eliminatedPlayer.gameRole === "Civilian" ? "un innocent Civil" :
+                    eliminatedPlayer.gameRole === "Undercover" ? "un imposteur Undercover" :
+                    eliminatedPlayer.gameRole === "MrWhite" ? "Mr. White" :
+                    eliminatedPlayer.gameRole === "Joker" ? "le Joker" :
+                    eliminatedPlayer.gameRole === "Cameleon" ? "le Caméléon" : "le Double-Agent";
+                  voiceEngine.speak(`${eliminatedPlayer.name} était ${roleLabel} ! Son mot secret était : ${eliminatedPlayer.word}.`, { tone: "DRAMA" });
+                }
+              }}
+              className="w-full max-w-xs mx-auto p-8 rounded-3xl bg-gradient-to-br from-red-950/80 via-surface to-purple-950/80 border-2 border-red-500/40 shadow-glow flex flex-col items-center justify-center cursor-pointer active:scale-95 transition-all hover:border-red-400 animate-pulse"
+            >
+              <EyeOff size={48} className="text-red-400 mb-4" />
+              <span className="text-base font-black text-white">Toucher pour révéler son rôle</span>
+              <span className="text-[11px] text-foreground/50 mt-1.5 font-bold">Suspense garanti 🎭</span>
+            </div>
+          ) : (
+            <Card className="w-full max-w-xs mx-auto p-6 flex flex-col items-center border-2 border-white/20 shadow-glow animate-in zoom-in duration-300">
+              <span className="text-[10px] font-black uppercase tracking-wider text-foreground/50 mb-2">Véritable Identité</span>
+              <div className={`px-4 py-1.5 rounded-full text-xs font-black mb-4 uppercase tracking-wider ${
+                eliminatedPlayer.gameRole === "Civilian" ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" :
+                eliminatedPlayer.gameRole === "Undercover" ? "bg-red-500/20 text-red-400 border border-red-500/30" :
+                eliminatedPlayer.gameRole === "MrWhite" ? "bg-purple-500/20 text-purple-400 border border-purple-500/30" :
+                eliminatedPlayer.gameRole === "Joker" ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" :
+                "bg-pink-500/20 text-pink-400 border border-pink-500/30"
+              }`}>
+                {eliminatedPlayer.gameRole === "Civilian" ? "Civil 😇" :
+                 eliminatedPlayer.gameRole === "Undercover" ? "Undercover 🕵️" :
+                 eliminatedPlayer.gameRole === "MrWhite" ? "Mr. White 🎭" :
+                 eliminatedPlayer.gameRole === "Joker" ? "Joker 🃏" :
+                 eliminatedPlayer.gameRole === "Cameleon" ? "Caméléon 🪞" :
+                 "Double-Agent 💣"}
+              </div>
+
+              <span className="text-xs text-foreground/60 font-bold mb-1">Mot secret de départ :</span>
+              <span className="text-2xl font-black text-primary">{eliminatedPlayer.word}</span>
+            </Card>
+          )}
+        </div>
+
+        <Button variant="primary" className="w-full py-5 text-lg gap-2 shadow-summer-glow" onClick={() => startSpeakingPhase(speakingOrder)}>
+          <RefreshCw size={20} /> Tour d'indices suivant →
         </Button>
       </main>
     );
