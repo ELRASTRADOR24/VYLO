@@ -49,6 +49,12 @@ interface AppState {
   updateGuestProfile: (updates: Partial<AppState["guestProfile"]>) => void;
   incrementStat: (statKey: keyof UserStats) => void;
 
+  // Custom Undercover word pairs
+  customWordPairs: Array<{ civilian: string; undercover: string; category?: string }>;
+  addCustomWordPair: (civilian: string, undercover: string) => void;
+  removeCustomWordPair: (index: number) => void;
+  clearCustomWordPairs: () => void;
+
   // Authentication actions
   registerAccount: (username: string, password: string) => { success: boolean; message: string };
   loginAccount: (username: string, password: string) => { success: boolean; message: string };
@@ -120,6 +126,29 @@ export const useAppStore = create<AppState>()(
       },
 
       clearSavedGroup: () => set({ savedGroup: [] }),
+
+      customWordPairs: [],
+
+      addCustomWordPair: (civilian, undercover) => {
+        const civ = civilian.trim();
+        const und = undercover.trim();
+        if (!civ || !und) return;
+
+        set((state) => ({
+          customWordPairs: [
+            ...state.customWordPairs,
+            { civilian: civ, undercover: und, category: "✨ Mots Personnalisés" },
+          ],
+        }));
+      },
+
+      removeCustomWordPair: (index) => {
+        set((state) => ({
+          customWordPairs: state.customWordPairs.filter((_, idx) => idx !== index),
+        }));
+      },
+
+      clearCustomWordPairs: () => set({ customWordPairs: [] }),
 
       updateGuestProfile: (updates) =>
         set((state) => {

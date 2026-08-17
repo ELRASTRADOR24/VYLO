@@ -37,7 +37,8 @@ export const CATEGORIES = [
   "Métiers",
   "Pays & Géographie",
   "Marques",
-  "Mode Expert"
+  "Mode Expert",
+  "✨ Mots Personnalisés"
 ] as const;
 
 export type CategoryName = typeof CATEGORIES[number];
@@ -649,15 +650,27 @@ export function validateRoleConfig(
 const usedUndercoverPairsHistory = new Set<string>();
 
 /** Obtenir une paire de mots aléatoire selon la catégorie choisie */
-export function getRandomWordPair(categories: CategoryName | CategoryName[]): UndercoverWordPair {
-  let pool = WORD_PAIRS_DATABASE;
+export function getRandomWordPair(
+  categories: CategoryName | CategoryName[],
+  customPairs: UndercoverWordPair[] = []
+): UndercoverWordPair {
+  let pool = [...WORD_PAIRS_DATABASE];
+
+  // Si des mots personnalisés existent, on les inclut avec la catégorie "✨ Mots Personnalisés"
+  if (customPairs.length > 0) {
+    const formattedCustom = customPairs.map(p => ({
+      ...p,
+      category: "✨ Mots Personnalisés",
+    }));
+    pool = [...pool, ...formattedCustom];
+  }
   
   if (Array.isArray(categories)) {
     if (!categories.includes("Toutes les catégories") && categories.length > 0) {
-      pool = WORD_PAIRS_DATABASE.filter(p => categories.includes(p.category as CategoryName));
+      pool = pool.filter(p => categories.includes(p.category as CategoryName));
     }
   } else if (categories !== "Toutes les catégories") {
-    pool = WORD_PAIRS_DATABASE.filter(p => p.category === categories);
+    pool = pool.filter(p => p.category === categories);
   }
 
   if (pool.length === 0) pool = WORD_PAIRS_DATABASE;
@@ -674,6 +687,29 @@ export function getRandomWordPair(categories: CategoryName | CategoryName[]): Un
   usedUndercoverPairsHistory.add(`${chosen.civilian}-${chosen.undercover}`);
 
   return chosen;
+}
+
+/** Liste de défis et contraintes d'indices amusantes */
+export const CLUE_CONSTRAINTS = [
+  "1 seul mot obligatoire (aucun mot supplémentaire)",
+  "L'indice doit obligatoirement être un verbe à l'infinitif",
+  "L'indice doit obligatoirement être un adjectif",
+  "Interdiction d'utiliser les lettres 'A' ou 'E' dans ton mot",
+  "L'indice doit rimer avec le prénom du joueur à ta gauche",
+  "Donne ton indice en chuchotant comme un espion 🤫",
+  "Donne ton indice avec une émotion exagérée (joie, colère ou peur)",
+  "L'indice doit commencer par la lettre de ton prénom",
+  "L'indice doit faire 4 lettres ou moins",
+  "Donne ton indice sous forme de question interrogative ❓",
+  "L'indice doit être lié à une couleur ou une saveur 🎨",
+  "Donne ton indice avec un accent ou une voix robotique 🤖",
+  "L'indice doit être en rapport avec la nature ou un élément 🌿",
+  "Interdiction de nommer un objet ou un lieu",
+  "Donne deux mots contraires en guise d'indice ⚖️",
+] as const;
+
+export function getRandomConstraint(): string {
+  return CLUE_CONSTRAINTS[Math.floor(Math.random() * CLUE_CONSTRAINTS.length)];
 }
 
 /** Helper classique de génération automatique des rôles */

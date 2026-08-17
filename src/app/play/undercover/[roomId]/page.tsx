@@ -8,7 +8,8 @@ import {
   UndercoverRole, UndercoverPlayer, CATEGORIES, CategoryName, 
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
   generateMysteryRoles, generateRolesFromConfigExtended,
-  shuffleSpeakingOrder, assignRolesFairly, shuffleArray, checkMrWhiteGuess
+  shuffleSpeakingOrder, assignRolesFairly, shuffleArray, checkMrWhiteGuess,
+  CLUE_CONSTRAINTS, getRandomConstraint, UndercoverWordPair
 } from "@/games/undercover/logic";
 import { undercoverConfig } from "@/games/undercover/config";
 import Button from "@/components/ui/Button";
@@ -16,7 +17,8 @@ import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Eye, EyeOff, Skull, Trophy, Share, Users, 
   Smartphone, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2,
-  HelpCircle, Vote, RefreshCw, BookOpen, Zap, Lock, Unlock, AlertCircle, CheckCircle, XCircle
+  HelpCircle, Vote, RefreshCw, BookOpen, Zap, Lock, Unlock, AlertCircle, CheckCircle, XCircle,
+  Plus, Trash2, Sparkles, Flame, HeartHandshake
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJoin } from "@/lib/audio";
@@ -38,13 +40,21 @@ type PassPhase =
 export default function UndercoverLocalGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
   const router = useRouter();
-  const { incrementStat, savedGroup, setSavedGroup } = useAppStore();
+  const { 
+    incrementStat, savedGroup, setSavedGroup, 
+    customWordPairs, addCustomWordPair, removeCustomWordPair 
+  } = useAppStore();
 
   // Rejouer instantanément avec la même équipe
   const handleReplaySameTeam = () => {
-    const wordPair = getRandomWordPair(selectedCategories);
+    const wordPair = getRandomWordPair(selectedCategories, customWordPairs);
     setCurrentCivilianWord(wordPair.civilian);
     setCurrentUndercoverWord(wordPair.undercover);
+    if (enableConstraintsMode) {
+      setCurrentConstraint(getRandomConstraint());
+    } else {
+      setCurrentConstraint("");
+    }
     const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
     const count = existingNames.length > 0 ? existingNames.length : playerCount;
     const playerNames = existingNames.length > 0 ? existingNames : Array.from({ length: count }, (_, i) => `Joueur ${i + 1}`);
@@ -100,6 +110,12 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [votingMode, setVotingMode] = useState<"EXPRESS" | "CIRCULATE">("EXPRESS");
   const [speakingTimerMax, setSpeakingTimerMax] = useState<number>(0); // 0 = sans limite
   const [minRoundsBeforeVote, setMinRoundsBeforeVote] = useState<number>(1); // min 1 tour avant de pouvoir voter
+  const [enableConstraintsMode, setEnableConstraintsMode] = useState(false);
+  const [currentConstraint, setCurrentConstraint] = useState<string>("");
+  const [enableUndercoverAlliance, setEnableUndercoverAlliance] = useState(false);
+  const [showCustomWordsModal, setShowCustomWordsModal] = useState(false);
+  const [newCivilianWord, setNewCivilianWord] = useState("");
+  const [newUndercoverWord, setNewUndercoverWord] = useState("");
 
   const handleToggleCategory = (cat: CategoryName) => {
     sfxTap();
@@ -174,10 +190,15 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const handleStartDistribution = () => {
     if (!configValidation.isValid) return;
 
-    // 1. Choix des mots (Multi-catégories)
-    const wordPair = getRandomWordPair(selectedCategories);
+    // 1. Choix des mots (Multi-catégories + mots personnalisés)
+    const wordPair = getRandomWordPair(selectedCategories, customWordPairs);
     setCurrentCivilianWord(wordPair.civilian);
     setCurrentUndercoverWord(wordPair.undercover);
+    if (enableConstraintsMode) {
+      setCurrentConstraint(getRandomConstraint());
+    } else {
+      setCurrentConstraint("");
+    }
 
     // 2. Génération des rôles (Mode Mystère ou Paramétré)
     const roles = isMysteryMode 
@@ -302,6 +323,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     setSpeakingOrder(newOrder);
     setClueRoundNumber(prev => prev + 1);
     setCurrentSpeakerIdx(0);
+
+    if (enableConstraintsMode) {
+      setCurrentConstraint(getRandomConstraint());
+    }
 
     if (speakingTimerMax > 0) {
       setTimerSeconds(speakingTimerMax);
@@ -591,6 +616,16 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                   );
                 })}
               </div>
+
+              <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
+                <span className="text-[11px] text-foreground/60 font-bold">Mots personnalisés ({customWordPairs.length})</span>
+                <button
+                  onClick={() => { setShowCustomWordsModal(true); sfxTap(); }}
+                  className="px-3 py-1.5 rounded-xl bg-primary/20 text-primary border border-primary/30 text-xs font-black hover:bg-primary/30 flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+                >
+                  <Sparkles size={14} /> Gérer mes mots
+                </button>
+              </div>
             </Card>
 
             {/* Nombre de Joueurs */}
@@ -708,6 +743,58 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 </div>
               </div>
             </Card>
+
+            {/* CARTE MODE DÉFIS & CONTRAINTES D'INDICES */}
+            <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
+              <div className="flex items-center justify-between">
+                <div className="flex flex-col text-left pr-2">
+                  <span className="text-xs font-black uppercase tracking-widest text-amber-400 flex items-center gap-1.5 mb-1">
+                    <Flame size={16} /> Défis & Contraintes
+                  </span>
+                  <p className="text-[11px] font-extrabold text-foreground/70 leading-snug">
+                    Règle d'indice imposée à chaque tour (1 seul mot, verbe, en chuchotant...)
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => { setEnableConstraintsMode(!enableConstraintsMode); sfxTap(); }}
+                  className={`h-11 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border shrink-0 ${
+                    enableConstraintsMode
+                      ? "bg-amber-500 text-black border-amber-400 shadow-glow"
+                      : "bg-surface/80 border-white/10 text-foreground/50 hover:text-white"
+                  }`}
+                >
+                  {enableConstraintsMode ? "ACTIF 🔥" : "Désactivé"}
+                </button>
+              </div>
+            </Card>
+
+            {/* CARTE ALLIANCE UNDERCOVER (si undercoverCount >= 2) */}
+            {undercoverCount >= 2 && (
+              <Card className="w-full p-5 bg-surface/90 border border-white/10 shadow-soft">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col text-left pr-2">
+                    <span className="text-xs font-black uppercase tracking-widest text-red-400 flex items-center gap-1.5 mb-1">
+                      <HeartHandshake size={16} /> Alliance Undercover
+                    </span>
+                    <p className="text-[11px] font-extrabold text-foreground/70 leading-snug">
+                      Les Undercovers découvrent qui sont leurs collègues secrets.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => { setEnableUndercoverAlliance(!enableUndercoverAlliance); sfxTap(); }}
+                    className={`h-11 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all border shrink-0 ${
+                      enableUndercoverAlliance
+                        ? "bg-red-500 text-white border-red-400 shadow-glow"
+                        : "bg-surface/80 border-white/10 text-foreground/50 hover:text-white"
+                    }`}
+                  >
+                    {enableUndercoverAlliance ? "ACTIF 🤝" : "Désactivé"}
+                  </button>
+                </div>
+              </Card>
+            )}
 
             {/* CARTE MODE MYSTÈRE ALÉATOIRE */}
             <Card className="w-full p-5 bg-gradient-to-r from-amber-950/80 via-surface to-purple-950/80 border-2 border-amber-500/40 shadow-glow">
@@ -874,6 +961,100 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </Button>
           </div>
         </div>
+
+        {/* MODALE DE GESTION DES MOTS PERSONNALISÉS */}
+        {showCustomWordsModal && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6 animate-in fade-in duration-200">
+            <Card className="w-full max-w-md p-6 border border-white/15 bg-surface/95 shadow-glow flex flex-col max-h-[85vh]">
+              <div className="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 className="font-black text-lg flex items-center gap-2 text-primary">
+                  <Sparkles size={20} /> Mes Mots Personnalisés
+                </h3>
+                <button 
+                  onClick={() => setShowCustomWordsModal(false)}
+                  className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center font-bold text-sm hover:bg-white/20"
+                >✕</button>
+              </div>
+
+              {/* Formulaire d'ajout */}
+              <div className="space-y-3 mb-4 bg-white/5 p-4 rounded-2xl border border-white/5">
+                <span className="text-xs font-black uppercase tracking-wider text-primary block">Ajouter une nouvelle paire</span>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[10px] font-bold text-blue-400 mb-1 block">Mot Civil</label>
+                    <input
+                      type="text"
+                      value={newCivilianWord}
+                      onChange={(e) => setNewCivilianWord(e.target.value)}
+                      placeholder="Ex: Coca-Cola"
+                      className="w-full bg-surface border border-white/10 rounded-xl px-3 py-2 text-xs font-bold focus:border-blue-400 outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-red-400 mb-1 block">Mot Undercover</label>
+                    <input
+                      type="text"
+                      value={newUndercoverWord}
+                      onChange={(e) => setNewUndercoverWord(e.target.value)}
+                      placeholder="Ex: Pepsi"
+                      className="w-full bg-surface border border-white/10 rounded-xl px-3 py-2 text-xs font-bold focus:border-red-400 outline-none"
+                    />
+                  </div>
+                </div>
+                <Button
+                  variant="primary"
+                  className="w-full py-2.5 text-xs font-black gap-1.5"
+                  disabled={!newCivilianWord.trim() || !newUndercoverWord.trim()}
+                  onClick={() => {
+                    if (newCivilianWord.trim() && newUndercoverWord.trim()) {
+                      addCustomWordPair(newCivilianWord.trim(), newUndercoverWord.trim());
+                      setNewCivilianWord("");
+                      setNewUndercoverWord("");
+                      sfxSuccess();
+                      if (!selectedCategories.includes("✨ Mots Personnalisés")) {
+                        setSelectedCategories(prev => [...prev.filter(c => c !== "Toutes les catégories"), "✨ Mots Personnalisés"]);
+                      }
+                    }
+                  }}
+                >
+                  <Plus size={14} /> Ajouter cette paire
+                </Button>
+              </div>
+
+              {/* Liste des mots enregistrés */}
+              <div className="flex-1 overflow-y-auto space-y-2 pr-1">
+                <span className="text-[11px] font-black uppercase tracking-wider text-foreground/50 block">
+                  Paires enregistrées ({customWordPairs.length})
+                </span>
+                {customWordPairs.length === 0 ? (
+                  <div className="text-center py-6 text-foreground/40 text-xs font-medium">
+                    Aucun mot personnalisé pour l'instant.<br />Ajoute tes premiers délires ci-dessus !
+                  </div>
+                ) : (
+                  customWordPairs.map((pair, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-3">
+                        <span className="font-bold text-blue-400">{pair.civilian}</span>
+                        <span className="text-foreground/30 font-black">vs</span>
+                        <span className="font-bold text-red-400">{pair.undercover}</span>
+                      </div>
+                      <button
+                        onClick={() => { removeCustomWordPair(idx); sfxTap(); }}
+                        className="p-1.5 text-red-400/60 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all cursor-pointer"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <Button variant="surface" className="w-full mt-4 py-3 text-sm" onClick={() => setShowCustomWordsModal(false)}>
+                Terminer
+              </Button>
+            </Card>
+          </div>
+        )}
       </main>
     );
   }
@@ -953,6 +1134,9 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   // --- ÉCRAN 4 : DÉCOUVERTE DU MOT SECRET ---
   if (phase === "SHOW_WORD") {
     const currentPlayer = playerList[currentDistIndex];
+    const otherUndercovers = playerList
+      .filter(p => p.gameRole === "Undercover" && p.id !== currentPlayer?.id && p.name.trim().length > 0)
+      .map(p => p.name);
 
     return (
       <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center max-w-md mx-auto">
@@ -961,10 +1145,20 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
         <Card className="w-full aspect-square flex flex-col items-center justify-center p-8 mb-8 border border-white/10 relative overflow-hidden shadow-glow">
           {isWordRevealed ? (
-            <div className="animate-in fade-in zoom-in duration-300">
+            <div className="animate-in fade-in zoom-in duration-300 w-full flex flex-col items-center">
               <span className="text-xs font-extrabold uppercase tracking-widest text-primary mb-4 block">Ton mot secret</span>
-              <h2 className="text-4xl font-black mb-6">{currentPlayer?.word}</h2>
-              <p className="text-xs text-foreground/40 font-medium">Ne le répète à personne !</p>
+              <h2 className="text-4xl font-black mb-4">{currentPlayer?.word}</h2>
+              <p className="text-xs text-foreground/40 font-medium mb-3">Ne le répète à personne !</p>
+
+              {/* Révélation alliance secrète pour les Undercovers si activé */}
+              {enableUndercoverAlliance && currentPlayer?.gameRole === "Undercover" && otherUndercovers.length > 0 && (
+                <div className="w-full p-3 bg-red-500/15 border border-red-500/30 rounded-2xl text-center animate-in fade-in">
+                  <span className="text-[10px] font-black uppercase text-red-400 block mb-0.5">🤝 Alliance Secrète</span>
+                  <span className="text-xs font-bold text-foreground/90">
+                    Ton coéquipier Undercover : <strong className="text-red-400 font-black">{otherUndercovers.join(", ")}</strong>
+                  </span>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex flex-col items-center cursor-pointer" onClick={handleRevealWord}>
@@ -1026,6 +1220,19 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </div>
             <div className="text-lg font-black text-white">
               {timerSeconds}s
+            </div>
+          </div>
+        )}
+
+        {/* Défi / Contrainte d'indice si mode actif */}
+        {enableConstraintsMode && currentConstraint && (
+          <div className="w-full my-2 bg-gradient-to-r from-amber-500/20 via-primary/20 to-purple-500/20 p-3.5 rounded-2xl border border-amber-500/40 flex items-center gap-3 shadow-glow text-left animate-in fade-in">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
+              <Flame size={20} className="animate-pulse" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">⚡ Défi d'Indice du Tour</span>
+              <span className="text-xs font-bold text-white leading-snug">{currentConstraint}</span>
             </div>
           </div>
         )}
@@ -1117,13 +1324,18 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 >✕</button>
               </div>
 
-              <div className="overflow-y-auto space-y-3 pr-1 text-left flex-1 text-sm">
+              <div className="overflow-y-auto space-y-3 pr-1 text-left flex-1 text-xs leading-relaxed">
                 <p><strong>Civils:</strong> Trouvez les imposteurs grâce aux indices.</p>
                 <p><strong>Undercover:</strong> Vous avez un mot similaire mais différent. Restez discret.</p>
-                <p><strong>Mr. White:</strong> Vous n'avez aucun mot. Bluffez pour survivre. Si éliminé, devinez le mot des Civils pour gagner.</p>
-                <p><strong>Joker:</strong> Faites-vous éliminer au Tour 1 pour gagner.</p>
-                <p><strong>Caméléon:</strong> Copiez le 1er joueur.</p>
-                <p><strong>Double Agent:</strong> Mot des Civils, mais si éliminé, vous emportez un joueur avec vous.</p>
+                <p><strong>Mr. White:</strong> Vous n'avez aucun mot. Bluffez pour survivre. Si éliminé, devinez le mot des Civils pour voler la victoire.</p>
+                <p><strong>Joker:</strong> Faites-vous éliminer au Tour 1 pour gagner seul.</p>
+                <p><strong>Caméléon:</strong> Copiez la description du 1er joueur.</p>
+                <p><strong>Double Agent:</strong> Mot des Civils, mais si éliminé au vote, vous emportez un joueur avec vous.</p>
+                <div className="pt-2 border-t border-white/10 space-y-1 text-foreground/70">
+                  <p>✨ <strong>Mots Personnalisés:</strong> Créez vos propres mots délires dans la configuration.</p>
+                  <p>🔥 <strong>Défis d'Indices:</strong> Règles imposées par tour (1 seul mot, verbe, chuchoté...).</p>
+                  <p>🤝 <strong>Alliance Undercover:</strong> Les Undercovers connaissent leurs coéquipiers.</p>
+                </div>
               </div>
 
               <Button variant="surface" className="w-full mt-4 py-3 text-sm" onClick={() => setShowRulesModal(false)}>
