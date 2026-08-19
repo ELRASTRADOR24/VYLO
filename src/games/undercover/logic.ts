@@ -1,6 +1,6 @@
 import { Player } from "@/engine/types";
 
-export type UndercoverRole = "Civilian" | "Undercover" | "MrWhite" | "Joker" | "Cameleon" | "DoubleAgent";
+export type UndercoverRole = "Civilian" | "Undercover" | "MrWhite" | "Joker" | "Cameleon" | "DoubleAgent" | "Detective" | "GuardianAngel";
 
 export interface UndercoverPlayer extends Player {
   gameRole?: UndercoverRole;
@@ -729,7 +729,7 @@ export function generateMysteryRoles(totalPlayers: number): UndercoverRole[] {
   const remainingSlots = totalPlayers - civilianCount;
   
   const possibleSpecialRoles: UndercoverRole[] = [
-    "Undercover", "MrWhite", "Joker", "Cameleon", "DoubleAgent"
+    "Undercover", "MrWhite", "Joker", "Cameleon", "DoubleAgent", "Detective", "GuardianAngel"
   ];
 
   const roles: UndercoverRole[] = [];
@@ -758,19 +758,21 @@ export function generateRolesFromConfig(
   undercoverCount: number,
   mrWhiteCount: number
 ): UndercoverRole[] {
-  return generateRolesFromConfigExtended(totalPlayers, undercoverCount, mrWhiteCount, 0, 0, 0);
+  return generateRolesFromConfigExtended(totalPlayers, undercoverCount, mrWhiteCount, 0, 0, 0, 0, 0);
 }
 
-/** Génération paramétrée incluant tous les rôles (Joker, Caméléon, Double-Agent) */
+/** Génération paramétrée incluant tous les rôles (Joker, Caméléon, Double-Agent, Enquêteur, Ange Gardien) */
 export function generateRolesFromConfigExtended(
   totalPlayers: number,
   undercoverCount: number,
   mrWhiteCount: number,
   jokerCount: number = 0,
   cameleonCount: number = 0,
-  doubleAgentCount: number = 0
+  doubleAgentCount: number = 0,
+  detectiveCount: number = 0,
+  guardianAngelCount: number = 0
 ): UndercoverRole[] {
-  const specialTotal = undercoverCount + mrWhiteCount + jokerCount + cameleonCount + doubleAgentCount;
+  const specialTotal = undercoverCount + mrWhiteCount + jokerCount + cameleonCount + doubleAgentCount + detectiveCount + guardianAngelCount;
   const civilianCount = Math.max(1, totalPlayers - specialTotal);
   const roles: UndercoverRole[] = [];
 
@@ -780,6 +782,8 @@ export function generateRolesFromConfigExtended(
   for (let i = 0; i < jokerCount; i++) roles.push("Joker");
   for (let i = 0; i < cameleonCount; i++) roles.push("Cameleon");
   for (let i = 0; i < doubleAgentCount; i++) roles.push("DoubleAgent");
+  for (let i = 0; i < detectiveCount; i++) roles.push("Detective");
+  for (let i = 0; i < guardianAngelCount; i++) roles.push("GuardianAngel");
 
   // Mélange de Fisher-Yates
   for (let i = roles.length - 1; i > 0; i--) {
@@ -788,6 +792,39 @@ export function generateRolesFromConfigExtended(
   }
 
   return roles;
+}
+
+/** Générateur d'indice secret pour l'Enquêteur */
+export function generateDetectiveClue(undercoverWord: string, players: UndercoverPlayer[] = []): string {
+  const clues: string[] = [];
+  
+  if (undercoverWord && undercoverWord.trim().length > 0) {
+    const cleanWord = undercoverWord.trim();
+    const firstLetter = cleanWord.charAt(0).toUpperCase();
+    const letterCount = cleanWord.replace(/\s+/g, "").length;
+    clues.push(`La 1ère lettre du mot Undercover commence par « ${firstLetter} »`);
+    clues.push(`Le mot des imposteurs contient environ ${letterCount} lettres.`);
+  }
+
+  const impostors = players.filter(p => p.gameRole === "Undercover" || p.gameRole === "MrWhite");
+  if (impostors.length > 0) {
+    const randomImpostor = impostors[Math.floor(Math.random() * impostors.length)];
+    if (randomImpostor && randomImpostor.name.trim().length > 0) {
+      const firstLetterName = randomImpostor.name.trim().charAt(0).toUpperCase();
+      clues.push(`Un imposteur a un prénom qui commence par « ${firstLetterName} ».`);
+    }
+  }
+
+  const hasMrWhite = players.some(p => p.gameRole === "MrWhite");
+  if (hasMrWhite) {
+    clues.push(`Mr. White est bien infiltré dans la partie !`);
+  }
+
+  if (clues.length === 0) {
+    return "Méfiez-vous des indices trop vagues ou hésitants...";
+  }
+
+  return clues[Math.floor(Math.random() * clues.length)];
 }
 
 // Historique global des rôles spéciaux attribués par joueur (pour éviter qu'un même joueur soit souvent rôle spécial)

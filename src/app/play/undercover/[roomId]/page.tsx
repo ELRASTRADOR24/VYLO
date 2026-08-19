@@ -9,7 +9,8 @@ import {
   validateRoleConfig, getRandomWordPair, generateRolesFromConfig, 
   generateMysteryRoles, generateRolesFromConfigExtended,
   shuffleSpeakingOrder, assignRolesFairly, shuffleArray, checkMrWhiteGuess,
-  CLUE_CONSTRAINTS, getRandomConstraint, UndercoverWordPair
+  CLUE_CONSTRAINTS, getRandomConstraint, UndercoverWordPair,
+  generateDetectiveClue
 } from "@/games/undercover/logic";
 import { undercoverConfig } from "@/games/undercover/config";
 import Button from "@/components/ui/Button";
@@ -18,7 +19,7 @@ import {
   ChevronLeft, Eye, EyeOff, Skull, Trophy, Share, Users, 
   Smartphone, Check, Clock, UserCheck, ShieldAlert, RotateCcw, Volume2,
   HelpCircle, Vote, RefreshCw, BookOpen, Zap, Lock, Unlock, AlertCircle, CheckCircle, XCircle,
-  Plus, Trash2, Sparkles, Flame, HeartHandshake
+  Plus, Trash2, Sparkles, Flame, HeartHandshake, Search, Shield, ShieldCheck
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { sfxTap, sfxSuccess, sfxError, sfxSuspense, sfxVictory, sfxReveal, sfxJoin } from "@/lib/audio";
@@ -56,17 +57,20 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     } else {
       setCurrentConstraint("");
     }
+    setGuardianProtectedId(null);
+    setSavedByGuardianPlayer(null);
+
     const existingNames = playerList.map(p => p.name).filter(n => n.length > 0);
     const count = existingNames.length > 0 ? existingNames.length : playerCount;
     const playerNames = existingNames.length > 0 ? existingNames : Array.from({ length: count }, (_, i) => `Joueur ${i + 1}`);
 
-    const roles = generateRolesFromConfigExtended(count, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
+    const roles = generateRolesFromConfigExtended(count, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount, detectiveCount, guardianAngelCount);
     const assignedRoles = assignRolesFairly(playerNames, roles);
 
     const newPlayers: UndercoverPlayer[] = playerNames.map((name, i) => {
       const role = assignedRoles[name] || "Civilian";
       let word = "";
-      if (role === "Civilian") word = wordPair.civilian;
+      if (role === "Civilian" || role === "Detective" || role === "GuardianAngel") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
       else if (role === "MrWhite") word = "Vous êtes Mr. White";
       else if (role === "Joker") word = "🃏 Vous êtes le JOKER ! Faites-vous éliminer au TOUT PREMIER VOTE (Tour 1) pour GAGNER !";
@@ -110,6 +114,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const [jokerCount, setJokerCount] = useState(0);
   const [cameleonCount, setCameleonCount] = useState(0);
   const [doubleAgentCount, setDoubleAgentCount] = useState(0);
+  const [detectiveCount, setDetectiveCount] = useState(0);
+  const [guardianAngelCount, setGuardianAngelCount] = useState(0);
+  const [guardianProtectedId, setGuardianProtectedId] = useState<string | null>(null);
+  const [savedByGuardianPlayer, setSavedByGuardianPlayer] = useState<UndercoverPlayer | null>(null);
   const [isMysteryMode, setIsMysteryMode] = useState(false);
   const [votingMode, setVotingMode] = useState<"EXPRESS" | "CIRCULATE">("EXPRESS");
   const [speakingTimerMax, setSpeakingTimerMax] = useState<number>(0); // 0 = sans limite
@@ -209,7 +217,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     // 2. Génération des rôles (Mode Mystère ou Paramétré)
     const roles = isMysteryMode 
       ? generateMysteryRoles(playerCount)
-      : generateRolesFromConfigExtended(playerCount, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount);
+      : generateRolesFromConfigExtended(playerCount, undercoverCount, mrWhiteCount, jokerCount, cameleonCount, doubleAgentCount, detectiveCount, guardianAngelCount);
+
+    setGuardianProtectedId(null);
+    setSavedByGuardianPlayer(null);
 
     const playerIdentifiers = Array.from({ length: playerCount }, (_, i) => `Joueur ${i + 1}`);
     const assignedRoles = assignRolesFairly(playerIdentifiers, roles);
@@ -217,7 +228,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     // 3. Première partie : les noms sont vides pour forcer la saisie manuelle de chaque joueur
     const initialPlayers: UndercoverPlayer[] = roles.map((role, i) => {
       let word = "";
-      if (role === "Civilian") word = wordPair.civilian;
+      if (role === "Civilian" || role === "Detective" || role === "GuardianAngel") word = wordPair.civilian;
       else if (role === "Undercover") word = wordPair.undercover;
       else if (role === "MrWhite") word = "Vous êtes Mr. White";
       else if (role === "Joker") word = "🃏 Vous êtes le JOKER ! Faites-vous éliminer au TOUT PREMIER VOTE (Tour 1) pour GAGNER !";
@@ -433,6 +444,17 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   };
 
   const handleEliminatePlayer = (eliminated: UndercoverPlayer) => {
+    // Si l'Ange Gardien a protégé ce joueur au Tour 1
+    if (clueRoundNumber === 1 && guardianProtectedId && eliminated.id === guardianProtectedId) {
+      setSavedByGuardianPlayer(eliminated);
+      setGuardianProtectedId(null); // Consommé
+      sfxSuccess();
+      if (enableVoiceNarrator) {
+        voiceEngine.speak(`Sauvetage miraculeux ! L'Ange Gardien a protégé ${eliminated.name} ! L'élimination est annulée !`, { tone: "VICTORY" });
+      }
+      return;
+    }
+
     setEliminatedPlayer(eliminated);
     setIsRoleRevealedOnElimination(false);
 
@@ -556,7 +578,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
     // Vérification de victoire
     const remainingAlive = updatedList.filter(p => !p.isEliminated);
     const undercoversLeft = remainingAlive.filter(p => p.gameRole === "Undercover" || p.gameRole === "MrWhite").length;
-    const civiliansLeft = remainingAlive.filter(p => p.gameRole === "Civilian").length;
+    const civiliansLeft = remainingAlive.filter(p => p.gameRole !== "Undercover" && p.gameRole !== "MrWhite").length;
 
     if (undercoversLeft === 0) {
       awardPoints(updatedList, "CIVILIANS");
@@ -592,7 +614,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
   const awardPoints = (finalPlayers: UndercoverPlayer[], winner: "CIVILIANS" | "UNDERCOVER") => {
     finalPlayers.forEach(p => {
       let pts = 0;
-      if (winner === "CIVILIANS" && p.gameRole === "Civilian") {
+      const isCivilianTeam = p.gameRole !== "Undercover" && p.gameRole !== "MrWhite" && p.gameRole !== "Joker";
+      if (winner === "CIVILIANS" && isCivilianTeam) {
         p.scorePoints += 100;
         pts = 100;
       } else if (winner === "UNDERCOVER" && (p.gameRole === "Undercover" || p.gameRole === "MrWhite")) {
@@ -932,7 +955,7 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                       <span className="w-3 h-3 rounded-full bg-blue-400"></span> Civils
                     </span>
                     <span className="font-extrabold text-blue-400 text-base">
-                      {Math.max(1, playerCount - undercoverCount - mrWhiteCount - jokerCount - cameleonCount - doubleAgentCount)}
+                      {Math.max(1, playerCount - undercoverCount - mrWhiteCount - jokerCount - cameleonCount - doubleAgentCount - detectiveCount - guardianAngelCount)}
                     </span>
                   </div>
 
@@ -1021,6 +1044,42 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                       <span className="font-extrabold text-pink-400 text-sm">{doubleAgentCount}</span>
                       <button 
                         onClick={() => { setDoubleAgentCount(doubleAgentCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >+</button>
+                    </div>
+                  </div>
+
+                  {/* L'Enquêteur */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
+                      <span className="w-3 h-3 rounded-full bg-emerald-400"></span> 👁️ Enquêteur
+                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <button 
+                        onClick={() => { setDetectiveCount(Math.max(0, detectiveCount - 1)); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >-</button>
+                      <span className="font-extrabold text-emerald-400 text-sm">{detectiveCount}</span>
+                      <button 
+                        onClick={() => { setDetectiveCount(detectiveCount + 1); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >+</button>
+                    </div>
+                  </div>
+
+                  {/* L'Ange Gardien */}
+                  <div className="flex justify-between items-center bg-white/5 p-3.5 rounded-2xl border border-white/5">
+                    <span className="font-bold flex items-center gap-2 text-xs">
+                      <span className="w-3 h-3 rounded-full bg-indigo-400"></span> 🛡️ Ange Gardien
+                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <button 
+                        onClick={() => { setGuardianAngelCount(Math.max(0, guardianAngelCount - 1)); sfxTap(); }}
+                        className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
+                      >-</button>
+                      <span className="font-extrabold text-indigo-400 text-sm">{guardianAngelCount}</span>
+                      <button 
+                        onClick={() => { setGuardianAngelCount(guardianAngelCount + 1); sfxTap(); }}
                         className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center font-bold text-xs active:scale-90"
                       >+</button>
                     </div>
@@ -1242,11 +1301,54 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
 
               {/* Révélation alliance secrète pour les Undercovers si activé */}
               {enableUndercoverAlliance && currentPlayer?.gameRole === "Undercover" && otherUndercovers.length > 0 && (
-                <div className="w-full p-3 bg-red-500/15 border border-red-500/30 rounded-2xl text-center animate-in fade-in">
+                <div className="w-full p-3 bg-red-500/15 border border-red-500/30 rounded-2xl text-center animate-in fade-in mb-2">
                   <span className="text-[10px] font-black uppercase text-red-400 block mb-0.5">🤝 Alliance Secrète</span>
                   <span className="text-xs font-bold text-foreground/90">
                     Ton coéquipier Undercover : <strong className="text-red-400 font-black">{otherUndercovers.join(", ")}</strong>
                   </span>
+                </div>
+              )}
+
+              {/* Rôle Enquêteur : Indice Secret */}
+              {currentPlayer?.gameRole === "Detective" && (
+                <div className="w-full p-3.5 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl text-left animate-in fade-in mb-2">
+                  <span className="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1.5 mb-1">
+                    <Search size={14} /> 👁️ Indice d'Enquêteur Secret
+                  </span>
+                  <p className="text-xs font-bold text-foreground/90 leading-snug">
+                    {generateDetectiveClue(currentUndercoverWord, playerList)}
+                  </p>
+                  <span className="text-[9px] text-foreground/50 block mt-1">Garde cet indice pour toi et oriente les débats !</span>
+                </div>
+              )}
+
+              {/* Rôle Ange Gardien : Choix du protégé */}
+              {currentPlayer?.gameRole === "GuardianAngel" && (
+                <div className="w-full p-3.5 bg-indigo-500/15 border border-indigo-500/30 rounded-2xl text-left animate-in fade-in mb-2">
+                  <span className="text-[10px] font-black uppercase text-indigo-400 flex items-center gap-1.5 mb-1">
+                    <ShieldCheck size={14} /> 🛡️ Pouvoir d'Ange Gardien (Tour 1)
+                  </span>
+                  <p className="text-[11px] text-foreground/80 mb-2">
+                    Touche le joueur que tu souhaites immuniser contre le 1er vote :
+                  </p>
+                  <div className="flex gap-1.5 flex-wrap max-h-28 overflow-y-auto">
+                    {playerList.map(p => {
+                      const isSelected = guardianProtectedId === p.id;
+                      return (
+                        <button
+                          key={p.id}
+                          onClick={(e) => { e.stopPropagation(); setGuardianProtectedId(p.id); sfxTap(); }}
+                          className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
+                            isSelected 
+                              ? "bg-indigo-500 text-white border-indigo-400 shadow-glow" 
+                              : "bg-white/5 border-white/5 text-foreground/70 hover:text-white"
+                          }`}
+                        >
+                          {p.name || `Joueur ${p.id.slice(-2)}`} {isSelected ? "🛡️" : ""}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -1421,6 +1523,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 <p><strong>Joker:</strong> Faites-vous éliminer au Tour 1 pour gagner seul.</p>
                 <p><strong>Caméléon:</strong> Copiez la description du 1er joueur.</p>
                 <p><strong>Double Agent:</strong> Mot des Civils, mais si éliminé au vote, vous emportez un joueur avec vous.</p>
+                <p>👁️ <strong>Enquêteur:</strong> Mot des Civils + indice secret sur les imposteurs ou leur mot.</p>
+                <p>🛡️ <strong>Ange Gardien:</strong> Mot des Civils + immunise 1 joueur contre l'élimination au Tour 1.</p>
                 <div className="pt-2 border-t border-white/10 space-y-1 text-foreground/70">
                   <p>✨ <strong>Mots Personnalisés:</strong> Créez vos propres mots délires dans la configuration.</p>
                   <p>🔥 <strong>Défis d'Indices:</strong> Règles imposées par tour (1 seul mot, verbe, chuchoté...).</p>
@@ -1545,6 +1649,32 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
             </Card>
           </div>
         )}
+
+        {/* Modal Sauvetage Miraculeux Ange Gardien */}
+        {savedByGuardianPlayer && (
+          <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-6 animate-in fade-in duration-200">
+            <Card className="w-full max-w-sm p-6 border border-indigo-500/40 bg-surface/95 shadow-glow flex flex-col items-center text-center">
+              <div className="w-16 h-16 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4 animate-bounce">
+                <ShieldCheck size={40} />
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400 mb-1">Sauvetage Miraculeux !</span>
+              <h3 className="font-black text-xl mb-2">{savedByGuardianPlayer.name} est protégé !</h3>
+              <p className="text-xs text-foreground/70 mb-6 leading-relaxed">
+                L'Ange Gardien avait posé son bouclier secret sur lui. L'élimination du Tour 1 est totalement annulée !
+              </p>
+              <Button 
+                variant="primary" 
+                className="w-full py-4 text-base bg-indigo-600 border-indigo-500 shadow-glow"
+                onClick={() => {
+                  setSavedByGuardianPlayer(null);
+                  startSpeakingPhase(speakingOrder);
+                }}
+              >
+                Passer au tour d'indices suivant →
+              </Button>
+            </Card>
+          </div>
+        )}
       </main>
     );
   }
@@ -1650,7 +1780,10 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                     eliminatedPlayer.gameRole === "Undercover" ? "un imposteur Undercover" :
                     eliminatedPlayer.gameRole === "MrWhite" ? "Mr. White" :
                     eliminatedPlayer.gameRole === "Joker" ? "le Joker" :
-                    eliminatedPlayer.gameRole === "Cameleon" ? "le Caméléon" : "le Double-Agent";
+                    eliminatedPlayer.gameRole === "Cameleon" ? "le Caméléon" :
+                    eliminatedPlayer.gameRole === "Detective" ? "l'Enquêteur" :
+                    eliminatedPlayer.gameRole === "GuardianAngel" ? "l'Ange Gardien" :
+                    "le Double-Agent";
                   voiceEngine.speak(`${eliminatedPlayer.name} était ${roleLabel} ! Son mot secret était : ${eliminatedPlayer.word}.`, { tone: "DRAMA" });
                 }
               }}
@@ -1668,6 +1801,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                 eliminatedPlayer.gameRole === "Undercover" ? "bg-red-500/20 text-red-400 border border-red-500/30" :
                 eliminatedPlayer.gameRole === "MrWhite" ? "bg-purple-500/20 text-purple-400 border border-purple-500/30" :
                 eliminatedPlayer.gameRole === "Joker" ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" :
+                eliminatedPlayer.gameRole === "Detective" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" :
+                eliminatedPlayer.gameRole === "GuardianAngel" ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30" :
                 "bg-pink-500/20 text-pink-400 border border-pink-500/30"
               }`}>
                 {eliminatedPlayer.gameRole === "Civilian" ? "Civil 😇" :
@@ -1675,6 +1810,8 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
                  eliminatedPlayer.gameRole === "MrWhite" ? "Mr. White 🎭" :
                  eliminatedPlayer.gameRole === "Joker" ? "Joker 🃏" :
                  eliminatedPlayer.gameRole === "Cameleon" ? "Caméléon 🪞" :
+                 eliminatedPlayer.gameRole === "Detective" ? "Enquêteur 👁️" :
+                 eliminatedPlayer.gameRole === "GuardianAngel" ? "Ange Gardien 🛡️" :
                  "Double-Agent 💣"}
               </div>
 
@@ -1794,22 +1931,35 @@ export default function UndercoverLocalGame({ params }: { params: Promise<{ room
               </div>
             </Card>
 
-            {speakingOrder.map(p => (
-              <div key={p.id} className="flex justify-between items-center text-sm py-2 border-b border-white/5 last:border-0">
-                <div className="flex items-center gap-2">
-                  {p.isEliminated && <Skull size={14} className="text-red-500" />}
-                  <span className="font-bold">{p.name}</span>
+            {speakingOrder.map(p => {
+              const isCivilianSide = p.gameRole !== "Undercover" && p.gameRole !== "MrWhite";
+              const roleDisplay = 
+                p.gameRole === "Civilian" ? "Civil 😇" :
+                p.gameRole === "Undercover" ? "Undercover 🕵️" :
+                p.gameRole === "MrWhite" ? "Mr. White 🎭" :
+                p.gameRole === "Joker" ? "Joker 🃏" :
+                p.gameRole === "Cameleon" ? "Caméléon 🪞" :
+                p.gameRole === "Detective" ? "Enquêteur 👁️" :
+                p.gameRole === "GuardianAngel" ? "Ange Gardien 🛡️" :
+                "Double-Agent 💣";
+
+              return (
+                <div key={p.id} className="flex justify-between items-center text-sm py-2 border-b border-white/5 last:border-0">
+                  <div className="flex items-center gap-2">
+                    {p.isEliminated && <Skull size={14} className="text-red-500" />}
+                    <span className="font-bold">{p.name}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className={`font-extrabold ${isCivilianSide ? "text-blue-400" : "text-red-400"}`}>
+                      {roleDisplay} ({p.word})
+                    </span>
+                    <span className="text-xs font-black bg-white/5 px-2 py-1 rounded-full text-yellow-400">
+                      +{p.scorePoints} pts
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className={`font-extrabold ${p.gameRole === "Civilian" ? "text-blue-400" : "text-red-400"}`}>
-                    {p.gameRole} ({p.word})
-                  </span>
-                  <span className="text-xs font-black bg-white/5 px-2 py-1 rounded-full text-yellow-400">
-                    +{p.scorePoints} pts
-                  </span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
 
