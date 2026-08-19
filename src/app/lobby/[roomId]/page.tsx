@@ -16,11 +16,12 @@ import { sfxTap, sfxSuccess, sfxError } from "@/lib/audio";
 import { 
   UndercoverIllustration, WerewolfIllustration, BlindTestIllustration, 
   TodIllustration, FlagQuizIllustration, TuPreferesIllustration, SaboteurIllustration, 
-  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration 
+  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration, FakeArtistIllustration 
 } from "@/components/illustrations/GameIllustrations";
 
 const GAME_ART_MAP: Record<string, { themeColor: string; hex: string; illustration: React.ReactNode }> = {
   "undercover": { themeColor: "purple", hex: "#9333EA", illustration: <UndercoverIllustration className="w-16 h-16" /> },
+  "fake-artist": { themeColor: "green", hex: "#10B981", illustration: <FakeArtistIllustration className="w-16 h-16" /> },
   "werewolf": { themeColor: "blue", hex: "#2563EB", illustration: <WerewolfIllustration className="w-16 h-16" /> },
   "blind-test": { themeColor: "green", hex: "#10B981", illustration: <BlindTestIllustration className="w-16 h-16" /> },
   "truth-or-dare": { themeColor: "orange", hex: "#F97316", illustration: <TodIllustration className="w-16 h-16" /> },

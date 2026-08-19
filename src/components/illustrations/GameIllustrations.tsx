@@ -365,3 +365,49 @@ export function VyloPartyIllustration({ className = "w-full h-56" }: { className
     </div>
   );
 }
+
+// 11. Carte Tarot / Vector Faux Artiste (Palette, Pinceau & Toile)
+export function FakeArtistIllustration({ className = "w-full h-56" }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center overflow-hidden rounded-2xl bg-[#064E3B] border-4 border-[#10B981] p-2 shadow-2xl ${className}`}>
+      <svg className="w-full h-full rounded-xl overflow-hidden" viewBox="0 0 200 280" fill="none">
+        <rect width="200" height="280" fill="#047857" />
+        <SunburstRays color="#6EE7B7" opacity={0.25} />
+
+        <rect x="8" y="8" width="184" height="264" rx="8" stroke="#6EE7B7" strokeWidth="2" strokeDasharray="3 3" fill="none" />
+
+        {/* Palette & Pinceau central */}
+        <g transform="translate(0, 0)">
+          {/* Palette de peinture */}
+          <path d="M100 60C60 60 40 85 45 125C48 150 70 170 95 165C105 163 112 150 122 155C132 160 140 170 155 160C170 150 175 120 170 95C165 70 140 60 100 60Z" fill="#1E293B" stroke="#6EE7B7" strokeWidth="3" />
+          
+          {/* Trou pour le pouce */}
+          <ellipse cx="75" cy="140" rx="8" ry="12" fill="#047857" stroke="#6EE7B7" strokeWidth="2" />
+          
+          {/* Taches de couleur */}
+          <circle cx="80" cy="85" r="7" fill="#EF4444" />
+          <circle cx="110" cy="78" r="7" fill="#3B82F6" />
+          <circle cx="140" cy="90" r="7" fill="#F59E0B" />
+          <circle cx="150" cy="120" r="7" fill="#EC4899" />
+          <circle cx="130" cy="145" r="7" fill="#8B5CF6" />
+
+          {/* Pinceau traversant */}
+          <g transform="rotate(35 100 110)">
+            <rect x="96" y="25" width="8" height="90" rx="3" fill="#B45309" stroke="#FDE68A" strokeWidth="1" />
+            <rect x="95" y="115" width="10" height="15" fill="#94A3B8" />
+            <path d="M95 130C95 140 105 140 105 130Z" fill="#10B981" />
+          </g>
+        </g>
+
+        {/* Ruban Inférieur */}
+        <g transform="translate(0, 220)">
+          <path d="M20 10L100 0L180 10L170 35L100 25L30 35L20 10Z" fill="#065F46" stroke="#6EE7B7" strokeWidth="2" />
+          <text x="100" y="20" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="900" letterSpacing="1">
+            FAUX ARTISTE
+          </text>
+        </g>
+      </svg>
+    </div>
+  );
+}
+

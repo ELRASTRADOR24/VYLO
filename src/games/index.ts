@@ -9,10 +9,12 @@ import { flagQuizConfig } from "./flag-quiz/config";
 import { wordMasterConfig } from "./word-master/config";
 import { punchlinesConfig } from "./punchlines/config";
 import { vyloPartyConfig } from "./vylo-party/config";
+import { fakeArtistConfig } from "./fake-artist/config";
 
 // On stocke tous les jeux disponibles
 export const gameRegistry: Record<string, GameConfig> = {
   [undercoverConfig.id]: undercoverConfig,
+  [fakeArtistConfig.id]: fakeArtistConfig,
   [blindTestConfig.id]: blindTestConfig,
   [tuPreferesConfig.id]: tuPreferesConfig,
   [punchlinesConfig.id]: punchlinesConfig,

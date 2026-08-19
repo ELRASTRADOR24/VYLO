@@ -10,7 +10,7 @@ import { GameCard3D } from "@/components/ui/GameCard3D";
 import { 
   VyloMascot, UndercoverIllustration, WerewolfIllustration, BlindTestIllustration, 
   TodIllustration, FlagQuizIllustration, TuPreferesIllustration, SaboteurIllustration, 
-  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration 
+  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration, FakeArtistIllustration 
 } from "@/components/illustrations/GameIllustrations";
 import { sfxTap, sfxSuccess } from "@/lib/audio";
 
@@ -191,6 +191,20 @@ export default function PlayfulPremiumHomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Card: Faux Artiste (🟢 Emerald) */}
+            <GameCard3D
+              title="FAUX ARTISTE"
+              description="Dessinez le mot secret trait par trait... sans vous faire repérer par le faussaire !"
+              playersMin={3}
+              playersMax={12}
+              durationMins={10}
+              themeColor="green"
+              accentHex="#10B981"
+              illustration={<FakeArtistIllustration />}
+              onClick={() => router.push("/setup/fake-artist")}
+              onHover={(hex) => setAmbientColor(hex)}
+            />
+
             {/* Card 5: Devine le Drapeau (🟡 Yellow) */}
             <GameCard3D
               title="DEVINE LE DRAPEAU"

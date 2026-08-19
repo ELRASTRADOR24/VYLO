@@ -9,14 +9,15 @@ import { LivingBackground } from "@/components/ui/LivingBackground";
 import { 
   UndercoverIllustration, WerewolfIllustration, BlindTestIllustration, 
   TodIllustration, FlagQuizIllustration, TuPreferesIllustration, SaboteurIllustration, 
-  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration 
+  WordMasterIllustration, PunchlinesIllustration, VyloPartyIllustration, FakeArtistIllustration 
 } from "@/components/illustrations/GameIllustrations";
 import { cn } from "@/lib/utils";
 
-const FILTERS = ["Tous", "Bluff", "Action", "Social", "Quiz"];
+const FILTERS = ["Tous", "Bluff", "Action", "Social", "Quiz", "Créativité & Bluff"];
 
 const GAME_ART_MAP: Record<string, { themeColor: any; hex: string; illustration: React.ReactNode }> = {
   "undercover": { themeColor: "purple", hex: "#9333EA", illustration: <UndercoverIllustration /> },
+  "fake-artist": { themeColor: "green", hex: "#10B981", illustration: <FakeArtistIllustration /> },
   "werewolf": { themeColor: "blue", hex: "#2563EB", illustration: <WerewolfIllustration /> },
   "blind-test": { themeColor: "green", hex: "#10B981", illustration: <BlindTestIllustration /> },
   "truth-or-dare": { themeColor: "orange", hex: "#F97316", illustration: <TodIllustration /> },
