@@ -111,8 +111,8 @@ export default function FakeArtistLocalGame({ params }: { params: Promise<{ room
     const roles = generateFakeArtistRoles(playerCount, fakeArtistCount);
 
     // 3. Préparation des joueurs avec leurs couleurs
-    const names = savedGroup.length >= playerCount 
-      ? savedGroup.slice(0, playerCount) 
+    const names: string[] = savedGroup.length >= playerCount 
+      ? savedGroup.slice(0, playerCount).map(p => p.name) 
       : Array.from({ length: playerCount }, (_, i) => `Joueur ${i + 1}`);
 
     const newPlayers: FakeArtistPlayer[] = names.map((name, i) => ({
@@ -192,7 +192,7 @@ export default function FakeArtistLocalGame({ params }: { params: Promise<{ room
     const updated = [...playerList];
     updated[currentDistIndex].name = tempName.trim();
     setPlayerList(updated);
-    setSavedGroup(updated.map(p => p.name));
+    setSavedGroup(updated.map(p => ({ id: p.id, name: p.name })));
     setPhase("SHOW_ROLE");
   };
 
