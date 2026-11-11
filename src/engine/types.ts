@@ -39,6 +39,7 @@ export interface GameConfig {
   difficulty: "Facile" | "Moyen" | "Difficile";
   modes: GameMode[];
   themeColor: "primary" | "accent" | "secondary" | "pink" | "purple";
+  status?: "ready" | "wip";
 }
 
 export interface EngineEvent {

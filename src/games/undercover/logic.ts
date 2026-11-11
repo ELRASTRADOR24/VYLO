@@ -624,27 +624,152 @@ export const WORD_PAIRS_DATABASE: UndercoverWordPair[] = [
   { civilian: "Ange", undercover: "Démon", category: "Mode Expert" },
 ];
 
+export const UNDERCOVER_ROLE_META: Record<
+  UndercoverRole,
+  { label: string; emoji: string; badgeClass: string; textClass: string; team: "CIVILIANS" | "INFILTRATORS" | "JOKER" }
+> = {
+  Civilian: {
+    label: "Civil",
+    emoji: "😇",
+    badgeClass: "bg-[#EFF6FF] text-[#1D4ED8] border border-blue-500/25",
+    textClass: "text-[#1D4ED8]",
+    team: "CIVILIANS",
+  },
+  Undercover: {
+    label: "Undercover",
+    emoji: "🕵️",
+    badgeClass: "bg-[#FEEBEB] text-[#C22E2E] border border-primary/25",
+    textClass: "text-[#C22E2E]",
+    team: "INFILTRATORS",
+  },
+  MrWhite: {
+    label: "Mr. White",
+    emoji: "🤍",
+    badgeClass: "bg-[#EEF2FF] text-[#4338CA] border border-secondary/25",
+    textClass: "text-[#4338CA]",
+    team: "INFILTRATORS",
+  },
+  Joker: {
+    label: "Joker",
+    emoji: "🃏",
+    badgeClass: "bg-[#FEF3C7] text-[#B45309] border border-amber-500/30",
+    textClass: "text-[#B45309]",
+    team: "JOKER",
+  },
+  Cameleon: {
+    label: "Caméléon",
+    emoji: "🪞",
+    badgeClass: "bg-[#ECFEFF] text-[#0E7490] border border-cyan-500/25",
+    textClass: "text-[#0E7490]",
+    team: "CIVILIANS",
+  },
+  DoubleAgent: {
+    label: "Double-Agent",
+    emoji: "💣",
+    badgeClass: "bg-[#FDF2F8] text-[#BE185D] border border-pink-500/25",
+    textClass: "text-[#BE185D]",
+    team: "CIVILIANS",
+  },
+  Detective: {
+    label: "Enquêteur",
+    emoji: "👁️",
+    badgeClass: "bg-[#ECFDF5] text-[#047857] border border-emerald-500/25",
+    textClass: "text-[#047857]",
+    team: "CIVILIANS",
+  },
+  GuardianAngel: {
+    label: "Ange Gardien",
+    emoji: "🛡️",
+    badgeClass: "bg-[#EEF2FF] text-[#4338CA] border border-indigo-500/25",
+    textClass: "text-[#4338CA]",
+    team: "CIVILIANS",
+  },
+};
+
+export function isInfiltratorRole(role?: string | null): boolean {
+  return role === "Undercover" || role === "MrWhite";
+}
+
+export function isCivilianTeamRole(role?: string | null): boolean {
+  return role !== "Undercover" && role !== "MrWhite" && role !== "Joker";
+}
+
+export interface ExtendedRoleCounts {
+  undercoverCount: number;
+  mrWhiteCount: number;
+  jokerCount?: number;
+  cameleonCount?: number;
+  doubleAgentCount?: number;
+  detectiveCount?: number;
+  guardianAngelCount?: number;
+}
+
+/** Validation stricte de la répartition des rôles (classique + rôles spéciaux) */
+export function validateRoleConfigExtended(
+  totalPlayers: number,
+  counts: ExtendedRoleCounts
+): { isValid: boolean; error?: string } {
+  const {
+    undercoverCount,
+    mrWhiteCount,
+    jokerCount = 0,
+    cameleonCount = 0,
+    doubleAgentCount = 0,
+    detectiveCount = 0,
+    guardianAngelCount = 0,
+  } = counts;
+
+  const specialTotal =
+    undercoverCount +
+    mrWhiteCount +
+    jokerCount +
+    cameleonCount +
+    doubleAgentCount +
+    detectiveCount +
+    guardianAngelCount;
+
+  const pureCivilianCount = totalPlayers - specialTotal;
+  const civilianTeamCount =
+    pureCivilianCount + cameleonCount + doubleAgentCount + detectiveCount + guardianAngelCount;
+  const infiltratorsCount = undercoverCount + mrWhiteCount;
+
+  if (totalPlayers < 3) {
+    return { isValid: false, error: "Il faut au moins 3 joueurs pour lancer Undercover." };
+  }
+
+  if (pureCivilianCount < 1) {
+    return { isValid: false, error: "Il faut au moins 1 Civil classique dans la partie." };
+  }
+
+  if (infiltratorsCount < 1) {
+    return { isValid: false, error: "Il faut au moins 1 Undercover ou 1 Mr. White." };
+  }
+
+  if (totalPlayers === 3 && infiltratorsCount > 1) {
+    return { isValid: false, error: "À 3 joueurs, maximum 1 imposteur (Undercover ou Mr. White)." };
+  }
+
+  if (civilianTeamCount <= infiltratorsCount) {
+    return {
+      isValid: false,
+      error: "L'équipe des Civils doit être strictement majoritaire face aux imposteurs.",
+    };
+  }
+
+  if (civilianTeamCount < 2) {
+    return { isValid: false, error: "Il faut au moins 2 joueurs du camp Civil." };
+  }
+
+  return { isValid: true };
+}
+
 /** Validation stricte de la répartition des rôles */
 export function validateRoleConfig(
   totalPlayers: number,
   undercoverCount: number,
   mrWhiteCount: number
 ): { isValid: boolean; error?: string } {
-  const civilianCount = totalPlayers - undercoverCount - mrWhiteCount;
-
-  if (civilianCount < 2) {
-    return { isValid: false, error: "Il faut au moins 2 Civils dans la partie." };
-  }
-
-  if (totalPlayers === 3 && undercoverCount > 0 && mrWhiteCount > 0) {
-    return { isValid: false, error: "À 3 joueurs, impossible d'avoir à la fois un Undercover et Mr. White." };
-  }
-
-  if (undercoverCount < 1 && mrWhiteCount < 1) {
-    return { isValid: false, error: "Il faut au moins 1 Undercover ou 1 Mr. White." };
-  }
-
-  return { isValid: true };
+  return validateRoleConfigExtended(totalPlayers, { undercoverCount, mrWhiteCount });
 }
 
 const usedUndercoverPairsHistory = new Set<string>();
@@ -723,27 +848,28 @@ export function generateRoles(playerCount: number): UndercoverRole[] {
   return generateRolesFromConfig(playerCount, undercoverCount, mrWhiteCount);
 }
 
-/** Génération du Mode Mystère : répartition 100% inconnue des rôles avec majorité garantie de Civils (60-70%) */
+/** Génération du Mode Mystère : répartition 100% inconnue des rôles avec majorité garantie de Civils */
 export function generateMysteryRoles(totalPlayers: number): UndercoverRole[] {
-  const civilianCount = Math.max(2, Math.floor(totalPlayers * 0.65));
-  const remainingSlots = totalPlayers - civilianCount;
-  
-  const possibleSpecialRoles: UndercoverRole[] = [
-    "Undercover", "MrWhite", "Joker", "Cameleon", "DoubleAgent", "Detective", "GuardianAngel"
-  ];
-
+  const maxInfiltrators = totalPlayers <= 4 ? 1 : Math.max(1, Math.floor((totalPlayers - 1) / 3));
   const roles: UndercoverRole[] = [];
-  for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
 
-  for (let i = 0; i < remainingSlots; i++) {
-    const randomRole = possibleSpecialRoles[Math.floor(Math.random() * possibleSpecialRoles.length)];
-    roles.push(randomRole);
+  // Au moins 1 infiltrateur garanti (Undercover prioritaire ou Mr. White si >= 4)
+  roles.push(totalPlayers >= 4 && Math.random() < 0.3 ? "MrWhite" : "Undercover");
+  for (let i = 1; i < maxInfiltrators; i++) {
+    roles.push(Math.random() < 0.35 ? "MrWhite" : "Undercover");
   }
 
-  if (!roles.includes("Undercover")) {
-    roles[civilianCount] = "Undercover";
+  // Eventuellement 1 rôle bonus fun si la table a au moins 5 joueurs
+  if (totalPlayers >= 5 && Math.random() < 0.6) {
+    const bonusPool: UndercoverRole[] = ["Joker", "Cameleon", "DoubleAgent", "Detective", "GuardianAngel"];
+    roles.push(bonusPool[Math.floor(Math.random() * bonusPool.length)]);
   }
 
+  while (roles.length < totalPlayers) {
+    roles.push("Civilian");
+  }
+
+  // Mélange Fisher-Yates
   for (let i = roles.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [roles[i], roles[j]] = [roles[j], roles[i]];
@@ -761,7 +887,7 @@ export function generateRolesFromConfig(
   return generateRolesFromConfigExtended(totalPlayers, undercoverCount, mrWhiteCount, 0, 0, 0, 0, 0);
 }
 
-/** Génération paramétrée incluant tous les rôles (Joker, Caméléon, Double-Agent, Enquêteur, Ange Gardien) */
+/** Génération paramétrée incluant tous les rôles (garantit exactement totalPlayers rôles) */
 export function generateRolesFromConfigExtended(
   totalPlayers: number,
   undercoverCount: number,
@@ -772,11 +898,8 @@ export function generateRolesFromConfigExtended(
   detectiveCount: number = 0,
   guardianAngelCount: number = 0
 ): UndercoverRole[] {
-  const specialTotal = undercoverCount + mrWhiteCount + jokerCount + cameleonCount + doubleAgentCount + detectiveCount + guardianAngelCount;
-  const civilianCount = Math.max(1, totalPlayers - specialTotal);
   const roles: UndercoverRole[] = [];
 
-  for (let i = 0; i < civilianCount; i++) roles.push("Civilian");
   for (let i = 0; i < undercoverCount; i++) roles.push("Undercover");
   for (let i = 0; i < mrWhiteCount; i++) roles.push("MrWhite");
   for (let i = 0; i < jokerCount; i++) roles.push("Joker");
@@ -785,13 +908,18 @@ export function generateRolesFromConfigExtended(
   for (let i = 0; i < detectiveCount; i++) roles.push("Detective");
   for (let i = 0; i < guardianAngelCount; i++) roles.push("GuardianAngel");
 
-  // Mélange de Fisher-Yates
-  for (let i = roles.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [roles[i], roles[j]] = [roles[j], roles[i]];
+  const safeRoles = roles.slice(0, Math.max(0, totalPlayers - 1));
+  while (safeRoles.length < totalPlayers) {
+    safeRoles.push("Civilian");
   }
 
-  return roles;
+  // Mélange de Fisher-Yates
+  for (let i = safeRoles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [safeRoles[i], safeRoles[j]] = [safeRoles[j], safeRoles[i]];
+  }
+
+  return safeRoles;
 }
 
 /** Générateur d'indice secret pour l'Enquêteur */
@@ -903,7 +1031,7 @@ export function shuffleArray<T>(array: T[]): T[] {
 
 /** Ordre de parole mélangé avec probabilité réduite pour Mr. White d'être le premier joueur */
 export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPlayer[] {
-  let shuffled = shuffleArray(players);
+  const shuffled = shuffleArray(players);
 
   // Si le premier joueur tiré est Mr. White, on lui applique 90% de chance d'être déplacé plus loin
   if (shuffled[0].gameRole === "MrWhite" && Math.random() < 0.9 && shuffled.length > 2) {
@@ -914,21 +1042,58 @@ export function shuffleSpeakingOrder(players: UndercoverPlayer[]): UndercoverPla
   return shuffled;
 }
 
-/** Normalisation d'une chaîne pour comparaison de mots (sans accents, minuscules, sans espaces superflus) */
+/** Normalisation d'une chaîne pour comparaison de mots (sans accents, minuscules, articles neutres) */
 export function normalizeString(str: string): string {
   return str
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/^(le |la |les |l'|un |une |des |du )/g, "")
     .replace(/[^a-z0-9]/g, "")
     .trim();
 }
 
-/** Vérifie si la devinette de Mr. White correspond au mot secret des Civils */
+function levenshteinOneOrLess(a: string, b: string): boolean {
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  let j = 0;
+  let edits = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) {
+      i += 1;
+      j += 1;
+    } else {
+      edits += 1;
+      if (edits > 1) return false;
+      if (a.length > b.length) i += 1;
+      else if (b.length > a.length) j += 1;
+      else {
+        i += 1;
+        j += 1;
+      }
+    }
+  }
+  if (i < a.length || j < b.length) edits += 1;
+  return edits <= 1;
+}
+
+/** Vérifie si la devinette de Mr. White correspond au mot secret des Civils (sans faux positifs sur sous-chaînes courtes) */
 export function checkMrWhiteGuess(guess: string, civilianWord: string): boolean {
   const normGuess = normalizeString(guess);
   const normCivilian = normalizeString(civilianWord);
 
   if (!normGuess || !normCivilian) return false;
-  return normGuess === normCivilian || (normCivilian.includes(normGuess) && normGuess.length >= 3);
+  if (normGuess === normCivilian) return true;
+
+  // Tolérance pluriel (ex: "pomme" vs "pommes")
+  const singularGuess = normGuess.replace(/[sx]$/, "");
+  const singularCivilian = normCivilian.replace(/[sx]$/, "");
+  if (singularGuess.length >= 2 && singularGuess === singularCivilian) return true;
+
+  // Tolérance faute de frappe mineure (1 lettre) sur mots >= 5 lettres
+  if (normCivilian.length >= 5 && normGuess.length >= 4 && levenshteinOneOrLess(normGuess, normCivilian)) {
+    return true;
+  }
+
+  return false;
 }

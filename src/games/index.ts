@@ -10,20 +10,22 @@ import { wordMasterConfig } from "./word-master/config";
 import { punchlinesConfig } from "./punchlines/config";
 import { vyloPartyConfig } from "./vylo-party/config";
 import { fakeArtistConfig } from "./fake-artist/config";
+import { mostLikelyToConfig } from "./most-likely-to/config";
 
-// On stocke tous les jeux disponibles
+// Catalogue complet des 12 jeux disponibles
 export const gameRegistry: Record<string, GameConfig> = {
   [undercoverConfig.id]: undercoverConfig,
-  [fakeArtistConfig.id]: fakeArtistConfig,
+  [werewolfConfig.id]: werewolfConfig,
   [blindTestConfig.id]: blindTestConfig,
+  [fakeArtistConfig.id]: fakeArtistConfig,
+  [truthOrDareConfig.id]: truthOrDareConfig,
   [tuPreferesConfig.id]: tuPreferesConfig,
-  [punchlinesConfig.id]: punchlinesConfig,
-  [vyloPartyConfig.id]: vyloPartyConfig,
-  [wordMasterConfig.id]: wordMasterConfig,
   [flagQuizConfig.id]: flagQuizConfig,
   [saboteurConfig.id]: saboteurConfig,
-  [werewolfConfig.id]: werewolfConfig,
-  [truthOrDareConfig.id]: truthOrDareConfig,
+  [wordMasterConfig.id]: wordMasterConfig,
+  [punchlinesConfig.id]: punchlinesConfig,
+  [vyloPartyConfig.id]: vyloPartyConfig,
+  [mostLikelyToConfig.id]: mostLikelyToConfig,
 };
 
 export const getGameList = (): GameConfig[] => Object.values(gameRegistry);

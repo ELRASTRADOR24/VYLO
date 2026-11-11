@@ -13,4 +13,5 @@ export const flagQuizConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local", "online"],
   themeColor: "purple",
+  status: "wip",
 };

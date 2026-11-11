@@ -5,21 +5,16 @@ import { useRouter } from "next/navigation";
 import { LivingBackground } from "@/components/ui/LivingBackground";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
-import { 
-  BookOpen, ShieldAlert, Sparkles, ChevronLeft, Target, Users, CheckCircle2, 
-  XCircle, Crown, Eye, Flame, Disc, Flag, HelpCircle, Pickaxe, MessageSquare, Zap
-} from "lucide-react";
+import { BookOpen, ShieldAlert, ChevronLeft, Target, Users, XCircle, Zap } from "lucide-react";
 import { sfxTap } from "@/lib/audio";
+import { getGameVisualMeta } from "@/components/illustrations/GameIllustrations";
 
 interface GameRuleData {
   id: string;
   name: string;
   category: string;
-  icon: string;
-  themeColor: string;
-  accentHex: string;
   goal: string;
-  roles?: { title: string; badge: string; desc: string; icon: string }[];
+  roles?: { title: string; badge: string; desc: string }[];
   donts: string[];
 }
 
@@ -27,240 +22,287 @@ const GAME_RULES: GameRuleData[] = [
   {
     id: "undercover",
     name: "Undercover",
-    category: "Enquête & Bluff",
-    icon: "🕵️‍♂️",
-    themeColor: "purple",
-    accentHex: "#9333EA",
-    goal: "Démasquer les imposteurs (Undercovers & Mr. White) cachés parmi les Civils grâce aux mots-indices !",
+    category: "Bluff & Déduction",
+    goal: "Démasquer les infiltrés cachés parmi les Civils grâce aux mots-indices échangés à voix haute.",
     roles: [
-      { title: "Civils", badge: "Majorité", desc: "Ont tous le même mot secret. Doivent se reconnaître entre eux et éliminer les imposteurs.", icon: "👥" },
-      { title: "Undercover", badge: "Imposteur", desc: "A un mot très proche du mot Civil. Doit fondre dans la masse et se faire passer pour un Civil.", icon: "🕵️‍♂️" },
-      { title: "Mr. White", badge: "Mystère", desc: "N'a AUCUN mot. Doit deviner le mot des Civils en écoutant leurs indices pour ne pas se faire démasquer.", icon: "🤍" },
-      { title: "Le Joker", badge: "Rôle Chaotique", desc: "Gagne en SOLO s'il se fait éliminer au TOUT PREMIER VOTE du Tour 1 en bluffant avec malice !", icon: "🃏" },
-      { title: "Le Caméléon", badge: "Rôle Copieur", desc: "N'a pas de mot au début. Il copie secrètement le mot et le camp du premier joueur qui s'exprime.", icon: "🪞" },
-      { title: "Double-Agent", badge: "Rôle Piégé", desc: "Connaît le mot Civil, mais s'il est éliminé au vote, il emporte un joueur de son choix dans sa mort !", icon: "💣" }
+      { title: "Civils", badge: "Majorité", desc: "Ont tous exactement le même mot secret. Doivent repérer et éliminer les imposteurs." },
+      { title: "Undercover", badge: "Infiltré", desc: "A un mot très proche du mot Civil. Doit se fondre dans la discussion." },
+      { title: "Mr. White", badge: "Sans mot", desc: "Ne reçoit aucun mot. Doit improviser et deviner le mot des Civils s'il est démasqué." },
+      { title: "Le Joker", badge: "Spécial", desc: "Gagne en solo s'il réussit à se faire éliminer dès le tout premier vote." },
+      { title: "Le Caméléon", badge: "Copieur", desc: "Sans mot au départ : il adopte discrètement la piste du premier orateur." },
+      { title: "Double-Agent", badge: "Piégé", desc: "Connaît le mot Civil et emporte un joueur de son choix s'il est éliminé." },
     ],
     donts: [
-      "🚫 Interdiction de donner l'initiale ou d'épeeler le mot lettre par lettre (ex: 'Ça commence par P').",
-      "🚫 Interdiction de donner des indices trop évidents ou synonymes directs (ex: dire 'Chat' pour 'Félin').",
-      "🚫 Interdiction de regarder l'écran ou la main du voisin pendant la distribution des mots.",
-      "🚫 Interdiction pour Mr. White de donner un indice au pif sans avoir attentivement écouté les précédents."
-    ]
+      "Ne donnez jamais l'initiale ni le nombre de lettres du mot.",
+      "Évitez les synonymes trop évidents ou de répéter un indice déjà dit.",
+      "Ne regardez pas l'écran pendant qu'un autre joueur consulte son mot.",
+    ],
   },
   {
     id: "werewolf",
     name: "Loup-Garou",
-    category: "Rôle Secret & Débat",
-    icon: "🐺",
-    themeColor: "blue",
-    accentHex: "#2563EB",
-    goal: "Les Villageois doivent éliminer tous les Loups-Garous le jour, et les Loups doivent dévorer le village la nuit !",
+    category: "Rôles Secrets & Débat",
+    goal: "Le Village doit éliminer tous les Loups-Garous le jour, pendant que la meute chasse la nuit.",
     roles: [
-      { title: "Villageois", badge: "Innocent", desc: "Débattent le jour pour démasquer et éliminer les Loups-Garous au vote.", icon: "🧑‍🌾" },
-      { title: "Loup-Garou", badge: "Tueur", desc: "Se réveillent la nuit en secret pour désigner une victime à dévorer.", icon: "🐺" },
-      { title: "La Voyante", badge: "Spécial", desc: "Découvre le rôle exact d'un joueur chaque nuit.", icon: "🔮" },
-      { title: "La Sorcière", badge: "Spécial", desc: "Possède 1 potion de vie (sauve la victime) et 1 potion de mort (élimine un joueur).", icon: "🧪" },
-      { title: "Le Chasseur", badge: "Spécial", desc: "S'il meurt, il tire une dernière balle pour éliminer un joueur au choix.", icon: "🏹" }
+      { title: "Villageois", badge: "Village", desc: "Enquêtent ensemble le jour pour démasquer les Loups." },
+      { title: "Loup-Garou", badge: "Meute", desc: "Se réveillent la nuit pour choisir leur cible en secret." },
+      { title: "La Voyante", badge: "Spécial", desc: "Observe le rôle exact d'un joueur chaque nuit." },
+      { title: "La Sorcière", badge: "Spécial", desc: "Dispose d'une potion de vie et d'une potion de mort." },
+      { title: "Le Chasseur", badge: "Spécial", desc: "S'il est éliminé, il emporte immédiatement un joueur avec lui." },
     ],
     donts: [
-      "🚫 Interdiction d'ouvrir les yeux pendant la phase de Nuit quand ce n'est pas votre tour.",
-      "🚫 Interdiction de faire du bruit ou des mouvements de bras traîtres pendant la Nuit.",
-      "🚫 Interdiction d'évoquer des preuves physiques (ex: 'J'ai entendu son téléphone vibrer à ma gauche')."
-    ]
+      "Gardez les yeux bien fermés pendant la phase de Nuit.",
+      "Évitez les indices sonores ou gestes qui trahissent votre tour de jeu.",
+      "Ne divulguez pas votre rôle en montrant l'écran du téléphone.",
+    ],
   },
   {
     id: "blind-test",
-    name: "Blind Test Musical",
-    category: "Musique & Vitesse",
-    icon: "🎶",
-    themeColor: "green",
-    accentHex: "#10B981",
-    goal: "Reconnaître le titre ou l'artiste de chaque extrait audio le plus rapidement possible !",
+    name: "Blind Test",
+    category: "Musique & Rapidité",
+    goal: "Identifier le titre ou l'artiste de chaque extrait musical le plus vite possible.",
     donts: [
-      "🚫 Interdiction de crier la réponse pendant que l'extrait tourne si vous jouez avec les propositions sur téléphone.",
-      "🚫 Interdiction d'utiliser Shazam ou des applications de reconnaissance musicale externes !",
-      "🚫 Interdiction de couper la musique des autres pendant les 30 secondes d'écoute."
-    ]
+      "Pas d'application de reconnaissance musicale pendant la manche.",
+      "Laissez tout le monde entendre l'extrait avant de couper le son.",
+    ],
+  },
+  {
+    id: "fake-artist",
+    name: "Faux Artiste",
+    category: "Dessin & Bluff",
+    goal: "Compléter un dessin collectif trait par trait tout en repérant qui ne connaît pas le mot secret.",
+    roles: [
+      { title: "Artistes", badge: "Équipe", desc: "Connaissent le mot secret et dessinent un trait pertinent sans trop en révéler." },
+      { title: "Faux Artiste", badge: "Imposteur", desc: "Connaît uniquement le thème. Doit imiter les autres traits sans se faire prendre !" },
+    ],
+    donts: [
+      "Un seul trait continu par joueur et par tour.",
+      "Interdiction d'écrire des lettres ou des chiffres dans le dessin.",
+    ],
   },
   {
     id: "truth-or-dare",
     name: "Action ou Vérité",
-    category: "Défis & Secrets",
-    icon: "🔥",
-    themeColor: "orange",
-    accentHex: "#F97316",
-    goal: "Révéler vos pires secrets ou réaliser des défis déjantés entre amis !",
+    category: "Défis & Confidences",
+    goal: "Répondre honnêtement à une question ou relever un défi dans la bonne humeur.",
     donts: [
-      "🚫 Interdiction de refuser une Vérité si vous avez choisi d'y répondre.",
-      "🚫 Interdiction de proposer des défis dangereux ou irrespectueux envers autrui.",
-      "🚫 Ne gâchez pas l'ambiance : assumez vos choix dans la rigolade et le respect !"
-    ]
+      "Assumez le choix sélectionné entre Action ou Vérité.",
+      "Gardez toujours les défis bienveillants et sans danger pour le groupe.",
+    ],
   },
   {
     id: "tu-preferes",
     name: "Tu Préfères ?",
-    category: "Dilemmes & Votes",
-    icon: "⚖️",
-    themeColor: "red",
-    accentHex: "#EF4444",
-    goal: "Voter pour l'option A ou B et découvrir si vous pensez comme la majorité du groupe !",
+    category: "Dilemmes",
+    goal: "Choisir entre deux options improbables et découvrir les votes du reste de la table.",
     donts: [
-      "🚫 Ne cherchez pas d'échappatoire : vous OBLIGÉ de choisir entre Option A ou Option B !",
-      "🚫 Ne votez pas en regardant le téléphone du voisin : exprimez votre vrai choix secret."
-    ]
+      "Impossible de passer ou de rester neutre : choisissez A ou B !",
+      "Votez sans influencer votre voisin avant l'affichage.",
+    ],
+  },
+  {
+    id: "flag-quiz",
+    name: "Devine le Drapeau",
+    category: "Quiz Visuel",
+    goal: "Reconnaître les drapeaux du monde entier et marquer un maximum de points.",
+    donts: [
+      "Ne soufflez pas la réponse à l'équipe adverse avant la fin du chrono.",
+    ],
   },
   {
     id: "saboteur",
     name: "Le Saboteur",
-    category: "Stratégie & Trahison",
-    icon: "⛏️",
-    themeColor: "cyan",
-    accentHex: "#06B6D4",
-    goal: "Les Chercheurs d'Or doivent créer un chemin vers le trésor, le Saboteur doit les bloquer !",
+    category: "Défis d'équipe & Trahison",
+    goal: "Réussir ensemble des mini-missions chronométrées tout en démasquant le Saboteur qui essaie de vous faire rater.",
+    roles: [
+      { title: "Agents", badge: "Équipe", desc: "Coopèrent à voix haute sur le défi commun pour gagner le point de mission." },
+      { title: "Saboteur", badge: "Traître", desc: "Fait échouer le groupe subtilement en glissant de fausses réponses ou en cassant le rythme." },
+    ],
     donts: [
-      "🚫 Interdiction pour le Saboteur de se révéler trop tôt au Tour 1.",
-      "🚫 Ne détruisez pas des cartes sans stratégie : bluffez jusqu'au bout !"
-    ]
-  }
+      "Ne sabotez pas de façon trop évidente dès le premier second.",
+      "Débattez uniquement après la fin du chrono de mission.",
+    ],
+  },
+  {
+    id: "word-master",
+    name: "Le Maître des Mots",
+    category: "Mots & Tabous",
+    goal: "Faire deviner le mot affiché sans prononcer aucun des mots interdits de la carte.",
+    donts: [
+      "Interdit de citer les mots tabous ou des mots de la même famille.",
+      "Pas de mime si la carte demande uniquement des indices oraux.",
+    ],
+  },
+  {
+    id: "punchlines",
+    name: "Punchlines",
+    category: "Humour & Cartes",
+    goal: "Compléter une carte situation avec la réponse la plus drôle ou inattendue.",
+    donts: [
+      "Laissez chaque joueur défendre ou lire sa carte avec le ton juste.",
+    ],
+  },
+  {
+    id: "vylo-party",
+    name: "VYLO Party",
+    category: "Mini-défis rapides",
+    goal: "Enchaîner défis collectifs, gages express et questions de rapidité à toute allure.",
+    donts: [
+      "Respectez le petit chrono de 5 secondes pour garder le rythme !",
+    ],
+  },
+  {
+    id: "most-likely-to",
+    name: "Qui est le plus susceptible de... ?",
+    category: "Votes & Fous rires",
+    goal: "Désigner collectivement le joueur du groupe qui correspond le plus à la situation.",
+    donts: [
+      "Tout le monde compte 1, 2, 3 et vote en même temps !",
+    ],
+  },
 ];
 
 export default function RulesNoticePage() {
   const router = useRouter();
   const [selectedGameId, setSelectedGameId] = useState<string>("undercover");
 
-  const activeGame = GAME_RULES.find(g => g.id === selectedGameId) || GAME_RULES[0];
+  const activeGame = GAME_RULES.find((g) => g.id === selectedGameId) || GAME_RULES[0];
+  const art = getGameVisualMeta(activeGame.id);
 
   return (
-    <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 w-full max-w-4xl mx-auto relative">
-      <LivingBackground accentColor={activeGame.accentHex} />
+    <main className="min-h-screen flex flex-col items-center pt-6 pb-28 px-4 md:px-8 w-full max-w-4xl mx-auto relative">
+      <LivingBackground accentColor={art.hex} />
 
-      {/* Header Navigation */}
-      <div className="w-full flex items-center justify-between mb-8 z-10">
-        <button 
+      {/* En-tête */}
+      <div className="w-full flex items-center justify-between gap-4 mb-6 z-10">
+        <button
+          type="button"
           onClick={() => {
             sfxTap();
             if (typeof window !== "undefined" && window.history.length > 1) router.back();
             else router.push("/");
-          }} 
-          className="h-10 px-4 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground hover:bg-white/10 active:scale-95 transition-all shadow-soft cursor-pointer shrink-0"
+          }}
+          className="h-10 px-4 bg-surface border border-border rounded-full flex items-center gap-1.5 text-xs font-bold text-foreground hover:border-[var(--border-strong)] active-press shadow-sm cursor-pointer shrink-0"
         >
           <ChevronLeft size={16} className="text-primary" /> Retour
         </button>
 
-        <div className="flex items-center gap-2 text-primary font-black text-xl uppercase tracking-wider">
-          <BookOpen size={24} /> Guide & Règles Officiels
+        <div className="flex items-center gap-2 font-display text-lg sm:text-xl font-bold text-foreground">
+          <BookOpen size={20} className="text-primary" aria-hidden="true" /> Règles des jeux
         </div>
 
-        <div className="w-20 shrink-0" />
+        <div className="w-20 hidden sm:block shrink-0" />
       </div>
 
-      {/* Onglets de Sélection des Jeux */}
+      {/* Onglets 12 jeux */}
       <div className="w-full flex gap-2 overflow-x-auto no-scrollbar pb-3 mb-6 z-10">
         {GAME_RULES.map((game) => (
           <button
             key={game.id}
-            onClick={() => { sfxTap(); setSelectedGameId(game.id); }}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-black flex items-center gap-2 transition-all shrink-0 border cursor-pointer ${
+            type="button"
+            onClick={() => {
+              sfxTap();
+              setSelectedGameId(game.id);
+            }}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all shrink-0 border cursor-pointer ${
               selectedGameId === game.id
-                ? "bg-gradient-summer text-white border-white/20 shadow-summer-glow scale-105"
-                : "bg-surface/90 border-white/10 text-foreground/60 hover:text-white hover:bg-white/10"
+                ? "bg-primary text-white border-primary shadow-sm"
+                : "bg-surface border-border text-muted hover:text-foreground hover:border-[var(--border-strong)]"
             }`}
           >
-            <span>{game.icon}</span>
-            <span>{game.name}</span>
+            {game.name}
           </button>
         ))}
       </div>
 
-      {/* BANNIÈRE EN-TÊTE DU JEU SÉLECTIONNÉ */}
-      <Card className="w-full p-6 md:p-8 bg-surface/95 border-2 border-white/10 shadow-2xl mb-6 text-left z-10 relative overflow-hidden">
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="flex items-center gap-3">
-            <span className="text-4xl p-3 bg-white/5 rounded-2xl border border-white/10">{activeGame.icon}</span>
+      {/* Carte d'en-tête avec illustration */}
+      <Card className="w-full overflow-hidden bg-surface border border-border shadow-soft mb-6 text-left z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 items-center">
+          <div className="md:col-span-5 aspect-[16/10] w-full bg-surface-elevated overflow-hidden">
+            {art.renderIllustration({ priority: true })}
+          </div>
+          <div className="md:col-span-7 p-6 space-y-4">
             <div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-primary block mb-0.5">
-                {activeGame.category}
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#FEEBEB] text-[#C22E2E]">
+                  {activeGame.category}
+                </span>
+                {activeGame.id !== "undercover" && (
+                  <span className="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#E4E7F0] text-[#454B63] border border-[#C6CDDC]">
+                    Jeu toujours en développement · Jouable
+                  </span>
+                )}
+              </div>
+              <h1 className="font-display text-2xl md:text-3xl font-bold text-foreground">
+                {activeGame.name}
+              </h1>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-surface-elevated border border-border">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-primary flex items-center gap-1.5 mb-1">
+                <Target size={14} aria-hidden="true" /> Le but du jeu
               </span>
-              <h1 className="text-2xl md:text-3xl font-black text-white">{activeGame.name}</h1>
+              <p className="text-sm font-bold text-foreground leading-relaxed">{activeGame.goal}</p>
             </div>
           </div>
-          <span className="text-xs font-black uppercase tracking-wider bg-white/10 px-3.5 py-1.5 rounded-full text-foreground/70 border border-white/10">
-            Guide Officiel VYLO
-          </span>
-        </div>
-
-        {/* Le But du Jeu */}
-        <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-          <span className="text-[11px] font-black uppercase tracking-widest text-primary flex items-center gap-1.5 mb-1">
-            <Target size={14} /> Le But du Jeu
-          </span>
-          <p className="text-sm font-extrabold text-white leading-relaxed">
-            {activeGame.goal}
-          </p>
         </div>
       </Card>
 
-      {/* SECTION 1 : TOUS LES RÔLES DU JEU (SI DISPONIBLES) */}
+      {/* Rôles */}
       {activeGame.roles && activeGame.roles.length > 0 && (
-        <div className="w-full mb-8 z-10 text-left space-y-4">
-          <h2 className="text-lg font-black text-white flex items-center gap-2 uppercase tracking-wider">
-            <Users className="text-primary" size={20} /> Explication des Rôles en Détail
+        <div className="w-full mb-7 z-10 text-left space-y-3.5">
+          <h2 className="font-display text-lg font-bold text-foreground flex items-center gap-2">
+            <Users className="text-secondary" size={19} aria-hidden="true" /> Les rôles
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             {activeGame.roles.map((role, idx) => (
-              <Card key={idx} className="p-5 bg-surface/90 border border-white/10 shadow-soft hover:border-white/20 transition-all flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="font-black text-base text-white flex items-center gap-2">
-                      <span className="text-xl">{role.icon}</span> {role.title}
-                    </span>
-                    <span className="text-[10px] font-black uppercase tracking-wider bg-primary/20 text-primary border border-primary/30 px-2.5 py-0.5 rounded-full">
-                      {role.badge}
-                    </span>
-                  </div>
-                  <p className="text-xs font-bold text-foreground/70 leading-relaxed">
-                    {role.desc}
-                  </p>
+              <Card key={idx} className="p-5 bg-surface border border-border shadow-sm">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="font-display font-bold text-base text-foreground">{role.title}</span>
+                  <span className="text-[11px] font-bold bg-[#EEF2FF] text-[#4338CA] px-2.5 py-0.5 rounded-full">
+                    {role.badge}
+                  </span>
                 </div>
+                <p className="text-xs font-semibold text-muted leading-relaxed">{role.desc}</p>
               </Card>
             ))}
           </div>
         </div>
       )}
 
-      {/* SECTION 2 : 🚫 CE QU'IL NE FAUT ABSOLUMENT PAS FAIRE (RÈGLES D'OR) */}
-      <div className="w-full z-10 text-left space-y-4">
-        <h2 className="text-lg font-black text-red-400 flex items-center gap-2 uppercase tracking-wider">
-          <ShieldAlert size={20} /> Les Règles d'Or — Ce qu'il ne faut PAS faire !
+      {/* À retenir */}
+      <div className="w-full z-10 text-left space-y-3.5">
+        <h2 className="font-display text-lg font-bold text-foreground flex items-center gap-2">
+          <ShieldAlert size={19} className="text-primary" aria-hidden="true" /> Règles d&apos;or pour bien jouer
         </h2>
 
-        <Card className="p-6 bg-red-950/20 border-2 border-red-500/30 text-left space-y-3">
-          <p className="text-xs font-black text-red-300 uppercase tracking-widest mb-1">
-            ⚠️ Pour ne pas gâcher le jeu et garder le plaisir de la soirée :
-          </p>
-          <div className="space-y-2.5">
-            {activeGame.donts.map((dont, idx) => (
-              <div key={idx} className="flex items-start gap-2.5 bg-surface/80 p-3 rounded-2xl border border-red-500/20">
-                <XCircle size={18} className="text-red-400 shrink-0 mt-0.5" />
-                <p className="text-xs font-bold text-foreground/90 leading-normal">
-                  {dont}
-                </p>
-              </div>
-            ))}
-          </div>
+        <Card className="p-5 sm:p-6 bg-surface border border-border space-y-2.5">
+          {activeGame.donts.map((dont, idx) => (
+            <div
+              key={idx}
+              className="flex items-start gap-3 bg-surface-elevated p-3.5 rounded-2xl border border-border"
+            >
+              <XCircle size={17} className="text-primary shrink-0 mt-0.5" aria-hidden="true" />
+              <p className="text-xs sm:text-sm font-bold text-foreground leading-snug">{dont}</p>
+            </div>
+          ))}
         </Card>
       </div>
 
-      {/* Bouton de Lancement */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-2xl border-t border-white/10 z-50">
+      {/* Bouton fixe */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-surface/95 border-t border-border z-50">
         <div className="max-w-md mx-auto">
-          <Button 
-            variant="primary" 
-            className="w-full h-14 text-base gap-2 shadow-summer-glow"
-            onClick={() => { sfxTap(); router.push(`/setup/${activeGame.id}`); }}
+          <Button
+            variant="primary"
+            size="lg"
+            className="w-full gap-2 rounded-full"
+            onClick={() => {
+              sfxTap();
+              router.push(`/setup/${activeGame.id}`);
+            }}
           >
-            <Zap size={18} /> Jouer à {activeGame.name} Maintenant
+            <Zap size={18} aria-hidden="true" /> Jouer à {activeGame.name}
           </Button>
         </div>
       </div>

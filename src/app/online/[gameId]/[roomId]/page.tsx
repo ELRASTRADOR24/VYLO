@@ -1,16 +1,15 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket, PlayerOnline } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { use, useState } from "react";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import { getGameConfig } from "@/games";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { QRCodeModal } from "@/components/ui/QRCodeModal";
 import { 
   Users, Crown, Play, QrCode, Share, Check, ChevronLeft, Wifi, WifiOff,
-  Sparkles, Flame, Trophy, RefreshCw, Smartphone, Zap
+  Sparkles, Flame, Trophy, RefreshCw, Smartphone, Zap, X
 } from "lucide-react";
 import { sfxTap, sfxSuccess, sfxVictory, sfxError, sfxReveal } from "@/lib/audio";
 import { getRandomPartyCard, formatPartyCard } from "@/games/vylo-party/logic";
@@ -20,36 +19,24 @@ import { WORLD_FLAGS_DATABASE, generateFlagQuestion } from "@/games/flag-quiz/lo
 
 export default function UniversalOnlineGamePage({ params }: { params: Promise<{ gameId: string; roomId: string }> }) {
   const { gameId, roomId } = use(params);
-  const router = useRouter();
   const gameConfig = getGameConfig(gameId);
-  const { guestProfile, incrementStat } = useAppStore();
-  const { isConnected, roomState, joinRoom, toggleReady, restartLobby, syncGameState } = useSocket();
+  const online = useOnlineRoom(roomId, gameId);
+  const { isConnected, connectionStatus, roomState, playerId, me, isHost, toggleReady, kickPlayer, restartLobby, syncGameState, leaveRoomAndGo } = online;
 
   const [showQR, setShowQR] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const playerPseudo = guestProfile?.pseudo || "Joueur";
-  const playerAvatar = guestProfile?.avatar || "👻";
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
 
-  // Joindre le salon en ligne à la connexion
-  useEffect(() => {
-    if (isConnected && playerPseudo) {
-      joinRoom(roomId, gameId, playerPseudo, playerAvatar);
-    }
-  }, [isConnected, playerPseudo, playerAvatar, roomId, gameId, joinRoom]);
-
-  const players = roomState?.players || [];
-  const isHost = players.find(p => p.id === roomState?.players?.find(p => p.name === playerPseudo)?.id)?.isHost || roomState?.isHost || false;
-  const gameState = roomState?.state || "LOBBY";
-  const gameData = roomState?.gameData || {};
+  const players = roomState.players || [];
+  const gameState = roomState.state || "LOBBY";
+  const gameData = roomState.gameData || {};
 
   const handleLeave = () => {
     sfxTap();
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/library");
-    }
+    leaveRoomAndGo("/library");
   };
 
   const handleCopyCode = () => {
@@ -63,6 +50,7 @@ export default function UniversalOnlineGamePage({ params }: { params: Promise<{ 
   if (gameState === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center justify-between pt-6 pb-32 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto relative text-center">
+        <ReconnectingBanner status={connectionStatus} />
         {/* Navigation Header */}
         <div className="w-full flex items-center justify-between mb-4">
           <button onClick={handleLeave} className="h-10 px-3.5 bg-surface/90 border border-white/10 rounded-full flex items-center gap-1.5 text-xs font-black text-foreground">
@@ -110,24 +98,45 @@ export default function UniversalOnlineGamePage({ params }: { params: Promise<{ 
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {players.map((p) => (
-                <div key={p.id} className="p-3.5 bg-surface border border-white/5 rounded-2xl flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-gradient-summer text-white flex items-center justify-center text-sm font-black">
-                      {p.name.charAt(0).toUpperCase()}
+              {players.map((p) => {
+                const isMePlayer = p.id === playerId;
+                return (
+                  <div key={p.id} className="p-3.5 bg-surface border border-white/5 rounded-2xl flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-9 h-9 rounded-full bg-gradient-summer text-white flex items-center justify-center text-sm font-black shrink-0">
+                        {p.avatar && !p.avatar.startsWith("http") && !p.avatar.startsWith("data:") ? p.avatar : p.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="flex flex-col text-left min-w-0">
+                        <span className="font-extrabold text-sm flex items-center gap-1.5 truncate">
+                          <span className="truncate">{p.name}</span>
+                          {isMePlayer && <span className="text-[10px] font-black text-primary">(Vous)</span>}
+                          {p.isHost && <Crown size={14} className="text-yellow-400 shrink-0" />}
+                        </span>
+                        {p.isConnected === false && (
+                          <span className="text-[10px] font-bold text-amber-400">Reconnexion...</span>
+                        )}
+                      </div>
                     </div>
-                    <span className="font-extrabold text-sm flex items-center gap-1.5">
-                      {p.name}
-                      {p.isHost && <Crown size={14} className="text-yellow-400" />}
-                    </span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {p.isReady ? (
+                        <span className="text-[10px] font-black uppercase text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full border border-emerald-400/20">Prêt</span>
+                      ) : (
+                        <span className="text-[10px] font-black uppercase text-foreground/40 bg-white/5 px-2 py-1 rounded-full">En attente</span>
+                      )}
+                      {isHost && !isMePlayer && (
+                        <button
+                          type="button"
+                          onClick={() => { sfxTap(); kickPlayer(roomId, p.id); }}
+                          aria-label={`Retirer ${p.name}`}
+                          className="w-6 h-6 rounded-full bg-white/5 hover:bg-red-500/20 text-foreground/40 hover:text-red-400 flex items-center justify-center cursor-pointer"
+                        >
+                          <X size={12} />
+                        </button>
+                      )}
+                    </div>
                   </div>
-                  {p.isReady ? (
-                    <span className="text-[10px] font-black uppercase text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded-full border border-emerald-400/20">Prêt</span>
-                  ) : (
-                    <span className="text-[10px] font-black uppercase text-foreground/40 bg-white/5 px-2 py-1 rounded-full">En attente</span>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -135,8 +144,8 @@ export default function UniversalOnlineGamePage({ params }: { params: Promise<{ 
         {/* Action Lancement */}
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 border-t border-white/10 z-50">
           <div className="max-w-md mx-auto flex gap-3">
-            <Button variant="surface" className="flex-1 h-14" onClick={() => toggleReady(roomId)}>
-              Prêt !
+            <Button variant={me?.isReady ? "secondary" : "surface"} className="flex-1 h-14" onClick={() => toggleReady(roomId)}>
+              {me?.isReady ? "Prêt ✓" : "Je suis prêt !"}
             </Button>
 
             {isHost && (
@@ -197,7 +206,7 @@ export default function UniversalOnlineGamePage({ params }: { params: Promise<{ 
           </div>
         </div>
 
-        <QRCodeModal isOpen={showQR} url={window.location.href} roomCode={roomId} onClose={() => setShowQR(false)} />
+        <QRCodeModal isOpen={showQR} roomCode={roomId} onClose={() => setShowQR(false)} />
       </main>
     );
   }

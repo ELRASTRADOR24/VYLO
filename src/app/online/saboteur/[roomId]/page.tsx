@@ -1,14 +1,13 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { use, useState } from "react";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
   ChevronLeft, Users, ShieldAlert, Skull, Trophy, Eye, EyeOff, 
-  Share, QrCode, Play, Bomb, Flame, Vote, RefreshCw, Clock
+  Share, QrCode, Play, Bomb, Flame, Vote, RefreshCw, Clock, X
 } from "lucide-react";
 import { 
   SaboteurRole, SaboteurChallenge, 
@@ -20,11 +19,8 @@ import { QRCodeModal } from "@/components/ui/QRCodeModal";
 
 export default function OnlineSaboteurGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
-  const router = useRouter();
-  const { guestProfile, incrementStat } = useAppStore();
-
-  const { socket, roomState, secretData, joinRoom, startSaboteur, castVote, restartLobby } = useSocket();
-  const isHost = socket && roomState ? roomState.players.find(p => p.id === socket.id)?.isHost : false;
+  const online = useOnlineRoom(roomId, "saboteur");
+  const { playerId, connectionStatus, roomState, secretData, kickPlayer, startSaboteur, castVote, restartLobby, leaveRoomAndGo } = online;
 
   const [saboteurCount, setSaboteurCount] = useState<number>(1);
   const [showSecret, setShowSecret] = useState<boolean>(false);
@@ -32,9 +28,11 @@ export default function OnlineSaboteurGame({ params }: { params: Promise<{ roomI
   const [copied, setCopied] = useState<boolean>(false);
   const [selectedTargetId, setSelectedTargetId] = useState<string | null>(null);
 
-  useEffect(() => {
-    joinRoom(roomId, "saboteur", guestProfile.pseudo, guestProfile.avatar);
-  }, [roomId, guestProfile.pseudo, guestProfile.avatar]);
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
+
+  const isHost = online.isHost;
 
   const handleCopyLink = () => {
     sfxTap();
@@ -45,7 +43,7 @@ export default function OnlineSaboteurGame({ params }: { params: Promise<{ roomI
 
   const handleHostStart = () => {
     sfxSuspense();
-    const players = roomState?.players || [];
+    const players = roomState.players || [];
     if (players.length < 3) {
       return alert("Il faut au moins 3 joueurs pour lancer une partie du Saboteur !");
     }
@@ -70,11 +68,7 @@ export default function OnlineSaboteurGame({ params }: { params: Promise<{ roomI
   const handleLeaveGame = () => {
     sfxTap();
     voiceEngine.stop();
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/library");
-    }
+    leaveRoomAndGo("/library");
   };
 
   const handleVoteSubmit = () => {
@@ -84,9 +78,10 @@ export default function OnlineSaboteurGame({ params }: { params: Promise<{ roomI
   };
 
   // 1. LOBBY
-  if (!roomState || roomState.state === "LOBBY") {
+  if (roomState.state === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center py-6 px-4 md:px-8 max-w-md md:max-w-5xl lg:max-w-6xl mx-auto pb-36">
+        <ReconnectingBanner status={connectionStatus} />
         <QRCodeModal isOpen={showQR} onClose={() => setShowQR(false)} roomCode={roomId} />
 
         <div className="w-full flex items-center justify-between mb-6">
@@ -189,7 +184,7 @@ export default function OnlineSaboteurGame({ params }: { params: Promise<{ roomI
 
           <div className="space-y-2">
             {roomState.players.map(p => {
-              if (p.id === socket?.id) return null;
+              if (p.id === playerId) return null;
               return (
                 <button
                   key={p.id}

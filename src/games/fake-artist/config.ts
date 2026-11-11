@@ -13,4 +13,5 @@ export const fakeArtistConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local", "online"],
   themeColor: "accent",
+  status: "wip",
 };

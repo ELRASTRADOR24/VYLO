@@ -12,5 +12,6 @@ export const undercoverConfig: GameConfig = {
   durationMins: 15,
   difficulty: "Moyen",
   modes: ["local", "online"],
-  themeColor: "primary"
+  themeColor: "primary",
+  status: "ready",
 };

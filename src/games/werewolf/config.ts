@@ -13,4 +13,5 @@ export const werewolfConfig: GameConfig = {
   difficulty: "Moyen",
   modes: ["local", "online"],
   themeColor: "purple",
+  status: "wip",
 };

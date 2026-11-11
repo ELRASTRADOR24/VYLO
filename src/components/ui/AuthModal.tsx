@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import { User, LogIn, UserPlus, LogOut, Check, X, Shield, Lock, Sparkles, KeyRound } from "lucide-react";
+import { User, LogIn, UserPlus, LogOut, X, Lock, KeyRound } from "lucide-react";
 import { sfxSuccess, sfxTap, sfxError } from "@/lib/audio";
 
 export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
@@ -29,7 +29,7 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         setTimeout(() => {
           setFeedback(null);
           onClose();
-        }, 1200);
+        }, 1000);
       } else {
         sfxError();
         setFeedback({ type: "error", text: res.message });
@@ -42,7 +42,7 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         setTimeout(() => {
           setFeedback(null);
           onClose();
-        }, 1200);
+        }, 1000);
       } else {
         sfxError();
         setFeedback({ type: "error", text: res.message });
@@ -57,115 +57,122 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-      <Card className="w-full max-w-md p-6 bg-surface/95 border border-white/10 shadow-summer-glow relative flex flex-col gap-5">
-        
-        {/* Header */}
+    <div className="fixed inset-0 bg-[#161824]/45 flex items-center justify-center p-4 z-50 animate-fade-up">
+      <Card className="w-full max-w-md p-6 bg-surface border border-border shadow-glow relative flex flex-col gap-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black text-foreground flex items-center gap-2">
-            <Lock className="text-primary" size={22} /> Espace Connexion VYLO
+          <h2 className="font-display text-xl font-bold text-foreground flex items-center gap-2">
+            <Lock className="text-primary" size={20} aria-hidden="true" /> Compte VYLO
           </h2>
-          <button onClick={onClose} className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center text-foreground/60 hover:text-foreground">
-            <X size={18} />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Fermer"
+            className="h-8 w-8 rounded-full bg-surface-elevated flex items-center justify-center text-muted hover:text-foreground cursor-pointer"
+          >
+            <X size={17} />
           </button>
         </div>
 
-        {/* Si l'utilisateur est déjà connecté */}
         {activeAccount ? (
           <div className="flex flex-col items-center gap-4 text-center py-4">
-            <div className="w-20 h-20 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center text-4xl shadow-glow">
+            <div className="w-20 h-20 rounded-full bg-[#FEEBEB] border-2 border-primary/40 flex items-center justify-center text-4xl">
               {activeAccount.avatar}
             </div>
             <div>
-              <span className="text-xs font-black uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
-                🟢 Connecté
+              <span className="text-xs font-bold uppercase text-[#226B50] bg-[#E1F4EC] px-3 py-1 rounded-full">
+                Connecté
               </span>
-              <h3 className="text-2xl font-black text-foreground mt-2">{activeAccount.username}</h3>
-              <p className="text-xs text-foreground/50 font-bold mt-1">
-                {activeAccount.stats.gamesPlayed} parties jouées • {activeAccount.stats.wins} victoires
+              <h3 className="font-display text-2xl font-bold text-foreground mt-2">{activeAccount.username}</h3>
+              <p className="text-xs text-muted font-bold mt-1">
+                {activeAccount.stats.gamesPlayed} parties • {activeAccount.stats.wins} victoires
               </p>
             </div>
 
-            <Button variant="surface" className="w-full py-4 font-black text-red-400 border border-red-500/30 gap-2 mt-2" onClick={handleLogout}>
-              <LogOut size={18} /> Se déconnecter de mon compte
+            <Button variant="surface" className="w-full py-3.5 font-bold text-primary gap-2 mt-2 rounded-full" onClick={handleLogout}>
+              <LogOut size={17} /> Se déconnecter
             </Button>
           </div>
         ) : (
-          /* Onglets Connexion / Inscription */
           <div className="flex flex-col gap-4">
-            <div className="flex p-1 bg-white/5 rounded-2xl border border-white/5">
+            <div className="flex p-1 bg-surface-elevated rounded-full border border-border">
               <button
                 type="button"
-                onClick={() => { setMode("LOGIN"); setFeedback(null); sfxTap(); }}
-                className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 ${
-                  mode === "LOGIN" ? "bg-gradient-summer text-white shadow-soft" : "text-foreground/60 hover:text-foreground"
+                onClick={() => {
+                  setMode("LOGIN");
+                  setFeedback(null);
+                  sfxTap();
+                }}
+                className={`flex-1 py-2 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  mode === "LOGIN" ? "bg-primary text-white shadow-sm" : "text-muted hover:text-foreground"
                 }`}
               >
                 <LogIn size={14} /> Se connecter
               </button>
               <button
                 type="button"
-                onClick={() => { setMode("REGISTER"); setFeedback(null); sfxTap(); }}
-                className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 ${
-                  mode === "REGISTER" ? "bg-gradient-summer text-white shadow-soft" : "text-foreground/60 hover:text-foreground"
+                onClick={() => {
+                  setMode("REGISTER");
+                  setFeedback(null);
+                  sfxTap();
+                }}
+                className={`flex-1 py-2 rounded-full text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  mode === "REGISTER" ? "bg-primary text-white shadow-sm" : "text-muted hover:text-foreground"
                 }`}
               >
                 <UserPlus size={14} /> Créer un compte
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Username */}
+            <form onSubmit={handleSubmit} className="space-y-4 text-left">
               <div className="space-y-1.5">
-                <label className="text-[11px] font-black uppercase tracking-wider text-foreground/50">Nom d'utilisateur (Username)</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-muted">Nom d'utilisateur</label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-3.5 text-foreground/40" size={18} />
+                  <User className="absolute left-3.5 top-3 text-muted" size={17} aria-hidden="true" />
                   <input
                     type="text"
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Ex: Johanson24"
-                    className="w-full bg-background border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm font-black text-foreground focus:outline-none focus:border-primary"
+                    placeholder="Ex: Camille24"
+                    className="w-full bg-surface-elevated border border-border rounded-2xl pl-11 pr-4 py-3 text-sm font-bold text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
 
-              {/* Password */}
               <div className="space-y-1.5">
-                <label className="text-[11px] font-black uppercase tracking-wider text-foreground/50">Mot de passe</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-muted">Mot de passe</label>
                 <div className="relative">
-                  <KeyRound className="absolute left-3.5 top-3.5 text-foreground/40" size={18} />
+                  <KeyRound className="absolute left-3.5 top-3 text-muted" size={17} aria-hidden="true" />
                   <input
                     type="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Entrez votre mot de passe..."
-                    className="w-full bg-background border border-white/10 rounded-xl pl-11 pr-4 py-3 text-sm font-black text-foreground focus:outline-none focus:border-primary"
+                    placeholder="Votre mot de passe..."
+                    className="w-full bg-surface-elevated border border-border rounded-2xl pl-11 pr-4 py-3 text-sm font-bold text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
 
-              {/* Message de feedback */}
               {feedback && (
-                <div className={`p-3 rounded-xl text-xs font-black border text-center ${
-                  feedback.type === "success" 
-                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400" 
-                    : "bg-red-500/10 border-red-500/30 text-red-400"
-                }`}>
+                <div
+                  className={`p-3 rounded-2xl text-xs font-bold border text-center ${
+                    feedback.type === "success"
+                      ? "bg-[#E1F4EC] border-[#389874]/30 text-[#226B50]"
+                      : "bg-[#FEEBEB] border-[#E84545]/30 text-[#C22E2E]"
+                  }`}
+                >
                   {feedback.text}
                 </div>
               )}
 
-              <Button type="submit" variant="primary" className="w-full py-4 text-md font-black gap-2 shadow-summer-glow mt-2">
+              <Button type="submit" variant="primary" size="lg" className="w-full gap-2 rounded-full">
                 {mode === "LOGIN" ? <LogIn size={18} /> : <UserPlus size={18} />}
                 {mode === "LOGIN" ? "Se connecter" : "Créer mon compte"}
               </Button>
             </form>
           </div>
         )}
-
       </Card>
     </div>
   );

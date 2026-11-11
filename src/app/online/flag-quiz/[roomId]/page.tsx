@@ -1,9 +1,8 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
@@ -22,20 +21,13 @@ const KAHOOT_BUTTON_VARIANTS: ("red" | "blue" | "yellow" | "green")[] = [
 
 export default function OnlineFlagQuizGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
-  const router = useRouter();
-  const { guestProfile } = useAppStore();
-  const { socket, roomState, joinRoom, syncGameState } = useSocket();
+  const online = useOnlineRoom(roomId, "flag-quiz");
+  const { playerId, connectionStatus, roomState, syncGameState, submitPlayerMapUpdate, leaveRoomAndGo } = online;
 
   const [selectedCategory, setSelectedCategory] = useState<FlagCategory>("Monde Entier");
   const [maxRounds, setMaxRounds] = useState<number>(10);
   const [copiedCode, setCopiedCode] = useState(false);
   const [timeLeftSec, setTimeLeftSec] = useState<number>(15);
-
-  useEffect(() => {
-    if (roomId) {
-      joinRoom(roomId, "flag-quiz", guestProfile.pseudo, guestProfile.avatar);
-    }
-  }, [roomId, guestProfile.pseudo, guestProfile.avatar, joinRoom]);
 
   useEffect(() => {
     if (roomState?.state !== "PLAYING" || timeLeftSec <= 0) return;
@@ -51,14 +43,18 @@ export default function OnlineFlagQuizGame({ params }: { params: Promise<{ roomI
     return () => clearInterval(timer);
   }, [roomState?.state, timeLeftSec]);
 
-  const isHost = roomState?.players?.find((p) => p.id === socket?.id)?.isHost || false;
-  const gameData = roomState?.gameData || {};
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
+
+  const isHost = online.isHost;
+  const gameData = roomState.gameData || {};
   const currentQuestion: FlagQuizQuestion | undefined = gameData.currentQuestion;
   const playerAnswers: Record<string, { choiceIndex: number; timeSec: number }> = gameData.answers || {};
   const scores: Record<string, number> = gameData.scores || {};
   const roundCount = gameData.roundCount || 1;
 
-  const myAnswer = socket?.id ? playerAnswers[socket.id] : undefined;
+  const myAnswer = playerId ? playerAnswers[playerId] : undefined;
 
   const handleCopyCode = () => {
     sfxTap();
@@ -69,15 +65,14 @@ export default function OnlineFlagQuizGame({ params }: { params: Promise<{ roomI
 
   const handleLeave = () => {
     sfxTap();
-    if (typeof window !== "undefined" && window.history.length > 1) router.back();
-    else router.push("/library");
+    leaveRoomAndGo("/library");
   };
 
   const handleHostStartGame = () => {
     sfxTap();
     const firstQuestion = generateFlagQuestion(selectedCategory);
     const initialScores: Record<string, number> = {};
-    (roomState?.players || []).forEach(p => { initialScores[p.id] = 0; });
+    (roomState.players || []).forEach(p => { initialScores[p.id] = 0; });
 
     syncGameState(roomId, "PLAYING", {
       currentQuestion: firstQuestion,
@@ -91,35 +86,23 @@ export default function OnlineFlagQuizGame({ params }: { params: Promise<{ roomI
   };
 
   const handlePlayerSubmitChoice = (choiceIndex: number) => {
-    if (!socket?.id || myAnswer !== undefined || roomState?.state !== "PLAYING") return;
+    if (!playerId || myAnswer !== undefined || roomState.state !== "PLAYING") return;
     sfxTap();
 
     const timeSpent = 15 - timeLeftSec;
     const isCorrect = choiceIndex === currentQuestion?.correctChoiceIndex;
+    const speedBonus = Math.max(5, Math.floor(timeLeftSec * 4));
+    const scoreDelta = isCorrect ? 50 + speedBonus : 0;
 
-    const newAnswers = {
-      ...playerAnswers,
-      [socket.id]: { choiceIndex, timeSec: timeSpent },
-    };
+    if (isCorrect) sfxSuccess();
+    else sfxError();
 
-    const newScores = { ...scores };
-    if (isCorrect) {
-      const speedBonus = Math.max(5, Math.floor(timeLeftSec * 4));
-      newScores[socket.id] = (newScores[socket.id] || 0) + 50 + speedBonus;
-      sfxSuccess();
-    } else {
-      sfxError();
-    }
-
-    const totalPlayers = roomState?.players?.length || 1;
-    const allAnswered = Object.keys(newAnswers).length >= totalPlayers;
-
-    syncGameState(roomId, allAnswered ? "REVEAL" : "PLAYING", {
-      answers: newAnswers,
-      scores: newScores,
-    });
-
-    if (allAnswered) sfxReveal();
+    submitPlayerMapUpdate(
+      roomId,
+      "answers",
+      { choiceIndex, timeSec: timeSpent },
+      { scoreDelta, revealStateWhenAllIn: "REVEAL" }
+    );
   };
 
   const handleNextRound = () => {
@@ -139,9 +122,10 @@ export default function OnlineFlagQuizGame({ params }: { params: Promise<{ roomI
   };
 
   // 1. SALON D'ATTENTE (LOBBY)
-  if (roomState?.state === "LOBBY" || !roomState?.state) {
+  if (roomState.state === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-2xl mx-auto relative text-center">
+        <ReconnectingBanner status={connectionStatus} />
         <LivingBackground accentColor="#06B6D4" />
 
         <div className="w-full flex items-center justify-between mb-6 z-10">

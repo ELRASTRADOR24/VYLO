@@ -1,9 +1,8 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { use, useState } from "react";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
@@ -21,27 +20,24 @@ import { FloatingEmojis } from "@/components/ui/FloatingEmojis";
 
 export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
-  const router = useRouter();
-  const { guestProfile } = useAppStore();
-  const { socket, roomState, joinRoom, syncGameState } = useSocket();
+  const online = useOnlineRoom(roomId, "truth-or-dare");
+  const { socket, playerId, playerName, connectionStatus, roomState, kickPlayer, syncGameState, leaveRoomAndGo } = online;
 
   const [intensity, setIntensity] = useState<IntensityLevel>("Toutes");
   const [copiedCode, setCopiedCode] = useState(false);
 
-  useEffect(() => {
-    if (roomId) {
-      joinRoom(roomId, "truth-or-dare", guestProfile.pseudo, guestProfile.avatar);
-    }
-  }, [roomId, guestProfile.pseudo, guestProfile.avatar, joinRoom]);
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
 
-  const isHost = roomState?.players?.find((p) => p.id === socket?.id)?.isHost || false;
-  const gameData = roomState?.gameData || {};
+  const isHost = online.isHost;
+  const gameData = roomState.gameData || {};
   const currentSpeakerId: string | undefined = gameData.currentSpeakerId;
   const activeCard: TodCard | undefined = gameData.activeCard;
   const scores: Record<string, number> = gameData.scores || {};
 
-  const currentSpeaker = roomState?.players?.find(p => p.id === currentSpeakerId);
-  const isMyTurn = socket?.id === currentSpeakerId;
+  const currentSpeaker = roomState.players?.find(p => p.id === currentSpeakerId);
+  const isMyTurn = Boolean(playerId && playerId === currentSpeakerId);
 
   const handleCopyCode = () => {
     sfxTap();
@@ -52,8 +48,7 @@ export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ ro
 
   const handleLeave = () => {
     sfxTap();
-    if (typeof window !== "undefined" && window.history.length > 1) router.back();
-    else router.push("/library");
+    leaveRoomAndGo("/library");
   };
 
   // Lancement du premier tour par l'Hôte
@@ -109,9 +104,10 @@ export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ ro
   };
 
   // 1. SALON DE RASSEMBLEMENT (LOBBY)
-  if (roomState?.state === "LOBBY" || !roomState?.state) {
+  if (roomState.state === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-2xl mx-auto relative text-center">
+        <ReconnectingBanner status={connectionStatus} />
         <LivingBackground accentColor="#EC4899" />
 
         <div className="w-full flex items-center justify-between mb-6 z-10">
@@ -286,7 +282,7 @@ export default function OnlineTruthOrDareGame({ params }: { params: Promise<{ ro
             Attente de la réalisation du défi par {currentSpeaker?.name}...
           </div>
         )}
-      <FloatingEmojis socket={socket} roomCode={roomId} senderName={guestProfile.pseudo} />
+      <FloatingEmojis socket={socket} roomCode={roomId} senderName={playerName} />
     </main>
   );
 }

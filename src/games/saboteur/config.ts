@@ -12,5 +12,6 @@ export const saboteurConfig: GameConfig = {
   durationMins: 15,
   difficulty: "Moyen",
   modes: ["local", "online"],
-  themeColor: "primary"
+  themeColor: "primary",
+  status: "wip",
 };

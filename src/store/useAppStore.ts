@@ -73,7 +73,7 @@ export const useAppStore = create<AppState>()(
       savedGroup: [],
 
       guestProfile: {
-        pseudo: `Guest_${Math.floor(Math.random() * 9000 + 1000)}`,
+        pseudo: "Invité",
         avatar: "👻",
         stats: {
           gamesPlayed: 0,
@@ -301,7 +301,7 @@ export const useAppStore = create<AppState>()(
         set({
           activeAccount: null,
           guestProfile: {
-            pseudo: `Guest_${Math.floor(Math.random() * 9000 + 1000)}`,
+            pseudo: "Invité",
             avatar: "👻",
             stats: {
               gamesPlayed: 0,

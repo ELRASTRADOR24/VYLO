@@ -1,9 +1,8 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { use, useState } from "react";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
@@ -83,28 +82,25 @@ function VisualOptionCard({
 
 export default function OnlineTuPreferesGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
-  const router = useRouter();
-  const { guestProfile } = useAppStore();
-  const { socket, roomState, joinRoom, syncGameState } = useSocket();
+  const online = useOnlineRoom(roomId, "tu-preferes");
+  const { playerId, connectionStatus, roomState, syncGameState, submitPlayerMapUpdate, leaveRoomAndGo } = online;
 
   const [selectedCategory, setSelectedCategory] = useState<TuPreferesCategory>("Toutes");
   const [maxRounds, setMaxRounds] = useState<number>(10);
   const [copiedCode, setCopiedCode] = useState(false);
 
-  useEffect(() => {
-    if (roomId) {
-      joinRoom(roomId, "tu-preferes", guestProfile.pseudo, guestProfile.avatar);
-    }
-  }, [roomId, guestProfile.pseudo, guestProfile.avatar, joinRoom]);
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
 
-  const isHost = roomState?.players?.find((p) => p.id === socket?.id)?.isHost || false;
-  const gameData = roomState?.gameData || {};
+  const isHost = online.isHost;
+  const gameData = roomState.gameData || {};
   const currentDilemma: TuPreferesDilemma | undefined = gameData.currentDilemma;
   const votes: Record<string, "A" | "B"> = gameData.votes || {};
   const scores: Record<string, number> = gameData.scores || {};
   const roundCount = gameData.roundCount || 1;
 
-  const myVote = socket?.id ? votes[socket.id] : undefined;
+  const myVote = playerId ? votes[playerId] : undefined;
 
   const handleCopyCode = () => {
     sfxTap();
@@ -115,15 +111,14 @@ export default function OnlineTuPreferesGame({ params }: { params: Promise<{ roo
 
   const handleLeave = () => {
     sfxTap();
-    if (typeof window !== "undefined" && window.history.length > 1) router.back();
-    else router.push("/library");
+    leaveRoomAndGo("/library");
   };
 
   const handleHostStartGame = () => {
     sfxTap();
     const firstDilemma = getRandomDilemma(selectedCategory);
     const initialScores: Record<string, number> = {};
-    (roomState?.players || []).forEach(p => { initialScores[p.id] = 0; });
+    (roomState.players || []).forEach(p => { initialScores[p.id] = 0; });
 
     syncGameState(roomId, "PLAYING", {
       currentDilemma: firstDilemma,
@@ -136,30 +131,10 @@ export default function OnlineTuPreferesGame({ params }: { params: Promise<{ roo
   };
 
   const handleVote = (choice: "A" | "B") => {
-    if (!socket?.id || myVote !== undefined || roomState?.state !== "PLAYING") return;
+    if (!playerId || myVote !== undefined || roomState.state !== "PLAYING") return;
     sfxSuccess();
-
-    const newVotes = { ...votes, [socket.id]: choice };
-    const totalPlayers = roomState?.players?.length || 1;
-    const allVoted = Object.keys(newVotes).length >= totalPlayers;
-
-    const newScores = { ...scores };
-    if (allVoted) {
-      sfxReveal();
-      const countA = Object.values(newVotes).filter(v => v === "A").length;
-      const countB = Object.values(newVotes).filter(v => v === "B").length;
-      const majorityChoice = countA >= countB ? "A" : "B";
-
-      Object.entries(newVotes).forEach(([pId, voteChoice]) => {
-        if (voteChoice === majorityChoice) {
-          newScores[pId] = (newScores[pId] || 0) + 50;
-        }
-      });
-    }
-
-    syncGameState(roomId, allVoted ? "REVEAL" : "PLAYING", {
-      votes: newVotes,
-      scores: newScores,
+    submitPlayerMapUpdate(roomId, "votes", choice, {
+      revealStateWhenAllIn: "REVEAL",
     });
   };
 
@@ -179,9 +154,10 @@ export default function OnlineTuPreferesGame({ params }: { params: Promise<{ roo
   };
 
   // 1. SALON D'ATTENTE (LOBBY)
-  if (roomState?.state === "LOBBY" || !roomState?.state) {
+  if (roomState.state === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-2xl mx-auto relative text-center">
+        <ReconnectingBanner status={connectionStatus} />
         <LivingBackground accentColor="#3B82F6" />
 
         <div className="w-full flex items-center justify-between mb-6 z-10">

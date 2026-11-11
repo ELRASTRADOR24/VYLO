@@ -1,9 +1,8 @@
 "use client";
 
 import { use, useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
@@ -32,9 +31,8 @@ const CATEGORIES: BlindTestCategory[] = [
 
 export default function OnlineBlindTestGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
-  const router = useRouter();
-  const { guestProfile } = useAppStore();
-  const { socket, roomState, joinRoom, syncGameState } = useSocket();
+  const online = useOnlineRoom(roomId, "blind-test");
+  const { socket, playerId, playerName, connectionStatus, roomState, syncGameState, submitPlayerMapUpdate, leaveRoomAndGo } = online;
 
   const [selectedCategory, setSelectedCategory] = useState<BlindTestCategory>("Films & Dessins Animés");
   const [maxRounds, setMaxRounds] = useState<number>(10);
@@ -43,13 +41,6 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [timeLeftSec, setTimeLeftSec] = useState<number>(30);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Initialisation et connexion Socket.IO à la room
-  useEffect(() => {
-    if (roomId) {
-      joinRoom(roomId, "blind-test", guestProfile.pseudo, guestProfile.avatar);
-    }
-  }, [roomId, guestProfile.pseudo, guestProfile.avatar, joinRoom]);
 
   // Synchronisation du chronomètre de 30 secondes en mode de jeu
   useEffect(() => {
@@ -86,6 +77,10 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
     }
   }, [roomState?.state, roomState?.gameData?.currentQuestion?.track?.previewUrl]);
 
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
+
   const toggleManualAudioPlay = () => {
     if (!audioRef.current) return;
     if (audioRef.current.paused) {
@@ -96,8 +91,8 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
     }
   };
 
-  const isHost = roomState?.players?.find((p) => p.id === socket?.id)?.isHost || false;
-  const gameData = roomState?.gameData || {};
+  const isHost = online.isHost;
+  const gameData = roomState.gameData || {};
   const currentQuestion: BlindTestQuestion | undefined = gameData.currentQuestion;
   const playerAnswers: Record<string, { choiceIndex: number; timeSec: number }> = gameData.answers || {};
   const scores: Record<string, number> = gameData.scores || {};
@@ -113,8 +108,7 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
   const handleLeave = () => {
     sfxTap();
     if (audioRef.current) audioRef.current.pause();
-    if (typeof window !== "undefined" && window.history.length > 1) router.back();
-    else router.push("/library");
+    leaveRoomAndGo("/library");
   };
 
   // Lancement de la première question par l'Hôte
@@ -124,7 +118,7 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
     
     // Initialiser les scores des joueurs présents
     const initialScores: Record<string, number> = {};
-    (roomState?.players || []).forEach(p => { initialScores[p.id] = 0; });
+    (roomState.players || []).forEach(p => { initialScores[p.id] = 0; });
 
     syncGameState(roomId, "PLAYING", {
       currentQuestion: firstQuestion,
@@ -137,38 +131,25 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
     setTimeLeftSec(30);
   };
 
-  // Soumission de la réponse d'un joueur
+  // Soumission de la réponse d'un joueur (atomique côté serveur)
   const handlePlayerSubmitChoice = (choiceIndex: number) => {
-    if (!socket?.id || playerAnswers[socket.id] !== undefined || roomState?.state !== "PLAYING") return;
+    if (!playerId || playerAnswers[playerId] !== undefined || roomState.state !== "PLAYING") return;
     sfxTap();
 
     const timeSpent = 30 - timeLeftSec;
     const isCorrect = choiceIndex === currentQuestion?.correctChoiceIndex;
+    const speedBonus = Math.max(10, Math.floor(timeLeftSec * 3));
+    const scoreDelta = isCorrect ? 50 + speedBonus : 0;
 
-    const newAnswers = {
-      ...playerAnswers,
-      [socket.id]: { choiceIndex, timeSec: timeSpent },
-    };
+    if (isCorrect) sfxSuccess();
+    else sfxError();
 
-    const newScores = { ...scores };
-    if (isCorrect) {
-      const speedBonus = Math.max(10, Math.floor(timeLeftSec * 3));
-      newScores[socket.id] = (newScores[socket.id] || 0) + 50 + speedBonus;
-      sfxSuccess();
-    } else {
-      sfxError();
-    }
-
-    // Vérifier si tous les joueurs ont répondu
-    const totalPlayers = roomState?.players?.length || 1;
-    const allAnswered = Object.keys(newAnswers).length >= totalPlayers;
-
-    syncGameState(roomId, allAnswered ? "REVEAL" : "PLAYING", {
-      answers: newAnswers,
-      scores: newScores,
-    });
-
-    if (allAnswered) sfxReveal();
+    submitPlayerMapUpdate(
+      roomId,
+      "answers",
+      { choiceIndex, timeSec: timeSpent },
+      { scoreDelta, revealStateWhenAllIn: "REVEAL" }
+    );
   };
 
   // Passation à la question suivante par l'Hôte
@@ -189,9 +170,10 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
   };
 
   // 1. SALON D'ATTENTE EN LIGNE (LOBBY)
-  if (roomState?.state === "LOBBY" || !roomState?.state) {
+  if (roomState.state === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-2xl mx-auto relative text-center">
+        <ReconnectingBanner status={connectionStatus} />
         <LivingBackground accentColor="#10B981" />
 
         {/* Header Navigation */}
@@ -278,10 +260,11 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
   }
 
   // 2. PHASE DE JEU MULTIJOUEUR (CHOIX SUR CHAQUE TÉLÉPHONE)
-  const myAnswer = socket?.id ? playerAnswers[socket.id] : undefined;
+  const myAnswer = playerId ? playerAnswers[playerId] : undefined;
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-between py-6 px-4 md:px-8 max-w-md md:max-w-4xl mx-auto text-center pb-12 relative">
+      <ReconnectingBanner status={connectionStatus} />
       <LivingBackground accentColor="#10B981" />
 
       <audio 
@@ -406,7 +389,7 @@ export default function OnlineBlindTestGame({ params }: { params: Promise<{ room
         </div>
       )}
       {/* Réactions Emojis Flottants en Temps Réel */}
-      <FloatingEmojis socket={socket} roomCode={roomId} senderName={guestProfile.pseudo} />
+      <FloatingEmojis socket={socket} roomCode={roomId} senderName={playerName} />
     </main>
   );
 }

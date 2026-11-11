@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import { QrCode, Copy, Check, Sparkles } from "lucide-react";
+import { QrCode, Copy, Check } from "lucide-react";
 import Card from "@/components/ui/Card";
 import { sfxTap } from "@/lib/audio";
 
@@ -30,38 +30,34 @@ export function LobbyQRCodeCard({ roomCode }: LobbyQRCodeCardProps) {
   };
 
   return (
-    <Card className="w-full p-5 bg-surface/90 border-2 border-primary/40 z-10 flex flex-col items-center shadow-glow">
+    <Card className="w-full p-5 bg-surface border border-border z-10 flex flex-col items-center shadow-soft">
       <div className="flex items-center gap-2 mb-3">
-        <QrCode size={20} className="text-primary animate-pulse" />
-        <span className="text-xs font-black uppercase tracking-widest text-primary">Rejoindre en 1 Secondes</span>
+        <QrCode size={18} className="text-primary" aria-hidden="true" />
+        <span className="text-xs font-bold uppercase tracking-wider text-primary">
+          Rejoindre en un scan
+        </span>
       </div>
 
       {joinUrl ? (
-        <div className="p-3 bg-white rounded-2xl shadow-xl border-4 border-primary/20 mb-3 flex items-center justify-center">
-          <QRCodeSVG 
-            value={joinUrl} 
-            size={140} 
-            level="M" 
-            fgColor="#0F172A"
-            bgColor="#FFFFFF"
-          />
+        <div className="p-3 bg-white rounded-3xl shadow-sm border border-border mb-3 flex items-center justify-center">
+          <QRCodeSVG value={joinUrl} size={136} level="M" fgColor="#161824" bgColor="#FFFFFF" />
         </div>
       ) : null}
 
       <div className="flex items-center gap-3 mb-2">
-        <span className="text-3xl font-black text-white tracking-widest">{roomCode}</span>
-        <button 
+        <span className="font-mono text-3xl font-bold text-foreground tracking-widest">{roomCode}</span>
+        <button
           type="button"
-          onClick={handleCopy} 
-          className="p-2 rounded-xl bg-white/5 border border-white/10 text-foreground/70 hover:text-white transition-colors"
+          onClick={handleCopy}
+          className="p-2 rounded-full bg-surface-elevated border border-border text-muted hover:text-foreground transition-colors cursor-pointer"
           title="Copier le lien d'invitation"
         >
-          {copied ? <Check size={18} className="text-emerald-400" /> : <Copy size={18} />}
+          {copied ? <Check size={17} className="text-green" /> : <Copy size={17} />}
         </button>
       </div>
 
-      <span className="text-[11px] font-bold text-foreground/50">
-        Flashez le QR Code avec votre appareil photo pour rejoindre !
+      <span className="text-xs font-semibold text-muted">
+        Flashez le QR code avec l'appareil photo
       </span>
     </Card>
   );

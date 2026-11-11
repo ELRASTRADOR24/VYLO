@@ -4,16 +4,17 @@ import { Home, User, QrCode, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { sfxTap } from "@/lib/audio";
 
 export function BottomBar() {
   const pathname = usePathname();
 
-  // Masquer la BottomBar dans les flux de jeu et salons pour libérer tout l'espace
   if (
-    pathname.includes("/setup") || 
-    pathname.includes("/lobby") || 
-    pathname.includes("/play") || 
-    pathname.includes("/online")
+    pathname.startsWith("/setup") ||
+    pathname.startsWith("/lobby") ||
+    pathname.startsWith("/play") ||
+    pathname.startsWith("/online") ||
+    pathname.startsWith("/rules")
   ) {
     return null;
   }
@@ -26,23 +27,33 @@ export function BottomBar() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 pb-[env(safe-area-inset-bottom)] pointer-events-none">
-      <div className="bg-surface/85 backdrop-blur-2xl border border-white/15 mx-4 mb-6 flex items-center justify-around rounded-[2rem] p-2 pointer-events-auto shadow-summer-glow">
+    <nav
+      aria-label="Navigation mobile"
+      className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-surface border-t border-border pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5 px-3 shadow-[0_-6px_18px_-10px_rgba(22,24,36,0.1)]"
+    >
+      <div className="max-w-md mx-auto grid grid-cols-4 gap-1">
         {links.map(({ href, icon: Icon, label }) => {
           const isActive = pathname === href;
           return (
             <Link
               key={href}
               href={href}
+              prefetch={false}
+              aria-current={isActive ? "page" : undefined}
+              onClick={() => sfxTap()}
               className={cn(
-                "flex flex-col items-center gap-1 px-5 py-2.5 rounded-2xl transition-all duration-300",
-                isActive 
-                  ? "text-white bg-gradient-summer shadow-soft scale-105 font-black" 
-                  : "text-foreground/50 hover:text-foreground/90 active:scale-95"
+                "relative flex flex-col items-center justify-center gap-0.5 py-2 rounded-xl transition-colors",
+                isActive
+                  ? "text-[#C22E2E] bg-[#FEEBEB] font-bold"
+                  : "text-muted hover:text-foreground font-semibold"
               )}
             >
-              <Icon className="h-5 w-5 relative z-10" strokeWidth={isActive ? 2.5 : 2} />
-              <span className="text-[10px] font-extrabold tracking-wider uppercase">{label}</span>
+              <Icon
+                className={cn("h-5 w-5", isActive && "text-primary")}
+                strokeWidth={isActive ? 2.4 : 2}
+                aria-hidden="true"
+              />
+              <span className="text-[11px] leading-none mt-0.5">{label}</span>
             </Link>
           );
         })}

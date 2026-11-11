@@ -1,276 +1,290 @@
 @import "tailwindcss";
 
 :root {
-  /* VYLO — Palette Vibrante, Chaude & Premium (Inspirée Kahoot) */
-  --background: #0B0D19; 
-  --surface: #161933;    
-  --surface-elevated: #1E2240;
-  --foreground: #FFFFFF; 
-  --border: rgba(255, 255, 255, 0.12);     
-  
-  /* Signature Kahoot Colors */
-  --kahoot-red: #E21B3C;
-  --kahoot-red-dark: #A91029;
-  --kahoot-blue: #1368CE;
-  --kahoot-blue-dark: #0C4893;
-  --kahoot-yellow: #D89E00;
-  --kahoot-yellow-dark: #A37700;
-  --kahoot-green: #26890C;
-  --kahoot-green-dark: #185B06;
-  --kahoot-purple: #864CBF;
-  --kahoot-purple-dark: #5C3286;
-  
-  --primary: #E21B3C;
-  --radius: 1.75rem;     
+  /* VYLO — Charte Casual Moderne & Équilibrée (Adultes, Amis & Famille) */
+  --background: #F5F6FA;
+  --surface: #FFFFFF;
+  --surface-elevated: #ECEEF5;
+  --surface-hover: #E2E5F0;
+  --foreground: #161824;
+  --muted: #5B6176;
+  --border: rgba(22, 24, 36, 0.09);
+  --border-strong: rgba(22, 24, 36, 0.16);
+
+  /* Couleurs Franches & Équilibrées */
+  --primary: #E84545;
+  --primary-dark: #C22E2E;
+  --primary-soft: #FEEBEB;
+  --secondary: #4F46E5;
+  --secondary-dark: #3730A3;
+  --secondary-soft: #EEF2FF;
+  --amber: #F59E0B;
+  --amber-dark: #D97706;
+  --amber-soft: #FEF3C7;
+  --emerald-soft: #ECFDF5;
+
+  /* Compatibilité Salles Existantes */
+  --kahoot-red: #E84545;
+  --kahoot-red-dark: #C22E2E;
+  --kahoot-blue: #4F46E5;
+  --kahoot-blue-dark: #3730A3;
+  --kahoot-yellow: #F59E0B;
+  --kahoot-yellow-dark: #D97706;
+  --kahoot-green: #10B981;
+  --kahoot-green-dark: #059669;
+  --kahoot-purple: #4F46E5;
+  --kahoot-purple-dark: #3730A3;
+
+  --radius: 1.25rem;
+}
+
+/* Pont temporaire lisible pour les salles /play/* et /online/* avant leur refonte individuelle */
+html[data-vylo-room="legacy"] {
+  --background: #141624;
+  --surface: #1E2134;
+  --surface-elevated: #282C44;
+  --surface-hover: #323754;
+  --foreground: #F8F9FC;
+  --muted: #AEB5CC;
+  --border: rgba(255, 255, 255, 0.11);
+  --border-strong: rgba(255, 255, 255, 0.2);
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
   --color-primary: var(--primary);
-  --color-secondary: var(--kahoot-blue);
-  --color-accent: var(--kahoot-red);
-  --color-yellow: var(--kahoot-yellow);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-accent: var(--primary);
+  --color-yellow: var(--amber);
   --color-green: var(--kahoot-green);
-  --color-purple: var(--kahoot-purple);
+  --color-purple: var(--secondary);
   --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --color-border: var(--border);
   --radius-xl: var(--radius);
-  --font-sans: var(--font-outfit);
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
-/* ======================================
-   GPU & FLUIDITÉ MOBILE NATIVE (Samsung S3 Compatible)
-   ====================================== */
-* {
-  -webkit-tap-highlight-color: transparent;
-  box-sizing: border-box;
-}
+@layer base {
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    color-scheme: light;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
 
-/* View Transitions Ultra-Rapides (0.1s Instant) */
-@view-transition {
-  navigation: auto;
-}
+  body {
+    background-color: var(--background);
+    background-image: linear-gradient(180deg, #ECEFF8 0%, var(--background) 340px);
+    background-repeat: no-repeat;
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    text-align: start;
+    -webkit-font-smoothing: antialiased;
+    min-block-size: 100dvh;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.1s;
-}
+  html[data-vylo-room="legacy"] body {
+    background-image: linear-gradient(180deg, #1B1E32 0%, var(--background) 340px);
+  }
 
-html {
-  overflow-x: hidden;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), 'Outfit', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
+  p {
+    text-wrap: pretty;
+  }
 
-/* Arrière-plan Ambient Vivant avec Couleurs Chaudes & Isolation GPU */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-color: var(--background);
-  background-image: 
-    radial-gradient(ellipse at 10% 10%, rgba(226, 27, 60, 0.18) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 20%, rgba(134, 76, 191, 0.14) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(19, 104, 206, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(216, 158, 0, 0.08) 0%, transparent 40%);
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
-  pointer-events: none;
-}
-
-/* Allègement des filtres flous lourds sur mobiles peu puissants */
-@media (max-width: 768px) {
-  .backdrop-blur-2xl,
-  .backdrop-blur-md,
-  .backdrop-blur-xl {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background-color: rgba(22, 25, 51, 0.96) !important;
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
   }
 }
 
-/* ======================================
-   BOUTONS KAHOOT 3D TACTILE
-   ====================================== */
+/* Diffère le rendu des sections hors écran pour accélérer le chargement mobile */
+.offscreen-section {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 340px;
+}
+
+/* Animations composées légères respectant prefers-reduced-motion */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.97) translateY(6px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .animate-bounce-in {
+    animation: bounceIn 200ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up {
+    animation: fadeUp 160ms cubic-bezier(0.2, 0, 0, 1) forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(0.85); }
+    60% { opacity: 1; transform: translateY(-140px) scale(1.1); }
+    100% { opacity: 0; transform: translateY(-260px) scale(1); }
+  }
+  .animate-float-up {
+    animation: floatUp 2.6s ease-out forwards;
+  }
+}
+
+/* Drawer natif <dialog> mobile */
+.vylo-drawer {
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  width: 100dvw;
+  height: 100dvh;
+}
+.vylo-drawer[open] {
+  display: flex;
+  justify-content: flex-end;
+}
+.vylo-drawer::backdrop {
+  background: rgba(22, 24, 36, 0.42);
+}
+
+/* Modales natives <dialog> (Top Layer, Focus Trap, Esc natif) */
+.vylo-modal {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 2rem);
+  width: 100%;
+  overflow: visible;
+}
+.vylo-modal:modal {
+  overscroll-behavior: contain;
+}
+.vylo-modal::backdrop {
+  background: rgba(22, 24, 36, 0.45);
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Boutons tactiles & ombres courtes */
 .btn-kahoot-red {
-  background-color: var(--kahoot-red);
+  background-color: var(--primary);
   color: #FFFFFF;
-  box-shadow: 0 6px 0 0 var(--kahoot-red-dark), 0 10px 20px -5px rgba(226, 27, 60, 0.4);
+  box-shadow: 0 3px 0 0 var(--primary-dark);
 }
 
 .btn-kahoot-blue {
-  background-color: var(--kahoot-blue);
+  background-color: var(--secondary);
   color: #FFFFFF;
-  box-shadow: 0 6px 0 0 var(--kahoot-blue-dark), 0 10px 20px -5px rgba(19, 104, 206, 0.4);
+  box-shadow: 0 3px 0 0 var(--secondary-dark);
 }
 
 .btn-kahoot-yellow {
-  background-color: var(--kahoot-yellow);
-  color: #FFFFFF;
-  box-shadow: 0 6px 0 0 var(--kahoot-yellow-dark), 0 10px 20px -5px rgba(216, 158, 0, 0.4);
+  background-color: var(--amber);
+  color: #161824;
+  box-shadow: 0 3px 0 0 var(--amber-dark);
 }
 
 .btn-kahoot-green {
   background-color: var(--kahoot-green);
   color: #FFFFFF;
-  box-shadow: 0 6px 0 0 var(--kahoot-green-dark), 0 10px 20px -5px rgba(38, 137, 12, 0.4);
+  box-shadow: 0 3px 0 0 var(--kahoot-green-dark);
 }
 
 .btn-kahoot-purple {
-  background-color: var(--kahoot-purple);
+  background-color: var(--secondary);
   color: #FFFFFF;
-  box-shadow: 0 6px 0 0 var(--kahoot-purple-dark), 0 10px 20px -5px rgba(134, 76, 191, 0.4);
+  box-shadow: 0 3px 0 0 var(--secondary-dark);
 }
 
-/* ======================================
-   THÈMES AMBIANCE PAR JEU
-   ====================================== */
+/* Thèmes hérités des salles en attente de refonte */
 .theme-undercover {
-  background: linear-gradient(135deg, rgba(134, 76, 191, 0.3) 0%, rgba(19, 104, 206, 0.2) 100%);
-  border-color: rgba(134, 76, 191, 0.5) !important;
+  background: linear-gradient(150deg, rgba(79, 70, 229, 0.16) 0%, var(--surface) 100%);
+  border-color: rgba(79, 70, 229, 0.35) !important;
 }
 
 .theme-werewolf {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(88, 28, 135, 0.4) 100%);
-  border-color: rgba(168, 85, 247, 0.4) !important;
+  background: linear-gradient(150deg, var(--surface) 0%, rgba(79, 70, 229, 0.2) 100%);
+  border-color: rgba(79, 70, 229, 0.35) !important;
 }
 
 .theme-tod {
-  background: linear-gradient(135deg, rgba(226, 27, 60, 0.3) 0%, rgba(216, 158, 0, 0.2) 100%);
-  border-color: rgba(226, 27, 60, 0.5) !important;
+  background: linear-gradient(150deg, rgba(232, 69, 69, 0.16) 0%, var(--surface) 100%);
+  border-color: rgba(232, 69, 69, 0.35) !important;
 }
 
 .theme-saboteur {
-  background: linear-gradient(135deg, rgba(216, 158, 0, 0.3) 0%, rgba(226, 27, 60, 0.25) 100%);
-  border-color: rgba(216, 158, 0, 0.5) !important;
+  background: linear-gradient(150deg, rgba(245, 158, 11, 0.16) 0%, var(--surface) 100%);
+  border-color: rgba(245, 158, 11, 0.35) !important;
 }
 
-/* ======================================
-   GRADIENTS & OMBRES PREMIUM
-   ====================================== */
 .bg-gradient-summer {
-  background: linear-gradient(135deg, #E21B3C 0%, #1368CE 50%, #864CBF 100%);
+  background: linear-gradient(135deg, #E84545 0%, #4F46E5 100%);
 }
 
 .text-gradient-summer {
-  background: linear-gradient(135deg, #E21B3C 0%, #D89E00 40%, #1368CE 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--foreground);
 }
 
 .shadow-summer-glow {
-  box-shadow: 0 6px 0 0 #A91029, 0 10px 24px -6px rgba(226, 27, 60, 0.4);
+  box-shadow: 0 8px 20px -8px rgba(232, 69, 69, 0.24);
+}
+
+.shadow-glow {
+  box-shadow: 0 10px 24px -10px rgba(22, 24, 36, 0.14), 0 0 0 1px var(--border);
+}
+
+.shadow-blue-glow {
+  box-shadow: 0 8px 20px -8px rgba(79, 70, 229, 0.24);
 }
 
 .shadow-soft {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-  transform: translateZ(0);
+  box-shadow: 0 4px 14px -6px rgba(22, 24, 36, 0.08);
 }
 
-/* ======================================
-   MICRO-INTERACTIONS & ANIMATIONS PREMIUM
-   ====================================== */
-
-/* Active Press : Boutons 3D qui s'enfoncent */
 .active-press {
-  transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 150ms ease;
+  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), background-color 120ms ease, border-color 120ms ease;
 }
 .active-press:active {
-  transform: translateY(3px) scale(0.97) !important;
-  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(1px) scale(0.985);
 }
 
-/* Hover Lift : Cartes qui se soulèvent au survol */
 .hover-lift {
-  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms ease;
+  transition: transform 150ms cubic-bezier(0.2, 0, 0, 1), border-color 150ms ease, box-shadow 150ms ease;
 }
 .hover-lift:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5), 0 0 30px -5px rgba(226, 27, 60, 0.15);
+  transform: translateY(-2px);
 }
 
-/* Bounce In : Animation d'entrée rebondissante */
-@keyframes bounceIn {
-  0%   { opacity: 0; transform: scale(0.85) translateY(16px); }
-  60%  { opacity: 1; transform: scale(1.04) translateY(-3px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-.animate-bounce-in {
-  animation: bounceIn 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* Fade Up : Animation d'entrée douce */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-up {
-  animation: fadeUp 350ms ease-out forwards;
-}
-
-/* Pulse Glow : Pour le V-Bubble */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 4px 1px rgba(226, 27, 60, 0.3); }
-  50%      { box-shadow: 0 0 12px 3px rgba(226, 27, 60, 0.5); }
-}
-.animate-pulse-glow {
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-/* Float Idle : Pour la mascotte flottante */
-@keyframes floatIdle {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-8px); }
-}
-.animate-float {
-  animation: floatIdle 3s ease-in-out infinite;
-}
-
-/* Emojis Flottants Animation */
-@keyframes floatUp {
-  0%   { opacity: 1; transform: translateY(0) scale(0.8); }
-  50%  { opacity: 1; transform: translateY(-150px) scale(1.2); }
-  100% { opacity: 0; transform: translateY(-300px) scale(1); }
-}
-.animate-float-up {
-  animation: floatUp 2.8s ease-out forwards;
-}
-
-/* Shimmer : Pour les cartes au repos */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-/* Tap Ripple : Retour visuel au toucher */
-@keyframes tapRipple {
-  0%   { transform: scale(0.95); opacity: 0.8; }
-  50%  { transform: scale(1.03); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-.animate-tap {
-  animation: tapRipple 200ms ease-out;
-}
-
-/* ======================================
-   UTILITAIRES
-   ====================================== */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

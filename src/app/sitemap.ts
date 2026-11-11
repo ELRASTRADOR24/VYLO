@@ -1,8 +1,15 @@
 import { MetadataRoute } from "next";
+import { getGameList } from "@/games";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://vylo-nine.vercel.app";
   const lastMod = new Date();
+  const gameEntries: MetadataRoute.Sitemap = getGameList().map((game) => ({
+    url: `${baseUrl}/setup/${game.id}`,
+    lastModified: lastMod,
+    changeFrequency: "weekly",
+    priority: 0.85,
+  }));
 
   return [
     {
@@ -29,54 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/setup/undercover`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/setup/werewolf`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/setup/blind-test`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/setup/truth-or-dare`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/setup/tu-preferes`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/setup/word-master`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/setup/flag-quiz`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/setup/saboteur`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
+    ...gameEntries,
     {
       url: `${baseUrl}/profile`,
       lastModified: lastMod,

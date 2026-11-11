@@ -13,4 +13,5 @@ export const truthOrDareConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local", "online"],
   themeColor: "primary",
+  status: "wip",
 };

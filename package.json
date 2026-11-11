@@ -2,10 +2,13 @@
   "name": "vylo",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "dev:online": "node server.js",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "node server.js",
     "lint": "eslint"
   },

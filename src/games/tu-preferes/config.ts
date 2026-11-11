@@ -13,4 +13,5 @@ export const tuPreferesConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local", "online"],
   themeColor: "purple",
+  status: "wip",
 };

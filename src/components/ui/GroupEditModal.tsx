@@ -4,21 +4,21 @@ import { useState, useEffect } from "react";
 import { useAppStore, GroupPlayer } from "@/store/useAppStore";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import { Users, UserPlus, Trash2, Edit2, Check, X, Sparkles, RefreshCw } from "lucide-react";
-import { sfxSuccess, sfxTap, sfxError } from "@/lib/audio";
+import { Users, UserPlus, Trash2, Edit2, Check, X, RefreshCw } from "lucide-react";
+import { sfxSuccess, sfxTap } from "@/lib/audio";
 
 const EMOJIS = ["😎", "🔥", "🦁", "🦊", "👑", "🚀", "⚡", "👻", "🦄", "🐼", "🤖", "⭐"];
 
-export function GroupEditModal({ 
-  isOpen, 
+export function GroupEditModal({
+  isOpen,
   onClose,
-  onGroupSaved 
-}: { 
-  isOpen: boolean; 
+  onGroupSaved,
+}: {
+  isOpen: boolean;
   onClose: () => void;
   onGroupSaved?: (updatedPlayers: GroupPlayer[]) => void;
 }) {
-  const { savedGroup, setSavedGroup, addPlayerToSavedGroup, removePlayerFromSavedGroup, updatePlayerInSavedGroup, clearSavedGroup } = useAppStore();
+  const { savedGroup, setSavedGroup, clearSavedGroup } = useAppStore();
 
   const [players, setPlayers] = useState<GroupPlayer[]>([]);
   const [newPlayerName, setNewPlayerName] = useState("");
@@ -38,21 +38,20 @@ export function GroupEditModal({
     if (!clean) return;
     sfxTap();
 
-    const randomEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    const randomEmoji = EMOJIS[players.length % EMOJIS.length];
     const newP: GroupPlayer = {
       id: `gp_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
       name: clean,
       avatar: randomEmoji,
     };
 
-    const updated = [...players, newP];
-    setPlayers(updated);
+    setPlayers([...players, newP]);
     setNewPlayerName("");
   };
 
   const handleRemovePlayer = (id: string) => {
     sfxTap();
-    setPlayers(prev => prev.filter(p => p.id !== id));
+    setPlayers((prev) => prev.filter((p) => p.id !== id));
   };
 
   const handleStartRename = (player: GroupPlayer) => {
@@ -65,17 +64,14 @@ export function GroupEditModal({
     const clean = editingName.trim();
     if (!clean) return;
     sfxTap();
-
-    setPlayers(prev => prev.map(p => p.id === id ? { ...p, name: clean } : p));
+    setPlayers((prev) => prev.map((p) => (p.id === id ? { ...p, name: clean } : p)));
     setEditingId(null);
   };
 
   const handleSaveAll = () => {
     sfxSuccess();
     setSavedGroup(players);
-    if (onGroupSaved) {
-      onGroupSaved(players);
-    }
+    if (onGroupSaved) onGroupSaved(players);
     onClose();
   };
 
@@ -86,72 +82,79 @@ export function GroupEditModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
-      <Card className="w-full max-w-md p-6 bg-surface/95 border border-white/10 shadow-summer-glow relative flex flex-col gap-4 max-h-[85vh] overflow-y-auto">
-        
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-3">
-          <h2 className="text-xl font-black text-foreground flex items-center gap-2">
-            <Users className="text-primary" size={22} /> Modifier l'Équipe ({players.length})
+    <div className="fixed inset-0 bg-[#161824]/45 flex items-center justify-center p-4 z-50 animate-fade-up">
+      <Card className="w-full max-w-md p-6 bg-surface border border-border shadow-glow relative flex flex-col gap-4 max-h-[85vh] overflow-y-auto">
+        <div className="flex items-center justify-between border-b border-border pb-3">
+          <h2 className="font-display text-xl font-bold text-foreground flex items-center gap-2">
+            <Users className="text-primary" size={20} aria-hidden="true" /> Modifier l'équipe ({players.length})
           </h2>
-          <button onClick={onClose} className="h-8 w-8 rounded-full bg-white/5 flex items-center justify-center text-foreground/60 hover:text-foreground">
-            <X size={18} />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Fermer"
+            className="h-8 w-8 rounded-full bg-surface-elevated flex items-center justify-center text-muted hover:text-foreground cursor-pointer"
+          >
+            <X size={17} />
           </button>
         </div>
 
-        {/* Ajouter un joueur */}
         <div className="flex gap-2">
           <input
             type="text"
             value={newPlayerName}
             onChange={(e) => setNewPlayerName(e.target.value)}
             placeholder="Nouveau joueur..."
-            className="flex-1 bg-background border border-white/10 rounded-xl px-4 py-2.5 text-xs font-bold text-foreground focus:outline-none focus:border-primary"
-            onKeyDown={(e) => { if (e.key === "Enter") handleAddPlayer(); }}
+            className="flex-1 bg-surface-elevated border border-border rounded-2xl px-4 py-2.5 text-sm font-bold text-foreground focus:outline-none focus:border-primary"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleAddPlayer();
+            }}
           />
-          <Button variant="primary" size="sm" className="px-4 font-black text-xs gap-1.5" onClick={handleAddPlayer} disabled={!newPlayerName.trim()}>
+          <Button variant="primary" size="sm" className="px-4 font-bold text-xs gap-1.5 rounded-2xl" onClick={handleAddPlayer} disabled={!newPlayerName.trim()}>
             <UserPlus size={14} /> Ajouter
           </Button>
         </div>
 
-        {/* Liste des Joueurs de l'Équipe */}
         <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
           {players.length === 0 ? (
-            <div className="p-6 text-center text-xs font-bold text-foreground/40 border border-dashed border-white/10 rounded-2xl">
-              Aucun joueur dans l'équipe. Ajoutez le prénom de vos amis !
+            <div className="p-6 text-center text-xs font-bold text-muted border border-dashed border-border rounded-2xl">
+              Aucun joueur dans l'équipe. Ajoutez vos proches !
             </div>
           ) : (
             players.map((p, idx) => (
-              <div key={p.id} className="p-3 bg-white/5 border border-white/5 rounded-2xl flex items-center justify-between">
+              <div key={p.id} className="p-3 bg-surface-elevated border border-border rounded-2xl flex items-center justify-between">
                 <div className="flex items-center gap-2.5 flex-1 mr-2">
                   <span className="text-xl">{p.avatar || "😎"}</span>
-                  
+
                   {editingId === p.id ? (
                     <div className="flex items-center gap-1 flex-1">
                       <input
                         type="text"
                         value={editingName}
                         onChange={(e) => setEditingName(e.target.value)}
-                        className="bg-background border border-primary rounded-lg px-2 py-1 text-xs font-bold w-full"
+                        className="bg-surface border border-primary rounded-xl px-2.5 py-1 text-xs font-bold text-foreground w-full"
                         autoFocus
-                        onKeyDown={(e) => { if (e.key === "Enter") handleSaveRename(p.id); }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") handleSaveRename(p.id);
+                        }}
                       />
-                      <button onClick={() => handleSaveRename(p.id)} className="p-1 text-emerald-400">
+                      <button type="button" onClick={() => handleSaveRename(p.id)} className="p-1 text-green cursor-pointer">
                         <Check size={16} />
                       </button>
                     </div>
                   ) : (
-                    <span className="font-bold text-xs truncate">Joueur {idx + 1} : <strong className="text-foreground">{p.name}</strong></span>
+                    <span className="font-bold text-xs text-muted truncate">
+                      {idx + 1}. <strong className="text-foreground text-sm">{p.name}</strong>
+                    </span>
                   )}
                 </div>
 
                 <div className="flex items-center gap-1">
                   {editingId !== p.id && (
-                    <button onClick={() => handleStartRename(p)} className="p-1.5 text-foreground/40 hover:text-primary transition-colors">
+                    <button type="button" onClick={() => handleStartRename(p)} className="p-1.5 text-muted hover:text-primary transition-colors cursor-pointer">
                       <Edit2 size={14} />
                     </button>
                   )}
-                  <button onClick={() => handleRemovePlayer(p.id)} className="p-1.5 text-foreground/40 hover:text-red-400 transition-colors">
+                  <button type="button" onClick={() => handleRemovePlayer(p.id)} className="p-1.5 text-muted hover:text-primary transition-colors cursor-pointer">
                     <Trash2 size={14} />
                   </button>
                 </div>
@@ -160,22 +163,21 @@ export function GroupEditModal({
           )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col gap-2 pt-2 border-t border-white/10">
-          <Button variant="primary" className="w-full py-3.5 text-xs font-black gap-2 shadow-summer-glow" onClick={handleSaveAll}>
-            <Check size={16} /> Valider l'Équipe ({players.length} Joueurs)
+        <div className="flex flex-col gap-2 pt-2 border-t border-border">
+          <Button variant="primary" size="md" className="w-full gap-2 rounded-full" onClick={handleSaveAll}>
+            <Check size={16} /> Valider l'équipe ({players.length} joueurs)
           </Button>
 
           {players.length > 0 && (
-            <button 
+            <button
+              type="button"
               onClick={handleResetGroup}
-              className="text-[11px] font-black text-red-400/80 hover:text-red-400 flex items-center justify-center gap-1 py-1"
+              className="text-xs font-bold text-muted hover:text-primary flex items-center justify-center gap-1 py-1 cursor-pointer"
             >
-              <RefreshCw size={12} /> Réinitialiser l'équipe au complet
+              <RefreshCw size={12} /> Réinitialiser l'équipe
             </button>
           )}
         </div>
-
       </Card>
     </div>
   );

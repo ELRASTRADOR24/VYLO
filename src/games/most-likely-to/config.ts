@@ -13,4 +13,5 @@ export const mostLikelyToConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local"],
   themeColor: "purple",
+  status: "wip",
 };

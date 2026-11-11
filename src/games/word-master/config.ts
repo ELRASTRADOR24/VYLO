@@ -13,4 +13,5 @@ export const wordMasterConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local", "online"],
   themeColor: "pink",
+  status: "wip",
 };

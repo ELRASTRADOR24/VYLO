@@ -1,34 +1,51 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import { sfxTap } from "@/lib/audio";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (
+    pathname.startsWith("/setup") ||
+    pathname.startsWith("/lobby") ||
+    pathname.startsWith("/play") ||
+    pathname.startsWith("/online") ||
+    pathname.startsWith("/rules")
+  ) {
+    return null;
+  }
+
   return (
-    <footer className="w-full py-6 border-t border-white/10 bg-surface/50 backdrop-blur-md mt-auto relative z-10">
-      <div className="max-w-6xl mx-auto px-4 text-center flex flex-col items-center justify-center gap-2">
-        <div className="flex items-center justify-center gap-4 text-xs font-bold text-foreground/70 mb-1">
-          <Link href="/rules" onClick={() => sfxTap()} className="hover:text-primary transition-colors text-white/80">
-            📖 Guide & Règles des Jeux
+    <footer className="w-full py-6 pb-24 md:pb-8 border-t border-border bg-surface mt-auto relative z-10">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted">
+        <div className="flex flex-wrap items-center justify-center gap-5 font-bold">
+          <Link href="/library" prefetch={false} onClick={() => sfxTap()} className="hover:text-foreground transition-colors">
+            Catalogue des jeux
           </Link>
-          <span>•</span>
-          <div className="flex items-center gap-1">
-            <span>Développé par</span>
-            <a
-              href="https://johansonweb.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => sfxTap()}
-              className="text-white font-extrabold hover:text-primary transition-colors flex items-center gap-1"
-            >
-              Johanson <ExternalLink size={12} />
-            </a>
-          </div>
+          <Link href="/rules" prefetch={false} onClick={() => sfxTap()} className="hover:text-foreground transition-colors">
+            Règles rapides
+          </Link>
+          <Link href="/join" prefetch={false} onClick={() => sfxTap()} className="hover:text-foreground transition-colors">
+            Rejoindre un salon
+          </Link>
         </div>
-        <p className="text-[11px] text-foreground/40 font-medium">
-          VYLO © 2026 — Tous droits réservés
-        </p>
+
+        <div className="flex items-center gap-3 font-semibold">
+          <span>VYLO © 2026</span>
+          <span aria-hidden="true" className="opacity-35">•</span>
+          <a
+            href="https://johansonweb.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => sfxTap()}
+            className="inline-flex items-center gap-1 font-bold text-foreground hover:text-primary transition-colors"
+          >
+            Johanson <ExternalLink size={12} aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </footer>
   );

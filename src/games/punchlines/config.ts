@@ -13,4 +13,5 @@ export const punchlinesConfig: GameConfig = {
   difficulty: "Facile",
   modes: ["local", "online"],
   themeColor: "purple",
+  status: "wip",
 };

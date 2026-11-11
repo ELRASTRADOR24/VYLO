@@ -1,9 +1,7 @@
-"use client";
-
 import React from "react";
-import { Users, Clock, Play } from "lucide-react";
+import Link from "next/link";
+import { Users, Clock, ArrowRight } from "lucide-react";
 import { VBubble } from "./VBubble";
-import { sfxTap } from "@/lib/audio";
 
 export interface GameCard3DProps {
   title: string;
@@ -12,53 +10,24 @@ export interface GameCard3DProps {
   playersMax: number;
   durationMins: number;
   themeColor: "purple" | "blue" | "green" | "orange" | "yellow" | "red" | "cyan" | "pink";
-  accentHex: string;
+  accentHex?: string;
   illustration: React.ReactNode;
-  onClick: () => void;
+  modeBadge?: string;
+  isWip?: boolean;
+  href?: string;
+  onClick?: () => void;
   onHover?: (hex: string) => void;
 }
 
-const COLOR_CLASSES = {
-  purple: {
-    border: "border-purple-500/40 hover:border-purple-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(168,85,247,0.45)]",
-    buttonBg: "bg-purple-600 hover:bg-purple-500 active:bg-purple-700 text-white shadow-[0_4px_0_#581C87]",
-  },
-  blue: {
-    border: "border-blue-500/40 hover:border-blue-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(59,130,246,0.45)]",
-    buttonBg: "bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white shadow-[0_4px_0_#1E3A8A]",
-  },
-  green: {
-    border: "border-emerald-500/40 hover:border-emerald-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(16,185,129,0.45)]",
-    buttonBg: "bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white shadow-[0_4px_0_#064E3B]",
-  },
-  orange: {
-    border: "border-orange-500/40 hover:border-orange-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(249,115,22,0.45)]",
-    buttonBg: "bg-orange-600 hover:bg-orange-500 active:bg-orange-700 text-white shadow-[0_4px_0_#7C2D12]",
-  },
-  yellow: {
-    border: "border-yellow-500/40 hover:border-yellow-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(250,204,21,0.45)]",
-    buttonBg: "bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-slate-950 font-black shadow-[0_4px_0_#78350F]",
-  },
-  red: {
-    border: "border-red-500/40 hover:border-red-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(239,68,68,0.45)]",
-    buttonBg: "bg-red-600 hover:bg-red-500 active:bg-red-700 text-white shadow-[0_4px_0_#7F1D1D]",
-  },
-  cyan: {
-    border: "border-cyan-500/40 hover:border-cyan-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(6,182,212,0.45)]",
-    buttonBg: "bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-700 text-white shadow-[0_4px_0_#164E63]",
-  },
-  pink: {
-    border: "border-pink-500/40 hover:border-pink-400",
-    glow: "group-hover:shadow-[0_0_35px_rgba(236,72,153,0.45)]",
-    buttonBg: "bg-pink-600 hover:bg-pink-500 active:bg-pink-700 text-white shadow-[0_4px_0_#831843]",
-  },
+const ACCENT_MAP: Record<GameCard3DProps["themeColor"], { badgeBg: string; badgeText: string; hoverBorder: string }> = {
+  purple: { badgeBg: "bg-[#EEF2FF]", badgeText: "text-[#4338CA]", hoverBorder: "hover:border-secondary/45" },
+  blue: { badgeBg: "bg-[#EEF2FF]", badgeText: "text-[#4338CA]", hoverBorder: "hover:border-secondary/45" },
+  green: { badgeBg: "bg-[#ECFDF5]", badgeText: "text-[#047857]", hoverBorder: "hover:border-green/45" },
+  orange: { badgeBg: "bg-[#FEF3C7]", badgeText: "text-[#B45309]", hoverBorder: "hover:border-yellow/55" },
+  yellow: { badgeBg: "bg-[#FEF3C7]", badgeText: "text-[#B45309]", hoverBorder: "hover:border-yellow/55" },
+  red: { badgeBg: "bg-[#FEEBEB]", badgeText: "text-[#C22E2E]", hoverBorder: "hover:border-primary/45" },
+  cyan: { badgeBg: "bg-[#EEF2FF]", badgeText: "text-[#4338CA]", hoverBorder: "hover:border-secondary/45" },
+  pink: { badgeBg: "bg-[#FEEBEB]", badgeText: "text-[#C22E2E]", hoverBorder: "hover:border-primary/45" },
 };
 
 export function GameCard3D({
@@ -68,61 +37,117 @@ export function GameCard3D({
   playersMax,
   durationMins,
   themeColor,
-  accentHex,
   illustration,
+  modeBadge,
+  isWip = false,
+  href,
   onClick,
-  onHover,
 }: GameCard3DProps) {
-  const styles = COLOR_CLASSES[themeColor];
+  const styles = ACCENT_MAP[themeColor];
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    sfxTap();
-    onClick();
-  };
-
-  return (
-    <div
-      onClick={handleClick}
-      onMouseEnter={() => onHover && onHover(accentHex)}
-      className={`group relative p-3 rounded-3xl bg-surface/90 border-2 transition-all duration-200 transform hover:-translate-y-1.5 active:scale-98 cursor-pointer flex flex-col justify-between overflow-hidden shadow-xl ${styles.border} ${styles.glow}`}
-    >
-      {/* Container de la Carte Tarot / Vector Héroïque */}
-      <div className="relative w-full rounded-2xl overflow-hidden mb-2.5">
-        {illustration}
-
-        {/* VBubble d'aide en haut à droite */}
-        <div className="absolute top-2.5 right-2.5 z-20" onClick={(e) => e.stopPropagation()}>
-          <VBubble title={title} description={description} />
+  const cardInner = (
+    <>
+      <div className="relative w-full aspect-[16/10] overflow-clip border-b border-border/80 bg-surface-elevated">
+        <div
+          className={
+            isWip
+              ? "w-full h-full grayscale-[42%] opacity-90 group-hover:grayscale-[18%] group-hover:opacity-100 transition-[filter,opacity] duration-150"
+              : "w-full h-full"
+          }
+        >
+          {illustration}
         </div>
+
+        {isWip && (
+          <>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-[#9CA3B8]/20 transition-opacity group-hover:opacity-60"
+            />
+            <div
+              role="note"
+              aria-label="Jeu toujours en développement : jouable mais non terminé, bugs possibles"
+              className="pointer-events-none select-none absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[16deg] w-[142%] z-10 bg-gradient-to-b from-[#ECEEF4]/95 via-[#DFE3EC]/95 to-[#CFD5E2]/95 backdrop-blur-[2px] border-y-2 border-[#7C849C]/85 ring-1 ring-inset ring-white/55 shadow-[0_3px_10px_rgba(22,24,36,0.18)] py-1.5 px-6 flex flex-col items-center justify-center text-center"
+            >
+              <span className="text-[10px] sm:text-[10.5px] font-black uppercase tracking-[0.06em] text-[#1E2235] leading-tight">
+                Jeu toujours en développement
+              </span>
+              <span className="text-[9px] font-bold text-[#4B526B] leading-tight mt-0.5">
+                Jouable · Non terminé (bugs possibles)
+              </span>
+            </div>
+          </>
+        )}
       </div>
 
-      {/* Titre & Badges Info */}
-      <div className="flex flex-col gap-2 px-1 pb-1">
-        <div className="flex items-center justify-between">
-          <h3 className="text-base font-black text-foreground tracking-tight group-hover:text-primary transition-colors">
+      <div className="p-4 flex flex-col gap-3 flex-1 justify-between">
+        <div>
+          {modeBadge && (
+            <span
+              className={`inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-md mb-1.5 ${
+                isWip ? "bg-[#E4E7F0] text-[#4B526B]" : `${styles.badgeBg} ${styles.badgeText}`
+              }`}
+            >
+              {modeBadge}
+            </span>
+          )}
+          <h3 className="font-display text-base sm:text-lg font-extrabold text-foreground leading-snug">
             {title}
           </h3>
         </div>
 
-        <div className="flex items-center justify-between gap-2 text-[11px] font-extrabold text-foreground/80 bg-white/5 border border-white/10 px-2.5 py-1 rounded-xl">
-          <span className="flex items-center gap-1">
-            <Users size={12} className="text-primary" /> {playersMin}-{playersMax} joueurs
-          </span>
-          <span className="text-white/20">•</span>
-          <span className="flex items-center gap-1">
-            <Clock size={12} className="text-primary" /> {durationMins} min
+        <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-border text-xs font-bold text-muted">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1">
+              <Users size={13} aria-hidden="true" />
+              {playersMin}–{playersMax}
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <Clock size={13} aria-hidden="true" />
+              {durationMins}m
+            </span>
+          </div>
+
+          <span
+            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg font-bold text-xs transition-colors ${
+              isWip
+                ? "bg-[#E4E7F0] text-[#454B63] group-hover:bg-[#5B6176] group-hover:text-white"
+                : "bg-surface-elevated group-hover:bg-primary text-foreground group-hover:text-white"
+            }`}
+          >
+            {isWip ? "Tester" : "Jouer"}
+            <ArrowRight size={13} aria-hidden="true" />
           </span>
         </div>
-
-        {/* Bouton Tactile Jouer */}
-        <button 
-          onClick={handleClick}
-          className={`w-full py-2.5 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all active:translate-y-0.5 ${styles.buttonBg}`}
-        >
-          <Play size={14} fill="currentColor" /> Jouer
-        </button>
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <article
+      className={`group relative rounded-2xl border overflow-clip flex flex-col shadow-soft hover:shadow-glow hover:-translate-y-0.5 transition-[border-color,transform,box-shadow] duration-150 ${
+        isWip
+          ? "bg-[#F4F5F8] border-[#CFD5E3] hover:border-[#8E95AC]"
+          : `bg-surface border-border ${styles.hoverBorder}`
+      }`}
+    >
+      <div className="absolute top-2.5 right-2.5 z-20">
+        <VBubble title={title} description={description} size="sm" />
+      </div>
+
+      {href ? (
+        <Link href={href} prefetch={false} className="flex flex-col flex-1 focus-visible:outline-2 focus-visible:outline-primary">
+          {cardInner}
+        </Link>
+      ) : (
+        <button
+          type="button"
+          onClick={onClick}
+          className="flex flex-col flex-1 text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-primary"
+        >
+          {cardInner}
+        </button>
+      )}
+    </article>
   );
 }

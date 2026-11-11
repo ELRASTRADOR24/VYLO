@@ -1,9 +1,8 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useSocket } from "@/hooks/useSocket";
-import { useAppStore } from "@/store/useAppStore";
+import { use, useState } from "react";
+import { useOnlineRoom } from "@/hooks/useOnlineRoom";
+import { OnlineRoomGuard, ReconnectingBanner } from "@/components/online/OnlineRoomGuard";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import { 
@@ -18,30 +17,27 @@ import { LivingBackground } from "@/components/ui/LivingBackground";
 
 export default function OnlineWordMasterGame({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
-  const router = useRouter();
-  const { guestProfile } = useAppStore();
-  const { socket, roomState, joinRoom, syncGameState } = useSocket();
+  const online = useOnlineRoom(roomId, "word-master");
+  const { playerId, connectionStatus, roomState, syncGameState, submitPlayerMapUpdate, leaveRoomAndGo } = online;
 
   const [selectedTheme, setSelectedTheme] = useState<WordMasterCategory>("Toutes");
   const [clueInput, setClueInput] = useState("");
   const [copiedCode, setCopiedCode] = useState(false);
 
-  useEffect(() => {
-    if (roomId) {
-      joinRoom(roomId, "word-master", guestProfile.pseudo, guestProfile.avatar);
-    }
-  }, [roomId, guestProfile.pseudo, guestProfile.avatar, joinRoom]);
+  if (!online.isRoomReady || !roomState) {
+    return <OnlineRoomGuard online={online} />;
+  }
 
-  const isHost = roomState?.players?.find((p) => p.id === socket?.id)?.isHost || false;
-  const gameData = roomState?.gameData || {};
+  const isHost = online.isHost;
+  const gameData = roomState.gameData || {};
   const currentMasterId: string | undefined = gameData.currentMasterId;
   const targetCard: TabooCard | undefined = gameData.targetCard;
   const clues: Record<string, string> = gameData.clues || {};
   const scores: Record<string, number> = gameData.scores || {};
   const roundCount = gameData.roundCount || 1;
 
-  const currentMaster = roomState?.players?.find(p => p.id === currentMasterId);
-  const isMaster = socket?.id === currentMasterId;
+  const currentMaster = roomState.players?.find(p => p.id === currentMasterId);
+  const isMaster = Boolean(playerId && playerId === currentMasterId);
 
   const handleCopyCode = () => {
     sfxTap();
@@ -52,14 +48,13 @@ export default function OnlineWordMasterGame({ params }: { params: Promise<{ roo
 
   const handleLeave = () => {
     sfxTap();
-    if (typeof window !== "undefined" && window.history.length > 1) router.back();
-    else router.push("/library");
+    leaveRoomAndGo("/library");
   };
 
   const handleHostStartGame = () => {
     sfxTap();
     resetWordMasterHistory();
-    const players = roomState?.players || [];
+    const players = roomState.players || [];
     if (players.length === 0) return;
 
     const firstMaster = players[Math.floor(Math.random() * players.length)];
@@ -79,13 +74,11 @@ export default function OnlineWordMasterGame({ params }: { params: Promise<{ roo
   };
 
   const handleSendClue = () => {
-    if (!socket?.id || isMaster || !clueInput.trim() || roomState?.state !== "PLAYING") return;
+    if (!playerId || isMaster || !clueInput.trim() || roomState.state !== "PLAYING") return;
     sfxTap();
-
-    const newClues = { ...clues, [socket.id]: clueInput.trim() };
+    const value = clueInput.trim();
     setClueInput("");
-
-    syncGameState(roomId, "PLAYING", { clues: newClues });
+    submitPlayerMapUpdate(roomId, "clues", value);
   };
 
   const handleGuessSubmit = (isCorrect: boolean) => {
@@ -113,9 +106,10 @@ export default function OnlineWordMasterGame({ params }: { params: Promise<{ roo
   };
 
   // 1. LOBBY
-  if (roomState?.state === "LOBBY" || !roomState?.state) {
+  if (roomState.state === "LOBBY") {
     return (
       <main className="min-h-screen flex flex-col items-center pt-6 pb-36 px-4 md:px-8 max-w-md md:max-w-2xl mx-auto relative text-center">
+        <ReconnectingBanner status={connectionStatus} />
         <LivingBackground accentColor="#8B5CF6" />
 
         <div className="w-full flex items-center justify-between mb-6 z-10">
